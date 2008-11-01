@@ -1,6 +1,6 @@
 = Datenbank =
-Software: MySQL
-Zugriff über [[Server]]: odbc
+  *   Software: MySQL
+* Zugriff über [[Server]]: odbc
 
 == Client ==
 Login beim DB Server
@@ -58,4 +58,3 @@ Geordnete Liste der Lampen ID's (trace) + Timestamp
 ID
 
 == Server ==
-
