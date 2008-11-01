@@ -2,6 +2,8 @@
   * Software: MySQL
   * Zugriff über [Server]: odbc
 
+= Funktionen =
+
 == Client ==
   * Login beim DB Server
   * Traces anzeigen
@@ -16,7 +18,6 @@
   * Auftragsliste persistent speichern
 
 == Datenbank Server ==
-= Funktionalitäten =
   * Beliebig viele Clients
   * Beliebig viele Funk Server (als client)
   * Rechteverwaltung
@@ -27,23 +28,21 @@
   * DB: Traces von Funkserver
   * Aufträge an Funkserver senden
   * Aufträge bei Funkserver löschen
-= Datenbank =
-
 
 == Preisschild ==
-= Auf Licht Befehl =
+=== Auf Licht Befehl ===
   * Preis anzeigen
 
 == Einkaufswagen ==
   * Trace speichern
-= Auf Licht Befehl =
+=== Auf Licht Befehl ===
   * Trace senden (funk) + reset
   * Anzeige schalten
 
 == Lampe ==
   * Besitzt beliebig viele LED's
 
-=== Daten ===
+= Daten =
 == Preisschild ==
   * Preis
   * Warenbezeichnung
