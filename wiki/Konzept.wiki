@@ -1,0 +1,61 @@
+= Datenbank =
+Software: MySQL
+Zugriff über [[Server]]: odbc
+
+== Client ==
+Login beim DB Server
+Traces anzeigen
+Preisschilder anzeigen, ändern, erstellen
+Lampen: anzeigen, ändern, erstellen
+
+
+== Funk Server ==
+Aufträge von DB Server empfangen
+Aufträge wiederholt senden (so gut es geht sicherstellen das der gewünschte Zustand erreicht wird)
+Traces von der Kasse empfangen und weiterleiten an DB Server
+Auftragsliste persistent speichern
+
+== Datenbank Server ==
+= Funktionalitäten =
+Beliebig viele Clients
+Beliebig viele Funk Server (als client)
+Rechteverwaltung
+DB: Preise (read / write)
+DB: Preisschild registrieren
+DB: Benutzerkonten (read / write)
+DB: Werbeaufträge (read / write)
+DB: Traces von Funkserver
+Aufträge an Funkserver senden
+Aufträge bei Funkserver löschen
+= Datenbank =
+
+
+== Preisschild ==
+= Auf Licht Befehl =
+Preis anzeigen
+
+== Einkaufswagen ==
+Trace speichern
+= Auf Licht Befehl =
+Trace senden (funk) + reset
+Anzeige schalten
+
+== Lampe ==
+Besitzt beliebig viele LED's
+
+=== Daten ===
+== Preisschild ==
+Preis
+Warenbezeichnung
+ID (fest)
+
+== Wagen ==
+ID (fest)
+Werbetext
+Geordnete Liste der Lampen ID's (trace) + Timestamp
+
+== Lampe ==
+ID
+
+== Server ==
+
