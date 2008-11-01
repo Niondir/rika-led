@@ -1,6 +1,6 @@
 = Datenbank =
   * Software: MySQL
-  * Zugriff über [[Server]]: odbc
+  * Zugriff über [Server]: odbc
 
 == Client ==
   * Login beim DB Server
