@@ -1,5 +1,5 @@
 = Klassen =
-  * GUI
+  * [GUI]
   * DataTable
   * Config
   * Communication
