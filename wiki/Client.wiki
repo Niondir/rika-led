@@ -6,4 +6,4 @@
   * _Packet_
 
 = DLL'S =
-[DataTypes.dll|datatypesdll]
+[DataTypes].dll
