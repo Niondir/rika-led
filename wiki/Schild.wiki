@@ -1,0 +1,4 @@
+= Funktionen =
+	* ReceiveMessage()
+	* UpdateText(string)
+	* getDefaultText()
