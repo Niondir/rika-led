@@ -4,7 +4,7 @@
 === Lampenschicht ===
   * Header: LampenID, Checksumme
 === Anwendungsschicht ===
-  * Header: Timestamp, Anzeigedauer, Checksumme
+  * Header: Timestamp, Checksumme
   * Body: Anzeigetext
 === Paketschicht ===
   * Header: Startbyte, SenderID, ReceiverID, Length, Sequenznummer, Checksumme
