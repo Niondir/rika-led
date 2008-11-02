@@ -1,0 +1,5 @@
+= Funktionen =
+  * Receive()
+  * Send()
+
+Packt oberen Layer aus, und schickt die Nachricht weiter wenn sie für die Lampe war.
