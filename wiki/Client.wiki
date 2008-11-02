@@ -1,0 +1,9 @@
+= Klassen =
+  * GUI
+  * DataTable
+  * Config
+  * Communication
+  * _Packet_
+
+= DLL'S =
+[DataTypes.dll]
