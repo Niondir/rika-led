@@ -1,0 +1,16 @@
+= [Lampe] -> [Schild] =
+
+== Kommunikationsstack ==
+=== Paketschicht ===
+  * Header: SenderID, ReceiverID
+  * Body: Text
+
+=== optical adjustment layer ===
+  * Optional zur korrektur des flackerns
+  * Invertiertes byte schicken
+
+=== uart Schicht ===
+	* Interpretation des bitstromes
+	
+=== physikalische Schicht ===
+	* Lichtimpulse senden
