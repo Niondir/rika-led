@@ -4,13 +4,13 @@
 
 Windows Forms SDI Anwendung in .NET
 
+----
 
 = Programmablauf =
 
-== Erststart (Noch keine Konfigurationsdatei vorhanden) ==
-
-#Main Form öffnen
-#Einstellungs Dialog öffnen um Serveradressen, Benutzernamen und Kennwort einzugeben
-#Zum Server verbinden
-#Controls dem Userlevel anpassen (enable/disable)
-#Daten vom Server laden (Regionen, Aktuelle Ads, ...) (<-- vllt auch erst nach Anfrage)
+ # Main Form öffnen
+ # Wenn Konfigurationen vorhanden, übernehmen und weiter zu *3.*
+ # Einstellungs Dialog öffnen um Serveradressen, Benutzernamen und Kennwort einzugeben
+ # Zum Server verbinden
+ # Controls dem Userlevel anpassen (enable/disable)
+ # Daten vom Server laden (Regionen, Aktuelle Ads, ...) (<-- vllt auch erst nach Anfrage)
