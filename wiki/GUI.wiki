@@ -14,3 +14,5 @@ Windows Forms SDI Anwendung in .NET
  # Zum Server verbinden
  # Controls dem Userlevel anpassen (enable/disable)
  # Daten vom Server laden (Regionen, Aktuelle Ads, ...) (<-- vllt auch erst nach Anfrage)
+ # Daten verändern
+ # Schließen
