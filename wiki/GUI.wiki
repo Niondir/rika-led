@@ -1,0 +1,7 @@
+#summary Client GUI
+= Basis =
+
+Windows Forms SDI Anwendung in .NET
+
+
+= Programmablauf =
