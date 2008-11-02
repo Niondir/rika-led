@@ -1,4 +1,23 @@
-= Funktionen =
-	* ReceiveMessage()
-	* UpdateText(string)
-	* getDefaultText()
+= Preisschild =
+== Funktionen ==
+  * ReceiveMessage()
+  * UpdateText(string)
+  * GetDefaultText()
+
+= Wagenschild =
+== Funktionen ==
+  * ReceiveMessage()
+  * UpdateText()
+  * GetDefaultText()
+  * SaveWaypoint()
+  * SendWaypoints()
+
+
+=== SaveWaypoints() ===
+Wenn die Nachricht von einer neuen Lampe ist: Speichern der LampenID und Timestamp
+Ansonsen: Nichts
+
+=== SendWaypoints() ===
+  # Funk aktivieren
+  # Senden und Trace löschen
+  # Funk deaktivieren
