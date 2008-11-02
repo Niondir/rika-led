@@ -1,16 +1,15 @@
 = [Lampe] -> [Schild] =
 
 == Kommunikationsstack ==
+=== Anwendungsschicht ===
+  * Header: Timestamp, Anzeigedauer, Checksumme
+  * Body: Anzeigetext
 === Paketschicht ===
-  * Header: SenderID, ReceiverID
-  * Body: Text
-
+  * Header: Startbyte, SenderID, ReceiverID, Length, Sequenznummer, Checksumme
 === optical adjustment layer ===
   * Optional zur korrektur des flackerns
   * Invertiertes byte schicken
-
 === uart Schicht ===
 	* Interpretation des bitstromes
-	
 === physikalische Schicht ===
 	* Lichtimpulse senden
