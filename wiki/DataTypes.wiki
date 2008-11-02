@@ -1,0 +1,7 @@
+= DataTypes.dll =
+Beinhaltet klassen für Server und Client
+
+  * Schild <- Preisschild, Wagenschild
+  * Advertisement
+  * Region
+  * Lamp
