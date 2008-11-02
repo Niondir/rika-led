@@ -1,17 +1,17 @@
-= Datenbank =
+= [Datenbank] =
   * Software: MySQL
   * Zugriff über [Server]: odbc
 
 = Funktionen =
 
-== Client ==
+== [Client] ==
   * Login beim DB Server
   * Traces anzeigen
   * Preisschilder anzeigen, ändern, erstellen
   * Lampen: anzeigen, ändern, erstellen
 
 
-== Funk Server ==
+== Funk [Server] ==
   * Aufträge von DB Server empfangen
   * Aufträge wiederholt senden (so gut es geht sicherstellen das der gewünschte Zustand erreicht wird)
   * Traces von der Kasse empfangen und weiterleiten an DB Server
@@ -39,7 +39,7 @@
   * Trace senden (funk) + reset
   * Anzeige schalten
 
-== Lampe ==
+== [Lampe] ==
   * Besitzt beliebig viele LED's
 
 = Daten =
