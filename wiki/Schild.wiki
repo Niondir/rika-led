@@ -21,3 +21,4 @@ Ansonsen: Nichts
   # Funk aktivieren
   # Senden und Trace löschen
   # Funk deaktivieren
+  # Default Werbung anzeigen
