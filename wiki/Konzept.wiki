@@ -1,4 +1,3 @@
-#labels istfüranfänger
 = [Datenbank] =
   * Software: MySQL
   * Zugriff über [Server]: odbc
