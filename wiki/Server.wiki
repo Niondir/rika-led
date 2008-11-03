@@ -1,3 +1,4 @@
+#labels TobiasK
 = Einleitung =
 Aufteilung in 2 Module: Datenbankkommunikation, Funkverbindung
 
