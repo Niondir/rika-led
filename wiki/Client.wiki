@@ -17,10 +17,10 @@ Windows Forms SDI Anwendung in .NET
  # Schließen
 
 = Klassen =
- * GUI
- ** FormMain : Form (Kontainer für komplettes UI, bis auf den Settings Dialog)
- ** FormSettings : Form (Einstellungen für Serveradresse, Benutzer etc)
- ** Ctrl
+ * Graphische Oberfläche und UI
+  * FormMain : Form (Kontainer für komplettes UI, bis auf den Settings Dialog)
+  * FormSettings : Form (Einstellungen für Serveradresse, Benutzer etc)
+  * Ctrl
  * DataTable
  * Config
  * Communication
