@@ -18,4 +18,4 @@ Properties:
 Basisklassen: Shield
 
 === ShieldCaddy ===
-Basisklassen: Shield
+Basisklassen: Shieldb
