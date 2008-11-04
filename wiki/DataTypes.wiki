@@ -6,3 +6,13 @@ Beinhaltet klassen für Server und Client
   * Advertisement
   * Region
   * Lamp
+
+=== Shield ===
+Abstrakte Basisklasse. Repräsentier die Grundfunktionalität der Endgeräte
+
+Properties:
+ * Addresse (ID)
+ * 
+
+=== ShieldPrice ===
+Basisklassen: Shield
