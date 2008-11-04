@@ -18,9 +18,10 @@ Windows Forms SDI Anwendung in .NET
 
 = Klassen =
  * Graphische Oberfläche und UI
-  * FormMain : Form (Kontainer für komplettes UI, bis auf den Settings Dialog)
-  * FormSettings : Form (Einstellungen für Serveradresse, Benutzer etc)
-  * Ctrl
+  * {{{FormMain : Form}}} (Kontainer für komplettes UI (Ctrls), bis auf den Settings Dialog)
+  * {{{FormSettings : Form}}} (Einstellungen für Serveradresse, Benutzer etc)
+  * {{{CtrlZonesLamps : UserControl}}} (Zeigt eingetragene Zonen an und bietet Funktionalität zum manipulieren)
+  * {{{CtrlShields : UserControl}}}
  * DataTable
  * Config
  * Communication
