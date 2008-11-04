@@ -10,3 +10,32 @@ Aufteilung in 2 Module: Datenbankkommunikation, Funkverbindung
   * _Packet_
   * NetworkEvents
   * DataTable
+
+== SendLogic ==
+
+== RadioCommunication ==
+Verwaltet die Communikation über das Funkmodul.
+
+  * Wird nur zum senden verwendet.
+
+=== Funktionen ===
+  * Send(Packet p)
+
+== NetworkCommunication ==
+  * Verwaltet mehrere Clients über TCP/IP Verbindungen.
+  * Verwaltet eine MessageQueue, ruft NetworkEvents auf
+
+=== Funktionen ===
+  * OnReceive()
+
+== Client ==
+  * 
+
+=== Funktionen ===
+  * Send(Packet p)
+
+== NetworkEvents ==
+Handler für alle netzwerk events
+
+=== Funktionen ==
+  * Ein static Event für jede Aktion die durch empfangene Pakete ausgeführt wird
