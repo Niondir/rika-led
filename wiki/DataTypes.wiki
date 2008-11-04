@@ -16,3 +16,6 @@ Properties:
 
 === ShieldPrice ===
 Basisklassen: Shield
+
+=== ShieldCaddy ===
+Basisklassen: Shield
