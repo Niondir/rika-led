@@ -12,7 +12,7 @@ Abstrakte Basisklasse. Repräsentier die Grundfunktionalität der Endgeräte
 
 Properties:
  * Addresse (ID)
- * 
+ * Anzeigetext
 
 === ShieldPrice ===
 Basisklassen: Shield
