@@ -1,21 +1,32 @@
 #labels Vince,TobiasR
-= Preisschild =
-== Funktionen ==
-  * ReceiveMessage()
+= Wagenschild & Preisschild =
+== Gemeinsame Funktionen ==
+  * string ReceiveMessage()
+  * ParseMessage(string)
   * UpdateText(string)
-  * GetDefaultText()
+  * Reset(string defaultMessage)
 
 = Wagenschild =
-== Funktionen ==
-  * ReceiveMessage()
-  * UpdateText()
-  * GetDefaultText()
+== Zusätzliche Funktionen ==
   * SaveWaypoint()
   * SendWaypoints()
 
+  
+
+=== ReceiveMessage() ===
+Wird in eine Endlosschleife ausgeführt, solange keine neuen Preis/Werbeinformationen für das jeweilige Schild gesendet werden. Es wird also permanent in den gesendeten Daten das ID Feld ausgelesen und mit der eigenen ID verglichen. Bei einer Übereinstimmung wird ParseMessage aufgerufen. Empfängt bis zur Paketschicht.
+
+=== ParseMessage(string) ===
+Packt das empfangene Paket aus und interpretiert den Inhalt. Paketschicht -> Anwendungsschicht.
+
+=== UpdateText(string) ===
+Schreibt die Preis/Werbeinformation ins EEPROM, so daß auch bei einem Neustart nach einem Stromausfall die letzte Anzeige wiederhergestellt werden kann. 
+
+=== Reset(string defaultMessage) ===
+Wird der (an der Rückseite versteckte, nur mit einer Stecknadel auslösbare) Resetknopf betätigt, löscht das Schild die letzte Information aus dem EEPROM und zeigt stattdessen eine Defaultnachricht an.
 
 === SaveWaypoints() ===
-Wenn die Nachricht von einer neuen Lampe ist: Speichern der LampenID und Timestamp
+Wenn die Nachricht von einer neuen Lampe ist: Speichern der LampenID und Timestamp im RAM.
 Ansonsen: Nichts
 
 === SendWaypoints() ===
