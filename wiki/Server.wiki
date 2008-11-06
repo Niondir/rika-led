@@ -9,6 +9,8 @@ Aufteilung in 2 Module: Datenbankkommunikation, Funkverbindung
   * Client
   * _Packet_
   * NetworkEvents
+  * PacketHandler
+  * PacketHandlers
   * DataTable
 
 == SendLogic ==
@@ -39,3 +41,21 @@ Handler für alle netzwerk events
 
 === Funktionen ==
   * Ein static Event für jede Aktion die durch empfangene Pakete ausgeführt wird
+
+
+== PacketHandler ==
+=== Felder ===
+  * int packetID
+  * int length
+  * OnPacketReceive OnReceive
+
+== PacketHandlers ==
+Verwaltet PacketHandler, für jedes Packet wird ein PacketHandler registriert.
+
+Die Callbacks rufen Events in NetworkEvents auf.
+
+=== Funktionen ===
+  * Register(int packetID, int length, OnPacketReceive onReceive)
+  * GetHandler(int packetID)
+  * 
+  
