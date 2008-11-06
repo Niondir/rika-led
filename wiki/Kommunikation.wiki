@@ -16,3 +16,15 @@
 	* Interpretation des bitstromes
 === physikalische Schicht ===
 	* Lichtimpulse senden
+
+= [Client] <-> [Server] =
+== Packets ==
+Bestehend aus Binärdaten: ID, Nutzdaten
+
+=== RequestLamps ===
+
+=== RequestSigns ===
+
+=== LoginClient ===
+  * ID: 0x01
+  * 
