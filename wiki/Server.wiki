@@ -57,5 +57,5 @@ Die Callbacks rufen Events in NetworkEvents auf.
 === Funktionen ===
   * Register(int packetID, int length, OnPacketReceive onReceive)
   * GetHandler(int packetID)
-  * 
+  * alle OnReceive funktionen
   
