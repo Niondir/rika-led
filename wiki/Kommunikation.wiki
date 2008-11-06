@@ -5,8 +5,8 @@
 === Lampenschicht ===
   * Header: LampenID, Checksumme
 === Anwendungsschicht ===
-  * Header: Timestamp, Checksumme
-  * Body: Anzeigetext
+  * Header: Timestamp, Checksumme, Length
+  * Body: CommandNr (Neue Daten oder z.B. Sleep für x Minuten), Daten (Anzeigetext)
 === Paketschicht ===
   * Header: Startbyte, SenderID, ReceiverID, Length, Sequenznummer, Checksumme
 === optical adjustment layer ===
