@@ -25,6 +25,9 @@ Schreibt die Preis/Werbeinformation ins EEPROM, so daß auch bei einem Neustart 
 === Reset(string defaultMessage) ===
 Wird der (an der Rückseite versteckte, nur mit einer Stecknadel auslösbare) Resetknopf betätigt, löscht das Schild die letzte Information aus dem EEPROM und zeigt stattdessen eine Defaultnachricht an.
 
+=== defaultMessage() ===
+Gibt die default Werbung zurück.
+
 === SaveWaypoints() ===
 Wenn die Nachricht von einer neuen Lampe ist: Speichern der LampenID und Timestamp im RAM.
 Ansonsen: Nichts
