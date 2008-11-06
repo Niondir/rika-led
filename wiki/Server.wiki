@@ -50,7 +50,7 @@ Handler für alle netzwerk events
   * OnPacketReceive OnReceive
 
 == PacketHandlers ==
-Verwaltet PacketHandler, für jedes Packet wird ein PacketHandler registriert.
+Verwaltet PacketHandler, für jedes Packet wird ein PacketHandler registriert. Siehe: [Kommunikation].
 
 Die Callbacks rufen Events in NetworkEvents auf.
 
