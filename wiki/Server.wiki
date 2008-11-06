@@ -7,6 +7,7 @@ Aufteilung in 2 Module: Datenbankkommunikation, Funkverbindung
   * RadioCommunication
   * NetworkCommunication
   * Client
+  * ClientHandler
   * _Packet_
   * NetworkEvents
   * PacketHandler
@@ -31,7 +32,13 @@ Verwaltet die Communikation über das Funkmodul.
   * OnReceive()
 
 == Client ==
-  * 
+  * Informationen über einen Client
+  * Netzwerkstatus
+
+
+== ClientHandler ==
+  * Statischer Zugriff auf Clients möglich
+  * Suche nach Clients in allen vorhandenen
 
 === Funktionen ===
   * Send(Packet p)
