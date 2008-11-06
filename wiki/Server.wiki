@@ -17,6 +17,7 @@ Aufteilung in 2 Module: Datenbankkommunikation, Funkverbindung
   * Listener
 
 == SendLogic ==
+Was wird wann wie oft gesendet.
 
 == RadioCommunication ==
 Verwaltet die Communikation über das Funkmodul.
