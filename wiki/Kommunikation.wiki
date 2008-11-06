@@ -17,7 +17,7 @@
 === physikalische Schicht ===
 	* Lichtimpulse senden
 
-= [Client] <-> [Server] =
+= [Client] < - > [Server] =
 == Packets ==
 Bestehend aus Binärdaten: ID, Nutzdaten
 
@@ -27,4 +27,13 @@ Bestehend aus Binärdaten: ID, Nutzdaten
 
 === LoginClient ===
   * ID: 0x01
-  * 
+  * Username
+  * Password
+
+=== AccountLoginAck ===
+  * ID: 0x02
+  * ServerInfo
+
+=== AccountLoginRej ===
+  * ID: 0x03
+  * Reason
