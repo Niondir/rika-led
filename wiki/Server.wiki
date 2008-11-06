@@ -9,10 +9,12 @@ Aufteilung in 2 Module: Datenbankkommunikation, Funkverbindung
   * Client
   * ClientHandler
   * _Packet_
+  * MessagePump
   * NetworkEvents
   * PacketHandler
   * PacketHandlers
   * DataTable
+  * Listener
 
 == SendLogic ==
 
@@ -43,6 +45,9 @@ Verwaltet die Communikation über das Funkmodul.
 === Funktionen ===
   * Send(Packet p)
 
+== MessagePump ==
+Arbeitet die ankommenden Netzwerknachrichten ab
+
 == NetworkEvents ==
 Handler für alle netzwerk events
 
@@ -66,3 +71,8 @@ Die Callbacks rufen Events in NetworkEvents auf.
   * GetHandler(int packetID)
   * alle OnReceive funktionen
   
+== Listener ==
+
+=== Funktionen ===
+  * OnAccept
+  * 
