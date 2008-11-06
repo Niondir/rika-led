@@ -14,10 +14,10 @@
   
 
 === ReceiveMessage() ===
-Wird in eine Endlosschleife ausgeführt, solange keine neuen Preis/Werbeinformationen für das jeweilige Schild gesendet werden. Es wird also permanent in den gesendeten Daten das ID Feld ausgelesen und mit der eigenen ID verglichen. Bei einer Übereinstimmung wird ParseMessage aufgerufen. Empfängt bis zur Paketschicht.
+Wird in eine Endlosschleife ausgeführt, solange keine neuen Preis/Werbeinformationen für das jeweilige Schild gesendet werden. Es wird also permanent in den empfangenen Paketen das ID Feld ausgelesen und mit der eigenen ID verglichen. Bei einer Übereinstimmung wird ParseMessage aufgerufen.
 
 === ParseMessage(string) ===
-Packt das empfangene Paket aus und interpretiert den Inhalt. Paketschicht -> Anwendungsschicht.
+Setzt aus einzelnen Paketen eine komplette Nachricht zusammen und ruft bei vollständigem Empfang die jeweilige Funktion auf.
 
 === UpdateText(string) ===
 Schreibt die Preis/Werbeinformation ins EEPROM, so daß auch bei einem Neustart nach einem Stromausfall die letzte Anzeige wiederhergestellt werden kann. 
