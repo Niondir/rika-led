@@ -1,7 +1,7 @@
 #labels Vince,TobiasR
 = Funktionen =
 == Receive() ==
-Analysiert Msg, wenn Ziel ID der eigenen entspricht wird Send aufgerufen
+Analysiert die eingetroffene Funknachricht, wenn Lampen ID der eigenen entspricht wird Send aufgerufen
 
 ==  * Send() ==
 Sendet die neuen Daten über alle angeschlossenen LEDs
