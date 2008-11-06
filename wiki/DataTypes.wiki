@@ -27,7 +27,7 @@ Basisklassen: Shieldb
 
 === Region ===
   * ID
-  * List<Lamp>
+  * List< Lamp >
 
 
 === Lamp ===
