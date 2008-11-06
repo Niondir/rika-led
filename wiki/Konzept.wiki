@@ -10,7 +10,7 @@
   * Traces anzeigen
   * Preisschilder anzeigen, ändern, erstellen
   * Lampen: anzeigen, ändern, erstellen
-
+  * Zonen: erstellen, Lampen zuweisen
 
 == Funk [Server] ==
   * Aufträge von DB Server empfangen
