@@ -19,3 +19,16 @@ Basisklassen: Shield
 
 === ShieldCaddy ===
 Basisklassen: Shieldb
+
+=== Advertisement ===
+  * ID
+  * Text
+  * Kundeninformationen?
+
+=== Region ===
+  * ID
+  * List<Lamp>
+
+
+=== Lamp ===
+  * ID
