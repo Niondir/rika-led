@@ -42,3 +42,6 @@
 * "laufweg senden" an die richtige stelle
 * mögliches entflimmer erwähnen
 * darstellung für pakete einheitlich
+
+== KASSE !
+wo ist sie wie kommuniziert sie etc
