@@ -44,4 +44,4 @@
 * darstellung für pakete einheitlich
 
 == KASSE !
-wo ist sie wie kommuniziert sie etc
+wo ist sie wie kommuniziert sie etc, am besten eigene folie
