@@ -25,3 +25,20 @@
 * überschrift lampe ändern (?)
 * intern -> lokal
 * vor ort -> zb. im supermarkt
+
+== Folie Client == 
+
+* Achsenbeschriftung
+* evtl mehr zur analyse
+
+== Folie Server
+
+*
+
+== Folie Lampen ==
+
+* aDDress
+* einheitliche schriftart
+* "laufweg senden" an die richtige stelle
+* mögliches entflimmer erwähnen
+* darstellung für pakete einheitlich
