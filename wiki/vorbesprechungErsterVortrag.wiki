@@ -1,23 +1,32 @@
-#summary One-sentence summary of this page.
-
-= Introduction =
-
-Add your content here.
+#vorbesprechung für den ersten vortrag
 
 
-= Details =
+==allgemein:==
+ 
+-seitennummern
+-anhang "im detail" nicht so gern gesehen
+-evtl "bestimmungsort" mit rein (wo soll das system eingesetzt werden)
 
-allgemein: seitennummern
 
-folie 1
---
+
+
+== folie 1 ==
+
 projektname
 
 stromsparend an richtige stelle, komma weg,
 (vorschlag: lichtbasierte Fernsteuerung von stromsparenden werbe und preisschildern
 
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+
+
+
+
+== folie technik ==
+
+titel ändern -> 
+begriffe client, server präzisieren, vor allem client
+überschrift lampe ändern (?)
+intern -> lokal
+
+vor ort -> zb. im supermarkt
