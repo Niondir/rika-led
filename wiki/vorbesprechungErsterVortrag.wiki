@@ -44,4 +44,15 @@
 * darstellung für pakete einheitlich
 
 == KASSE !
-wo ist sie wie kommuniziert sie etc, am besten eigene folie
+* wo ist sie wie kommuniziert sie etc, am besten eigene folie
+
+== folie anwendungsbeispiel
+
+* 
+*
+
+== mögliche letzte folie:
+
+* zeitplan
+
+== abgabe per pdf, rechtzeitig =)
