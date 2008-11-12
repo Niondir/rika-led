@@ -56,3 +56,13 @@
 * zeitplan
 
 == abgabe per pdf, rechtzeitig =)
+
+==notes testpräsentation
+werbeschilder : an wagen!!
+farben der diagramme einheitlich machen
+intern -> lokal
+bei ieee -> funk drüberschreiben
+tobik: zur serverfolie notizen machen
+lampenfolie: slot gespeichert weil funk entlasten
+
+pers notes: grosses bild zuerst erklären
