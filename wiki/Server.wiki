@@ -77,3 +77,20 @@ Die Callbacks rufen Events in NetworkEvents auf.
 === Funktionen ===
   * OnAccept
   * 
+
+
+
+
+= grober Aufbau =
+== Client Handler ==
+  * Netzweckschnitstelle zum Client (TCP/IP, Xml-RPC, ISS)
+  * Benutzerverwaltung: Login, Berechtigungen
+  * Weiterleitung der Daten von und an Data Manager
+== Data Manager ==
+  * Anbindung an Datenbank
+  * Schnitstelle für Datenbankanfragen
+  * Bereitstellung abstrakter Datenobjekte
+
+== Funk Manager ==
+  * Ansteuerung des Funksenders (Serielle Schnittstelle)
+  * Verwaltung der Daten in den Lampen
