@@ -2,7 +2,7 @@
 
 
 
-Arseni: Client incl. Kasse
-TobiK: Server
-TobiR: Schilder/Wagen
-Vince: Lampe
+ *Arseni: Client incl. Kasse
+ *TobiK: Server
+ *TobiR: Schilder/Wagen
+ *Vince: Lampe
