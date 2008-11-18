@@ -3,3 +3,4 @@
 
 = XML-RPC Lib = 
 http://www.xml-rpc.net
+FAQ: http://www.xml-rpc.net/faq/xmlrpcnetfaq.html
