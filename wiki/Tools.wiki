@@ -1,5 +1,5 @@
 = DB Designer 4 =
-[http://www.fabforce.net/dbdesigner4/ homepage]
+  * Software: http://www.fabforce.net/dbdesigner4/
 
 = XML-RPC Lib = 
   * Source: http://www.xml-rpc.net
