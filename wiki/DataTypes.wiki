@@ -1,5 +1,10 @@
 #labels TobiasK,Arseni
 = DataTypes.dll =
+  
+  * Exception bearbeitung
+  * Interfaces zur Kommunikation via XML-RPC
+  * Strukturen für die Datenübertragung
+  
 Beinhaltet klassen für Server und Client
 
   * Schild <- Preisschild, Wagenschild
@@ -7,28 +12,26 @@ Beinhaltet klassen für Server und Client
   * Region
   * Lamp
 
-=== Shield ===
-Abstrakte Basisklasse. Repräsentier die Grundfunktionalität der Endgeräte
+=== Session ===
 
-Properties:
- * Addresse (ID)
- * Anzeigetext
-
-=== ShieldPrice ===
-Basisklassen: Shield
-
-=== ShieldCaddy ===
-Basisklassen: Shieldb
-
-=== Advertisement ===
-  * ID
-  * Text
-  * Kundeninformationen?
-
-=== Region ===
-  * ID
-  * List< Lamp >
-
+=== User ===
 
 === Lamp ===
-  * ID
+
+=== Region ===
+
+=== Product ===
+
+=== Sign ===
+
+=== Trace ===
+
+=== Advertisement ===
+
+= Interface =
+
+== Add() ==
+  * Hinzufügen von Daten
+  * Speichern der Daten in der Datenbank
+  * Eventuelles versenden der Daten
+  * Wirft Exeption bei Fehlern
