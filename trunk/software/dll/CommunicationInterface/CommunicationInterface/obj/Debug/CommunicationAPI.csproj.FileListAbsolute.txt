@@ -1,0 +1,6 @@
+C:\Users\Arseni\Documents\rika\software\dll\CommunicationInterface\CommunicationInterface\bin\Debug\CommunicationAPI.dll
+C:\Users\Arseni\Documents\rika\software\dll\CommunicationInterface\CommunicationInterface\bin\Debug\CommunicationAPI.pdb
+C:\Users\Arseni\Documents\rika\software\dll\CommunicationInterface\CommunicationInterface\bin\Debug\CookComputing.XmlRpcV2.dll
+C:\Users\Arseni\Documents\rika\software\dll\CommunicationInterface\CommunicationInterface\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Arseni\Documents\rika\software\dll\CommunicationInterface\CommunicationInterface\obj\Debug\CommunicationAPI.dll
+C:\Users\Arseni\Documents\rika\software\dll\CommunicationInterface\CommunicationInterface\obj\Debug\CommunicationAPI.pdb
