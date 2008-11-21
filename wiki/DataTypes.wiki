@@ -4,13 +4,8 @@
   * Exception bearbeitung
   * Interfaces zur Kommunikation via XML-RPC
   * Strukturen für die Datenübertragung
-  
-Beinhaltet klassen für Server und Client
 
-  * Schild <- Preisschild, Wagenschild
-  * Advertisement
-  * Region
-  * Lamp
+== Structs ==
 
 === Session ===
 
@@ -28,10 +23,20 @@ Beinhaltet klassen für Server und Client
 
 === Advertisement ===
 
-= Interface =
+== Interfaces ==
 
-== Add() ==
-  * Hinzufügen von Daten
+== Add(Session session, value) ==
+  * *Hinzufügen von Daten*
   * Speichern der Daten in der Datenbank
-  * Eventuelles versenden der Daten
+  * Mitteilung an den [RadioManager]
   * Wirft Exeption bei Fehlern
+
+== Delete(Session session, value) ==
+  * *Entfernen von Daten*
+  * Löschen der Daten aus der Datenbank
+  * Mitteilung an den [RadioManager]
+
+== Edit(Session session, oldValue, newValue) ==
+  * *Editieren von Daten*
+  * Editiert Daten in der Datenbank
+  * Mitteilung an den [RadioManager]
