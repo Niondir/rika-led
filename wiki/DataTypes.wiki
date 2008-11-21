@@ -40,3 +40,5 @@
   * *Editieren von Daten*
   * Editiert Daten in der Datenbank
   * Mitteilung an den [RadioManager]
+
+== Get...() ==
