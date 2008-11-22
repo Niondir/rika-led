@@ -4,3 +4,6 @@ C:\Users\Arseni\Documents\rika\software\dll\CommunicationInterface\Communication
 C:\Users\Arseni\Documents\rika\software\dll\CommunicationInterface\CommunicationInterface\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Arseni\Documents\rika\software\dll\CommunicationInterface\CommunicationInterface\obj\Debug\CommunicationAPI.dll
 C:\Users\Arseni\Documents\rika\software\dll\CommunicationInterface\CommunicationInterface\obj\Debug\CommunicationAPI.pdb
+D:\programmieren\c#\rika\software\dll\CommunicationAPI\CommunicationAPI\obj\Debug\ResolveAssemblyReference.cache
+D:\programmieren\c#\rika\software\dll\CommunicationAPI\CommunicationAPI\obj\Debug\CommunicationAPI.dll
+D:\programmieren\c#\rika\software\dll\CommunicationAPI\CommunicationAPI\obj\Debug\CommunicationAPI.pdb
