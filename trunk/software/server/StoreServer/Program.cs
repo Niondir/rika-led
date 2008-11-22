@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Diagnostics;
 using System.Reflection;
+using StoreServer.Data;
 
 namespace StoreServer
 {
@@ -85,7 +86,6 @@ namespace StoreServer
             Console.WriteLine("StoreServer - [http://code.google.com/p/rika-led/]");
             Console.WriteLine("Version {0}.{1}, Build {2}.{3}", ver.Major, ver.Minor, ver.Build, ver.Revision);
 			Console.WriteLine("Server: Running on .NET Framework Version {0}.{1}.{2}", Environment.Version.Major, Environment.Version.Minor, Environment.Version.Build);
-
            
             int platform = (int)Environment.OSVersion.Platform;
             if ((platform == 4) || (platform == 128))
@@ -99,6 +99,8 @@ namespace StoreServer
             httpServiceThread.Name = "Http Service Thread";
 
             httpServiceThread.Start();
+
+            
 
 
             Console.WriteLine("Server: Pres any key to exit");

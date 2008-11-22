@@ -4,10 +4,11 @@ using System.Text;
 using CookComputing.XmlRpc;
 using CommunicationAPI.Interface;
 using CommunicationAPI.DataTypes;
+using CommunicationAPI;
 
 namespace StoreServer.WebService
 {
-    public class StoreClientService : XmlRpcListenerService, IRemoteFunctions
+    public class ClientHandler : XmlRpcListenerService, IRemoteFunctions
     {
 
         #region IRemoteFunctions Members
@@ -16,7 +17,14 @@ namespace StoreServer.WebService
         [XmlRpcMethod]
         public Session Login(User user)
         {
-            WebServiceEvents.InvokeLogin(new LoginEventArgs(user));
+            Session session = new Session(user);
+            LoginEventArgs ea = new LoginEventArgs(session);
+            WebServiceEvents.InvokeLogin(ea);
+
+            if (ea.Session.Valid)
+                return ea.Session;
+            else
+                throw new XmlRpcFaultException(101, "Invalid Login Data");
         }
 
         public void Logout()
