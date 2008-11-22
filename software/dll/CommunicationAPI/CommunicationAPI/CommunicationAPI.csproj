@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes\DataTypes.cs" />
+    <Compile Include="Interface\ErrorCodes.cs" />
     <Compile Include="Interface\IRemoteFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

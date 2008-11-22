@@ -8,8 +8,33 @@ namespace CommunicationAPI.DataTypes
 {
     public struct Session
     {
-        int id;
-        User user;
+        private int id;
+        private User user;
+        private bool valid;
+
+        public int ID
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public int User
+        {
+            get { return user; }
+        }
+
+        public int Valid
+        {
+            get { return valid; }
+            set { valid = value; }
+        }
+
+        public Session(User user)
+        {
+            this.id = 0;
+            this.user = user;
+            this.valid = false;
+        }
     }
 
     /// <summary>
@@ -18,7 +43,6 @@ namespace CommunicationAPI.DataTypes
     public struct Password
     {
         private string password;
-        private bool isEncrypted;
 
         public string PasswordMD5
         {
@@ -32,7 +56,7 @@ namespace CommunicationAPI.DataTypes
             }
         }
 
-        public string Password
+        public string PasswordClear
         {
             set
             {
@@ -42,14 +66,15 @@ namespace CommunicationAPI.DataTypes
 
         public Password(string password)
         {
-            this.Password = password;
+            /// We can use the Encrypt method only if it is static. Because we can't access "this" yet.
+            this.password = Password.Encrypt(password);
         }
 
-        public string Encrypt(string value)
+        public static string Encrypt(string value)
         {
             MD5CryptoServiceProvider cryptMD5 = new MD5CryptoServiceProvider();
             byte[] bs = System.Text.Encoding.UTF8.GetBytes(value);
-            bs = x.ComputeHash(bs);
+            bs = cryptMD5.ComputeHash(bs);
             return BitConverter.ToString(bs);
         }
 

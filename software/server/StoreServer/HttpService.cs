@@ -41,7 +41,7 @@ namespace StoreServer
                     Thread.Sleep(500); */
 
                     HttpListenerContext context = listener.GetContext();
-                    XmlRpcListenerService svc = new StoreClientService();
+                    XmlRpcListenerService svc = new ClientHandler();
                     svc.ProcessRequest(context);
 
                     Debug.WriteLine("Contex Info: \n"+
