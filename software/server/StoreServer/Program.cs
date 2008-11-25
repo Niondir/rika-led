@@ -6,6 +6,7 @@ using System.Threading;
 using System.Diagnostics;
 using System.Reflection;
 using StoreServer.Data;
+using StoreServer.WebService;
 
 namespace StoreServer
 {
@@ -67,6 +68,9 @@ namespace StoreServer
             }
         }
 
+        private static AutoResetEvent signal = new AutoResetEvent( true );
+        public static void Set() { signal.Set(); }
+
 
         static void Main(string[] args)
         {
@@ -94,18 +98,21 @@ namespace StoreServer
                 Console.WriteLine("Server: Unix environment detected");
             }
 
-            HttpService.HttpServiceThread hstObj = new HttpService.HttpServiceThread();
-            httpServiceThread = new Thread(new ThreadStart(hstObj.HttpServiceMain));
-            httpServiceThread.Name = "Http Service Thread";
+            HttpService httpService = new HttpService("http://127.0.0.1:11000/", new ClientHandler());
+            DataManager dataManager = new DataManager();
 
-            httpServiceThread.Start();
+            while (signal.WaitOne())
+            {
+                httpService.Slice();
+                dataManager.Slice();
+                Console.WriteLine("--- New round! ---");
+            }
 
-            
-
-
+            // TODO: Loop for async actions, linke console input
             Console.WriteLine("Server: Pres any key to exit");
             Console.ReadKey();
             closing = true;
         }
     }
+
 }
