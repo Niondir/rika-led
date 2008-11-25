@@ -18,12 +18,12 @@ namespace CommunicationAPI.DataTypes
             set { id = value; }
         }
 
-        public int User
+        public User User
         {
             get { return user; }
         }
 
-        public int Valid
+        public bool Valid
         {
             get { return valid; }
             set { valid = value; }

@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using CookComputing.XmlRpc;
 using StoreClient.Remote.Interfaces;
+using CommunicationAPI.Interface;
+using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
@@ -21,12 +23,12 @@ namespace StoreClient
         private void button1_Click(object sender, EventArgs e)
         {
             label1.Text = "";
-            IStateName betty = XmlRpcProxyGen.Create<IStateName>();
+            IRemoteFunctions betty = XmlRpcProxyGen.Create<IRemoteFunctions>();
             Cursor = Cursors.WaitCursor;
             try
             {
                 int num = Convert.ToInt32(textBox1.Text);
-                label1.Text = betty.GetStateName(num);
+                label1.Text = betty.Login(new User()).ToString();
             }
             catch (Exception ex)
             {

@@ -110,6 +110,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\dll\CommunicationAPI\CommunicationAPI\CommunicationAPI.csproj">
+      <Project>{433D4C5E-44DD-4B00-952E-F0504E6DE751}</Project>
+      <Name>CommunicationAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
