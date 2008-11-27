@@ -97,17 +97,26 @@ namespace StoreServer
                 unix = true;
                 Console.WriteLine("Server: Unix environment detected");
             }
-
+ 
             HttpService httpService = new HttpService("http://127.0.0.1:11000/", new ClientHandler());
             DataManager dataManager = new DataManager();
+            UserManager userManager = new UserManager();
 
-            while (signal.WaitOne())
+            try
             {
-                httpService.Slice();
-                dataManager.Slice();
-                Console.WriteLine("--- New round! ---");
-            }
 
+                while (signal.WaitOne())
+                {
+                    httpService.Slice();
+                    dataManager.Slice();
+                    Console.WriteLine("--- New round! ---");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             // TODO: Loop for async actions, linke console input
             Console.WriteLine("Server: Pres any key to exit");
             Console.ReadKey();

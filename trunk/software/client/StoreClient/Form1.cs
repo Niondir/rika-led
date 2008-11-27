@@ -28,7 +28,10 @@ namespace StoreClient
             try
             {
                 int num = Convert.ToInt32(textBox1.Text);
-                label1.Text = betty.Login(new User()).ToString();
+                User user = new User("gast", "gast");
+   
+                Session session = betty.Login(user);
+                label1.Text = session.ToString();
             }
             catch (Exception ex)
             {
@@ -36,6 +39,7 @@ namespace StoreClient
             }
             Cursor = Cursors.Default;
         }
+
 
         private void HandleException(Exception ex)
         {

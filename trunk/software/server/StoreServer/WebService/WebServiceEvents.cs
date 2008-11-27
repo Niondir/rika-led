@@ -9,7 +9,7 @@ namespace StoreServer.WebService
 
     public class LoginEventArgs
     {
-        private Session session;
+        public Session session;
 
         public Session Session
         {
