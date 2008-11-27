@@ -21,6 +21,7 @@ namespace CommunicationAPI.DataTypes
         public User User
         {
             get { return user; }
+            set { user = value; }
         }
 
         public bool Valid
@@ -35,6 +36,12 @@ namespace CommunicationAPI.DataTypes
             this.user = user;
             this.valid = false;
         }
+
+        public void Validate(int id)
+        {
+            this.id = id;
+            this.valid = true;
+        }
     }
 
     /// <summary>
@@ -46,22 +53,14 @@ namespace CommunicationAPI.DataTypes
 
         public string PasswordMD5
         {
-            get
-            {
-                return password;
-            }
-            set
-            {
-                password = value;
-            }
+            get { return password; }
+            set { password = value; }
         }
 
         public string PasswordClear
         {
-            set
-            {
-                password = Encrypt(value);
-            }
+            set { password = Encrypt(value); }
+            get { return "bullshit"; }
         }
 
         public Password(string password)
@@ -86,7 +85,9 @@ namespace CommunicationAPI.DataTypes
         /// <returns>Returns true if the password is matching</returns>
         public bool CheckPassword(string password)
         {
-            return Encrypt(password) == this.password;
+            string pw = Encrypt(password);
+            bool res = this.password == pw;
+            return res;
         }
 
         public bool CheckPassword(Password password)
@@ -97,9 +98,26 @@ namespace CommunicationAPI.DataTypes
 
     public struct User
     {
-        private string userName;
-        private string password;
-        
+        private string username;
+        private Password password;
+
+        public string Username
+        {
+            get { return username; }
+            set { username = value; }
+        }
+
+        public Password Password
+        {
+            get { return password; }
+            set { password = value; }
+        }
+
+        public User(string username, string password)
+        {
+            this.username = username;
+            this.password = new Password(password);
+        }
 
     }
 

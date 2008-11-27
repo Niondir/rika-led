@@ -10,3 +10,9 @@ D:\programmieren\c#\rika\software\dll\CommunicationAPI\CommunicationAPI\obj\Debu
 D:\programmieren\c#\rika\software\dll\CommunicationAPI\CommunicationAPI\bin\Debug\CommunicationAPI.dll
 D:\programmieren\c#\rika\software\dll\CommunicationAPI\CommunicationAPI\bin\Debug\CommunicationAPI.pdb
 D:\programmieren\c#\rika\software\dll\CommunicationAPI\CommunicationAPI\bin\Debug\CookComputing.XmlRpcV2.dll
+C:\programmieren\rika\software\dll\CommunicationAPI\CommunicationAPI\bin\Debug\CommunicationAPI.dll
+C:\programmieren\rika\software\dll\CommunicationAPI\CommunicationAPI\bin\Debug\CommunicationAPI.pdb
+C:\programmieren\rika\software\dll\CommunicationAPI\CommunicationAPI\bin\Debug\CookComputing.XmlRpcV2.dll
+C:\programmieren\rika\software\dll\CommunicationAPI\CommunicationAPI\obj\Debug\ResolveAssemblyReference.cache
+C:\programmieren\rika\software\dll\CommunicationAPI\CommunicationAPI\obj\Debug\CommunicationAPI.dll
+C:\programmieren\rika\software\dll\CommunicationAPI\CommunicationAPI\obj\Debug\CommunicationAPI.pdb

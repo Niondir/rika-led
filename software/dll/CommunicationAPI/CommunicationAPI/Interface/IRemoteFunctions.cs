@@ -20,66 +20,66 @@ namespace CommunicationAPI.Interface
         #region Add()
 
         [XmlRpcMethod]
-        void Add(Session session, User value);
+        void AddUser(Session session, User value);
 
         [XmlRpcMethod]
-        void Add(Session session, Lamp value);
+        void AddLamp(Session session, Lamp value);
 
         [XmlRpcMethod]
-        void Add(Session session, Region value);
+        void AddRegion(Session session, Region value);
 
         [XmlRpcMethod]
-        void Add(Session session, Product value);
+        void AddProduct(Session session, Product value);
 
         [XmlRpcMethod]
-        void Add(Session session, Sign value);
+        void AddSign(Session session, Sign value);
 
         [XmlRpcMethod]
-        void Add(Session session, Advertisement value);
+        void AddAdvertisement(Session session, Advertisement value);
 
         [XmlRpcMethod]
-        void Add(Session session, Trace value);
+        void AddTrace(Session session, Trace value);
 
         #endregion
 
         #region Delete()
 
         [XmlRpcMethod]
-        void Delete(Session session, User value);
+        void DeleteUser(Session session, User value);
 
         [XmlRpcMethod]
-        void Delete(Session session, Lamp value);
+        void DeleteLamp(Session session, Lamp value);
 
         [XmlRpcMethod]
-        void Delete(Session session, Region value);
+        void DeleteRegion(Session session, Region value);
 
         [XmlRpcMethod]
-        void Delete(Session session, Product value);
+        void DeleteProduct(Session session, Product value);
 
         [XmlRpcMethod]
-        void Delete(Session session, Sign value);
+        void DeleteSign(Session session, Sign value);
 
         [XmlRpcMethod]
-        void Delete(Session session, Advertisement value);
+        void DeleteAdvertisement(Session session, Advertisement value);
 
         [XmlRpcMethod]
-        void Delete(Session session, Trace value);
+        void DeleteTrace(Session session, Trace value);
 
         #endregion
 
         #region Edit()
 
         [XmlRpcMethod]
-        void Edit(Session session, User oldValue, User newValue);
+        void EditUser(Session session, User oldValue, User newValue);
 
         [XmlRpcMethod]
-        void Edit(Session session, Region oldValue, Region newValue);
+        void EditRegion(Session session, Region oldValue, Region newValue);
 
         [XmlRpcMethod]
-        void Edit(Session session, Product oldValue, Product newValue);
+        void EditProduct(Session session, Product oldValue, Product newValue);
 
         [XmlRpcMethod]
-        void Edit(Session session, Sign oldValue, Sign newValue);
+        void EditSign(Session session, Sign oldValue, Sign newValue);
         
         #endregion
 

@@ -11,10 +11,9 @@ namespace StoreServer.WebService
     public class ClientHandler : XmlRpcListenerService, IRemoteFunctions
     {
 
-        #region IRemoteFunctions Members
 
-        // Need the tag?
-        [XmlRpcMethod]
+        #region IRemoteFunctions Member
+
         public Session Login(User user)
         {
             Session session = new Session(user);
@@ -29,132 +28,132 @@ namespace StoreServer.WebService
 
         public void Logout()
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException((int)ErrorCodes.NotImplemented, "Not implemented");
         }
 
-        public void Add(Session session, User value)
+        public void AddUser(Session session, User value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Add(Session session, Lamp value)
+        public void AddLamp(Session session, Lamp value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Add(Session session, Region value)
+        public void AddRegion(Session session, Region value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Add(Session session, Product value)
+        public void AddProduct(Session session, Product value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Add(Session session, Sign value)
+        public void AddSign(Session session, Sign value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Add(Session session, Advertisement value)
+        public void AddAdvertisement(Session session, Advertisement value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Add(Session session, Trace value)
+        public void AddTrace(Session session, Trace value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Delete(Session session, User value)
+        public void DeleteUser(Session session, User value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Delete(Session session, Lamp value)
+        public void DeleteLamp(Session session, Lamp value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Delete(Session session, Region value)
+        public void DeleteRegion(Session session, Region value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Delete(Session session, Product value)
+        public void DeleteProduct(Session session, Product value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Delete(Session session, Sign value)
+        public void DeleteSign(Session session, Sign value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Delete(Session session, Advertisement value)
+        public void DeleteAdvertisement(Session session, Advertisement value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Delete(Session session, Trace value)
+        public void DeleteTrace(Session session, Trace value)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Edit(Session session, User oldValue, User newValue)
+        public void EditUser(Session session, User oldValue, User newValue)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Edit(Session session, Region oldValue, Region newValue)
+        public void EditRegion(Session session, Region oldValue, Region newValue)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Edit(Session session, Product oldValue, Product newValue)
+        public void EditProduct(Session session, Product oldValue, Product newValue)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void Edit(Session session, Sign oldValue, Sign newValue)
+        public void EditSign(Session session, Sign oldValue, Sign newValue)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public User GetUser(string loginName)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Lamp[] GetLamps()
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Region[] GetRegions()
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Product[] GetProducts()
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Sign[] GetSigns()
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Trace[] GetTraces(DateTime from, DateTime to)
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Advertisement[] GetAdvertisement()
         {
-            throw new XmlRpcFaultException(1, "Not Implemented");
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         #endregion
