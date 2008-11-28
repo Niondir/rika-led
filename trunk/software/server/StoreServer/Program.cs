@@ -19,6 +19,7 @@ namespace StoreServer
         private static string baseDirectory;
         private static string exePath;
         private static UserManager userManager;
+        private static DataManager dataManager;
 
         private static bool unix = false;
         public static bool Unix { get { return unix; } }
@@ -34,6 +35,7 @@ namespace StoreServer
         public static Process Process { get { return process; } }
         public static Thread Thread { get { return thread; } }
         public static UserManager UserManager { get { return userManager; } }
+        public static DataManager DataManager { get { return dataManager; } }
 
         public static string ExePath
         {
@@ -101,8 +103,9 @@ namespace StoreServer
             }
  
             HttpService httpService = new HttpService("http://127.0.0.1:11000/", new ClientHandler());
-            DataManager dataManager = new DataManager();
+            
             userManager = new UserManager();
+            dataManager = new DataManager();
 
             try
             {

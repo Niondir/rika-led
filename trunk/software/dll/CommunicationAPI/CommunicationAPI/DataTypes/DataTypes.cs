@@ -11,9 +11,8 @@ namespace CommunicationAPI.DataTypes
         private int id;
         private User user;
         private bool valid;
-        private AccessFlags accessFlags;
-        private long ip;
-
+        private int access;
+        
         public int ID
         {
             get { return id; }
@@ -32,16 +31,10 @@ namespace CommunicationAPI.DataTypes
             set { valid = value; }
         }
 
-        public AccessFlags AccessFlags
+        public int Access
         {
-            get { return accessFlags; }
-            set { accessFlags = value; }
-        }
-
-        public long IP
-        {
-            get { return ip; }
-            set { ip = value; }
+            get { return access; }
+            set { access = value; }
         }
 
         public Session(User user)
@@ -49,8 +42,7 @@ namespace CommunicationAPI.DataTypes
             this.id = 0;
             this.user = user;
             this.valid = false;
-            this.accessFlags = AccessFlags.None;
-            this.ip = 0;
+            this.access = (int)AccessFlags.None;
         }
 
         public void Validate(int id)

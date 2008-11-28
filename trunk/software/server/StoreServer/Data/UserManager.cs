@@ -13,6 +13,8 @@ namespace StoreServer.Data
     /// </summary>
     public class UserManager
     {
+        // TODO: Session IP gebunden? Mehrere Sessions pro IP?
+        // Dann Dictonary<IPAdress, Session>
         private List<Session> sessions;
 
         public UserManager()
@@ -65,9 +67,11 @@ namespace StoreServer.Data
         {
             if (!CheckSession(session)) return false;
             
+            // TODO: Refresh session
+
             bool hasAccess = false;
 
-            if ((session.AccessFlags & flags) == flags)
+            if (((AccessFlags)session.Access & flags) == flags)
             {
                 hasAccess = true;
             }
