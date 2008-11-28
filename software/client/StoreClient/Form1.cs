@@ -31,7 +31,7 @@ namespace StoreClient
                 User user = new User("gast", "gast");
                 betty.Credentials = new NetworkCredential("gast", "gast");
                 Session session = betty.Login(user);
-                label1.Text = session.ToString();
+                label1.Text = session.User.Username;
             }
             catch (Exception ex)
             {

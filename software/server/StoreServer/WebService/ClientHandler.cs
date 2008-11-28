@@ -9,7 +9,7 @@ using CommunicationAPI;
 
 namespace StoreServer.WebService
 {
-    public class ClientHandler : MyXmlRpcListenerService, IRemoteServer
+    public class ClientHandler : MyXmlRpcListenerService, IRemoteFunctions
     {
         
         #region IRemoteFunctions Member
@@ -24,7 +24,7 @@ namespace StoreServer.WebService
                 throw new XmlRpcFaultException(101, "Invalid Login Data");
         }
 
-        public void Logout()
+        public void Logout(Session session)
         {
             Program.UserManager.Logout(this.RemoteEndPoint);
 

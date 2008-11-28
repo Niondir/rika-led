@@ -53,6 +53,7 @@
     <Compile Include="DataTypes\DataTypes.cs" />
     <Compile Include="Interface\ErrorCodes.cs" />
     <Compile Include="Interface\IRemoteClient.cs" />
+    <Compile Include="Interface\IRemoteFunctions.cs" />
     <Compile Include="Interface\IRemoteServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

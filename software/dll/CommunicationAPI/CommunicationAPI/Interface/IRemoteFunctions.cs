@@ -9,13 +9,13 @@ using CommunicationAPI.DataTypes;
 namespace CommunicationAPI.Interface
 {
     [XmlRpcUrl("http://127.0.0.1:11000/")]
-    public interface IRemoteFunctions : IXmlRpcProxy
+    public interface IRemoteFunctions
     {
         [XmlRpcMethod]
         Session Login(User user);
         
         [XmlRpcMethod]
-        void Logout();
+        void Logout(Session session);
 
         #region Add()
 
@@ -86,25 +86,25 @@ namespace CommunicationAPI.Interface
         #region Get()
 
         [XmlRpcMethod]
-        User GetUser(string loginName);
+        User GetUser(Session session, string loginName);
 
         [XmlRpcMethod]
-        Lamp[] GetLamps();
+        Lamp[] GetLamps(Session session);
 
         [XmlRpcMethod]
-        Region[] GetRegions();
+        Region[] GetRegions(Session session);
 
         [XmlRpcMethod]
-        Product[] GetProducts();
+        Product[] GetProducts(Session session);
 
         [XmlRpcMethod]
-        Sign[] GetSigns();
+        Sign[] GetSigns(Session session);
 
         [XmlRpcMethod]
-        Trace[] GetTraces(DateTime from, DateTime to);
+        Trace[] GetTraces(Session session, DateTime from, DateTime to);
 
         [XmlRpcMethod]
-        Advertisement[] GetAdvertisement();
+        Advertisement[] GetAdvertisement(Session session);
         
         #endregion
 

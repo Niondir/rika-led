@@ -13,5 +13,10 @@ namespace StoreServer.Radio
          * 
          * 
          * */
+
+        /* TODO:
+         * Ansprechen des Funkmoduls über die serielle Schnittstelle
+         * 
+         * */
     }
 }
