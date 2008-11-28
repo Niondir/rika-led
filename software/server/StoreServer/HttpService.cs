@@ -11,10 +11,10 @@ namespace StoreServer
 {
     public class HttpService
     {
-        private XmlRpcListenerService service;
+        private MyXmlRpcListenerService service;
         private HttpServiceThread serviceThread;
 
-        public HttpService(string url, XmlRpcListenerService service)
+        public HttpService(string url, MyXmlRpcListenerService service)
         {
             this.service = service;
 
@@ -32,7 +32,7 @@ namespace StoreServer
             {
                 HttpListenerContext context = workingQueue.Dequeue();
                 service.ProcessRequest(context);
-
+               
                 Debug.WriteLine("Contex Info: \n" +
                     "Request.UserAgent: " + context.Request.UserAgent + "\n" +
                     "Request.HttpMethod: " + context.Request.HttpMethod + "\n" +

@@ -23,13 +23,13 @@ namespace StoreClient
         private void button1_Click(object sender, EventArgs e)
         {
             label1.Text = "";
-            IRemoteFunctions betty = XmlRpcProxyGen.Create<IRemoteFunctions>();
+            IRemoteClient betty = XmlRpcProxyGen.Create<IRemoteClient>();
             Cursor = Cursors.WaitCursor;
             try
             {
                 int num = Convert.ToInt32(textBox1.Text);
                 User user = new User("gast", "gast");
-   
+                betty.Credentials = new NetworkCredential("gast", "gast");
                 Session session = betty.Login(user);
                 label1.Text = session.ToString();
             }
