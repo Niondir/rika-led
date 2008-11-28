@@ -11,6 +11,8 @@ namespace CommunicationAPI.DataTypes
         private int id;
         private User user;
         private bool valid;
+        private AccessFlags accessFlags;
+        private long ip;
 
         public int ID
         {
@@ -30,11 +32,25 @@ namespace CommunicationAPI.DataTypes
             set { valid = value; }
         }
 
+        public AccessFlags AccessFlags
+        {
+            get { return accessFlags; }
+            set { accessFlags = value; }
+        }
+
+        public long IP
+        {
+            get { return ip; }
+            set { ip = value; }
+        }
+
         public Session(User user)
         {
             this.id = 0;
             this.user = user;
             this.valid = false;
+            this.accessFlags = AccessFlags.None;
+            this.ip = 0;
         }
 
         public void Validate(int id)
@@ -59,8 +75,8 @@ namespace CommunicationAPI.DataTypes
 
         public string PasswordClear
         {
-            set { password = Encrypt(value); }
-            get { return "bullshit"; }
+            set { password = value; }
+            get { return password; }
         }
 
         public Password(string password)
@@ -74,7 +90,8 @@ namespace CommunicationAPI.DataTypes
             MD5CryptoServiceProvider cryptMD5 = new MD5CryptoServiceProvider();
             byte[] bs = System.Text.Encoding.UTF8.GetBytes(value);
             bs = cryptMD5.ComputeHash(bs);
-            return BitConverter.ToString(bs);
+            string res = BitConverter.ToString(bs);
+            return res;
         }
 
         /// <summary>
@@ -85,7 +102,7 @@ namespace CommunicationAPI.DataTypes
         /// <returns>Returns true if the password is matching</returns>
         public bool CheckPassword(string password)
         {
-            string pw = Encrypt(password);
+            string pw = Password.Encrypt(password);
             bool res = this.password == pw;
             return res;
         }

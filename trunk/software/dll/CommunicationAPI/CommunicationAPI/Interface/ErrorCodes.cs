@@ -9,6 +9,7 @@ namespace CommunicationAPI.Interface
     {
         XmlRpcInternal = 0,
         NotImplemented = 1,
-        InvalidLogin = 101
+        InvalidLogin = 101,
+        AccessDenined = 102
     }
 }
