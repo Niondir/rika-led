@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 
 namespace CommunicationAPI.DataTypes
 {
+ 
     public struct Session
     {
         private int id;
