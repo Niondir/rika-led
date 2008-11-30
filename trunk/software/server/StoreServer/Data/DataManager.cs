@@ -26,7 +26,7 @@ namespace StoreServer.Data
 
             connection = new OdbcConnection(sb.ToString());
 
-            Console.WriteLine("Connecting to database with {0}:\nServer: {1}\nSchema: {2}\nUser: {3}", 
+            Console.WriteLine("Connecting to database with {0}:\nServer: {1}\nSchema: {2}\nUser: {3}\nPassword: <hidden>", 
                 sb["Driver"], sb["Server"], sb["Database"], sb["User"]);
             
             try
@@ -62,6 +62,8 @@ namespace StoreServer.Data
 
         private void VeryfyDatabase()
         {
+            if (connection.State != System.Data.ConnectionState.Open) return;
+
             OdbcCommand command = connection.CreateCommand();
             command.CommandText = "SHOW TABLES;";
             
