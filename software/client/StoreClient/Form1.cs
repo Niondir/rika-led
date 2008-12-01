@@ -30,7 +30,7 @@ namespace StoreClient
                 int num = Convert.ToInt32(textBox1.Text);
                 User user = new User("gast", "gast");
                 Session session = betty.Login(user);
-                label1.Text = session.User.Username;
+                label1.Text = session.ID.ToString();
             }
             catch (Exception ex)
             {

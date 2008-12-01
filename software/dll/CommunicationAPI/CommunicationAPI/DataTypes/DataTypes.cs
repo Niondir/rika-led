@@ -10,9 +10,7 @@ namespace CommunicationAPI.DataTypes
     public struct Session
     {
         private int id;
-        private User user;
-        private bool valid;
-        private int access;
+        private long timestamp;
         
         public int ID
         {
@@ -20,36 +18,16 @@ namespace CommunicationAPI.DataTypes
             set { id = value; }
         }
 
-        public User User
+        public long Timestamp
         {
-            get { return user; }
-            set { user = value; }
+            get { return timestamp; }
+            set { timestamp = value; }
         }
 
-        public bool Valid
-        {
-            get { return valid; }
-            set { valid = value; }
-        }
-
-        public int Access
-        {
-            get { return access; }
-            set { access = value; }
-        }
-
-        public Session(User user)
-        {
-            this.id = 0;
-            this.user = user;
-            this.valid = false;
-            this.access = (int)AccessFlags.None;
-        }
-
-        public void Validate(int id)
+        public Session(int id)
         {
             this.id = id;
-            this.valid = true;
+            this.timestamp = DateTime.Now.Ticks;
         }
     }
 

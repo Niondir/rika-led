@@ -13,82 +13,101 @@ namespace StoreServer.Data
     /// </summary>
     public class UserManager
     {
-        // TODO: Session IP gebunden? Mehrere Sessions pro IP?
-        // Dann Dictonary<IPAdress, Session>
-        private List<Session> sessions;
+        private Dictionary<long, List<Client>> ipTable;
+        private static int currentSessionID;
 
         public UserManager()
         {
-            sessions = new List<Session>();
+            currentSessionID = 1;
+            ipTable = new Dictionary<long, List<Client>>();
         }
 
+
+        /// <summary>
+        /// Validate the user
+        /// Create an sessionID for the user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="remoteEndPoint"></param>
+        /// <returns></returns>
         public Session Login(User user, IPEndPoint remoteEndPoint)
         {
-            Session session = new Session(user);
+            if (this.UserValid(user)) 
+            {
+                Session session = new Session(GenerateSessionID());
+                Client client = new Client(session, remoteEndPoint);
+                client.Authed = true;
+                ipTable[remoteEndPoint.Address.Address].Add(client);
 
+                return session;
+            }
+
+            throw new Exception("Invalid login");
+        }
+
+        private bool UserValid(User user)
+        {
             // TODO: user im Datamanager suchen
-            if (session.User.Username == "gast" && session.User.Password.CheckPassword("gast")) 
-            {
-                // User already in session list?
-                foreach (Session s in sessions)
-                {
-                    if (s.User.Username == user.Username)
-                    {
-                        // Refresh session
-                        return s;
-                    }
-                }
-
-                // TODO: Session timeout?
-                // TODO: Generate valid uid
-                session.Validate(100);
-                //sessions.Add(session);
-            }
-            return session;
+            return (user.Username == "gast" && user.Password.CheckPassword("gast"));
         }
 
-        public bool Logout(IPEndPoint remoteEndPoint)
+        private int GenerateSessionID()
         {
-            bool removed = false;
-            foreach (Session s in sessions)
-            {
-               /* if (s.ID )
-                {
-                    sessions.Remove(s);
-                    removed = true;
-                    break;
-                }
-                * */
-            }
-            return removed;
+            return UserManager.currentSessionID++;
         }
 
-        public bool CheckAccess(Session session, AccessFlags flags)
+        public bool Logout(Session session, IPEndPoint remoteEndPoint)
         {
-            if (!CheckSession(session)) return false;
-            
-            // TODO: Refresh session
+            if (!ipTable.ContainsKey(remoteEndPoint.Address.Address)) return false;
 
-            bool hasAccess = false;
+            Client client = GetClient(session, remoteEndPoint);
+            client.Authed = false;
+            ipTable[remoteEndPoint.Address.Address].Remove(client);
 
-            if (((AccessFlags)session.Access & flags) == flags)
-            {
-                hasAccess = true;
-            }
-
-            return hasAccess;
+            return true;
         }
 
-        private bool CheckSession(Session session)
+        public bool CheckAccess(Session session, IPEndPoint remoteEndPoint, AccessFlags flags)
         {
-            foreach (Session s in sessions)
+            Client client = GetClient(session, remoteEndPoint);
+
+            if (!client.Authed)
+                return false;
+
+            if ((client.AccessFlags & flags) == flags)
             {
-                if (s.ID == session.ID)
-                {
-                    return true;
-                }
+                return true;
             }
+
             return false;
+        }
+
+        public Client GetClient(Session session, IPEndPoint remoteEndPoint)
+        {
+            if (!ipTable.ContainsKey(remoteEndPoint.Address.Address))
+                return new Client(session, remoteEndPoint);
+
+            List<Client> clients = ipTable[remoteEndPoint.Address.Address];
+
+            foreach (Client c in clients)
+            {
+                if (c.Session.ID == session.ID)
+                {
+                    DateTime sDate = new DateTime(c.Session.Timestamp);
+                    if (DateTime.Now - sDate > TimeSpan.FromMinutes(10))
+                    {
+                        Logout(session, remoteEndPoint);
+                    }
+                    else
+                    {
+                        c.RefreshSession();
+                    }
+                    
+                    return c;
+                }
+            }
+
+            return new Client(session, remoteEndPoint);
         }
     }
 }

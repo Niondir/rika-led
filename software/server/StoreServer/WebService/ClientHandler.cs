@@ -16,34 +16,36 @@ namespace StoreServer.WebService
 
         public Session Login(User user)
         {
-            Session session = Program.UserManager.Login(user, this.RemoteEndPoint);
-            
-            if (session.Valid)
+            try
+            {
+                Session session = Program.UserManager.Login(user, this.RemoteEndPoint);
                 return session;
-            else
-                throw new XmlRpcFaultException(101, "Invalid Login Data");
+            }
+            catch (Exception ex){
+                throw new XmlRpcFaultException(101, ex.Message);
+            }
         }
 
         public void Logout(Session session)
         {
-            Program.UserManager.Logout(this.RemoteEndPoint);
-
-            throw new XmlRpcFaultException((int)ErrorCodes.NotImplemented, "Not implemented");
+            Program.UserManager.Logout(session, this.RemoteEndPoint);
         }
 
         public void AddUser(Session session, User value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
+
+            Program.DataManager.AddUser(value);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void AddLamp(Session session, Lamp value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -53,7 +55,7 @@ namespace StoreServer.WebService
 
         public void AddRegion(Session session, Region value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -63,7 +65,7 @@ namespace StoreServer.WebService
 
         public void AddProduct(Session session, Product value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -73,7 +75,7 @@ namespace StoreServer.WebService
 
         public void AddSign(Session session, Sign value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -83,7 +85,7 @@ namespace StoreServer.WebService
 
         public void AddAdvertisement(Session session, Advertisement value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -93,7 +95,7 @@ namespace StoreServer.WebService
 
         public void AddTrace(Session session, Trace value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -103,7 +105,7 @@ namespace StoreServer.WebService
 
         public void DeleteUser(Session session, User value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -113,7 +115,7 @@ namespace StoreServer.WebService
 
         public void DeleteLamp(Session session, Lamp value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -123,7 +125,7 @@ namespace StoreServer.WebService
 
         public void DeleteRegion(Session session, Region value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -133,7 +135,7 @@ namespace StoreServer.WebService
 
         public void DeleteProduct(Session session, Product value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -143,7 +145,7 @@ namespace StoreServer.WebService
 
         public void DeleteSign(Session session, Sign value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -153,7 +155,7 @@ namespace StoreServer.WebService
 
         public void DeleteAdvertisement(Session session, Advertisement value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -163,7 +165,7 @@ namespace StoreServer.WebService
 
         public void DeleteTrace(Session session, Trace value)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -173,7 +175,7 @@ namespace StoreServer.WebService
 
         public void EditUser(Session session, User oldValue, User newValue)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -183,7 +185,7 @@ namespace StoreServer.WebService
 
         public void EditRegion(Session session, Region oldValue, Region newValue)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -193,7 +195,7 @@ namespace StoreServer.WebService
 
         public void EditProduct(Session session, Product oldValue, Product newValue)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -203,7 +205,7 @@ namespace StoreServer.WebService
 
         public void EditSign(Session session, Sign oldValue, Sign newValue)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -213,7 +215,7 @@ namespace StoreServer.WebService
 
         public User GetUser(Session session, string loginName)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -223,7 +225,7 @@ namespace StoreServer.WebService
 
         public Lamp[] GetLamps(Session session)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -233,7 +235,7 @@ namespace StoreServer.WebService
 
         public Region[] GetRegions(Session session)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -243,7 +245,7 @@ namespace StoreServer.WebService
 
         public Product[] GetProducts(Session session)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -253,7 +255,7 @@ namespace StoreServer.WebService
 
         public Sign[] GetSigns(Session session)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -263,7 +265,7 @@ namespace StoreServer.WebService
 
         public Trace[] GetTraces(Session session, DateTime from, DateTime to)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
@@ -273,7 +275,7 @@ namespace StoreServer.WebService
 
         public Advertisement[] GetAdvertisement(Session session)
         {
-            if (!Program.UserManager.CheckAccess(session, AccessFlags.Authenticated))
+            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
             }
