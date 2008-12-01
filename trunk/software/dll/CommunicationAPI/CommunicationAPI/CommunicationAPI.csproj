@@ -63,4 +63,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>DIR</PostBuildEvent>
+  </PropertyGroup>
 </Project>

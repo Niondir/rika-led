@@ -1,21 +1,21 @@
 CREATE TABLE led_advertisements (
   id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  led_regions_id INTEGER UNSIGNED NOT NULL,
-  text VARCHAR NULL,
+  regions_id INTEGER UNSIGNED NOT NULL,
+  text VARCHAR(255) NULL,
   PRIMARY KEY(id),
-  INDEX advertisements_FKIndex1(led_regions_id)
+  INDEX advertisements_FKIndex1(regions_id)
 );
 
 CREATE TABLE led_lamps (
   id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  led_regions_id INTEGER UNSIGNED NOT NULL,
+  regions_id INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY(id),
-  INDEX lamps_FKIndex1(led_regions_id)
+  INDEX lamps_FKIndex1(regions_id)
 );
 
 CREATE TABLE led_regions (
   id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  name VARCHAR NULL,
+  name VARCHAR(255) NULL,
   PRIMARY KEY(id)
 );
 
@@ -34,11 +34,11 @@ CREATE TABLE led_roles (
 
 CREATE TABLE led_signs (
   id INTEGER UNSIGNED NOT NULL,
-  led_regions_id INTEGER UNSIGNED NULL,
-  text VARCHAR NULL,
+  regions_id INTEGER UNSIGNED NULL,
+  text VARCHAR(255) NULL,
   type INTEGER UNSIGNED NULL,
   PRIMARY KEY(id),
-  INDEX signs_FKIndex1(led_regions_id)
+  INDEX signs_FKIndex1(regions_id)
 );
 
 CREATE TABLE led_traces (
@@ -48,20 +48,20 @@ CREATE TABLE led_traces (
 
 CREATE TABLE led_users (
   id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  led_roles_id INTEGER UNSIGNED NOT NULL,
-  login VARCHAR NULL,
-  password VARCHAR NULL,
+  roles_id INTEGER UNSIGNED NOT NULL,
+  login VARCHAR(255) NULL,
+  password VARCHAR(255) NULL,
   PRIMARY KEY(id),
-  INDEX users_FKIndex1(led_roles_id)
+  INDEX users_FKIndex1(roles_id)
 );
 
 CREATE TABLE led_waypoints (
   id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  led_lamps_id INTEGER UNSIGNED NOT NULL,
-  led_traces_id INTEGER UNSIGNED NOT NULL,
+  lamps_id INTEGER UNSIGNED NOT NULL,
+  traces_id INTEGER UNSIGNED NOT NULL,
   time TIMESTAMP NULL,
   PRIMARY KEY(id),
-  INDEX waypoints_FKIndex2(led_traces_id),
-  INDEX waypoints_FKIndex3(led_lamps_id)
+  INDEX waypoints_FKIndex2(traces_id),
+  INDEX waypoints_FKIndex3(lamps_id)
 );
 

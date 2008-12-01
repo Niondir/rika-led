@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.Odbc;
 using System.IO;
+using CommunicationAPI.DataTypes;
 
 namespace StoreServer.Data
 {
@@ -48,7 +49,6 @@ namespace StoreServer.Data
              * */
 
             /* TODO:
-             * - Datenbank anlegen
              * - Interface für die Datenbankzugriffe definieren
              * - Abstrakte Datenobjekte für die Schnitstelle
              * 
@@ -205,9 +205,14 @@ namespace StoreServer.Data
             }
         }
 
-        private void CreateTables()
+        public void AddUser(User user)
         {
+            OdbcCommand command = connection.CreateCommand();
 
+            command.CommandText = "INSERT INTO led_users (roles_id, login, password) VALUES (?, ?, ?)";
+            command.Parameters.AddWithValue("roles_id", 0);
+            command.Parameters.AddWithValue("login", user.Username);
+            command.Parameters.AddWithValue("password", user.Password);
         }
     }
 }
