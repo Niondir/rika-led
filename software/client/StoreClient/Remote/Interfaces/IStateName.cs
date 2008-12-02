@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 using CookComputing.XmlRpc;
+
 
 namespace StoreClient.Remote.Interfaces
 {
@@ -10,6 +13,6 @@ namespace StoreClient.Remote.Interfaces
     public interface IStateName : IXmlRpcProxy
     {
         [XmlRpcMethod("client.getStateName")]
-        string GetStateName(int stateNumber);
+        string[] GetStateName(int stateNumber);
     }
 }
