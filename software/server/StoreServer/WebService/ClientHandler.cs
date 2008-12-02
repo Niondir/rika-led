@@ -6,37 +6,50 @@ using CookComputing.XmlRpc;
 using CommunicationAPI.Interface;
 using CommunicationAPI.DataTypes;
 using CommunicationAPI;
+using StoreServer.Data;
 
 namespace StoreServer.WebService
 {
     public class ClientHandler : MyXmlRpcListenerService, IRemoteFunctions
     {
-        
+
+        private void ValidateRequest(Session session, AccessFlags accessFlags)
+        {
+            Client client = Program.UserManager.GetClient(session, this.RemoteEndPoint);
+            throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
+        }
+
         #region IRemoteFunctions Member
 
         public Session Login(User user)
         {
-            try
+            Client client = new Client(this.RemoteEndPoint, user);
+
+            if (client.Authed)
             {
-                Session session = Program.UserManager.Login(user, this.RemoteEndPoint);
-                return session;
+                return client.Session;
             }
-            catch (Exception ex){
-                throw new XmlRpcFaultException(101, ex.Message);
+            else
+            {
+                throw new XmlRpcFaultException(101, "Invalid logindata");
             }
         }
 
         public void Logout(Session session)
         {
-            Program.UserManager.Logout(session, this.RemoteEndPoint);
+            Client client = Program.UserManager.GetClient(session, this.RemoteEndPoint);
+            
+            if (client != null)
+                client.Logout();
         }
+
+        
 
         public void AddUser(Session session, User value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
+
+            
 
             Program.DataManager.AddUser(value);
 
@@ -45,240 +58,168 @@ namespace StoreServer.WebService
 
         public void AddLamp(Session session, Lamp value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void AddRegion(Session session, Region value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void AddProduct(Session session, Product value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void AddSign(Session session, Sign value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void AddAdvertisement(Session session, Advertisement value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void AddTrace(Session session, Trace value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void DeleteUser(Session session, User value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void DeleteLamp(Session session, Lamp value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void DeleteRegion(Session session, Region value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void DeleteProduct(Session session, Product value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void DeleteSign(Session session, Sign value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void DeleteAdvertisement(Session session, Advertisement value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void DeleteTrace(Session session, Trace value)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void EditUser(Session session, User oldValue, User newValue)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void EditRegion(Session session, Region oldValue, Region newValue)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void EditProduct(Session session, Product oldValue, Product newValue)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void EditSign(Session session, Sign oldValue, Sign newValue)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public User GetUser(Session session, string loginName)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Lamp[] GetLamps(Session session)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Region[] GetRegions(Session session)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Product[] GetProducts(Session session)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Sign[] GetSigns(Session session)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Trace[] GetTraces(Session session, DateTime from, DateTime to)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public Advertisement[] GetAdvertisement(Session session)
         {
-            if (!Program.UserManager.CheckAccess(session, this.RemoteEndPoint, AccessFlags.Authenticated))
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
-            }
+            this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
