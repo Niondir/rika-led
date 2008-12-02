@@ -46,9 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ClientManager.cs" />
+    <Compile Include="Data\User.cs" />
     <Compile Include="Data\Client.cs" />
     <Compile Include="Data\DataManager.cs" />
-    <Compile Include="Data\UserManager.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="HttpService.cs" />
     <Compile Include="Program.cs" />

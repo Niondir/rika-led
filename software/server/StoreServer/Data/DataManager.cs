@@ -205,7 +205,7 @@ namespace StoreServer.Data
             }
         }
 
-        public void AddUser(User user)
+        public void AddUser(UserData user)
         {
             OdbcCommand command = connection.CreateCommand();
 
