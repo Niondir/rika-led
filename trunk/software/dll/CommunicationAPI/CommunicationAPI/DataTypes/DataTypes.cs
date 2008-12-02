@@ -11,6 +11,7 @@ namespace CommunicationAPI.DataTypes
     {
         private int id;
         private long timestamp;
+        private static int lastID = 0;
         
         public int ID
         {
@@ -28,6 +29,14 @@ namespace CommunicationAPI.DataTypes
         {
             this.id = id;
             this.timestamp = DateTime.Now.Ticks;
+        }
+
+        public static Session NewSession
+        {
+            get 
+            {
+                return new Session(++lastID);
+            }
         }
     }
 
