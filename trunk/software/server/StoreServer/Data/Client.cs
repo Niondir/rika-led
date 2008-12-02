@@ -13,14 +13,14 @@ namespace StoreServer.Data
     /// </summary>
     public class Client
     {
-        private Session session;
-        private User user;
+        private SessionData session;
+        private UserData user;
         private IPEndPoint ipEndPoint;
         private AccessFlags accessFlags;
 
         private bool authed = false;
 
-        public Session Session
+        public SessionData Session
         {
             get { return session; }
         }
@@ -41,11 +41,11 @@ namespace StoreServer.Data
             get { return accessFlags; }
         }
 
-        public Client(IPEndPoint ipEndPoint, User user)
+        public Client(IPEndPoint ipEndPoint, UserData user)
         {
             this.user = user;
             this.ipEndPoint = ipEndPoint;
-            this.session = Session.NewSession;
+            this.session = SessionData.NewSession;
 
             /// Valid logindata?
             this.authed = this.CheckAccount();
@@ -56,6 +56,21 @@ namespace StoreServer.Data
         {
             // TODO: user im Datamanager suchen
             return (user.Username == "gast" && user.Password.CheckPassword("gast"));
+        }
+
+        public bool CheckAccess(SessionData session, IPEndPoint remoteEndPoint, AccessFlags flags)
+        {
+            Client client = this;
+
+            if (!client.Authed)
+                return false;
+
+            if ((client.AccessFlags & flags) == flags)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void Logout()

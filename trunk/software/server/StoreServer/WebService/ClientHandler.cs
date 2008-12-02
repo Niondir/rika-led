@@ -13,7 +13,12 @@ namespace StoreServer.WebService
     public class ClientHandler : MyXmlRpcListenerService, IRemoteFunctions
     {
 
-        private void ValidateRequest(Session session, AccessFlags accessFlags)
+        public ClientHandler() : base(new DataManager())
+        {
+
+        }
+
+        private void ValidateRequest(SessionData session, AccessFlags accessFlags)
         {
             Client client = Program.UserManager.GetClient(session, this.RemoteEndPoint);
             throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
@@ -21,7 +26,7 @@ namespace StoreServer.WebService
 
         #region IRemoteFunctions Member
 
-        public Session Login(User user)
+        public SessionData Login(UserData user)
         {
             Client client = new Client(this.RemoteEndPoint, user);
 
@@ -31,11 +36,11 @@ namespace StoreServer.WebService
             }
             else
             {
-                throw new XmlRpcFaultException(101, "Invalid logindata");
+                throw new XmlRpcFaultException((int)ErrorCodes.InvalidLogin, "Invalid logindata");
             }
         }
 
-        public void Logout(Session session)
+        public void Logout(SessionData session)
         {
             Client client = Program.UserManager.GetClient(session, this.RemoteEndPoint);
             
@@ -45,179 +50,186 @@ namespace StoreServer.WebService
 
         
 
-        public void AddUser(Session session, User value)
+        public void AddUser(SessionData session, UserData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
-            
-
-            Program.DataManager.AddUser(value);
-
-            throw new XmlRpcFaultException(1, "Not implemented");
+            User acc = new User(value);
+            try
+            {
+                acc.Save(this.DataManager.Connection);
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBWriteError, ex.Message);
+            }
         }
 
-        public void AddLamp(Session session, Lamp value)
-        {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
-
-            throw new XmlRpcFaultException(1, "Not implemented");
-        }
-
-        public void AddRegion(Session session, Region value)
-        {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
-
-            throw new XmlRpcFaultException(1, "Not implemented");
-        }
-
-        public void AddProduct(Session session, Product value)
+        public void AddLamp(SessionData session, LampData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void AddSign(Session session, Sign value)
+        public void AddRegion(SessionData session, RegionData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void AddAdvertisement(Session session, Advertisement value)
+        public void AddProduct(SessionData session, ProductData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void AddTrace(Session session, Trace value)
+        public void AddSign(SessionData session, SignData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void DeleteUser(Session session, User value)
+        public void AddAdvertisement(SessionData session, AdvertisementData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void DeleteLamp(Session session, Lamp value)
+        public void AddTrace(SessionData session, TraceData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void DeleteRegion(Session session, Region value)
+        public void DeleteUser(SessionData session, UserData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void DeleteProduct(Session session, Product value)
+        public void DeleteLamp(SessionData session, LampData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void DeleteSign(Session session, Sign value)
+        public void DeleteRegion(SessionData session, RegionData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void DeleteAdvertisement(Session session, Advertisement value)
+        public void DeleteProduct(SessionData session, ProductData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void DeleteTrace(Session session, Trace value)
+        public void DeleteSign(SessionData session, SignData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void EditUser(Session session, User oldValue, User newValue)
+        public void DeleteAdvertisement(SessionData session, AdvertisementData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void EditRegion(Session session, Region oldValue, Region newValue)
+        public void DeleteTrace(SessionData session, TraceData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void EditProduct(Session session, Product oldValue, Product newValue)
+        public void EditUser(SessionData session, UserData oldValue, UserData newValue)
+        {
+            this.ValidateRequest(session, AccessFlags.Authenticated);
+
+            User user = new User(oldValue);
+            user.Update(this.DataManager.Connection, newValue);
+
+            throw new XmlRpcFaultException(1, "Not implemented");
+        }
+
+        public void EditRegion(SessionData session, RegionData oldValue, RegionData newValue)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void EditSign(Session session, Sign oldValue, Sign newValue)
+        public void EditProduct(SessionData session, ProductData oldValue, ProductData newValue)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public User GetUser(Session session, string loginName)
+        public void EditSign(SessionData session, SignData oldValue, SignData newValue)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public Lamp[] GetLamps(Session session)
+        public UserData GetUser(SessionData session, string loginName)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public Region[] GetRegions(Session session)
+        public LampData[] GetLamps(SessionData session)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public Product[] GetProducts(Session session)
+        public RegionData[] GetRegions(SessionData session)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public Sign[] GetSigns(Session session)
+        public ProductData[] GetProducts(SessionData session)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public Trace[] GetTraces(Session session, DateTime from, DateTime to)
+        public SignData[] GetSigns(SessionData session)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public Advertisement[] GetAdvertisement(Session session)
+        public TraceData[] GetTraces(SessionData session, DateTime from, DateTime to)
+        {
+            this.ValidateRequest(session, AccessFlags.Authenticated);
+
+            throw new XmlRpcFaultException(1, "Not implemented");
+        }
+
+        public AdvertisementData[] GetAdvertisement(SessionData session)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 

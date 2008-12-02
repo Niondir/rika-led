@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Diagnostics;
 using System.Reflection;
-using StoreServer.Data;
 using StoreServer.WebService;
+using StoreServer.Data;
 
 namespace StoreServer
 {
@@ -18,8 +18,7 @@ namespace StoreServer
         private static Assembly assembly;
         private static string baseDirectory;
         private static string exePath;
-        private static UserManager userManager;
-        private static DataManager dataManager;
+        private static ClientManager userManager;
 
         private static bool unix = false;
         public static bool Unix { get { return unix; } }
@@ -34,8 +33,8 @@ namespace StoreServer
         public static Assembly Assembly { get { return assembly; } set { assembly = value; } }
         public static Process Process { get { return process; } }
         public static Thread Thread { get { return thread; } }
-        public static UserManager UserManager { get { return userManager; } }
-        public static DataManager DataManager { get { return dataManager; } }
+        public static ClientManager UserManager { get { return userManager; } }
+
 
         public static string ExePath
         {
@@ -104,8 +103,7 @@ namespace StoreServer
  
             HttpService httpService = new HttpService("http://127.0.0.1:11000/", new ClientHandler());
             
-            userManager = new UserManager();
-            dataManager = new DataManager();
+            userManager = new ClientManager();
 
             try
             {
@@ -113,7 +111,6 @@ namespace StoreServer
                 while (signal.WaitOne())
                 {
                     httpService.Slice();
-                    dataManager.Slice();
                     Console.WriteLine("--- New round! ---");
                 }
 

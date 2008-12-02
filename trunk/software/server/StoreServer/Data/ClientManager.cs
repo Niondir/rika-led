@@ -11,11 +11,11 @@ namespace StoreServer.Data
     /// <summary>
     /// Benutzer und Rechteverwaltung
     /// </summary>
-    public class UserManager
+    public class ClientManager
     {
         private Dictionary<int, Client> clients;
 
-        public UserManager()
+        public ClientManager()
         {
             clients = new Dictionary<int, Client>();
         }
@@ -33,22 +33,9 @@ namespace StoreServer.Data
             }
         }
         
-        public bool CheckAccess(Session session, IPEndPoint remoteEndPoint, AccessFlags flags)
-        {
-            Client client = GetClient(session, remoteEndPoint);
+        
 
-            if (!client.Authed)
-                return false;
-
-            if ((client.AccessFlags & flags) == flags)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public Client GetClient(Session session, IPEndPoint remoteEndPoint)
+        public Client GetClient(SessionData session, IPEndPoint remoteEndPoint)
         {
             Client client;
             clients.TryGetValue(session.ID, out client);

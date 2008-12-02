@@ -9,15 +9,15 @@ namespace StoreServer.WebService
 
     public class LoginEventArgs
     {
-        public Session session;
+        public SessionData session;
 
-        public Session Session
+        public SessionData Session
         {
             get { return session; }
             set { session = value; }
         }
 
-        public LoginEventArgs(Session session)
+        public LoginEventArgs(SessionData session)
         {
             this.session = session;
         }
