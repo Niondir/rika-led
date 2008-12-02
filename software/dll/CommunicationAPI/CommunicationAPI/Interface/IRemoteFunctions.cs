@@ -12,99 +12,99 @@ namespace CommunicationAPI.Interface
     public interface IRemoteFunctions
     {
         [XmlRpcMethod]
-        Session Login(User user);
+        SessionData Login(UserData user);
         
         [XmlRpcMethod]
-        void Logout(Session session);
+        void Logout(SessionData session);
 
         #region Add()
 
         [XmlRpcMethod]
-        void AddUser(Session session, User value);
+        void AddUser(SessionData session, UserData value);
 
         [XmlRpcMethod]
-        void AddLamp(Session session, Lamp value);
+        void AddLamp(SessionData session, LampData value);
 
         [XmlRpcMethod]
-        void AddRegion(Session session, Region value);
+        void AddRegion(SessionData session, RegionData value);
 
         [XmlRpcMethod]
-        void AddProduct(Session session, Product value);
+        void AddProduct(SessionData session, ProductData value);
 
         [XmlRpcMethod]
-        void AddSign(Session session, Sign value);
+        void AddSign(SessionData session, SignData value);
 
         [XmlRpcMethod]
-        void AddAdvertisement(Session session, Advertisement value);
+        void AddAdvertisement(SessionData session, AdvertisementData value);
 
         [XmlRpcMethod]
-        void AddTrace(Session session, Trace value);
+        void AddTrace(SessionData session, TraceData value);
 
         #endregion
 
         #region Delete()
 
         [XmlRpcMethod]
-        void DeleteUser(Session session, User value);
+        void DeleteUser(SessionData session, UserData value);
 
         [XmlRpcMethod]
-        void DeleteLamp(Session session, Lamp value);
+        void DeleteLamp(SessionData session, LampData value);
 
         [XmlRpcMethod]
-        void DeleteRegion(Session session, Region value);
+        void DeleteRegion(SessionData session, RegionData value);
 
         [XmlRpcMethod]
-        void DeleteProduct(Session session, Product value);
+        void DeleteProduct(SessionData session, ProductData value);
 
         [XmlRpcMethod]
-        void DeleteSign(Session session, Sign value);
+        void DeleteSign(SessionData session, SignData value);
 
         [XmlRpcMethod]
-        void DeleteAdvertisement(Session session, Advertisement value);
+        void DeleteAdvertisement(SessionData session, AdvertisementData value);
 
         [XmlRpcMethod]
-        void DeleteTrace(Session session, Trace value);
+        void DeleteTrace(SessionData session, TraceData value);
 
         #endregion
 
         #region Edit()
 
         [XmlRpcMethod]
-        void EditUser(Session session, User oldValue, User newValue);
+        void EditUser(SessionData session, UserData oldValue, UserData newValue);
 
         [XmlRpcMethod]
-        void EditRegion(Session session, Region oldValue, Region newValue);
+        void EditRegion(SessionData session, RegionData oldValue, RegionData newValue);
 
         [XmlRpcMethod]
-        void EditProduct(Session session, Product oldValue, Product newValue);
+        void EditProduct(SessionData session, ProductData oldValue, ProductData newValue);
 
         [XmlRpcMethod]
-        void EditSign(Session session, Sign oldValue, Sign newValue);
+        void EditSign(SessionData session, SignData oldValue, SignData newValue);
         
         #endregion
 
         #region Get()
 
         [XmlRpcMethod]
-        User GetUser(Session session, string loginName);
+        UserData GetUser(SessionData session, string loginName);
 
         [XmlRpcMethod]
-        Lamp[] GetLamps(Session session);
+        LampData[] GetLamps(SessionData session);
 
         [XmlRpcMethod]
-        Region[] GetRegions(Session session);
+        RegionData[] GetRegions(SessionData session);
 
         [XmlRpcMethod]
-        Product[] GetProducts(Session session);
+        ProductData[] GetProducts(SessionData session);
 
         [XmlRpcMethod]
-        Sign[] GetSigns(Session session);
+        SignData[] GetSigns(SessionData session);
 
         [XmlRpcMethod]
-        Trace[] GetTraces(Session session, DateTime from, DateTime to);
+        TraceData[] GetTraces(SessionData session, DateTime from, DateTime to);
 
         [XmlRpcMethod]
-        Advertisement[] GetAdvertisement(Session session);
+        AdvertisementData[] GetAdvertisement(SessionData session);
         
         #endregion
 

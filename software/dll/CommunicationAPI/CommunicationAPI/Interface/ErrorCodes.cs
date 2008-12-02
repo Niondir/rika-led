@@ -10,6 +10,7 @@ namespace CommunicationAPI.Interface
         XmlRpcInternal = 0,
         NotImplemented = 1,
         InvalidLogin = 101,
-        AccessDenined = 102
+        AccessDenined = 102,
+        DBWriteError = 201
     }
 }

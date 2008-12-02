@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 namespace CommunicationAPI.DataTypes
 {
  
-    public struct Session
+    public struct SessionData
     {
         private int id;
         private long timestamp;
@@ -25,17 +25,17 @@ namespace CommunicationAPI.DataTypes
             set { timestamp = value; }
         }
 
-        public Session(int id)
+        public SessionData(int id)
         {
             this.id = id;
             this.timestamp = DateTime.Now.Ticks;
         }
 
-        public static Session NewSession
+        public static SessionData NewSession
         {
             get 
             {
-                return new Session(++lastID);
+                return new SessionData(++lastID);
             }
         }
     }
@@ -43,7 +43,7 @@ namespace CommunicationAPI.DataTypes
     /// <summary>
     /// Stores a password in MD5 format and offers encryption algorythms
     /// </summary>
-    public struct Password
+    public struct PasswordData
     {
         private string password;
 
@@ -59,10 +59,10 @@ namespace CommunicationAPI.DataTypes
             get { return password; }
         }
 
-        public Password(string password)
+        public PasswordData(string password)
         {
             /// We can use the Encrypt method only if it is static. Because we can't access "this" yet.
-            this.password = Password.Encrypt(password);
+            this.password = PasswordData.Encrypt(password);
         }
 
         public static string Encrypt(string value)
@@ -82,21 +82,21 @@ namespace CommunicationAPI.DataTypes
         /// <returns>Returns true if the password is matching</returns>
         public bool CheckPassword(string password)
         {
-            string pw = Password.Encrypt(password);
+            string pw = PasswordData.Encrypt(password);
             bool res = this.password == pw;
             return res;
         }
 
-        public bool CheckPassword(Password password)
+        public bool CheckPassword(PasswordData password)
         {
             return password.PasswordMD5 == this.PasswordMD5;
         }
     }
 
-    public struct User
+    public struct UserData
     {
         private string username;
-        private Password password;
+        private PasswordData password;
 
         public string Username
         {
@@ -104,21 +104,21 @@ namespace CommunicationAPI.DataTypes
             set { username = value; }
         }
 
-        public Password Password
+        public PasswordData Password
         {
             get { return password; }
             set { password = value; }
         }
 
-        public User(string username, string password)
+        public UserData(string username, string password)
         {
             this.username = username;
-            this.password = new Password(password);
+            this.password = new PasswordData(password);
         }
 
     }
 
-    public struct Lamp
+    public struct LampData
     {
         private int id;
         public int ID
@@ -126,29 +126,37 @@ namespace CommunicationAPI.DataTypes
             get { return id; }
             set { id = value; }
         }
-        public Lamp(int id)
+        public LampData(int id)
         {
             this.id = id;
         }
     }
 
-    public struct Region
+    public struct RegionData
+    {
+        private int id;
+        private string name;
+    }
+
+    public struct ProductData
+    {
+        private SignData sign;
+    }
+
+    public struct SignData
+    {
+        private int id;
+        private RegionData region;
+        private string text;
+        private int signType;
+    }
+
+    public struct TraceData
     {
     }
 
-    public struct Product
+    public struct AdvertisementData
     {
-    }
-
-    public struct Sign
-    {
-    }
-
-    public struct Trace
-    {
-    }
-
-    public struct Advertisement
-    {
+        private RegionData region;
     }
 }
