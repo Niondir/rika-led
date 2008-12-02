@@ -16,12 +16,18 @@ namespace StoreServer.Data
         private Session session;
         private User user;
         private IPEndPoint ipEndPoint;
-        private bool authed;
         private AccessFlags accessFlags;
+
+        private bool authed = false;
 
         public Session Session
         {
             get { return session; }
+        }
+
+        public IPAddress IP
+        {
+            get { return ipEndPoint.Address; }
         }
 
         public bool Authed
@@ -35,13 +41,45 @@ namespace StoreServer.Data
             get { return accessFlags; }
         }
 
-        public Client(Session session, IPEndPoint ipEndPoint)
+        public Client(IPEndPoint ipEndPoint, User user)
         {
-            authed = false;
-            this.session = session;
+            this.user = user;
             this.ipEndPoint = ipEndPoint;
+            this.session = Session.NewSession;
 
-            UpdateAccessFlags();
+            /// Valid logindata?
+            this.authed = this.CheckAccount();
+            Program.UserManager.AddClient(this);
+        }
+
+        private bool CheckAccount()
+        {
+            // TODO: user im Datamanager suchen
+            return (user.Username == "gast" && user.Password.CheckPassword("gast"));
+        }
+
+        public void Logout()
+        {
+            this.authed = false;
+            Program.UserManager.RemoveClient(this);
+        }
+
+        public bool CheckSession()
+        {
+            DateTime sDate = new DateTime(this.session.Timestamp);
+            if (DateTime.Now - sDate > TimeSpan.FromMinutes(10))
+            {
+                Logout();
+                return false;
+            }
+
+            RefreshSession();
+            return true;
+        }
+
+        public void RefreshSession()
+        {
+            this.session.Timestamp = DateTime.Now.Ticks;
         }
 
         /// <summary>
@@ -51,10 +89,7 @@ namespace StoreServer.Data
             accessFlags = AccessFlags.Authenticated;
         }
 
-        public void RefreshSession()
-        {
-            this.session.Timestamp = DateTime.Now.Ticks;
-        }
+        
 
         public void Save(OdbcConnection connection)
         {
