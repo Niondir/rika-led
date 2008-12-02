@@ -13,12 +13,11 @@ namespace StoreServer.Data
     /// </summary>
     public class UserManager
     {
-        private Dictionary<long, List<Client>> ipTable;
         private Dictionary<int, Client> clients;
 
         public UserManager()
         {
-            ipTable = new Dictionary<long, List<Client>>();
+            clients = new Dictionary<int, Client>();
         }
 
 
@@ -34,18 +33,6 @@ namespace StoreServer.Data
             }
         }
         
-
-        public bool Logout(Session session, IPEndPoint remoteEndPoint)
-        {
-            if (!ipTable.ContainsKey(remoteEndPoint.Address.Address)) return false;
-
-            Client client = GetClient(session, remoteEndPoint);
-            client.Authed = false;
-            ipTable[remoteEndPoint.Address.Address].Remove(client);
-
-            return true;
-        }
-
         public bool CheckAccess(Session session, IPEndPoint remoteEndPoint, AccessFlags flags)
         {
             Client client = GetClient(session, remoteEndPoint);
