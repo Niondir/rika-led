@@ -108,7 +108,15 @@ namespace StoreServer.Data
 
         public void Save(OdbcConnection connection)
         {
+            OdbcCommand command = connection.CreateCommand();
+            command.CommandText = "INSERT INTO led_users (roles_id, login, password) VALUES(@roles_id, @login, @password)";
+            command.Parameters.AddWithValue("@roles_id", user.Role.Name);
+            command.Parameters.AddWithValue("@login", user.Username);
+            command.Parameters.AddWithValue("@password", user.Password);
 
+            // TODO: Verify that the role exists
+
+            command.ExecuteNonQuery();
         }
     }
 }
