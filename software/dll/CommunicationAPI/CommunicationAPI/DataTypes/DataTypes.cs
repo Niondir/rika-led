@@ -117,6 +117,11 @@ namespace CommunicationAPI.DataTypes
             this.flags = 0;
         }
 
+        public void SetFlags(AccessFlags flags)
+        {
+            this.flags = (int)flags;
+        }
+
         public void AddFlags(AccessFlags flags) 
         {
             this.flags |= (int)flags;
