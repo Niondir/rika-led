@@ -237,5 +237,30 @@ namespace StoreServer.WebService
         }
 
         #endregion
+
+        #region IRemoteFunctions Member (role)
+
+
+        public void AddRole(SessionData session, RoleData value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteRole(SessionData session, RoleData value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditRole(SessionData session, RoleData oldValue, RoleData newValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RoleData GetRole(SessionData session, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
+using CommunicationAPI;
 
 namespace CommunicationAPI.DataTypes
 {
@@ -93,10 +94,50 @@ namespace CommunicationAPI.DataTypes
         }
     }
 
+    public struct RoleData
+    {
+        private string name;
+        private int flags;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public int Flags
+        {
+            get { return flags; }
+            set { flags = value; }
+        }
+
+        public RoleData(string name)
+        {
+            this.name = name;
+            this.flags = 0;
+        }
+
+        public void AddFlags(AccessFlags flags) 
+        {
+            this.flags |= (int)flags;
+        }
+
+        public void DeleteFlags(AccessFlags flags)
+        {
+            this.flags &= ~(int)flags;
+        }
+
+        public bool HasFlags(AccessFlags flags)
+        {
+            return (this.flags & (int)flags) == (int)flags; 
+        }
+    }
+
     public struct UserData
     {
         private string username;
         private PasswordData password;
+        private RoleData role;
 
         public string Username
         {
@@ -110,10 +151,17 @@ namespace CommunicationAPI.DataTypes
             set { password = value; }
         }
 
+        public RoleData Role
+        {
+            get { return role; }
+            set { role = value; }
+        }
+
         public UserData(string username, string password)
         {
             this.username = username;
             this.password = new PasswordData(password);
+            this.role = new RoleData("none");
         }
 
     }

@@ -20,6 +20,9 @@ namespace CommunicationAPI.Interface
         #region Add()
 
         [XmlRpcMethod]
+        void AddRole(SessionData session, RoleData value);
+
+        [XmlRpcMethod]
         void AddUser(SessionData session, UserData value);
 
         [XmlRpcMethod]
@@ -43,6 +46,9 @@ namespace CommunicationAPI.Interface
         #endregion
 
         #region Delete()
+
+        [XmlRpcMethod]
+        void DeleteRole(SessionData session, RoleData value);
 
         [XmlRpcMethod]
         void DeleteUser(SessionData session, UserData value);
@@ -70,6 +76,9 @@ namespace CommunicationAPI.Interface
         #region Edit()
 
         [XmlRpcMethod]
+        void EditRole(SessionData session, RoleData oldValue, RoleData newValue);
+
+        [XmlRpcMethod]
         void EditUser(SessionData session, UserData oldValue, UserData newValue);
 
         [XmlRpcMethod]
@@ -84,6 +93,9 @@ namespace CommunicationAPI.Interface
         #endregion
 
         #region Get()
+
+        [XmlRpcMethod]
+        RoleData GetRole(SessionData session, string roleName);
 
         [XmlRpcMethod]
         UserData GetUser(SessionData session, string loginName);
