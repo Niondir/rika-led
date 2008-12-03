@@ -16,7 +16,6 @@ namespace StoreServer.Data
         private SessionData session;
         private UserData user;
         private IPEndPoint ipEndPoint;
-        private AccessFlags accessFlags;
 
         private bool authed = false;
 
@@ -36,9 +35,9 @@ namespace StoreServer.Data
             set { authed = value; }
         }
 
-        public AccessFlags AccessFlags
+        public RoleData Role
         {
-            get { return accessFlags; }
+            get { return user.Role; }
         }
 
         public Client(IPEndPoint ipEndPoint, UserData user)
@@ -49,23 +48,25 @@ namespace StoreServer.Data
 
             /// Valid logindata?
             this.authed = this.CheckAccount();
+            
+            UpdateAccessFlags();
+            
             Program.UserManager.AddClient(this);
         }
 
         private bool CheckAccount()
         {
             // TODO: user im Datamanager suchen
+            // TODO: get role from db
             return (user.Username == "gast" && user.Password.CheckPassword("gast"));
         }
 
         public bool CheckAccess(SessionData session, IPEndPoint remoteEndPoint, AccessFlags flags)
         {
-            Client client = this;
-
-            if (!client.Authed)
+            if (!this.Authed)
                 return false;
 
-            if ((client.AccessFlags & flags) == flags)
+            if (user.Role.HasFlags(flags))
             {
                 return true;
             }
@@ -101,7 +102,15 @@ namespace StoreServer.Data
         /// Updates the AccessFlags from the Database
         /// </summary>
         public void UpdateAccessFlags() {
-            accessFlags = AccessFlags.Authenticated;
+            if (this.authed)
+            {
+                // TODO: Receive role from Database
+                user.Role.AddFlags(AccessFlags.Authenticated);
+            }
+            else
+            {
+                user.Role.SetFlags(AccessFlags.None);
+            }
         }
 
         
