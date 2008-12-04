@@ -243,22 +243,22 @@ namespace StoreServer.WebService
 
         public void AddRole(SessionData session, RoleData value)
         {
-            throw new NotImplementedException();
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void DeleteRole(SessionData session, RoleData value)
         {
-            throw new NotImplementedException();
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void EditRole(SessionData session, RoleData oldValue, RoleData newValue)
         {
-            throw new NotImplementedException();
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public RoleData GetRole(SessionData session, string roleName)
         {
-            throw new NotImplementedException();
+            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         #endregion
