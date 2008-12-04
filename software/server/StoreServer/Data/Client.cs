@@ -115,27 +115,31 @@ namespace StoreServer.Data
 
         
 
+        // TODO: untested!
         public void Save(OdbcConnection connection)
         {
-            // TODO: Verify that the role exists
             OdbcCommand command = connection.CreateCommand();
 
-            command.CommandText = "SELECT name FROM led_roles WHERE name = @name";
-            command.Parameters.AddWithValue("name", user.Role.Name);
+            command.CommandText = "SELECT name FROM led_roles WHERE name = @role";
+            command.Parameters.AddWithValue("role", user.Role.Name);
             OdbcDataReader reader = command.ExecuteReader();
-            
-            
-            command.Parameters.Clear();
+
+            bool roleOK = reader.HasRows;
+
+            while (reader.Read())
+            {
+                user.Role.SetFlags((AccessFlags)reader.GetInt32(1));
+            }
+
             reader.Close();
 
-            command.CommandText = "INSERT INTO led_users (roles_id, login, password) VALUES(@roles_id, @login, @password)";
-            command.Parameters.AddWithValue("@roles_id", user.Role.Name);
-            command.Parameters.AddWithValue("@login", user.Username);
-            command.Parameters.AddWithValue("@password", user.Password);
-
-            
-
-            command.ExecuteNonQuery();
+            if (roleOK)
+            {
+                command.CommandText = "INSERT INTO led_users (roles_id, login, password) VALUES(@role, @login, @password)";
+                command.Parameters.AddWithValue("@login", user.Username);
+                command.Parameters.AddWithValue("@password", user.Password);
+                command.ExecuteNonQuery();
+            }
         }
     }
 }
