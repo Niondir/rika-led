@@ -117,13 +117,23 @@ namespace StoreServer.Data
 
         public void Save(OdbcConnection connection)
         {
+            // TODO: Verify that the role exists
             OdbcCommand command = connection.CreateCommand();
+
+            command.CommandText = "SELECT name FROM led_roles WHERE name = @name";
+            command.Parameters.AddWithValue("name", user.Role.Name);
+            OdbcDataReader reader = command.ExecuteReader();
+            
+            
+            command.Parameters.Clear();
+            reader.Close();
+
             command.CommandText = "INSERT INTO led_users (roles_id, login, password) VALUES(@roles_id, @login, @password)";
             command.Parameters.AddWithValue("@roles_id", user.Role.Name);
             command.Parameters.AddWithValue("@login", user.Username);
             command.Parameters.AddWithValue("@password", user.Password);
 
-            // TODO: Verify that the role exists
+            
 
             command.ExecuteNonQuery();
         }
