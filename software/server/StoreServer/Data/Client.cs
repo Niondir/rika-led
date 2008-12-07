@@ -58,6 +58,8 @@ namespace StoreServer.Data
         {
             // TODO: user im Datamanager suchen
             // TODO: get role from db
+
+            user.Role.AddFlags(AccessFlags.Authenticated);
             return (user.Username == "gast" && user.Password.CheckPassword("gast"));
         }
 
@@ -77,7 +79,6 @@ namespace StoreServer.Data
         public void Logout()
         {
             this.authed = false;
-            Program.UserManager.RemoveClient(this);
         }
 
         public bool CheckSession()

@@ -44,6 +44,12 @@ namespace StoreServer.Data
                 if (!client.IP.Equals(remoteEndPoint.Address)) return null;
 
                 client.CheckSession();
+                
+                if (!client.Authed)
+                {
+                    RemoveClient(client);
+                }
+
                 return client;
             }
 

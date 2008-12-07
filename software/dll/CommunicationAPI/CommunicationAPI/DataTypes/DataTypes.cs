@@ -169,6 +169,13 @@ namespace CommunicationAPI.DataTypes
             this.role = new RoleData("none");
         }
 
+        public UserData(string username)
+        {
+            this.username = username;
+            this.password = new PasswordData(String.Empty);
+            this.role = new RoleData("none");
+        }
+
     }
 
     public struct LampData
