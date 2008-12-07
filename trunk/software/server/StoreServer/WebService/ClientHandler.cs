@@ -48,7 +48,14 @@ namespace StoreServer.WebService
                 client.Logout();
         }
 
-        
+        public void AddRole(SessionData session, RoleData value)
+        {
+            this.ValidateRequest(session, AccessFlags.Authenticated);
+
+
+
+            throw new XmlRpcFaultException(1, "Not implemented");
+        }
 
         public void AddUser(SessionData session, UserData value)
         {
@@ -107,6 +114,11 @@ namespace StoreServer.WebService
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
+        public void DeleteRole(SessionData session, RoleData value)
+        {
+            throw new XmlRpcFaultException(1, "Not implemented");
+        }
+
         public void DeleteUser(SessionData session, UserData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
@@ -156,14 +168,24 @@ namespace StoreServer.WebService
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
+        public void EditRole(SessionData session, RoleData oldValue, RoleData newValue)
+        {
+            throw new XmlRpcFaultException(1, "Not implemented");
+        }
+
         public void EditUser(SessionData session, UserData oldValue, UserData newValue)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
-            User user = new User(oldValue);
-            user.Update(this.DataManager.Connection, newValue);
-
-            throw new XmlRpcFaultException(1, "Not implemented");
+            try
+            {
+                User user = new User(oldValue);
+                user.Update(this.DataManager.Connection, newValue);
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
+            }
         }
 
         public void EditRegion(SessionData session, RegionData oldValue, RegionData newValue)
@@ -187,11 +209,24 @@ namespace StoreServer.WebService
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
+        public RoleData GetRole(SessionData session, string roleName)
+        {
+            throw new XmlRpcFaultException(1, "Not implemented");
+        }
+
         public UserData GetUser(SessionData session, string loginName)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
-            throw new XmlRpcFaultException(1, "Not implemented");
+            try
+            {
+                User user = new User(loginName, this.DataManager.Connection);
+                return user.UserData;
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
+            }
         }
 
         public LampData[] GetLamps(SessionData session)
@@ -233,31 +268,6 @@ namespace StoreServer.WebService
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
-            throw new XmlRpcFaultException(1, "Not implemented");
-        }
-
-        #endregion
-
-        #region IRemoteFunctions Member (role)
-
-
-        public void AddRole(SessionData session, RoleData value)
-        {
-            throw new XmlRpcFaultException(1, "Not implemented");
-        }
-
-        public void DeleteRole(SessionData session, RoleData value)
-        {
-            throw new XmlRpcFaultException(1, "Not implemented");
-        }
-
-        public void EditRole(SessionData session, RoleData oldValue, RoleData newValue)
-        {
-            throw new XmlRpcFaultException(1, "Not implemented");
-        }
-
-        public RoleData GetRole(SessionData session, string roleName)
-        {
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 

@@ -105,13 +105,17 @@ namespace StoreServer
             
             userManager = new ClientManager();
 
+            ConsoleHandler consoleHandler = new ConsoleHandler();
+
             try
             {
 
                 while (signal.WaitOne())
                 {
                     httpService.Slice();
+                    consoleHandler.Slice();
                     Console.WriteLine("--- New round! ---");
+                    
                 }
 
             }
@@ -124,6 +128,11 @@ namespace StoreServer
             Console.ReadKey();
             closing = true;
         }
+
+        
+
+
+
     }
 
 }

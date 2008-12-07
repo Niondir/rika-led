@@ -13,7 +13,22 @@ namespace StoreServer.Data
     {
         private UserData user;
 
+        public UserData UserData
+        {
+            get { return user; }
+        }
+
         public User(UserData user)
+        {
+            this.user = user;
+        }
+
+        /// <summary>
+        /// Load user from Database, search for the username
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="connection"></param>
+        public User(string username, OdbcConnection connection)
         {
             this.user = user;
         }
@@ -27,5 +42,6 @@ namespace StoreServer.Data
         {
 
         }
+
     }
 }
