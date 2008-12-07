@@ -40,6 +40,12 @@ namespace StoreServer
             }
         }
 
+        public void Abort()
+        {
+            serviceThread.Abort();
+        
+        }
+
         public class HttpServiceThread
         {
             private HttpListener listener;
@@ -48,6 +54,7 @@ namespace StoreServer
             private Queue<HttpListenerContext> queue;
             private Queue<HttpListenerContext> workingQueue;
 
+            
             public HttpServiceThread(string url)
             {
                 queue = new Queue<HttpListenerContext>();
@@ -62,6 +69,12 @@ namespace StoreServer
                 thread = new Thread(new ThreadStart(this.HttpServiceMain));
                 thread.Name = "HttpServiceThread";
                 thread.Start();
+            }
+
+            public void Abort()
+            {
+                thread.Abort();
+                listener.Abort();
             }
 
             public Queue<HttpListenerContext> Queue
