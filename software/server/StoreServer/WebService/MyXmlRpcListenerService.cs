@@ -26,7 +26,19 @@ namespace StoreServer.WebService
 
         public IPEndPoint RemoteEndPoint
         {
-            get { return currentContext.Request.RemoteEndPoint; }
+            get 
+            {
+                if (currentContext != null)
+                    return currentContext.Request.RemoteEndPoint;
+                else
+                {
+#if DEBUG
+                    return new IPEndPoint(2130706433, 9999);
+#else
+                    return null;
+#endif
+                }
+            }
         }
 
         public MyXmlRpcListenerService(DataManager dataManager)

@@ -32,6 +32,7 @@ namespace StoreServer.WebService
 
             if (client.Authed)
             {
+                Debug.WriteLine("user logged in: " + user.Username);
                 return client.Session;
             }
             else

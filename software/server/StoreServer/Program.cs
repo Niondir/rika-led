@@ -19,6 +19,7 @@ namespace StoreServer
         private static string baseDirectory;
         private static string exePath;
         private static ClientManager userManager;
+        private static ClientHandler clientHandler;
 
         private static bool unix = false;
         public static bool Unix { get { return unix; } }
@@ -34,7 +35,7 @@ namespace StoreServer
         public static Process Process { get { return process; } }
         public static Thread Thread { get { return thread; } }
         public static ClientManager UserManager { get { return userManager; } }
-
+        public static ClientHandler ClientHandler { get { return clientHandler; } }
 
         public static string ExePath
         {
@@ -100,8 +101,9 @@ namespace StoreServer
                 unix = true;
                 Console.WriteLine("Server: Unix environment detected");
             }
- 
-            HttpService httpService = new HttpService("http://127.0.0.1:11000/", new ClientHandler());
+
+            clientHandler = new ClientHandler();
+            HttpService httpService = new HttpService("http://127.0.0.1:11000/", clientHandler);
             
             userManager = new ClientManager();
 
@@ -124,9 +126,17 @@ namespace StoreServer
                 Console.WriteLine(ex.Message);
             }
             // TODO: Loop for async actions, linke console input
+
             Console.WriteLine("Server: Pres any key to exit");
-            Console.ReadKey();
             closing = true;
+
+
+            Console.ReadKey();
+
+            httpService.Abort();
+            
+            
+            
         }
 
         

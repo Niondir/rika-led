@@ -8,26 +8,35 @@ namespace StoreServer
     public class ConsoleHandler
     {
         private Queue<string> queue;
-
+        private Thread thread;
 
         public ConsoleHandler()
         {
             queue = new Queue<string>();
-            ThreadPool.QueueUserWorkItem(new WaitCallback(ConsoleListen));
+
+            thread = new Thread(new ThreadStart(ConsoleListen));
+            thread.Name = "Console Listener Thread";
+            thread.Start();
+            //ThreadPool.QueueUserWorkItem(new WaitCallback(ConsoleListen));
         }
 
-        public void ConsoleListen(Object stateInfo)
+        public void ConsoleListen()
         {
-            string input = Console.ReadLine();
-
-            lock (queue)
+            while (!Program.Closing)
             {
-                queue.Enqueue(input);
-                Program.Set();
+                string input = Console.ReadLine();
+
+                lock (queue)
+                {
+                    queue.Enqueue(input);
+                    Program.Set();
+                }
             }
 
-            ThreadPool.QueueUserWorkItem(new WaitCallback(ConsoleListen));
+            Debug.WriteLine("Console Listener Thread: Closing");
+            
 
+            //ThreadPool.QueueUserWorkItem(new WaitCallback(ConsoleListen));
         }
 
         public void Slice() {
@@ -40,19 +49,36 @@ namespace StoreServer
                 }
 
                 //Console.WriteLine("Sended: " + msg + " in Thread: " + Thread.CurrentThread.Name);
-                switch (msg)
-                {
-                    case "foo": 
-                        Console.WriteLine("bar");
-                        break;
-                    case "bar":
-                        Console.WriteLine("baz");
-                        break;
-                    default:
-                        Console.WriteLine("Unknown Command");
-                        break;
-                }
 
+                string[] tokens = msg.Split(new char[] {' '});
+                HandleCommand(tokens);
+
+                
+
+            }
+        }
+
+        private void HandleCommand(string[] tokens) {
+            string command = tokens[0];
+
+            switch (command)
+            {
+                case "login":
+                    try
+                    {
+                        Program.ClientHandler.Login(new CommunicationAPI.DataTypes.UserData(tokens[1], tokens[2]));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+                case "bar":
+                    Console.WriteLine("baz");
+                    break;
+                default:
+                    Console.WriteLine("Unknown Command");
+                    break;
             }
         }
     }
