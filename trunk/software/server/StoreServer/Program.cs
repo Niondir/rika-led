@@ -8,6 +8,12 @@ using System.Reflection;
 using StoreServer.WebService;
 using StoreServer.Data;
 
+/* TODO:
+ * - Data NUR zur Übertragung, alles in eigene Objekte parsen!
+ * 
+ * 
+ * */
+
 namespace StoreServer
 {
     class Program

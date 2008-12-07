@@ -21,7 +21,15 @@ namespace StoreServer.WebService
         private void ValidateRequest(SessionData session, AccessFlags accessFlags)
         {
             Client client = Program.UserManager.GetClient(session, this.RemoteEndPoint);
-            throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
+
+            if (client == null)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Login first");
+            }
+            else if (!client.CheckAccess(session, this.RemoteEndPoint, accessFlags))
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
+            }
         }
 
         #region IRemoteFunctions Member

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using CommunicationAPI.DataTypes;
 
 namespace StoreServer
 {
@@ -17,7 +18,6 @@ namespace StoreServer
             thread = new Thread(new ThreadStart(ConsoleListen));
             thread.Name = "Console Listener Thread";
             thread.Start();
-            //ThreadPool.QueueUserWorkItem(new WaitCallback(ConsoleListen));
         }
 
         public void ConsoleListen()
@@ -34,9 +34,6 @@ namespace StoreServer
             }
 
             Debug.WriteLine("Console Listener Thread: Closing");
-            
-
-            //ThreadPool.QueueUserWorkItem(new WaitCallback(ConsoleListen));
         }
 
         public void Slice() {
@@ -48,37 +45,44 @@ namespace StoreServer
                     msg = queue.Dequeue();
                 }
 
-                //Console.WriteLine("Sended: " + msg + " in Thread: " + Thread.CurrentThread.Name);
-
-                string[] tokens = msg.Split(new char[] {' '});
+                string[] tokens = msg.ToLower().Split(new char[] {' '});
                 HandleCommand(tokens);
-
-                
-
             }
         }
 
+
+        private SessionData session;
         private void HandleCommand(string[] tokens) {
             string command = tokens[0];
 
-            switch (command)
+            try
             {
-                case "login":
-                    try
-                    {
-                        Program.ClientHandler.Login(new CommunicationAPI.DataTypes.UserData(tokens[1], tokens[2]));
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    break;
-                case "bar":
-                    Console.WriteLine("baz");
-                    break;
-                default:
-                    Console.WriteLine("Unknown Command");
-                    break;
+                switch (command)
+                {
+                    case "login":
+                        try
+                        {
+                            session = Program.ClientHandler.Login(new UserData(tokens[1], tokens[2]));
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        break;
+                    case "adduser":
+                        UserData user = new UserData("holger", "hogerson");
+                        user.Role = new RoleData("foo");
+
+                        Program.ClientHandler.AddUser(session, user);
+                        break;
+                    default:
+                        Console.WriteLine("Unknown Command");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

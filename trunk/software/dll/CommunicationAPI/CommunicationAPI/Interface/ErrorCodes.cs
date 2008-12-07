@@ -11,6 +11,7 @@ namespace CommunicationAPI.Interface
         NotImplemented = 1,
         InvalidLogin = 101,
         AccessDenined = 102,
-        DBWriteError = 201
+        DBWriteError = 201,
+        DBReadError = 202
     }
 }
