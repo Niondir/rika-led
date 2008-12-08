@@ -11,8 +11,7 @@ namespace CommunicationAPI.DataTypes
     public struct SessionData
     {
         private int id;
-        private long timestamp;
-        private static int lastID = 0;
+        private int timestamp;
         
         public int ID
         {
@@ -20,7 +19,7 @@ namespace CommunicationAPI.DataTypes
             set { id = value; }
         }
 
-        public long Timestamp
+        public int Timestamp
         {
             get { return timestamp; }
             set { timestamp = value; }
@@ -29,15 +28,7 @@ namespace CommunicationAPI.DataTypes
         public SessionData(int id)
         {
             this.id = id;
-            this.timestamp = DateTime.Now.Ticks;
-        }
-
-        public static SessionData NewSession
-        {
-            get 
-            {
-                return new SessionData(++lastID);
-            }
+            this.timestamp = (int)(DateTime.Now.Ticks / 1000);
         }
     }
 

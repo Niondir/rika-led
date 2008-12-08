@@ -15,6 +15,13 @@ namespace StoreClient
 {
     public partial class FormMain : Form
     {
+        private Connection connection;
+        private bool connected = false;
+        private bool Connected
+        {
+            get { return connected; }
+            set { connected = value; }
+        }
         public FormMain()
         {
             InitializeComponent();
@@ -22,6 +29,8 @@ namespace StoreClient
 
             panelMain.Controls.Clear();
             panelMain.Controls.Add(new ucLogin());
+
+            connection = Connection.GetInstance();
         }
 
         private void produkteToolStripMenuItem_Click(object sender, EventArgs e)

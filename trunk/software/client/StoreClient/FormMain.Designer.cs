@@ -84,8 +84,8 @@
             this.einstellungenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.einstellungenToolStripMenuItem1});
             this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
-            this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
-            this.einstellungenToolStripMenuItem.Text = "Einstellungen";
+            this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+            this.einstellungenToolStripMenuItem.Text = "Extras";
             // 
             // einstellungenToolStripMenuItem1
             // 
@@ -158,6 +158,7 @@
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(230, 150);
             this.Name = "FormMain";
             this.Text = "iShop";
             this.menuStrip1.ResumeLayout(false);

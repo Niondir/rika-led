@@ -42,12 +42,14 @@ namespace StoreClient
                 if (value == false)
                 {
                     textBoxPassword.ForeColor = Color.Silver;
+                    textBoxPassword.PasswordChar = new char();
                     textBoxPassword.Text = "Passwort";
                 }
                 else
                 {
                     textBoxPassword.ForeColor = SystemColors.ControlText;
                     textBoxPassword.Text = string.Empty;
+                    textBoxPassword.PasswordChar = '*';
                 }
             }
         }
@@ -74,6 +76,18 @@ namespace StoreClient
         {
             if (textBoxUsername.Text.Length == 0)
                 UserEntered = false;
+        }
+
+        private void textBoxPassword_Leave(object sender, EventArgs e)
+        {
+            if (textBoxPassword.Text.Length == 0)
+                PasswordEntered = false;
+        }
+
+        private void buttonLogin_Click(object sender, EventArgs e)
+        {
+            Connection con = Connection.GetInstance();
+            con.Login(textBoxUsername.Text, textBoxPassword.Text);
         }
     }
 }
