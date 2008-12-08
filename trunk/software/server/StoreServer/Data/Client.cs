@@ -44,7 +44,7 @@ namespace StoreServer.Data
         {
             this.user = user;
             this.ipEndPoint = ipEndPoint;
-            this.session = new SessionData(1);
+            this.session = new SessionData(1);/*fix me*/
 
             /// Valid logindata?
             this.authed = this.CheckAccount();
