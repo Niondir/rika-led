@@ -44,7 +44,7 @@ namespace StoreServer.Data
         {
             this.user = user;
             this.ipEndPoint = ipEndPoint;
-            this.session = SessionData.NewSession;
+            this.session = new SessionData(1);
 
             /// Valid logindata?
             this.authed = this.CheckAccount();
@@ -96,7 +96,7 @@ namespace StoreServer.Data
 
         public void RefreshSession()
         {
-            this.session.Timestamp = DateTime.Now.Ticks;
+            this.session.Timestamp = (int)(DateTime.Now.Ticks / 1000);
         }
 
         /// <summary>
