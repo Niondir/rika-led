@@ -12,16 +12,41 @@ namespace StoreServer.Data
     /// </summary>
     public class User
     {
-        private UserData user;
+        private string username;
+        private Password password;
+        private Role role;
 
-        public UserData UserData
+        public string Username
         {
-            get { return user; }
+            get { return username; }
+        }
+
+        public Password Password
+        {
+            get { return password; }
+        }
+
+        public Role Role
+        {
+            get { return role; }
+        }
+
+        public UserData Data
+        {
+            get
+            {
+                UserData u = new UserData(username);
+                u.Password = this.password.Data;
+                u.Role = role.Data;
+                return u;
+            }
         }
 
         public User(UserData user)
         {
-            this.user = user;
+            this.username = user.Username;
+            this.password = new Password(user.Password);
+            this.role = new Role(user.Role);
         }
 
         /// <summary>
@@ -31,22 +56,32 @@ namespace StoreServer.Data
         /// <param name="connection"></param>
         public User(string username, OdbcConnection connection)
         {
-            this.user = user;
+            this.username = username;
         }
+
+        public bool CheckAccount()
+        {
+            // TODO: user im Datamanager suchen
+            // TODO: get role from db
+
+            Role.AddFlags(AccessFlags.Authenticated);
+            return (username == "gast" && password.Check("gast"));
+        }
+
 
         public void Save(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
 
             command.CommandText = "SELECT name FROM led_roles WHERE name = @role";
-            command.Parameters.AddWithValue("role", user.Role.Name);
+            command.Parameters.AddWithValue("role", role.Name);
             OdbcDataReader reader = command.ExecuteReader();
 
             bool roleOK = reader.HasRows;
 
             while (reader.Read())
             {
-                user.Role.SetFlags((AccessFlags)reader.GetInt32(1));
+                role.SetFlags((AccessFlags)reader.GetInt32(1));
             }
 
             reader.Close();
@@ -54,8 +89,8 @@ namespace StoreServer.Data
             if (roleOK)
             {
                 command.CommandText = "INSERT INTO led_users (roles_id, login, password) VALUES(@role, @login, @password)";
-                command.Parameters.AddWithValue("@login", user.Username);
-                command.Parameters.AddWithValue("@password", user.Password);
+                command.Parameters.AddWithValue("@login", username);
+                command.Parameters.AddWithValue("@password", password);
                 command.ExecuteNonQuery();
             }
 

@@ -13,13 +13,13 @@ namespace StoreServer.Data
     /// </summary>
     public class Client
     {
-        private SessionData session;
-        private UserData user;
+        private Session session;
+        private User user;
         private IPEndPoint ipEndPoint;
 
         private bool authed = false;
 
-        public SessionData Session
+        public Session Session
         {
             get { return session; }
         }
@@ -35,32 +35,18 @@ namespace StoreServer.Data
             set { authed = value; }
         }
 
-        public RoleData Role
-        {
-            get { return user.Role; }
-        }
-
         public Client(IPEndPoint ipEndPoint, UserData user)
         {
-            this.user = user;
+            this.user = new User(user);
             this.ipEndPoint = ipEndPoint;
-            this.session = new SessionData(1);/*fix me*/
+            this.session = Session.NewSession();
 
             /// Valid logindata?
-            this.authed = this.CheckAccount();
+            this.authed = this.user.CheckAccount();
             
             UpdateAccessFlags();
             
             Program.UserManager.AddClient(this);
-        }
-
-        private bool CheckAccount()
-        {
-            // TODO: user im Datamanager suchen
-            // TODO: get role from db
-
-            user.Role.AddFlags(AccessFlags.Authenticated);
-            return (user.Username == "gast" && user.Password.CheckPassword("gast"));
         }
 
         public bool CheckAccess(SessionData session, IPEndPoint remoteEndPoint, AccessFlags flags)
@@ -83,20 +69,14 @@ namespace StoreServer.Data
 
         public bool CheckSession()
         {
-            DateTime sDate = new DateTime(this.session.Timestamp);
-            if (DateTime.Now - sDate > TimeSpan.FromMinutes(10))
+            if (!session.Alive)
             {
                 Logout();
                 return false;
             }
 
-            RefreshSession();
+            session.Refresh();
             return true;
-        }
-
-        public void RefreshSession()
-        {
-            this.session.Timestamp = (int)(DateTime.Now.Ticks / 1000);
         }
 
         /// <summary>

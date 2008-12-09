@@ -23,13 +23,13 @@ namespace StoreServer.Data
 
         public void AddClient(Client client)
         {
-            clients[client.Session.ID] = client;
+            clients[client.Session.Id] = client;
         }
 
         public void RemoveClient(Client client)
         {
-            if (clients.ContainsKey(client.Session.ID)) {
-                clients.Remove(client.Session.ID);
+            if (clients.ContainsKey(client.Session.Id)) {
+                clients.Remove(client.Session.Id);
             }
         }
         
