@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Reflection;
 using StoreServer.WebService;
 using StoreServer.Data;
+using StoreServer.Radio;
 
 /* TODO:
  * - Data NUR zur Übertragung, alles in eigene Objekte parsen!
@@ -26,6 +27,7 @@ namespace StoreServer
         private static string exePath;
         private static ClientManager userManager;
         private static ClientHandler clientHandler;
+        private static RadioManager radioManager;
 
         private static bool unix = false;
         public static bool Unix { get { return unix; } }
@@ -42,6 +44,7 @@ namespace StoreServer
         public static Thread Thread { get { return thread; } }
         public static ClientManager UserManager { get { return userManager; } }
         public static ClientHandler ClientHandler { get { return clientHandler; } }
+        public static RadioManager RadioManager { get { return radioManager; } }
 
         public static string ExePath
         {
@@ -109,8 +112,10 @@ namespace StoreServer
             }
 
             clientHandler = new ClientHandler();
-            HttpService httpService = new HttpService("http://127.0.0.1:11000/", clientHandler);
-            
+            HttpService httpService = new HttpService("http://127.0.0.1:" + Properties.StoreServer.Default.HttpListenerPort+ "/", clientHandler);
+
+
+            radioManager = new RadioManager(Properties.StoreServer.Default.ComPort);
             userManager = new ClientManager();
 
             ConsoleHandler consoleHandler = new ConsoleHandler();
