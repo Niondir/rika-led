@@ -1,10 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO.Ports;
 
 namespace StoreServer.Radio
 {
-    class SerialPacket
+    public abstract class SerialPacket
     {
+        protected Byte[] sendBytes;
+
+        public void Send(SerialPort port)
+        {
+            try
+            {
+                Write(port, sendBytes);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        protected virtual void Write(SerialPort port, Byte[] bytes)
+        {
+            port.Write(bytes, 0, bytes.Length);
+        }
+
+        /// <summary>
+        /// Encode a given string to a byte array
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        protected virtual Byte[] Encode(string msg)
+        {
+            return Encoding.ASCII.GetBytes(msg);
+        }
+
+        /// <summary>
+        /// Decode a given byte array to an ASCII String
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        protected virtual string Decode(Byte[] bytes)
+        {
+            return Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + "\n" + Decode(sendBytes) + "\n";
+        }
     }
 }
