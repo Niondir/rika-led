@@ -10,8 +10,8 @@ using StoreServer.Data;
 using StoreServer.Radio;
 
 /* TODO:
- * - Data NUR zur Übertragung, alles in eigene Objekte parsen!
- * 
+ * - XML Configdatei nutzen
+ * -- XMLSchema definieren. Siehe: DataTable
  * 
  * */
 
@@ -19,7 +19,6 @@ namespace StoreServer
 {
     class Program
     {
-        private static Thread httpServiceThread;
         private static Thread thread;
         private static Process process;
         private static Assembly assembly;
@@ -112,10 +111,10 @@ namespace StoreServer
             }
 
             clientHandler = new ClientHandler();
-            HttpService httpService = new HttpService("http://127.0.0.1:" + Properties.StoreServer.Default.HttpListenerPort+ "/", clientHandler);
+            HttpService httpService = new HttpService("http://127.0.0.1:11000/", clientHandler);
 
 
-            radioManager = new RadioManager(Properties.StoreServer.Default.ComPort);
+            radioManager = new RadioManager("COM3");
             userManager = new ClientManager();
 
             ConsoleHandler consoleHandler = new ConsoleHandler();

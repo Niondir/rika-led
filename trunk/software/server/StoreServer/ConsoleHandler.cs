@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using CommunicationAPI.DataTypes;
+using StoreServer.Radio;
+using StoreServer.Data;
 
 namespace StoreServer
 {
@@ -80,6 +82,18 @@ namespace StoreServer
                         break;
                     case "addregion":
                         Program.ClientHandler.AddRegion(session, new RegionData(1, "foobar"));
+                        break;
+                    case "address":
+                        Program.RadioManager.Destination = int.Parse(tokens[1]);
+                        break;
+                    case "sendtrace":
+                        Program.RadioManager.Send(new SendTracePacket(bool.Parse(tokens[1])));
+                        break;
+                    case "settext":
+                        Sign s = new Sign();
+                        s.Id = int.Parse(tokens[1]);
+                        s.Text = tokens[2];
+                        Program.RadioManager.Send(new SetTextPacket(s));
                         break;
                     default:
                         Console.WriteLine("Unknown Command");

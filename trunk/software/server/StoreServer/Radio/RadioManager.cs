@@ -4,6 +4,12 @@ using System.IO.Ports;
 using System.Text;
 using System.Threading;
 
+/* TODO:
+ * - Keinen ebeneffekte wenn die Verbindung nicht auf gebaut werden kann. Queue trotzdem pflegen.
+ * - Wenn offline, jede Sekunde versuchen die Verbindung wieder auf zu nehmen
+ * 
+ * */
+
 namespace StoreServer.Radio
 {
     public class RadioManager
@@ -11,6 +17,18 @@ namespace StoreServer.Radio
         private SerialPort serialPort;
         private Queue<SerialPacket> sendQueue;
         private Thread sendThread;
+
+        private int destination;
+
+        public int Destination
+        {
+            get { return destination; }
+            set
+            {
+                Send(new AddressPacket(value));
+                destination = value;
+            }
+        }
 
         public RadioManager(string portName)
         {
@@ -31,63 +49,44 @@ namespace StoreServer.Radio
             sendThread.Start();
         }
 
+        public void Send(SerialPacket packet)
+        {
+            lock (sendQueue)
+            {
+                sendQueue.Enqueue(packet);
+            }
+        }
+
         /// <summary>
-        /// thread
+        /// Thread to send SerialPackets as fast as possible
         /// </summary>
         private void sendLoop()
         {
-            while (!Program.Closing && serialPort.IsOpen)
+            while (!Program.Closing)
             {
-
+                if (sendQueue.Count > 0)
+                {
+                    lock (sendQueue)
+                    {
+                        if (serialPort.IsOpen)
+                        {
+                            SerialPacket p = sendQueue.Dequeue();
+                            Debug.WriteLine("RadioManager: <online> sending: " + p.ToString());
+                            p.Send(serialPort);
+                        }
+#if DEBUG
+                        else 
+                        {
+                            SerialPacket p = sendQueue.Dequeue();
+                            Debug.WriteLine("RadioManager: <offline> sending: " + p.ToString());
+                            
+                        }
+#endif
+                    }
+                }
             }
+
+            Debug.WriteLine("Leaving SerialSend Thread");
         }
-
-        private void send()
-        {
-            // umstaendlich aber noetig, ohne schnallt der xbee die befehle nicht
-            Byte[] sendBytes1 = Encoding.ASCII.GetBytes("+++");
-            Byte[] sendBytes2 = Encoding.ASCII.GetBytes("ATDH0,DL" + 0 + ",CN\r");
-            //<packet>
-            Byte[] sendBytes3 = Encoding.ASCII.GetBytes("hallo welt" + "\r\n");
-
-            try
-            {
-                serialPort.Open();
-
-                //guard time beachten, +++ senden um in cmd modus zu wechseln
-                Thread.Sleep(20);
-                serialPort.Write(sendBytes1, 0, sendBytes1.Length);
-                //_serialPort.WriteLine("+++");
-
-                Thread.Sleep(20);
-
-                //command senden, genauer: einstellen der ziel id
-                serialPort.Write(sendBytes2, 0, sendBytes2.Length);
-                Thread.Sleep(20);
-
-                //test per funk verschicken
-                serialPort.Write(sendBytes3, 0, sendBytes3.Length);
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-        }
-
-
-        /* Workflow:
-         * DataManager stellt anfragen (wer ist hier eig. egal)
-         * Anfragen werden so schnell wie möglich behandelt. Wir brauchen einen Puffer um nicht schneller als die Schnittstelle zu werden
-         * Darf nicht blockierend sein!
-         * 
-         * 
-         * */
-
-        /* TODO:
-         * Ansprechen des Funkmoduls über die serielle Schnittstelle
-         * 
-         * */
     }
 }
