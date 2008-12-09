@@ -20,9 +20,9 @@ namespace StoreServer.Data
         public void Save(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO led_regions (id, name) VALUES(@id, @name)";
-            command.Parameters.AddWithValue("@id", this.id);
-            command.Parameters.AddWithValue("@name", this.name);
+            command.CommandText = "INSERT INTO led_regions (id, name) VALUES(?, ?)";
+            command.Parameters.AddWithValue("id", this.id);
+            command.Parameters.AddWithValue("name", this.name);
             command.ExecuteNonQuery();
         }
     }
