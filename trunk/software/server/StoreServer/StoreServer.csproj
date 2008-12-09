@@ -59,7 +59,13 @@
     <Compile Include="HttpService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\StoreServer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>StoreServer.settings</DependentUpon>
+    </Compile>
     <Compile Include="Radio\RadioManager.cs" />
+    <Compile Include="Radio\SerialPacket.cs" />
     <Compile Include="WebService\ClientHandler.cs" />
     <Compile Include="WebService\MyXmlRpcListenerService.cs" />
     <Compile Include="WebService\WebServiceEvents.cs" />
@@ -71,7 +77,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="app.manifest" />
+    <None Include="Properties\StoreServer.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>StoreServer.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Sql\1.0.0.0_create.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
