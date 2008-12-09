@@ -41,7 +41,7 @@ namespace StoreServer.WebService
             if (client.Authed)
             {
                 Debug.WriteLine("user logged in: " + user.Username);
-                return client.Session;
+                return client.Session.Data;
             }
             else
             {
@@ -92,7 +92,16 @@ namespace StoreServer.WebService
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
-            throw new XmlRpcFaultException(1, "Not implemented");
+            Region region = new Region(value);
+
+            try
+            {
+                region.Save(this.DataManager.Connection);
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBWriteError, ex.Message);
+            }
         }
 
         public void AddProduct(SessionData session, ProductData value)
@@ -230,7 +239,7 @@ namespace StoreServer.WebService
             try
             {
                 User user = new User(loginName, this.DataManager.Connection);
-                return user.UserData;
+                return user.Data;
             }
             catch (Exception ex)
             {

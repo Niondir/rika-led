@@ -62,7 +62,10 @@ namespace StoreServer
                     case "login":
                         try
                         {
-                            session = Program.ClientHandler.Login(new UserData(tokens[1], tokens[2]));
+                            if (tokens.Length > 1)
+                                session = Program.ClientHandler.Login(new UserData(tokens[1], tokens[2]));
+                            else
+                                session = Program.ClientHandler.Login(new UserData("gast", "gast"));
                         }
                         catch (Exception ex)
                         {
@@ -74,6 +77,9 @@ namespace StoreServer
                         user.Role = new RoleData("foo");
 
                         Program.ClientHandler.AddUser(session, user);
+                        break;
+                    case "addregion":
+                        Program.ClientHandler.AddRegion(session, new RegionData(1, "foobar"));
                         break;
                     default:
                         Console.WriteLine("Unknown Command");

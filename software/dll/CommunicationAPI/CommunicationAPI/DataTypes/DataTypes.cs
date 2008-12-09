@@ -28,8 +28,16 @@ namespace CommunicationAPI.DataTypes
         public SessionData(int id)
         {
             this.id = id;
-            this.timestamp = (int)(DateTime.Now.Ticks / 1000);
+            this.timestamp = SessionData.Date2Timestamp(DateTime.Now);
         }
+
+        public static int Date2Timestamp(DateTime date)
+        {
+            DateTime dateRef = new DateTime(1970, 1, 1);
+            TimeSpan ts = new TimeSpan(date.Ticks - dateRef.Ticks);
+            return (Convert.ToInt32(ts.TotalSeconds));
+        }
+
     }
 
     /// <summary>
@@ -39,16 +47,10 @@ namespace CommunicationAPI.DataTypes
     {
         private string password;
 
-        public string PasswordMD5
+        public string Password
         {
             get { return password; }
             set { password = value; }
-        }
-
-        public string PasswordClear
-        {
-            set { password = value; }
-            get { return password; }
         }
 
         public PasswordData(string password)
@@ -70,7 +72,6 @@ namespace CommunicationAPI.DataTypes
         /// 
         /// </summary>
         /// <param name="password">the password to check</param>
-        /// <param name="isEncrypted">is the password already encrypted?</param>
         /// <returns>Returns true if the password is matching</returns>
         public bool CheckPassword(string password)
         {
@@ -81,7 +82,7 @@ namespace CommunicationAPI.DataTypes
 
         public bool CheckPassword(PasswordData password)
         {
-            return password.PasswordMD5 == this.PasswordMD5;
+            return password.Password == this.Password;
         }
     }
 
@@ -106,21 +107,6 @@ namespace CommunicationAPI.DataTypes
         {
             this.name = name;
             this.flags = 0;
-        }
-
-        public void SetFlags(AccessFlags flags)
-        {
-            this.flags = (int)flags;
-        }
-
-        public void AddFlags(AccessFlags flags) 
-        {
-            this.flags |= (int)flags;
-        }
-
-        public void DeleteFlags(AccessFlags flags)
-        {
-            this.flags &= ~(int)flags;
         }
 
         public bool HasFlags(AccessFlags flags)
@@ -187,6 +173,24 @@ namespace CommunicationAPI.DataTypes
     {
         private int id;
         private string name;
+
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public RegionData(int id, string name)
+        {
+            this.id = id;
+            this.name = name;
+        }
     }
 
     public struct ProductData
