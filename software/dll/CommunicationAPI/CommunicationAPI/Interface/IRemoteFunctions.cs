@@ -35,9 +35,6 @@ namespace CommunicationAPI.Interface
         void AddProduct(SessionData session, ProductData value);
 
         [XmlRpcMethod]
-        void AddSign(SessionData session, SignData value);
-
-        [XmlRpcMethod]
         void AddAdvertisement(SessionData session, AdvertisementData value);
 
         [XmlRpcMethod]
@@ -63,9 +60,6 @@ namespace CommunicationAPI.Interface
         void DeleteProduct(SessionData session, ProductData value);
 
         [XmlRpcMethod]
-        void DeleteSign(SessionData session, SignData value);
-
-        [XmlRpcMethod]
         void DeleteAdvertisement(SessionData session, AdvertisementData value);
 
         [XmlRpcMethod]
@@ -87,9 +81,6 @@ namespace CommunicationAPI.Interface
         [XmlRpcMethod]
         void EditProduct(SessionData session, ProductData oldValue, ProductData newValue);
 
-        [XmlRpcMethod]
-        void EditSign(SessionData session, SignData oldValue, SignData newValue);
-        
         #endregion
 
         #region Get()
@@ -110,7 +101,7 @@ namespace CommunicationAPI.Interface
         ProductData[] GetProducts(SessionData session);
 
         [XmlRpcMethod]
-        SignData[] GetSigns(SessionData session);
+        SignData[] GetSigns(SessionData session, RegionData region);
 
         [XmlRpcMethod]
         TraceData[] GetTraces(SessionData session, DateTime from, DateTime to);

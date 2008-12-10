@@ -111,13 +111,6 @@ namespace StoreServer.WebService
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void AddSign(SessionData session, SignData value)
-        {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
-
-            throw new XmlRpcFaultException(1, "Not implemented");
-        }
-
         public void AddAdvertisement(SessionData session, AdvertisementData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
@@ -159,13 +152,6 @@ namespace StoreServer.WebService
         }
 
         public void DeleteProduct(SessionData session, ProductData value)
-        {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
-
-            throw new XmlRpcFaultException(1, "Not implemented");
-        }
-
-        public void DeleteSign(SessionData session, SignData value)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
@@ -220,13 +206,6 @@ namespace StoreServer.WebService
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public void EditSign(SessionData session, SignData oldValue, SignData newValue)
-        {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
-
-            throw new XmlRpcFaultException(1, "Not implemented");
-        }
-
         public RoleData GetRole(SessionData session, string roleName)
         {
             throw new XmlRpcFaultException(1, "Not implemented");
@@ -268,7 +247,7 @@ namespace StoreServer.WebService
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
-        public SignData[] GetSigns(SessionData session)
+        public SignData[] GetSigns(SessionData session, RegionData region)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 

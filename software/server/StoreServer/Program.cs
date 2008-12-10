@@ -13,6 +13,12 @@ using StoreServer.Radio;
  * - XML Configdatei nutzen
  * -- XMLSchema definieren. Siehe: DataTable
  * 
+ * addProduct
+ * getProducts
+ * addRegion
+ * getRegions
+ * 
+ * sign id 0 bedeutet Einkaufswagen!
  * */
 
 namespace StoreServer
