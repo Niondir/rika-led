@@ -8,7 +8,7 @@ namespace StoreServer.Radio
     public class SetTextPacket : LampPacket
     {
         public SetTextPacket(Sign sign)
-            : base(LampCommand.SetText, sign.Id.ToString(), sign.Text)
+            : base(LampCommand.SetText, sign.Id.ToString(), "hallo welt")
         {
         }
     }

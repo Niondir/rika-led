@@ -191,19 +191,69 @@ namespace CommunicationAPI.DataTypes
             this.id = id;
             this.name = name;
         }
+
+        public RegionData(int id)
+        {
+            this.id = 0;
+            this.name = "";
+        }
     }
 
     public struct ProductData
     {
         private SignData sign;
+        private string name;
+        private double price;
+
+        public SignData Sign
+        {
+            get { return sign; }
+            set { sign = value; }
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public double Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+
+        public ProductData(SignData sign, string name, double price)
+        {
+            this.sign = sign;
+            this.name = name;
+            this.price = price;
+        }
     }
 
     public struct SignData
     {
         private int id;
         private RegionData region;
-        private string text;
-        private int signType;
+        
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public RegionData Region
+        {
+            get { return region; }
+            set { region = value; }
+        }
+
+        public SignData(int id, RegionData region) 
+        {
+            this.id = id;
+            this.region = region;
+        }
+
     }
 
     public struct TraceData

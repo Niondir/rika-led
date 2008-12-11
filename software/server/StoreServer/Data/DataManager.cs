@@ -25,7 +25,7 @@ namespace StoreServer.Data
             sb.Add("User", "root");
             sb.Add("Password", "");
             sb.Add("Option", "3");
-
+            //Debug.WriteLine(sb.ConnectionString);
             connection = new OdbcConnection(sb.ToString());
 
             Console.WriteLine("Connecting to database with {0}:\nServer: {1}\nSchema: {2}\nUser: {3}\nPassword: <hidden>", 

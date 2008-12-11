@@ -90,9 +90,9 @@ namespace StoreServer
                         Program.RadioManager.Send(new SendTracePacket(bool.Parse(tokens[1])));
                         break;
                     case "settext":
-                        Sign s = new Sign();
+                        Sign s = new Sign(new SignData());
                         s.Id = int.Parse(tokens[1]);
-                        s.Text = tokens[2];
+                        //s.Text = tokens[2];
                         Program.RadioManager.Send(new SetTextPacket(s));
                         break;
                     default:

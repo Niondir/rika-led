@@ -108,6 +108,17 @@ namespace StoreServer.WebService
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
+            Product product = new Product(value);
+
+            try
+            {
+                product.Save(this.DataManager.Connection);
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBWriteError, ex.Message);
+            }
+
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
@@ -236,15 +247,34 @@ namespace StoreServer.WebService
         public RegionData[] GetRegions(SessionData session)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
+            RegionData[] regions;
+            try
+            {
+                regions = Region.Load(this.DataManager.Connection);
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
+            }
 
-            throw new XmlRpcFaultException(1, "Not implemented");
+            return regions;
         }
 
         public ProductData[] GetProducts(SessionData session)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
-            throw new XmlRpcFaultException(1, "Not implemented");
+            ProductData[] products;
+            try
+            {
+                products = Product.Load(this.DataManager.Connection);
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
+            }
+
+            return products;
         }
 
         public SignData[] GetSigns(SessionData session, RegionData region)

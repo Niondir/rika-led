@@ -11,6 +11,18 @@ namespace StoreServer.Data
         private int id;
         private string name;
 
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
         public Region(RegionData region)
         {
             this.id = region.Id;
@@ -24,6 +36,23 @@ namespace StoreServer.Data
             command.Parameters.AddWithValue("id", this.id);
             command.Parameters.AddWithValue("name", this.name);
             command.ExecuteNonQuery();
+        }
+
+        public static RegionData[] Load(OdbcConnection connection)
+        {
+            OdbcCommand command = connection.CreateCommand();
+
+            command.CommandText = "SELECT id, name FROM led_regions";
+            OdbcDataReader reader = command.ExecuteReader();
+
+            List<RegionData> regions = new List<RegionData>();
+
+            while (reader.Read())
+            {
+                regions.Add(new RegionData(reader.GetInt32(0), reader.GetString(1)));
+            }
+
+            return regions.ToArray();
         }
     }
 }
