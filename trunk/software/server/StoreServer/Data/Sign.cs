@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CommunicationAPI.DataTypes;
 
 namespace StoreServer.Data
 {
     public class Sign
     {
         private int id;
-        private string text;
+        private Region region;
 
         public int Id
         {
@@ -15,10 +16,16 @@ namespace StoreServer.Data
             set { id = value; }
         }
 
-        public string Text
+        public Region Region
         {
-            get { return text; }
-            set { text = value; }
+            get { return region; }
+            set { region = value; }
+        }
+
+        public Sign(SignData sign)
+        {
+            this.id = sign.Id;
+            this.region = new Region(sign.Region);
         }
     }
 }
