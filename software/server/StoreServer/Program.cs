@@ -9,14 +9,12 @@ using StoreServer.WebService;
 using StoreServer.Data;
 using StoreServer.Radio;
 
+
+using System.Data;
+using System.Xml;
 /* TODO:
  * - XML Configdatei nutzen
  * -- XMLSchema definieren. Siehe: DataTable
- * 
- * addProduct
- * getProducts
- * addRegion
- * getRegions
  * 
  * sign id 0 bedeutet Einkaufswagen!
  * */
@@ -115,6 +113,18 @@ namespace StoreServer
                 unix = true;
                 Console.WriteLine("Server: Unix environment detected");
             }
+
+            Config config;
+
+            try
+            {
+                config = Config.Load();
+            }
+            catch(Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
 
             clientHandler = new ClientHandler();
             HttpService httpService = new HttpService("http://127.0.0.1:11000/", clientHandler);
