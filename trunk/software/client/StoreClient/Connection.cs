@@ -1,29 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CommunicationAPI.Interface;
+using CommunicationAPI.DataTypes;
+using CookComputing.XmlRpc;
 
 namespace StoreClient
 {
-    public class Connection
+    public class ConnectionChangedEventArgs : EventArgs
     {
-        private static Connection instance;
-
-        private void Init() {
-
-        }
-
-        public static Connection GetInstance() {
-            if (instance == null) {
-                instance = new Connection();
-                instance.Init();
-            }
-
-            return instance;
-        }
-
-        public void Login(string user, string password)
+        public bool Connected { get; set; }
+        public ConnectionChangedEventArgs(bool connected)
         {
+            Connected = connected;
+        }
 
+    }
+    class Connection
+    {
+        private IRemoteFunctions remote;
+        private SessionData session;
+        static public UserData user;
+        static private Connection con;
+        
+        public event EventHandler<ConnectionChangedEventArgs> LoginChanged;
+
+        private Connection()
+        {
+            remote = XmlRpcProxyGen.Create<IRemoteFunctions>();
+        }
+
+        static public Connection GetInstance()
+        {
+            if (con == null)
+                con = new Connection();
+            return con;
+        }
+
+        public void Login(string username, string password)
+        {
+            user = new UserData(username, password);
+            try
+            {
+                session = remote.Login(user);
+                if (LoginChanged != null)
+                    LoginChanged(this, new ConnectionChangedEventArgs(true));
+            }
+            catch(Exception ex)
+            {
+                FormMain.HandleException(ex);
+            }
+        }
+
+
+        internal void Logout()
+        {
+            remote.Logout(session);
         }
     }
 }

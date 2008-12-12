@@ -21,5 +21,13 @@ namespace StoreClient
             GridProducts.Columns.Add("ProductPrice", "Preis");
             GridProducts.Columns.Add("ProductBind", "Schild Nr.");
         }
+
+        private void toolStripButtonPNew_Click(object sender, EventArgs e)
+        {
+            FormAddProduct adder = new FormAddProduct();
+            if (adder.ShowDialog(this) == DialogResult.OK)
+            {
+            }
+        }
     }
 }
