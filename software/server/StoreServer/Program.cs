@@ -123,6 +123,9 @@ namespace StoreServer
             catch(Exception ex) 
             {
                 Console.WriteLine(ex.Message);
+                Console.WriteLine("Press any key to exit");
+                Console.ReadKey();
+                return;
             }
             
 
@@ -130,7 +133,7 @@ namespace StoreServer
             HttpService httpService = new HttpService("http://127.0.0.1:11000/", clientHandler);
 
 
-            radioManager = new RadioManager("COM3");
+            radioManager = new RadioManager(config.ComPort);
             userManager = new ClientManager();
 
             ConsoleHandler consoleHandler = new ConsoleHandler();

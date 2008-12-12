@@ -12,9 +12,25 @@ namespace StoreServer
         [XmlElement("ComPort")]
         public string ComPort { get; set; }
 
+        [XmlElement("SQLServer")]
+        public string SQLServer { get; set; }
+
+        [XmlElement("SQLDatabase")]
+        public string SQLDatabase { get; set; }
+
+        [XmlElement("SQLUser")]
+        public string SQLUser { get; set; }
+
+        [XmlElement("SQLPassword")]
+        public string SQLPassword { get; set; }
+
         public Config()
         {
             this.ComPort = "NONE";
+            this.SQLDatabase = "ledcom";
+            this.SQLUser = "user";
+            this.SQLPassword = "password";
+            this.SQLServer = "localhost";
         }
 
         public static void Save() 

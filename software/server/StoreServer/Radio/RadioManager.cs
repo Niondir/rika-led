@@ -38,7 +38,8 @@ namespace StoreServer.Radio
             try
             {
                 serialPort.Open();
-            }
+                Debug.WriteLine("Opened serial port on " + portName);
+            } 
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
