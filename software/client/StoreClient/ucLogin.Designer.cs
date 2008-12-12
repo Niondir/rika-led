@@ -77,6 +77,7 @@
             this.textBoxUsername.TabIndex = 2;
             this.textBoxUsername.Text = "Benutzername";
             this.textBoxUsername.Leave += new System.EventHandler(this.textBoxUsername_Leave);
+            this.textBoxUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsername_KeyPress);
             this.textBoxUsername.Enter += new System.EventHandler(this.textBoxUsername_Click);
             // 
             // buttonLogin
@@ -100,6 +101,7 @@
             this.textBoxPassword.TabIndex = 3;
             this.textBoxPassword.Text = "Passwort";
             this.textBoxPassword.Leave += new System.EventHandler(this.textBoxPassword_Leave);
+            this.textBoxPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsername_KeyPress);
             this.textBoxPassword.Enter += new System.EventHandler(this.textBox1_Click);
             // 
             // ucLogin

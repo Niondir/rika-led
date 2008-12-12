@@ -42,7 +42,11 @@
             this.benutzerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripConnectionStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -72,6 +76,7 @@
             this.verbindungHerstellenToolStripMenuItem.Name = "verbindungHerstellenToolStripMenuItem";
             this.verbindungHerstellenToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.verbindungHerstellenToolStripMenuItem.Text = "Verbindung herstellen";
+            this.verbindungHerstellenToolStripMenuItem.Click += new System.EventHandler(this.verbindungHerstellenToolStripMenuItem_Click);
             // 
             // beendenToolStripMenuItem
             // 
@@ -90,7 +95,7 @@
             // einstellungenToolStripMenuItem1
             // 
             this.einstellungenToolStripMenuItem1.Name = "einstellungenToolStripMenuItem1";
-            this.einstellungenToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.einstellungenToolStripMenuItem1.Size = new System.Drawing.Size(145, 22);
             this.einstellungenToolStripMenuItem1.Text = "Einstellungen";
             // 
             // fensterToolStripMenuItem
@@ -147,8 +152,31 @@
             this.panelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMain.Location = new System.Drawing.Point(0, 24);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(823, 504);
+            this.panelMain.Size = new System.Drawing.Size(823, 482);
             this.panelMain.TabIndex = 4;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripConnectionStatus,
+            this.toolStripProgressBar1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 506);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(823, 22);
+            this.statusStrip1.TabIndex = 5;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripConnectionStatus
+            // 
+            this.toolStripConnectionStatus.Name = "toolStripConnectionStatus";
+            this.toolStripConnectionStatus.Size = new System.Drawing.Size(72, 17);
+            this.toolStripConnectionStatus.Text = "Verbindung:";
+            this.toolStripConnectionStatus.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
             // 
             // FormMain
             // 
@@ -156,6 +184,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 528);
             this.Controls.Add(this.panelMain);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(230, 150);
@@ -163,6 +192,8 @@
             this.Text = "iShop";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -184,6 +215,9 @@
         private System.Windows.Forms.ToolStripMenuItem werbungToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem benutzerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hilfeToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripConnectionStatus;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
     }
 }
 
