@@ -56,6 +56,7 @@ namespace WindowsFormsApplication2
             // umstaendlich aber noetig, ohne schnallt der xbee die befehle nicht
             Byte[] sendBytes1 = Encoding.ASCII.GetBytes("+++");
             Byte[] sendBytes2 = Encoding.ASCII.GetBytes("ATDH0,DL"+textBox1.Text+",CN\r");
+            //<packet>
             Byte[] sendBytes3 = Encoding.ASCII.GetBytes(textBox2.Text + "\r\n");
 
             try
@@ -73,6 +74,8 @@ namespace WindowsFormsApplication2
                 _serialPort.Write(sendBytes2, 0, sendBytes2.Length);
                 //_serialPort.WriteLine("ATDH0,DL" + textBox1.Text + ",CN\r");
                 System.Threading.Thread.Sleep(20);
+
+
 
                 //test per funk verschicken
                 _serialPort.Write(sendBytes3, 0, sendBytes3.Length);

@@ -91,6 +91,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sql\1.0.0.3_products.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

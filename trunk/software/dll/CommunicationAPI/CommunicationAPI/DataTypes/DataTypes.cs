@@ -191,12 +191,6 @@ namespace CommunicationAPI.DataTypes
             this.id = id;
             this.name = name;
         }
-
-        public RegionData(int id)
-        {
-            this.id = 0;
-            this.name = "";
-        }
     }
 
     public struct ProductData

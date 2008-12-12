@@ -42,7 +42,7 @@ namespace StoreServer.Data
 
             while (reader.Read())
             {
-                RegionData region = new RegionData(reader.GetInt32(1));
+                RegionData region = new RegionData(reader.GetInt32(1), "not yet");
                 // TODO: Veryfy region !??!? Or get the name??
 
                 SignData sign = new SignData(reader.GetInt32(0), region);
