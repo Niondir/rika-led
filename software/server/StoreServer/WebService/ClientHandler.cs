@@ -246,11 +246,17 @@ namespace StoreServer.WebService
 
         public RegionData[] GetRegions(SessionData session)
         {
+            Debug.WriteLine("GetRegions()");
             this.ValidateRequest(session, AccessFlags.Authenticated);
             RegionData[] regions;
             try
             {
                 regions = Region.Load(this.DataManager.Connection);
+
+                for (int i = 0; i < regions.Length; i++)
+                {
+                    Debug.WriteLine("Region name " + i + ": " + regions[i].Name);
+                }
             }
             catch (Exception ex)
             {
@@ -262,12 +268,17 @@ namespace StoreServer.WebService
 
         public ProductData[] GetProducts(SessionData session)
         {
+            Debug.WriteLine("GetProducts()");
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             ProductData[] products;
             try
             {
                 products = Product.Load(this.DataManager.Connection);
+                for (int i = 0; i < products.Length; i++)
+                {
+                    Debug.WriteLine("Produkt name "+i+": " + products[i].Name);
+                }
             }
             catch (Exception ex)
             {
