@@ -84,7 +84,7 @@ namespace StoreServer
                         Program.ClientHandler.AddRegion(session, new RegionData(1, "foobar"));
                         break;
                     case "address":
-                        Program.RadioManager.Destination = int.Parse(tokens[1]);
+                        Program.RadioManager.Destination = tokens[1];
                         break;
                     case "sendtrace":
                         Program.RadioManager.Send(new SendTracePacket(bool.Parse(tokens[1])));
