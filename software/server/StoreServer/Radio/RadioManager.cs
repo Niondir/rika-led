@@ -18,9 +18,9 @@ namespace StoreServer.Radio
         private Queue<SerialPacket> sendQueue;
         private Thread sendThread;
 
-        private int destination;
+        private string destination;
 
-        public int Destination
+        public string Destination
         {
             get { return destination; }
             set

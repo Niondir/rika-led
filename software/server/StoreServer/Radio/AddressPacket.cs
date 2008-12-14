@@ -8,10 +8,10 @@ namespace StoreServer.Radio
 {
     public class AddressPacket : SerialPacket
     {
-        private int address;
+        private string address;
         private Byte[] swtichModeCmd;
 
-        public AddressPacket(int address)
+        public AddressPacket(string address)
         {
             this.address = address;
             this.swtichModeCmd = Encode("+++");
