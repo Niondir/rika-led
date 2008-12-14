@@ -37,7 +37,7 @@ namespace StoreClient
             return con;
         }
 
-        public void Login(string username, string password)
+        internal void Login(string username, string password)
         {
             user = new UserData(username, password);
             try
@@ -56,6 +56,30 @@ namespace StoreClient
         internal void Logout()
         {
             remote.Logout(session);
+        }
+
+        internal RegionData[] GetRegions()
+        {
+            try
+            {
+                RegionData[] regions = remote.GetRegions(session);
+                return regions;
+            }
+            catch (Exception ex)
+            {
+                FormMain.HandleException(ex);
+                return null;
+            }
+        }
+
+        internal void Add(RegionData regionData)
+        {
+            remote.AddRegion(session, regionData);
+        }
+
+        internal void Add(ProductData productData)
+        {
+            remote.AddProduct(session, productData);
         }
     }
 }
