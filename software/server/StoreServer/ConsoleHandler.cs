@@ -90,10 +90,14 @@ namespace StoreServer
                         Program.RadioManager.Send(new SendTracePacket(bool.Parse(tokens[1])));
                         break;
                     case "settext":
-                        Sign s = new Sign(new SignData());
-                        s.Id = int.Parse(tokens[1]);
+                        RegionData region = new RegionData(1, "fooRegion");
+                        SignData sign = new SignData(int.Parse(tokens[1]), region);
+                        Product product = new Product(new ProductData(sign, tokens[2], 16.22));
+                        
+                        
+                        
                         //s.Text = tokens[2];
-                        Program.RadioManager.Send(new SetTextPacket(s));
+                        Program.RadioManager.Send(new SetTextPacket(product));
                         break;
                     default:
                         Console.WriteLine("Unknown Command");
