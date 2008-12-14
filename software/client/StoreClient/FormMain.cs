@@ -26,6 +26,10 @@ namespace StoreClient
                 if (ex.Status == WebExceptionStatus.ConnectFailure)
                     MessageBox.Show("Es konnte keine Verbindung hergestellt werden. Bitte überprüfen Sie die Einstellungen", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            catch (XmlRpcFaultException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             catch
             {
                 throw exception;
