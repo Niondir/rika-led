@@ -14,7 +14,7 @@ namespace StoreServer.Radio
     {
         public LampPacket(LampCommand command, params string[] parameters)
         {
-            this.sendBytes = Encode(String.Format("<{0}|{1}>", (int)command, String.Join("|", parameters)));
+            this.sendBytes = Encode(String.Format("<000{0}|{1}>", (int)command, String.Join("|", parameters)));
         }
     }
 }
