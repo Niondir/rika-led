@@ -12,6 +12,24 @@ namespace StoreServer.Data
         private string name;
         private double price;
 
+        public Sign Sign
+        {
+            get { return sign; }
+            set { sign = value; }
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public double Price
+        {
+            get { return price; }
+            set { price = value; }
+        }
+
         public Product(ProductData product)
         {
             this.sign = new Sign(product.Sign);
