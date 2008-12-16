@@ -30,6 +30,14 @@ namespace StoreServer.Data
             set { price = value; }
         }
 
+        public ProductData Data
+        {
+            get
+            {
+                return new ProductData(this.sign.Data, this.name, this.price);
+            }
+        }
+
         public Product(ProductData product)
         {
             this.sign = new Sign(product.Sign);
@@ -49,25 +57,38 @@ namespace StoreServer.Data
             command.ExecuteNonQuery();
         }
 
-        public static ProductData[] Load(OdbcConnection connection)
+        public static List<Product> Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
 
             command.CommandText = "SELECT id, regions_id, name, price FROM led_products";
             OdbcDataReader reader = command.ExecuteReader();
 
-            List<ProductData> products = new List<ProductData>();
+            List<Product> products = new List<Product>();
+
+            List<RegionData> regions = new List<RegionData>();
+            regions.AddRange(Region.Load(connection));
 
             while (reader.Read())
             {
-                RegionData region = new RegionData(reader.GetInt32(1), "not yet");
-                // TODO: Veryfy region !??!? Or get the name??
+                RegionData region = new RegionData(reader.GetInt32(1), "Region not found!");
+                //TODO: Veryfy region !??!? Or get the name??
 
-                SignData sign = new SignData(reader.GetInt32(0), region);
-                products.Add(new ProductData(sign, reader.GetString(2), reader.GetDouble(3)));
+                foreach (RegionData r in regions)
+                {
+                    if (r.Id == region.Id)
+                    {
+                        region.Name = r.Name;
+                    }
+                }
+
+                /* TODO: Product table: key as int not unsigned! */
+                SignData sign = new SignData((int)reader.GetInt64(0), region);
+                ProductData pData = new ProductData(sign, reader.GetString(2), reader.GetDouble(3));
+                products.Add(new Product(pData));
             }
 
-            return products.ToArray();
+            return products;
         }
     }
 }

@@ -23,6 +23,14 @@ namespace StoreServer.Data
             set { name = value; }
         }
 
+        public RegionData Data
+        {
+            get
+            {
+                return new RegionData(id, name);
+            }
+        }
+
         public Region(RegionData region)
         {
             this.id = region.Id;

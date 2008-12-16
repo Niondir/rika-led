@@ -22,6 +22,14 @@ namespace StoreServer.Data
             set { region = value; }
         }
 
+        public SignData Data
+        {
+            get
+            {
+                return new SignData(id, region.Data);
+            }
+        }
+
         public Sign(SignData sign)
         {
             this.id = sign.Id;
