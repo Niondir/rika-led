@@ -127,13 +127,14 @@ namespace StoreServer
                 Console.ReadKey();
                 return;
             }
-            
 
-            clientHandler = new ClientHandler();
+            DataManager dataManager = new DataManager();
+
+            clientHandler = new ClientHandler(dataManager);
             HttpService httpService = new HttpService("http://127.0.0.1:11000/", clientHandler);
 
 
-            radioManager = new RadioManager(config.ComPort);
+            radioManager = new RadioManager(config.ComPort, dataManager);
             userManager = new ClientManager();
 
             ConsoleHandler consoleHandler = new ConsoleHandler();

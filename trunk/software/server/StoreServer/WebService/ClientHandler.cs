@@ -13,7 +13,8 @@ namespace StoreServer.WebService
     public class ClientHandler : MyXmlRpcListenerService, IRemoteFunctions
     {
 
-        public ClientHandler() : base(new DataManager())
+        public ClientHandler(DataManager dataManager)
+            : base(dataManager)
         {
 
         }
@@ -52,7 +53,7 @@ namespace StoreServer.WebService
         public void Logout(SessionData session)
         {
             Client client = Program.UserManager.GetClient(session, this.RemoteEndPoint);
-            
+
             if (client != null)
                 client.Logout();
         }
@@ -269,21 +270,24 @@ namespace StoreServer.WebService
             Debug.WriteLine("GetProducts()");
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
-            ProductData[] products;
+            List<ProductData> products = new List<ProductData>();
             try
             {
-                products = Product.Load(this.DataManager.Connection);
-                for (int i = 0; i < products.Length; i++)
+                int i = 0;
+                foreach (Product p in Product.Load(this.DataManager.Connection))
                 {
-                    Debug.WriteLine("Produkt name "+i+": " + products[i].Name);
+                    i++;
+                    products.Add(p.Data);
+                    Debug.WriteLine("Produkt name " + i + ": " + p.Name);
                 }
+
             }
             catch (Exception ex)
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
             }
 
-            return products;
+            return products.ToArray();
         }
 
         public SignData[] GetSigns(SessionData session, RegionData region)
