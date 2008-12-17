@@ -83,6 +83,9 @@ namespace StoreServer
                     case "addregion":
                         Program.ClientHandler.AddRegion(session, new RegionData(1, "foobar"));
                         break;
+                    case "addproduct":
+                        Program.ClientHandler.AddProduct(session, new ProductData(new SignData(int.Parse(tokens[1]), new RegionData(1234, "testregion")), tokens[2], double.Parse(tokens[3])));
+                        break;
                     case "address":
                         Program.RadioManager.Destination = tokens[1];
                         break;

@@ -13,8 +13,8 @@ using StoreServer.Radio;
 using System.Data;
 using System.Xml;
 /* TODO:
- * - XML Configdatei nutzen
- * -- XMLSchema definieren. Siehe: DataTable
+ * Regelmäßig DB auslesen und über Seriell senden
+ * 
  * 
  * sign id 0 bedeutet Einkaufswagen!
  * */
