@@ -41,7 +41,7 @@ namespace StoreServer.Radio
 
             this.dataManager = dataManager;
 
-            sendTimer = new Timer(sendTimerCallback, null, 0, 1000);            
+            sendTimer = new Timer(sendTimerCallback, null, 0, 5000);            
 
             try
             {
