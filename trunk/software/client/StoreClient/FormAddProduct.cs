@@ -22,6 +22,8 @@ namespace StoreClient
         private void SetRegions()
         {
             regions = Connection.GetInstance().GetRegions();
+            if (regions == null)
+                return;
             comboBoxGroup.Items.Clear();
             foreach (RegionData i in regions)
             {
