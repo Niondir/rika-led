@@ -1,0 +1,28 @@
+CAM-Ausgabe für AktuellesProjekt groupmouse.T3001
+Ausgabe am 02. Sep 2008, 14:07h
+AktuellesProjekt erzeugt mit TARGET 13.5.0.115 smart
+Ausgabe erzeugt mit PCBout V13.5.0.115
+LIEFERANSCHRIFT:
+  
+  
+  
+  D- 
+  Tel: 
+  FAX: 
+  eMail: @
+Größe der Platine: 55,245 mm x 76,2 mm
+
+Folgend die Beschreibung der erzeugten Dateien:
+
+groupmouse.Top = 16 = Kupfer oben L2   ( *.Top )
+groupmouse.Bot = 2 = Kupfer unten L1   ( *.Bot )
+groupmouse.Tool = Bohrerliste
+groupmouse.Drill = Durchkontaktierte Bohrungen
+groupmouse.Outline = 23 = Platinen-Umriss   ( *.Outline )
+groupmouse.StopTop = 18 = Lötstoppmaske oben   ( *.StopTop )
+groupmouse.StopBot = 4 = Lötstoppmaske unten   ( *.StopBot )
+groupmouse.PosiTop = 21 = Bestückungsdruck oben   ( *.PosiTop )
+groupmouse.PosiBot = 7 = Bestückungsdruck unten   ( *.PosiBot )
+groupmouse.Apr = TARGET 3001! Blendenliste
+groupmouse.Whl = Eagle kompatible Blendenliste
+
