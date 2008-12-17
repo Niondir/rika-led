@@ -5,10 +5,11 @@ using StoreServer.Data;
 
 namespace StoreServer.Radio
 {
+    // TODO: Rename to: SetPricePacket
     public class SetTextPacket : LampPacket
     {
         public SetTextPacket(Product product)
-            : base(LampCommand.SetText, product.Sign.Id.ToString("0000"), product.Name + ": " + product.Price.ToString())
+            : base(LampCommand.SetText, product.Sign.Id.ToString("0000"), product.Name, product.Price.ToString())
         {
         }
     }
