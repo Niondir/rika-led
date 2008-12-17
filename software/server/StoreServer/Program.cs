@@ -114,7 +114,7 @@ namespace StoreServer
                 Console.WriteLine("Server: Unix environment detected");
             }
 
-            Config config;
+            Config config = new Config();
 
             try
             {
@@ -128,7 +128,7 @@ namespace StoreServer
                 return;
             }
 
-            DataManager dataManager = new DataManager();
+            DataManager dataManager = new DataManager(config);
 
             clientHandler = new ClientHandler(dataManager);
             HttpService httpService = new HttpService("http://127.0.0.1:11000/", clientHandler);
@@ -146,7 +146,7 @@ namespace StoreServer
                 {
                     httpService.Slice();
                     consoleHandler.Slice();
-                    Console.WriteLine("--- New round! ---");
+                    Console.WriteLine("--- MainLoop ---");
                     
                 }
 

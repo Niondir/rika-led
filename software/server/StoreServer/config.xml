@@ -1,3 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	<ComPort>COM3</ComPort>
+	<SQLDriver>{MySQL ODBC 3.51 Driver}</SQLDriver>
+	<SQLServer>localhost</SQLServer>
+	<SQLDatabase>rika</SQLDatabase>
+	<SQLUser>root</SQLUser>
+	<SQLPassword></SQLPassword>
 </Config>

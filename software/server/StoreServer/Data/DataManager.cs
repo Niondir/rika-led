@@ -16,14 +16,14 @@ namespace StoreServer.Data
             get { return connection; }
         }
 
-        public DataManager()
+        public DataManager(Config cfg)
         {
             OdbcConnectionStringBuilder sb = new OdbcConnectionStringBuilder();
-            sb.Driver = "{MySQL ODBC 3.51 Driver}";
-            sb.Add("Server", "localhost");
-            sb.Add("Database", "rika");
-            sb.Add("User", "root");
-            sb.Add("Password", "");
+            sb.Driver = cfg.SQLDriver; // {MySQL ODBC 3.51 Driver}
+            sb.Add("Server", cfg.SQLServer);
+            sb.Add("Database", cfg.SQLDatabase);
+            sb.Add("User", cfg.SQLUser);
+            sb.Add("Password", cfg.SQLPassword);
             sb.Add("Option", "3");
             //Debug.WriteLine(sb.ConnectionString);
             connection = new OdbcConnection(sb.ToString());

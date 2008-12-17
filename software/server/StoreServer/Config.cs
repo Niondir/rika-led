@@ -12,6 +12,9 @@ namespace StoreServer
         [XmlElement("ComPort")]
         public string ComPort { get; set; }
 
+        [XmlElement("SQLDriver")]
+        public string SQLDriver { get; set; }
+
         [XmlElement("SQLServer")]
         public string SQLServer { get; set; }
 
@@ -27,10 +30,12 @@ namespace StoreServer
         public Config()
         {
             this.ComPort = "NONE";
+            this.SQLDriver = "{MySQL ODBC 3.51 Driver}";
+            this.SQLServer = "localhost";
             this.SQLDatabase = "ledcom";
             this.SQLUser = "user";
             this.SQLPassword = "password";
-            this.SQLServer = "localhost";
+            
         }
 
         public static void Save() 
