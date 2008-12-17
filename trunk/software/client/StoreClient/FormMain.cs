@@ -122,7 +122,10 @@ namespace StoreClient
                     ((ucLogin)(panelMain.Controls[0])).PerformLogin();
             }
             else
+            {
                 connection.Logout();
+                CurrWindow = DisplayWindow.Login;
+            }
         }
 
     }

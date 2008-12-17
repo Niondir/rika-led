@@ -40,6 +40,7 @@
             this.buttonNewGroup = new System.Windows.Forms.Button();
             this.textBoxNumber = new System.Windows.Forms.TextBox();
             this.textBoxPrice = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -121,6 +122,7 @@
             // 
             // buttonCancel
             // 
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(13, 229);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
@@ -152,8 +154,19 @@
             // 
             this.textBoxPrice.Location = new System.Drawing.Point(57, 184);
             this.textBoxPrice.Name = "textBoxPrice";
-            this.textBoxPrice.Size = new System.Drawing.Size(215, 20);
+            this.textBoxPrice.Size = new System.Drawing.Size(192, 20);
             this.textBoxPrice.TabIndex = 4;
+            this.textBoxPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(255, 185);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(16, 16);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "€";
             // 
             // FormAddProduct
             // 
@@ -162,6 +175,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(284, 264);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.textBoxPrice);
             this.Controls.Add(this.textBoxNumber);
             this.Controls.Add(this.buttonNewGroup);
@@ -197,5 +211,6 @@
         private System.Windows.Forms.Button buttonNewGroup;
         private System.Windows.Forms.TextBox textBoxNumber;
         private System.Windows.Forms.TextBox textBoxPrice;
+        private System.Windows.Forms.Label label5;
     }
 }
