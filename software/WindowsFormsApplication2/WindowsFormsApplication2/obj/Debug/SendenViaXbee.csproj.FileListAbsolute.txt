@@ -1,2 +1,0 @@
-C:\Dokumente und Einstellungen\Vince\Desktop\hierhin\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.exe
-C:\Dokumente und Einstellungen\Vince\Desktop\hierhin\WindowsFormsApplication2\WindowsFormsApplication2\obj\Debug\WindowsFormsApplication2.pdb
