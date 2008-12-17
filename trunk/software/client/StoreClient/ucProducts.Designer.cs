@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucProducts));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucProducts));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.GridProducts = new OutlookStyleControls.OutlookGrid();
             this.toolStripButtonFilterGroups = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonPNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonPEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonPDelete = new System.Windows.Forms.ToolStripButton();
-            this.GridProducts = new OutlookStyleControls.OutlookGrid();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GridProducts)).BeginInit();
             this.SuspendLayout();
@@ -59,61 +59,10 @@
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip1";
             // 
-            // toolStripButtonFilterGroups
-            // 
-            this.toolStripButtonFilterGroups.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonFilterGroups.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonFilterGroups.Image")));
-            this.toolStripButtonFilterGroups.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonFilterGroups.Name = "toolStripButtonFilterGroups";
-            this.toolStripButtonFilterGroups.Size = new System.Drawing.Size(29, 22);
-            this.toolStripButtonFilterGroups.Text = "toolStripDropDownButton1";
-            this.toolStripButtonFilterGroups.ToolTipText = "Produktgruppen filtern";
-            // 
-            // toolStripButtonRefresh
-            // 
-            this.toolStripButtonRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRefresh.Image")));
-            this.toolStripButtonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRefresh.Name = "toolStripButtonRefresh";
-            this.toolStripButtonRefresh.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonRefresh.Text = "toolStripButton1";
-            this.toolStripButtonRefresh.ToolTipText = "Aktualisieren";
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonPNew
-            // 
-            this.toolStripButtonPNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPNew.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPNew.Image")));
-            this.toolStripButtonPNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPNew.Name = "toolStripButtonPNew";
-            this.toolStripButtonPNew.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonPNew.Text = "toolStripButton1";
-            this.toolStripButtonPNew.ToolTipText = "Neues Produkt hinzufügen";
-            this.toolStripButtonPNew.Click += new System.EventHandler(this.toolStripButtonPNew_Click);
-            // 
-            // toolStripButtonPEdit
-            // 
-            this.toolStripButtonPEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPEdit.Image")));
-            this.toolStripButtonPEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPEdit.Name = "toolStripButtonPEdit";
-            this.toolStripButtonPEdit.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonPEdit.Text = "toolStripButton2";
-            this.toolStripButtonPEdit.ToolTipText = "Ausgewähltes Produkt bearbeiten";
-            // 
-            // toolStripButtonPDelete
-            // 
-            this.toolStripButtonPDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPDelete.Image")));
-            this.toolStripButtonPDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPDelete.Name = "toolStripButtonPDelete";
-            this.toolStripButtonPDelete.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonPDelete.Text = "toolStripButton3";
-            this.toolStripButtonPDelete.ToolTipText = "Ausgewähltes Produkt löschen";
             // 
             // GridProducts
             // 
@@ -154,6 +103,57 @@
             this.GridProducts.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.GridProducts.Size = new System.Drawing.Size(809, 511);
             this.GridProducts.TabIndex = 1;
+            // 
+            // toolStripButtonFilterGroups
+            // 
+            this.toolStripButtonFilterGroups.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonFilterGroups.Image = global::StoreClient.Properties.Resources._33;
+            this.toolStripButtonFilterGroups.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonFilterGroups.Name = "toolStripButtonFilterGroups";
+            this.toolStripButtonFilterGroups.Size = new System.Drawing.Size(29, 22);
+            this.toolStripButtonFilterGroups.Text = "toolStripDropDownButton1";
+            this.toolStripButtonFilterGroups.ToolTipText = "Produktgruppen filtern";
+            // 
+            // toolStripButtonRefresh
+            // 
+            this.toolStripButtonRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRefresh.Image")));
+            this.toolStripButtonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRefresh.Name = "toolStripButtonRefresh";
+            this.toolStripButtonRefresh.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonRefresh.Text = "Aktualisieren";
+            this.toolStripButtonRefresh.ToolTipText = "Aktualisieren";
+            // 
+            // toolStripButtonPNew
+            // 
+            this.toolStripButtonPNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPNew.Image = global::StoreClient.Properties.Resources._23;
+            this.toolStripButtonPNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPNew.Name = "toolStripButtonPNew";
+            this.toolStripButtonPNew.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonPNew.Text = "Neues Produkt erstellen";
+            this.toolStripButtonPNew.ToolTipText = "Neues Produkt hinzufügen";
+            this.toolStripButtonPNew.Click += new System.EventHandler(this.toolStripButtonPNew_Click);
+            // 
+            // toolStripButtonPEdit
+            // 
+            this.toolStripButtonPEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPEdit.Image = global::StoreClient.Properties.Resources._24;
+            this.toolStripButtonPEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPEdit.Name = "toolStripButtonPEdit";
+            this.toolStripButtonPEdit.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonPEdit.Text = "Ausgewähltes Produkt bearbeiten";
+            this.toolStripButtonPEdit.ToolTipText = "Ausgewähltes Produkt bearbeiten";
+            // 
+            // toolStripButtonPDelete
+            // 
+            this.toolStripButtonPDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPDelete.Image = global::StoreClient.Properties.Resources._12;
+            this.toolStripButtonPDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPDelete.Name = "toolStripButtonPDelete";
+            this.toolStripButtonPDelete.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonPDelete.Text = "Ausgewähltes Produkt löschen";
+            this.toolStripButtonPDelete.ToolTipText = "Ausgewähltes Produkt löschen";
             // 
             // ucProducts
             // 
