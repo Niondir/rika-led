@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verbindungHerstellenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,25 +42,25 @@
             this.benutzerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelMain = new System.Windows.Forms.Panel();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripConnectionStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.menuStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.menuStrip.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // menuStrip
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dateiToolStripMenuItem,
             this.einstellungenToolStripMenuItem,
             this.fensterToolStripMenuItem,
             this.hilfeToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(823, 24);
-            this.menuStrip1.TabIndex = 3;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(823, 24);
+            this.menuStrip.TabIndex = 3;
+            this.menuStrip.Text = "menuStrip1";
             // 
             // dateiToolStripMenuItem
             // 
@@ -155,16 +155,16 @@
             this.panelMain.Size = new System.Drawing.Size(823, 482);
             this.panelMain.TabIndex = 4;
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripConnectionStatus,
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 506);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(823, 22);
-            this.statusStrip1.TabIndex = 5;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip.Location = new System.Drawing.Point(0, 506);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(823, 22);
+            this.statusStrip.TabIndex = 5;
+            this.statusStrip.Text = "statusStrip1";
             // 
             // toolStripConnectionStatus
             // 
@@ -172,11 +172,13 @@
             this.toolStripConnectionStatus.Size = new System.Drawing.Size(72, 17);
             this.toolStripConnectionStatus.Text = "Verbindung:";
             this.toolStripConnectionStatus.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripConnectionStatus.Visible = false;
             // 
             // toolStripProgressBar1
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+            this.toolStripProgressBar1.Visible = false;
             // 
             // FormMain
             // 
@@ -184,16 +186,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(823, 528);
             this.Controls.Add(this.panelMain);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.menuStrip);
+            this.MainMenuStrip = this.menuStrip;
             this.MinimumSize = new System.Drawing.Size(230, 150);
             this.Name = "FormMain";
             this.Text = "iShop";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,7 +203,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem verbindungHerstellenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem beendenToolStripMenuItem;
@@ -215,7 +217,7 @@
         private System.Windows.Forms.ToolStripMenuItem werbungToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem benutzerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hilfeToolStripMenuItem;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripConnectionStatus;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
     }

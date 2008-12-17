@@ -85,7 +85,10 @@ namespace StoreClient
         {
             FormAddRegion addReg = new FormAddRegion();
             if (addReg.ShowDialog() == DialogResult.OK)
+            {
+                System.Threading.Thread.Sleep(200);
                 SetRegions();
+            }
         }
     }
 }
