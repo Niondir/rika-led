@@ -153,13 +153,14 @@
             this.textBoxPrice.Location = new System.Drawing.Point(57, 184);
             this.textBoxPrice.Name = "textBoxPrice";
             this.textBoxPrice.Size = new System.Drawing.Size(215, 20);
-            this.textBoxPrice.TabIndex = 15;
+            this.textBoxPrice.TabIndex = 4;
             // 
             // FormAddProduct
             // 
             this.AcceptButton = this.buttonAccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(284, 264);
             this.Controls.Add(this.textBoxPrice);
             this.Controls.Add(this.textBoxNumber);

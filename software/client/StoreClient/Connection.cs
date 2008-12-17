@@ -81,5 +81,10 @@ namespace StoreClient
         {
             remote.AddProduct(session, productData);
         }
+
+        internal ProductData[] GetProducts()
+        {
+            return remote.GetProducts(session);
+        }
     }
 }
