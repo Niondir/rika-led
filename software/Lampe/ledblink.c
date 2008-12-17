@@ -68,14 +68,12 @@ ISR(USART_RXC_vect)
     cli();
 	PORTD=PIND+(1<<5);
    	if(uart_getc()=='<'){
-		PORTD=PIND+(1<<5);
 		command=uart_getc();
 		uart_getc();
 		switch (command) {
 		
 		// 1: Schild
-			case '1': {
-					PORTD=PIND+(1<<5);		
+			case '1': {	
 					uart_gets(schildinc, 100);
 					for(int k=0; k<Schildslotsused; k++){
 						for(int j=0; j<SCHILDIDBYTES; j++){
@@ -252,9 +250,9 @@ while (1)
 		if(Schildslotsused!=0) nextSchildShowslot=(nextSchildShowslot+1)%Schildslotsused;
 		_delay_ms(CYCLEDELAY);
 
-// DEBUG
+#ifdef DEBUG
 		sprintf(tempstring, "  nextSchildOverwriteslot=%d;nextSchildShowslot=%d;Schildslotsused=%d; \r\n", nextSchildOverwriteslot, nextSchildShowslot, Schildslotsused);		
 		uartSW_puts(tempstring);
-//#endif
+#endif
       };
 }
