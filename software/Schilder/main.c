@@ -44,6 +44,10 @@ int main(void)
   DDRD|= 1<<PD5; //LED1
   CLR_LED1;;
 
+  //Cursor nicht anzeigen cmd:
+  uartSW_putc(27);
+  uartSW_putc('C');
+  uartSW_putc(0);
 
   while(1)
   {
@@ -92,8 +96,10 @@ int main(void)
 	else i++;
    }
 
-	uartSW_putc(12); //clear display
-	uartSW_puts("ID: ");
+
+	//uartSW_putc(12); //clear display
+
+	uartSW_puts("Schild-ID: ");
 	uartSW_puts(anzg.ID);
 	uartSW_puts("\r\n");
 	uartSW_puts("Text1: ");
@@ -102,6 +108,7 @@ int main(void)
 	uartSW_puts("Text2: ");
 	uartSW_puts(anzg.Text2);
 	uartSW_puts("\r\n");
+  
 
   }
   return 0;
