@@ -23,6 +23,7 @@ namespace StoreClient
                 int res;
                 int.TryParse(textBox2.Text, out res);
                 Connection.GetInstance().Add(new RegionData(res, textBox1.Text));
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
         }
