@@ -1,0 +1,17 @@
+D010    draw      0.00591
+D011    draw      0.00768
+D012    draw      0.00787
+D013    draw      0.01024
+D014    draw      0.01181
+D015    draw      0.03150
+D016    square    0.05118
+D017    rectangle 0.05118 x 0.14173
+D018    rectangle 0.07874 x 0.10236
+D019    rectangle 0.09843 x 0.00984
+D020    rectangle 0.09843 x 0.05000
+D021    octagon   0.04724
+D022    octagon   0.05512
+D023    octagon   0.05906
+D024    octagon   0.06693
+D025    octagon   0.07087
+D026    oval      0.09843 x 0.05000
