@@ -24,6 +24,7 @@ Data Stack size     : 256
 #define ADBUFFERMAXSLOTS 0
 #define SCHILDBUFFERMAXSLOTS 3
 #define SCHILDIDBYTES 4
+#define CYCLEDELAY 1000
 //#define DEBUG
 
 #include <avr/io.h>
@@ -249,11 +250,10 @@ while (1)
 		uartSW_puts(&schildbuffer[nextSchildShowslot][0]);
 		if(Schildslotsused) uartSW_putc('>');
 		if(Schildslotsused!=0) nextSchildShowslot=(nextSchildShowslot+1)%Schildslotsused;
-
+		_delay_ms(CYCLEDELAY);
 
 // DEBUG
-		sprintf(tempstring, "  nextSchildOverwriteslot=%d;nextSchildShowslot=%d;Schildslotsused=%d; \r\n", nextSchildOverwriteslot, nextSchildShowslot, Schildslotsused);
-		_delay_ms(1000);		
+		sprintf(tempstring, "  nextSchildOverwriteslot=%d;nextSchildShowslot=%d;Schildslotsused=%d; \r\n", nextSchildOverwriteslot, nextSchildShowslot, Schildslotsused);		
 		uartSW_puts(tempstring);
 //#endif
       };

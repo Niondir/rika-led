@@ -32,6 +32,13 @@ int uartSW_getc_nowait();
 int uartSW_getc_wait();
 void uartSW_puts (char *s);
 
+/*     TOBIMODE
+#define SUART_TXD_PORT PORTC
+#define SUART_TXD_DDR DDRC
+#define SUART_TXD_BIT PC5
+*/	
+
+
 #ifdef SUART_TXD
     #define SUART_TXD_PORT PORTB
     #define SUART_TXD_DDR  DDRB
