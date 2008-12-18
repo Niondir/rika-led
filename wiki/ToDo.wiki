@@ -6,6 +6,11 @@
   * Alle Fehler abfangen
   * Traces sinnvoll darstellen
 
+== Kasse ==
+  * Default Account am server anmelden
+  * Empfangen der Traces über Funk (kommt 3 mal an!)
+  * Senden der Traces an Server
+
 == Server ==
   * Alle Interfaces der API implementieren
   * LampenID berücksichtigen
@@ -27,6 +32,7 @@
   * Escape Sequenz
   * Verifizierung aller externen Daten
   * Checksumme für die Packete
+  * ShowDefaultText
 
 === Features ===
   * Scrooling Text (mehr als 4 Zeilen)
@@ -37,14 +43,15 @@
   * Verifizierung aller externen Daten
   * Trace speichern
   * SendTrace
-  * 
+  * ShowDefaultText
+  * Beim hochfahren: DefaultText anzeigen
+  * Escape Sequenzen können
+  * Checksum implementieren
 
 
+= Checksum =
+  * <sign|cmd|params>
+  * <lamp|sign|cmd|params>
 
-<sign|cmd|params>
-
-<lamp|sign|cmd|params>
-
-Checksum:
-
-sign|cmd|params
+  * Checksum über:
+  * sign|cmd|params
