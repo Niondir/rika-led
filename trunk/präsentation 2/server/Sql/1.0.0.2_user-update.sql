@@ -1,0 +1,1 @@
+ALTER TABLE `rika`.`led_users` ADD UNIQUE INDEX `uniqe_login`(`login`);

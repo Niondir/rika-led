@@ -135,7 +135,7 @@ namespace StoreServer.Data
                 }
             }
 
-            BuildDatabase(version);
+            BuildDatabase(ref version);
 
         }
 
@@ -143,15 +143,13 @@ namespace StoreServer.Data
         /// Erstelle die Datenbank aus den SQL Dateien
         /// </summary>
         /// <param name="version"></param>
-        private void BuildDatabase(Version version)
+        private void BuildDatabase(ref Version version)
         {
             string dir = Program.BaseDirectory + "/sql";
             if (!Directory.Exists(dir))
                 return;
 
-
             SortedDictionary<string, Version> files = new SortedDictionary<string, Version>();
-            
 
             foreach (string f in Directory.GetFiles(dir))
             {
@@ -159,7 +157,9 @@ namespace StoreServer.Data
                 Version fileversion = new Version(file.Split('_')[0]);
                 if (fileversion > version)
                 {
+                    //Debug.WriteLine("fileversion = " + fileversion.ToString());
                     files.Add(f, fileversion);
+                    
                 }
             }
 
@@ -188,13 +188,18 @@ namespace StoreServer.Data
                         command.ExecuteNonQuery();
                     }
 
-                    OdbcCommandBuilder cb = new OdbcCommandBuilder();
+
+                    if (files[f] > version)
+                        version = files[f];
+
                     command.CommandText = "UPDATE `rika`.`led_informations` SET `value` = ? WHERE `key` = 'version';";
-                    //command.Parameters.AddWithValue("?version?", files[f].ToString());
-                    command.Parameters.Add("version", OdbcType.VarChar).Value = files[f].ToString();
+                    command.Parameters.Add("version", OdbcType.VarChar).Value = version.ToString();
                     command.ExecuteNonQuery();
+                    command.Parameters.Clear();
+                    Debug.WriteLine("Database updated to Version: " + version.ToString());
 
                     command.Transaction.Commit();
+
                 }
                 catch (Exception ex)
                 {
@@ -202,7 +207,10 @@ namespace StoreServer.Data
                     command.Transaction.Rollback();
                     Console.WriteLine(ex.Message);
                 }
+
+                
             }
+
         }
 
         public void AddUser(UserData user)
