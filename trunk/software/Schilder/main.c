@@ -49,6 +49,7 @@ int main(void)
   uartSW_putc('C');
   uartSW_putc(0);
 
+
   while(1)
   {
      
@@ -98,16 +99,19 @@ int main(void)
 
 
 	//uartSW_putc(12); //clear display
-
-	uartSW_puts("Schild-ID: ");
+  if(anzg.ID[0]=='0' && anzg.ID[1]=='0' && anzg.ID[2]=='0' && anzg.ID[3] =='1'){
+	uartSW_puts("\r\n");
+	uartSW_puts("ID: ");
 	uartSW_puts(anzg.ID);
 	uartSW_puts("\r\n");
-	uartSW_puts("Text1: ");
+	uartSW_puts("\r\n");
 	uartSW_puts(anzg.Text1);
 	uartSW_puts("\r\n");
-	uartSW_puts("Text2: ");
 	uartSW_puts(anzg.Text2);
-	uartSW_puts("\r\n");
+	uartSW_puts(" EUR");
+  }
+
+//	uartSW_puts("\r\n");
   
 
   }
