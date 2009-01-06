@@ -64,16 +64,17 @@ char adbuffer[ADBUFFERMAXSLOTS][100];
 
 ISR(USART_RXC_vect)
 {
+
    // Code to be executed when the USART receives a byte here
     cli();
-	PORTD=PIND+(1<<5);
+	PORTD=PIND^(~5<<(PIND5));
    	if(uart_getc()=='<'){
 		command=uart_getc();
 		uart_getc();
 		switch (command) {
 		
 		// 1: Schild
-			case '1': {	
+			case '2': {	
 					uart_gets(schildinc, 100);
 					for(int k=0; k<Schildslotsused; k++){
 						for(int j=0; j<SCHILDIDBYTES; j++){
@@ -102,14 +103,16 @@ ISR(USART_RXC_vect)
 
 
 		// 2: Ad
-			case '2':	break;
-		// 3: SendTrace
 			case '3':	break;
-		// 4: ClearBuffers
+		// 3: SendTrace
 			case '4':	break;
+		// 4: ClearBuffers
+			case '5':	break;
 		}
 		sei();
 	}
+	PORTD=PIND^(~5<<(PIND5));
+
 } 
 
 
@@ -153,11 +156,13 @@ void main(void)
 PORTB=0x00;
 DDRB=0x04;
 
+
 // Port C initialization
 // Func6=In Func5=In Func4=In Func3=In Func2=In Func1=In Func0=In 
 // State6=T State5=T State4=T State3=T State2=T State1=T State0=T 
 PORTC=0x00;
-DDRC=0x00;
+DDRC=0xFF;
+
 
 // Port D initialization
 // Func7=Out Func6=Out Func5=Out Func4=In Func3=In Func2=In Func1=Out Func0=In 
@@ -238,7 +243,7 @@ UBRRL=0x0B;
 //#asm("sei")
 sei();
 init_uart();
-uartSW_init(); //software uart
+uartSW_init(); //software uart   
 
 
 
