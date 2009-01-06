@@ -18,7 +18,7 @@ void uart_gets( char* Buffer, uint8_t MaxLen );
 
 
 //Software UART
-#define BAUDRATE 19200
+#define BAUDRATE 9600
 #define nop() __asm volatile ("nop")
 
 #define SUART_TXD
@@ -31,18 +31,24 @@ void uartSW_putc (const char c);
 int uartSW_getc_nowait();
 int uartSW_getc_wait();
 void uartSW_puts (char *s);
-
-/*     TOBIMODE
-#define SUART_TXD_PORT PORTC
-#define SUART_TXD_DDR DDRC
-#define SUART_TXD_BIT PC5
-*/	
+	
 
 
 #ifdef SUART_TXD
+
+     //TOBIMODE
+	 
+#define SUART_TXD_PORT PORTC
+#define SUART_TXD_DDR DDRC
+#define SUART_TXD_BIT PC5
+
+
+//normal mode
+/*
     #define SUART_TXD_PORT PORTB
     #define SUART_TXD_DDR  DDRB
-    #define SUART_TXD_BIT  PB1
+    #define SUART_TXD_BIT  PB1 
+	*/
     static volatile uint16_t outframe;
 #endif // SUART_TXD 
 
