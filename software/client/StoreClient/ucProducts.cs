@@ -38,7 +38,8 @@ namespace StoreClient
 
         void item_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            ((ToolStripMenuItem)sender).Checked = !((ToolStripMenuItem)sender).Checked;
+            GridProducts.Refresh();
         }
 
         private void toolStripButtonPNew_Click(object sender, EventArgs e)
@@ -59,6 +60,20 @@ namespace StoreClient
             foreach (ProductData i in products)
             {
                 GridProducts.Rows.Add(new string[] { i.Name, i.Sign.Id.ToString(), i.Sign.Region.Name, i.Price.ToString() });
+            }
+        }
+
+        private void GridProducts_Paint(object sender, PaintEventArgs e)
+        {
+            foreach (DataGridViewRow i in GridProducts.Rows)
+            {
+                bool visible = true;
+                foreach (ToolStripMenuItem j in toolStripButtonFilterGroups.DropDownItems)
+                {
+                    if (j.Checked == false && (string)i.Cells["Group"].Value == j.Text)
+                        visible = false;
+                }
+                i.Visible = visible;
             }
         }
     }
