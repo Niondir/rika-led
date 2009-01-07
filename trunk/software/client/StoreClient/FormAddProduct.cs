@@ -30,6 +30,11 @@ namespace StoreClient
                 comboBoxGroup.Items.Add(i.Name);
             }
         }
+        private void SetRegions(RegionData selected)
+        {
+            this.SetRegions();
+            comboBoxGroup.SelectedIndex = comboBoxGroup.Items.Count - 1;
+        }
 
         private void buttonAccept_Click(object sender, EventArgs e)
         {
@@ -64,10 +69,30 @@ namespace StoreClient
                 textBoxNumber.BackColor = Color.OrangeRed;
                 errorMsg += i++.ToString() + ". Bitte geben Sie eine gütige Produktnummer ein." + Environment.NewLine;
             }
-            if (comboBoxGroup.SelectedItem == null)
+            if(comboBoxGroup.Text.Length == 0)
+            //if (comboBoxGroup.SelectedItem == null)
             {
                 comboBoxGroup.BackColor = Color.OrangeRed;
                 errorMsg += i++.ToString() + ". Bitte wählen Sie eine Produktgruppe." + Environment.NewLine;
+            }
+            if (comboBoxGroup.SelectedIndex == -1 && comboBoxGroup.Text.Length > 0)
+            {
+                if (MessageBox.Show("Die Warengruppe \"" + comboBoxGroup.Text + "\" existiert nicht, soll sie nun erstellt werden?", "Neue Gruppe erstellen?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    FormAddRegion f = new FormAddRegion(comboBoxGroup.Text);
+                    if (f.ShowDialog() == DialogResult.OK)
+                        SetRegions(f.Region);
+                    else
+                    {
+                        comboBoxGroup.BackColor = Color.OrangeRed;
+                        errorMsg += i++.ToString() + ". Bitte wählen Sie eine Produktgruppe." + Environment.NewLine;
+                    }
+                }
+                else
+                {
+                    comboBoxGroup.BackColor = Color.OrangeRed;
+                    errorMsg += i++.ToString() + ". Bitte wählen Sie eine Produktgruppe." + Environment.NewLine;
+                }
             }
 
             if (errorMsg.Length > 0)
@@ -89,7 +114,7 @@ namespace StoreClient
             if (addReg.ShowDialog() == DialogResult.OK)
             {
                 System.Threading.Thread.Sleep(200);
-                SetRegions();
+                SetRegions(addReg.Region);
             }
         }
     }
