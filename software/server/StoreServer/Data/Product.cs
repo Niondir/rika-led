@@ -90,5 +90,14 @@ namespace StoreServer.Data
 
             return products;
         }
+
+        public void Save(OdbcConnection connection)
+        {
+            OdbcCommand command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM led_products WHERE id = ?";
+            command.Parameters.AddWithValue("id", this.sign.Id);
+
+            command.ExecuteNonQuery();
+        }
     }
 }
