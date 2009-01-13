@@ -151,7 +151,16 @@ namespace StoreServer.WebService
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
-            throw new XmlRpcFaultException(1, "Not implemented");
+            Lamp lamp = new Lamp(value);
+
+            try
+            {
+                lamp.Delete(this.DataManager.Connection);
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBWriteError, ex.Message);
+            }
         }
 
         public void DeleteRegion(SessionData session, RegionData value)

@@ -91,7 +91,7 @@ namespace StoreServer.Data
             return products;
         }
 
-        public void Save(OdbcConnection connection)
+        public void Delete(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
             command.CommandText = "DELETE FROM led_products WHERE id = ?";
