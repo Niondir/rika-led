@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{48A78EF4-3ADB-45C8-A820-C5DC003ABDFD}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -48,13 +48,16 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="ConsoleHandler.cs" />
+    <Compile Include="Data\Advertisement.cs" />
     <Compile Include="Data\ClientManager.cs" />
+    <Compile Include="Data\Lamp.cs" />
     <Compile Include="Data\Password.cs" />
     <Compile Include="Data\Product.cs" />
     <Compile Include="Data\Region.cs" />
     <Compile Include="Data\Role.cs" />
     <Compile Include="Data\Session.cs" />
     <Compile Include="Data\Sign.cs" />
+    <Compile Include="Data\Trace.cs" />
     <Compile Include="Data\User.cs" />
     <Compile Include="Data\Client.cs" />
     <Compile Include="Data\DataManager.cs" />
