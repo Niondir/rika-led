@@ -165,6 +165,17 @@ namespace StoreServer.WebService
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
+            Product product = new Product(value);
+
+            try
+            {
+                product.Delete(this.DataManager.Connection);
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBWriteError, ex.Message);
+            }
+
             throw new XmlRpcFaultException(1, "Not implemented");
         }
 
