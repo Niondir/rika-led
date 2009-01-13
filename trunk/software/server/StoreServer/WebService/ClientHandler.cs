@@ -175,8 +175,6 @@ namespace StoreServer.WebService
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.DBWriteError, ex.Message);
             }
-
-            throw new XmlRpcFaultException(1, "Not implemented");
         }
 
         public void DeleteAdvertisement(SessionData session, AdvertisementData value)
