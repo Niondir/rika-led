@@ -13,13 +13,8 @@ checksummen immer über alles bis vor der csum, inklusive "|", ohne "<"
 sendtrace
 <1|csum>
 
-set ad / preis
-server -> lampe
-<2|zielid|text1|text2|text3|text4|csum>
-
-lampe-> schilder
-<2|zielid|text1|text2|text3|text4|lampenid|csum>
-
+set ad
+<2|lampid|text1|text2|text3|text4|csum>
 
 reset lamp buffers
 <3|csum>
@@ -32,3 +27,6 @@ changelampid (für traces)
 
 changeschildid
 <6|zielid|neueid|csum>
+
+set pricetag
+<7|zielid|produktname|preis|csum>
