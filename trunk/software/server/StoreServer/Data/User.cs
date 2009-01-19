@@ -98,7 +98,17 @@ namespace StoreServer.Data
 
         public void Update(OdbcConnection connection, UserData data)
         {
+            // TODO: Not implemented: Update user
+            throw new Exception("Not implemented");
+        }
 
+        public void Delete(OdbcConnection connection)
+        {
+            OdbcCommand command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM led_users WHERE login = ?";
+            command.Parameters.AddWithValue("login", this.username);
+
+            command.ExecuteNonQuery();
         }
 
     }

@@ -94,9 +94,6 @@ namespace StoreServer.Data
             }
         }
 
-        
-
-        // TODO: untested!
         public void Save(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();

@@ -12,8 +12,7 @@ using StoreServer.Radio;
 
 using System.Data;
 using System.Xml;
-/* TODO:
- * Regelmäßig DB auslesen und über Seriell senden
+/* TODO: Program.cs
  * 
  * 
  * sign id 0 bedeutet Einkaufswagen!

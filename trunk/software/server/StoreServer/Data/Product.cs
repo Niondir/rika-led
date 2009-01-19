@@ -57,6 +57,12 @@ namespace StoreServer.Data
             command.ExecuteNonQuery();
         }
 
+        public void Update(OdbcConnection connection, ProductData data)
+        {
+            // TODO: Not Implemented: Update Product
+            throw new Exception("Not implemented");
+        }
+
         public static List<Product> Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
