@@ -100,7 +100,7 @@ namespace StoreServer
                         
                         
                         //s.Text = tokens[2];
-                        Program.RadioManager.Send(new SetTextPacket(product));
+                        Program.RadioManager.Send(new SetPricePacket(product));
                         break;
                     default:
                         Console.WriteLine("Unknown Command");

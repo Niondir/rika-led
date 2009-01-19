@@ -46,6 +46,12 @@ namespace StoreServer.Data
             command.ExecuteNonQuery();
         }
 
+        public void Update(OdbcConnection connection, RegionData data)
+        {
+            // TODO: Not Implemented: Region Update
+            throw new Exception("Not implemented");
+        }
+
         public static RegionData[] Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -61,6 +67,15 @@ namespace StoreServer.Data
             }
 
             return regions.ToArray();
+        }
+
+        public void Delete(OdbcConnection connection)
+        {
+            OdbcCommand command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM led_regions WHERE id = ?";
+            command.Parameters.AddWithValue("id", this.id);
+
+            command.ExecuteNonQuery();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using CommunicationAPI;
 using CommunicationAPI.DataTypes;
+using System.Data.Odbc;
 
 namespace StoreServer.Data
 {
@@ -48,6 +49,30 @@ namespace StoreServer.Data
         public bool HasFlags(AccessFlags flags)
         {
             return (this.flags & (int)flags) == (int)flags;
+        }
+
+        public void Save(OdbcConnection connection)
+        {
+            // TODO: Not implemented: Save Role
+            throw new Exception("Not implemented");
+        }
+
+        public void Update(OdbcConnection connection, RoleData data)
+        {
+            // TODO: Not implemented: Update Role
+            throw new Exception("Not implemented");
+        }
+
+        public static List<Role> Load(OdbcConnection connection)
+        {
+            // TODO: Not implemented: Load Role
+            throw new Exception("Not implemented");
+        }
+
+        public void Delete(OdbcConnection connection)
+        {
+            // TODO: Not implemented: Delete Role
+            throw new Exception("Not implemented");
         }
     }
 }

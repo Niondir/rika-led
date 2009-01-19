@@ -48,9 +48,7 @@ namespace StoreServer.Data
              * 
              * */
 
-            /* TODO:
-             * - Interface für die Datenbankzugriffe definieren
-             * - Abstrakte Datenobjekte für die Schnitstelle
+            /* TODO: Interface für die Datenbankzugriffe definieren
              * 
              * */
 

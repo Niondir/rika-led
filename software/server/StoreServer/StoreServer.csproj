@@ -70,7 +70,8 @@
     <Compile Include="Radio\RadioManager.cs" />
     <Compile Include="Radio\SendTracePacket.cs" />
     <Compile Include="Radio\SerialPacket.cs" />
-    <Compile Include="Radio\SetTextPacket.cs" />
+    <Compile Include="Radio\SetAdPacket.cs" />
+    <Compile Include="Radio\SetPricePacket.cs" />
     <Compile Include="WebService\ClientHandler.cs" />
     <Compile Include="WebService\MyXmlRpcListenerService.cs" />
     <Compile Include="WebService\WebServiceEvents.cs" />
@@ -92,13 +93,16 @@
     <None Include="Sql\1.0.0.2_user-update.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Sql\1.0.0.3_products.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Sql\1.0.0.4_username.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sql\1.0.0.3_products.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

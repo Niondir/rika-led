@@ -17,7 +17,5 @@ namespace StoreServer
             Console.WriteLine(value);
 #endif
         }
-
-        
     }
 }
