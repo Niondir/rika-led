@@ -19,8 +19,8 @@ set ad
 reset lamp buffers
 <3|csum>
 
-delete sign
-<4|zielid|csum>
+//delete sign
+//<4|zielid|csum>
 
 changelampid (für traces)
 <5|neuelampenid|csum>
