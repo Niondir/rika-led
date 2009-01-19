@@ -1,0 +1,34 @@
+#pakete server->lampe  bzw lampe->schilder
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+
+checksummen immer über alles bis vor der csum, inklusive "|", ohne "<"
+
+sendtrace
+<1|csum>
+
+set ad / preis
+server -> lampe
+<2|zielid|text1|text2|text3|text4|csum>
+
+lampe-> schilder
+<2|zielid|text1|text2|text3|text4|lampenid|csum>
+
+
+reset lamp buffers
+<3|csum>
+
+delete sign
+<4|zielid|csum>
+
+changelampid (für traces)
+<5|neuelampenid|csum>
+
+changeschildid
+<6|zielid|neueid|csum>
