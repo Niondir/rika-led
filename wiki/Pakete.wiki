@@ -11,8 +11,8 @@ Add your content here.
 checksummen immer über alles bis vor der csum, inklusive "|", ohne "<"
 
 sendtrace
-<1|csum>
-
+<1|anaus|csum>    anaus=1 -> lampe schickt "schicktraceraus" an wagen, 0 -> tuts nicht
+ 
 set ad
 <2|lampid|text1|text2|text3|text4|csum>
 
