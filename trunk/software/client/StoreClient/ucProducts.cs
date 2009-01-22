@@ -76,5 +76,13 @@ namespace StoreClient
                 i.Visible = visible;
             }
         }
+
+        private void toolStripButtonPDelete_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow i in GridProducts.SelectedRows)
+            {
+                Connection.GetInstance().DeleteProduct(Convert.ToInt32(i.Cells["ProductID"].Value));
+            }
+        }
     }
 }
