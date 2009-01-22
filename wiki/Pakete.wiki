@@ -19,14 +19,14 @@ set ad
 reset lamp buffers
 <3|csum>
 
-//delete sign
-//<4|zielid|csum>
+toggle ad / pricetag
+<4|param|csum> param 0: ad  param 1: pricetag
 
 changelampid (für traces)
 <5|neuelampenid|csum>
 
-changeschildid
-<6|zielid|neueid|csum>
+//changeschildid
+//<6|zielid|neueid|csum>
 
 set pricetag
 <7|zielid|produktname|preis|csum>
