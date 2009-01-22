@@ -11,7 +11,7 @@ namespace StoreClient
 {
     public partial class FormAddRegion : Form
     {
-        public RegionData Region { get { return region; } }
+        public RegionData NewRegion { get { return region; } }
         private RegionData region;
 
         public FormAddRegion()

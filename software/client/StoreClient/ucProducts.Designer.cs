@@ -115,6 +115,7 @@
             this.toolStripButtonPDelete.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonPDelete.Text = "Ausgewähltes Produkt löschen";
             this.toolStripButtonPDelete.ToolTipText = "Ausgewähltes Produkt löschen";
+            this.toolStripButtonPDelete.Click += new System.EventHandler(this.toolStripButtonPDelete_Click);
             // 
             // GridProducts
             // 

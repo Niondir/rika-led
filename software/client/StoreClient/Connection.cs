@@ -86,5 +86,10 @@ namespace StoreClient
         {
             return remote.GetProducts(session);
         }
+
+        internal void DeleteProduct(int id)
+        {
+            remote.DeleteProduct(session, new ProductData(new SignData(id, new RegionData(0, "")), "", 0));
+        }
     }
 }
