@@ -9,15 +9,17 @@ namespace StoreServer.Radio
     {
         protected Byte[] sendBytes;
 
-        public void Send(SerialPort port)
+        public bool Send(SerialPort port)
         {
             try
             {
                 Write(port, sendBytes);
+                return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return false;
             }
         }
 
