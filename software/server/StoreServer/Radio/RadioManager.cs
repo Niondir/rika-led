@@ -136,7 +136,7 @@ namespace StoreServer.Radio
             }
 
 
-            Debug.WriteLine("--- Send Loop ---");
+            //Debug.WriteLine("--- Send Loop ---");
             Debug.WriteLine("Sending: " + ads.Count + " ads & " + products.Count + " products");
 
             // Extra liste für die ziel lampen benötigt
@@ -178,14 +178,14 @@ namespace StoreServer.Radio
                         if (serialPort.IsOpen)
                         {
                             SerialPacket p = sendQueue.Dequeue();
-                            Debug.WriteLine("RadioManager: <online> sending: " + p.ToString());
+                            //Debug.WriteLine("RadioManager: <online> sending: " + p.ToString());
 
                             if (p is LampPacket)
                             {
                                 if (((LampPacket)p).TargetId != destination)
                                 {
                                     AddressPacket addressPacket = new AddressPacket(((LampPacket)p).TargetId);
-                                    Debug.WriteLine("RadioManager: <online> sending: " + addressPacket.ToString());
+                                    //Debug.WriteLine("RadioManager: <online> sending: " + addressPacket.ToString());
                                     if (addressPacket.Send(serialPort))
                                     {
                                         destination = addressPacket.Address;
@@ -198,7 +198,7 @@ namespace StoreServer.Radio
                         }
                         else
                         {
-#if !DEBUG
+#if DEBUG
                             SerialPacket p = sendQueue.Dequeue();
                             Debug.WriteLine("RadioManager: <offline> sending: " + p.ToString());
                             Thread.Sleep(200);
