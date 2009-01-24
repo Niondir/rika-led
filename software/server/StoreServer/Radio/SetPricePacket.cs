@@ -12,8 +12,6 @@ namespace StoreServer.Radio
             : base(LampCommand.SetPrice, product.Sign.Id.ToString(), product.Name, product.Price.ToString())
         {
             this.targetId = product.Sign.Region.Id.ToString();
-            // Lampen ID
-            //product.Sign.Region.Id
         }
 
     }

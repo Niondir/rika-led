@@ -6,9 +6,10 @@ namespace StoreServer.Radio
 {
     public class ResetLampBufferPacket : LampPacket
     {
-        public ResetLampBufferPacket()
+        public ResetLampBufferPacket(string lampId)
             : base(LampCommand.ResetLampBuffer)
         {
+            this.targetId = lampId;
         }
     }
 }

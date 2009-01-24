@@ -90,7 +90,7 @@ namespace StoreServer
                         Program.RadioManager.Destination = tokens[1];
                         break;
                     case "sendtrace":
-                        Program.RadioManager.Send(new SendTracePacket(bool.Parse(tokens[1])));
+                        Program.RadioManager.Send(new SendTracePacket(tokens[1], bool.Parse(tokens[2])));
                         break;
                     case "settext":
                         RegionData region = new RegionData(1, "fooRegion");
@@ -119,19 +119,19 @@ namespace StoreServer
             switch (args[1])
             {
                 case "sendtrace":
-                    Program.RadioManager.Send(new SendTracePacket(bool.Parse(args[2])));
+                    Program.RadioManager.Send(new SendTracePacket(args[2], bool.Parse(args[3])));
                     break;
                 case "resetlampbuffer":
-                    Program.RadioManager.Send(new ResetLampBufferPacket());
+                    Program.RadioManager.Send(new ResetLampBufferPacket(args[2]));
                     break;
                 case "setsignmode":
-                    if (args[2] == "ad")
-                        Program.RadioManager.Send(new SetSignModePacket(SignMode.Ad));
-                    else if (args[2] == "price")
-                        Program.RadioManager.Send(new SetSignModePacket(SignMode.Price));
+                    if (args[3] == "ad")
+                        Program.RadioManager.Send(new SetSignModePacket(args[2], SignMode.Ad));
+                    else if (args[3] == "price")
+                        Program.RadioManager.Send(new SetSignModePacket(args[2], SignMode.Price));
                     break;
                 case "setlampid":
-                    Program.RadioManager.Send(new SetLampIdPacket(args[2]));
+                    Program.RadioManager.Send(new SetLampIdPacket(args[2], args[3]));
                     break;
             }
         }

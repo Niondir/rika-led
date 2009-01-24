@@ -6,9 +6,10 @@ namespace StoreServer.Radio
 {
     public class SetLampIdPacket : LampPacket
     {
-        public SetLampIdPacket(string lampId)
-            : base(LampCommand.SetLampId, lampId)
+        public SetLampIdPacket(string oldLampId, string newLampId)
+            : base(LampCommand.SetLampId, newLampId)
         {
+            this.targetId = oldLampId;
         }
     }
 }
