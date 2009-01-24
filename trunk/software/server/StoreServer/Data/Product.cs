@@ -59,8 +59,24 @@ namespace StoreServer.Data
 
         public void Update(OdbcConnection connection, ProductData data)
         {
-            // TODO: Not Implemented: Update Product
-            throw new Exception("Not implemented");
+            OdbcCommand command = connection.CreateCommand();
+            
+            // Verify that this is in db
+            command.CommandText = "SELECT id FROM led_products WHERE id = ?";
+            command.Parameters.AddWithValue("id", this.sign.Id);
+            OdbcDataReader reader = command.ExecuteReader();
+            command.Parameters.Clear();
+
+            // Got our product id
+            if (reader.HasRows)
+            {
+                command.CommandText = "UPDATE led_products SET regions_id = @region_id, name = @name price = @price WHERE id = @id";
+                command.Parameters.AddWithValue("@region_id", data.Sign.Region.Id);
+                command.Parameters.AddWithValue("@name", data.Name);
+                command.Parameters.AddWithValue("@price", data.Price);
+                command.Parameters.AddWithValue("@id", this.sign.Id);
+                command.ExecuteNonQuery();
+            }
         }
 
         public static List<Product> Load(OdbcConnection connection)

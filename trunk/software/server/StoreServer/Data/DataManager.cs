@@ -38,6 +38,7 @@ namespace StoreServer.Data
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Program.Close();
             }
 
             VeryfyDatabase();

@@ -143,6 +143,7 @@ namespace StoreServer
 
                 while (signal.WaitOne())
                 {
+                    if (closing) break;
                     httpService.Slice();
                     consoleHandler.Slice();
                     Console.WriteLine("--- MainLoop ---");
@@ -156,16 +157,19 @@ namespace StoreServer
             }
             // TODO: Loop for async actions, linke console input
 
-            Console.WriteLine("Server: Pres any key to exit");
+            Console.WriteLine("Server: shuting down...");
             closing = true;
-
-
+            Thread.Sleep(500);
+            Console.WriteLine("Server: Pres any key to exit");
             Console.ReadKey();
 
             httpService.Abort();
-            
-            
-            
+        }
+
+        public static void Close()
+        {
+            closing = true;
+            Set();
         }
 
         
