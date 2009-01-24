@@ -87,6 +87,11 @@ namespace StoreClient
             return remote.GetProducts(session);
         }
 
+        internal ProductData[] GetProducts(int regionID)
+        {
+            return remote.GetProductsByRegion(session, regionID);
+        }
+
         internal void DeleteProduct(int id)
         {
             remote.DeleteProduct(session, new ProductData(new SignData(id, new RegionData(0, "")), "", 0));
@@ -98,5 +103,12 @@ namespace StoreClient
                                 new ProductData(new SignData(id, new RegionData(0, "")), "", 0),
                                 newValue);
         }
+
+        internal void DeleteRegion(int id)
+        {
+            remote.DeleteRegion(session, new RegionData(id, ""));
+        }
+
+
     }
 }

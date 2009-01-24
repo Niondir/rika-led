@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.GridProducts = new System.Windows.Forms.DataGridView();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonFilterGroups = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonPNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonPEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonPDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonGroups = new System.Windows.Forms.ToolStripButton();
+            this.GridProducts = new System.Windows.Forms.DataGridView();
             this.ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Group = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -63,36 +63,6 @@
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip1";
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // GridProducts
-            // 
-            this.GridProducts.AllowUserToAddRows = false;
-            this.GridProducts.AllowUserToOrderColumns = true;
-            this.GridProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.GridProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ProductName,
-            this.ProductID,
-            this.Group,
-            this.Price});
-            this.GridProducts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GridProducts.Location = new System.Drawing.Point(0, 25);
-            this.GridProducts.Name = "GridProducts";
-            this.GridProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.GridProducts.Size = new System.Drawing.Size(809, 511);
-            this.GridProducts.TabIndex = 1;
-            this.GridProducts.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.GridProducts_CellBeginEdit);
-            this.GridProducts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridProducts_CellEndEdit);
-            this.GridProducts.Paint += new System.Windows.Forms.PaintEventHandler(this.GridProducts_Paint);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
             // toolStripButtonFilterGroups
             // 
             this.toolStripButtonFilterGroups.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -112,7 +82,12 @@
             this.toolStripButtonRefresh.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonRefresh.Text = "Aktualisieren";
             this.toolStripButtonRefresh.ToolTipText = "Aktualisieren";
-            this.toolStripButtonRefresh.Click += new System.EventHandler(this.toolStripButtonRefresh_Click);
+            this.toolStripButtonRefresh.Click += new System.EventHandler(this.refreshContent);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonPNew
             // 
@@ -147,6 +122,11 @@
             this.toolStripButtonPDelete.ToolTipText = "Ausgewähltes Produkt löschen";
             this.toolStripButtonPDelete.Click += new System.EventHandler(this.toolStripButtonPDelete_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripButtonGroups
             // 
             this.toolStripButtonGroups.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -157,20 +137,44 @@
             this.toolStripButtonGroups.Tag = "";
             this.toolStripButtonGroups.Text = "toolStripButton1";
             this.toolStripButtonGroups.ToolTipText = "Produktgruppen verwalten";
+            this.toolStripButtonGroups.Click += new System.EventHandler(this.toolStripButtonGroups_Click);
+            // 
+            // GridProducts
+            // 
+            this.GridProducts.AllowUserToAddRows = false;
+            this.GridProducts.AllowUserToOrderColumns = true;
+            this.GridProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.GridProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ProductName,
+            this.ProductID,
+            this.Group,
+            this.Price});
+            this.GridProducts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GridProducts.Location = new System.Drawing.Point(0, 25);
+            this.GridProducts.Name = "GridProducts";
+            this.GridProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.GridProducts.Size = new System.Drawing.Size(809, 511);
+            this.GridProducts.TabIndex = 1;
+            this.GridProducts.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.GridProducts_CellBeginEdit);
+            this.GridProducts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridProducts_CellEndEdit);
+            this.GridProducts.Paint += new System.Windows.Forms.PaintEventHandler(this.GridProducts_Paint);
             // 
             // ProductName
             // 
+            this.ProductName.FillWeight = 162.4366F;
             this.ProductName.HeaderText = "Name";
             this.ProductName.Name = "ProductName";
             // 
             // ProductID
             // 
+            this.ProductID.FillWeight = 80.25792F;
             this.ProductID.HeaderText = "Produktnummer";
             this.ProductID.Name = "ProductID";
             // 
             // Group
             // 
             this.Group.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.Group.FillWeight = 78.65276F;
             this.Group.HeaderText = "Produktgruppe";
             this.Group.Name = "Group";
             this.Group.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -178,6 +182,7 @@
             // 
             // Price
             // 
+            this.Price.FillWeight = 78.65276F;
             this.Price.HeaderText = "Preis";
             this.Price.Name = "Price";
             // 
