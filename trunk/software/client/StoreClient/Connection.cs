@@ -91,5 +91,12 @@ namespace StoreClient
         {
             remote.DeleteProduct(session, new ProductData(new SignData(id, new RegionData(0, "")), "", 0));
         }
+
+        internal void EditProduct(int id, ProductData newValue)
+        {
+            remote.EditProduct(session,
+                                new ProductData(new SignData(id, new RegionData(0, "")), "", 0),
+                                newValue);
+        }
     }
 }
