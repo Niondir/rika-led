@@ -1,27 +1,3 @@
-/*****************************************************
-This program was produced by the
-CodeWizardAVR V2.03.8a Evaluation
-Automatic Program Generator
-© Copyright 1998-2008 Pavel Haiduc, HP InfoTech s.r.l.
-http://www.hpinfotech.com
-
-Project : 
-Version : 
-Date    : 30.11.2008
-Author  : Freeware, for evaluation and non-commercial use only
-Company : 
-Comments: 
-
-
-Chip type           : ATmega8
-Program type        : Application
-Clock frequency     : 1,843200 MHz
-Memory model        : Small
-External RAM size   : 0
-Data Stack size     : 256
-*****************************************************/
-
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <inttypes.h>
@@ -87,7 +63,6 @@ char dat;
 	sprintf(tempstring, "+++");
 	uart_puts(tempstring);
 	_delay_ms(20);
-	while((dat=uart_getc())!='\r') uartSW_putc(dat);	
 	sprintf(tempstring, "ATDH%lx,DL%lx,CN\r",desthigh,destlow); //, desthigh);
 	uart_puts(tempstring);
 	_delay_ms(10);
@@ -121,21 +96,15 @@ void init_lamp(){
 	sprintf(tempstring, "ATMY\r");
 	uart_puts(tempstring);
 	_delay_ms(1000);
-	rcvbuf[rcvbuf_iterator]='\0';
 	for(int i=0; i<5; i++){
 		lampid[i]=rcvbuf[i];
 		if(rcvbuf[i]=='\0') break;
 	}
-	uartSW_puts(lampid);
+	//uartSW_puts(lampid);
 	_delay_ms(1000);
 	rcvbuf_invalid = TRUE;
 	setupmode = FALSE;
 };
-
-void addsigntobuffer(){	
-};
-
-
 
 int get_csum_index(){
 	int csumindex=0;
@@ -167,22 +136,33 @@ void calculate_csum(int csumindex){
 int checksum_failed(){
 	int csum_index=get_csum_index();
 	calculate_csum(csum_index);
+	uartSW_puts("\r\n die richtige csum waere: ");
 	uartSW_puts(csum);
-	uartSW_putc(';');
-	uartSW_puts(&rcvbuf[csum_index]);
+	uartSW_puts("\r\n");
+	//uartSW_putc(';');
+	//uartSW_puts(&rcvbuf[csum_index]);
 	return(strcmp(csum, &rcvbuf[csum_index]));
 }
 
 
 void change_lampid(){
-	int i=0;
-	while(rcvbuf[i]!='\0'){
-		lampid[i]=rcvbuf[i];
+	int i=2;
+	while(rcvbuf[i]!='|'){
+		lampid[i-2]=rcvbuf[i];
 		i++;
 	}
+	lampid[i-2]='\0';
+	_delay_ms(20);
+	sprintf(tempstring, "+++");
+	uart_puts(tempstring);
+	_delay_ms(20);
+	sprintf(tempstring, "ATMY%s,CN\r",lampid);
+	uart_puts(tempstring);
+//	uartSW_puts(tempstring);
+	_delay_ms(10);
 }
 
-
+/*
 void forwardPacketThroughSignbuffer(){
 	strcpy(schildbuffer[nextSchildOverwriteslot], rcvbuf);
 	nextSchildOverwriteslot=(nextSchildOverwriteslot+1)%SCHILDBUFFERMAXSLOTS;
@@ -190,7 +170,7 @@ void forwardPacketThroughSignbuffer(){
 		Schildslotsused++;
 	}
 	signbuf_empty=FALSE;
-}
+}*/
 
 
 void set_send_trace(){
@@ -218,6 +198,12 @@ int overwrite=nextSchildOverwriteslot;
 	sprintf(tempstring, "write to slot %d ", overwrite);
 	uartSW_puts(tempstring);
 	return(overwrite);
+}
+
+void forward_packet(){
+	uartSW_putc('<');
+	uartSW_puts(rcvbuf);
+	uartSW_putc('>');
 }
 
 void insert_in_ad_buffer(){
@@ -256,23 +242,23 @@ void process_packet(){
 									break;
 								}
 		// clear buffer / reset lamp
-			case '3': {
+			case '3': 			{
 									clear_buffers();
 									break;
 								}
-		// delete sign packet
-			case '4':	{
-									//forwardPacketThroughSignbuffer();
+		// toggle ad / pricetag
+			case '4':			{
+									forward_packet();
 									break;
 								}
 		//	change lamp id for trace
-			case '5': {	
+			case '5': 			{	
 									change_lampid();
 									break;
 								}
-		//	change sign id
-			case '6':	{
-									insert_in_command_buffer();
+		//	show id
+			case '6':			{
+									forward_packet();
 									break;
 								}
 		// set pricetag packet
@@ -293,11 +279,15 @@ void process_packet(){
 
 
 void send_next_sign(){
+	uartSW_putc('<');
 	uartSW_puts(schildbuffer[nextSchildShowslot]);
+	uartSW_putc('>');
 	nextSchildShowslot=(nextSchildShowslot+1)%Schildslotsused;
 }
 void send_next_ad(){
+	uartSW_putc('<');
 	uartSW_puts(adbuffer[nextAdShowslot]);
+	uartSW_putc('>');
 	nextAdShowslot=(nextAdShowslot+1)%Adslotsused;
 }
 
@@ -352,6 +342,7 @@ ISR(USART_RXC_vect)
 			if(tempchar!='O' && tempchar!='K' && tempchar!='\r'){
 				rcvbuf[rcvbuf_iterator]=tempchar;
 				rcvbuf_iterator++;
+				rcvbuf[rcvbuf_iterator]='\0';
 			}
 		}
 }
@@ -496,6 +487,10 @@ while (1){
 		sprintf(tempstring, "<1|173>");
 		uartSW_puts(tempstring);	
 	}
+	uartSW_puts("\r\n");
+	uartSW_puts(lampid);
+	uartSW_puts("\r\n");
+	_delay_ms(500);
 /*
 	if(Schildslotsused) uartSW_putc('<');
 	uartSW_puts(&schildbuffer[nextSchildShowslot][0]);
@@ -505,10 +500,10 @@ while (1){
 */
 #ifdef DEBUG
 	//sprintf(tempstring, "  nextSchildOverwriteslot=%d;nextSchildShow=%d;Schildslotsused=%d; \r\n", nextSchildOverwriteslot, nextSchildShowslot, Schildslotsused);		
-	sprintf(tempstring, "  nextadOverwriteslot=%d;nextadShow=%d;adsused=%d; \r\n", nextAdOverwriteslot, nextAdShowslot, Adslotsused);		
+	//sprintf(tempstring, "  nextadOverwriteslot=%d;nextadShow=%d;adsused=%d; \r\n", nextAdOverwriteslot, nextAdShowslot, Adslotsused);		
 	//sprintf(tempstring, "  recd %d; invalid %d; rcv: %d ; lampid %c \r\n", packet_received, rcvbuf_invalid, rcvbuf_receiving, lampid[0]);		
-	uartSW_puts(tempstring);
-	_delay_ms(1000);
+	//uartSW_puts(tempstring);
+	_delay_ms(500);
 #endif
 
 };
