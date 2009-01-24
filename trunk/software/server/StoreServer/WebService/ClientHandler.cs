@@ -414,6 +414,31 @@ namespace StoreServer.WebService
             return products.ToArray();
         }
 
+        public ProductData[] GetProductsByRegion(SessionData session, int regionId)
+        {
+            Debug.WriteLine("GetProductsByRegion()");
+            this.ValidateRequest(session, AccessFlags.Authenticated);
+
+            List<ProductData> products = new List<ProductData>();
+            try
+            {
+                int i = 0;
+                foreach (Product p in Product.Load(this.DataManager.Connection, regionId))
+                {
+                    i++;
+                    products.Add(p.Data);
+                    Debug.WriteLine("Produkt name " + i + ": " + p.Name);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
+            }
+
+            return products.ToArray();
+        }
+
         public SignData[] GetSigns(SessionData session, RegionData region)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
