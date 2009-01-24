@@ -11,6 +11,8 @@ namespace StoreServer.Radio
         private string address;
         private Byte[] swtichModeCmd;
 
+        public string Address { get { return address; } }
+
         public AddressPacket(string address)
         {
             this.address = address;

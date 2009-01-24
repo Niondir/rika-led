@@ -20,6 +20,7 @@ namespace StoreServer
 
         public FileLogger(string file, bool append)
         {
+            file = Path.Combine(Program.BaseDirectory, file);
             m_FileName = file;
             string dir = Path.GetDirectoryName(file);
             if (!Directory.Exists(dir))

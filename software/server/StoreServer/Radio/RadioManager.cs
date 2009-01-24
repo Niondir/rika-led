@@ -136,8 +136,8 @@ namespace StoreServer.Radio
             }
 
 
-            Debug.WriteLine("--- Sending ---");
-            Debug.WriteLine("Sending: " + ads.Count + " ads AND " + products.Count + " products");
+            Debug.WriteLine("--- Send Loop ---");
+            Debug.WriteLine("Sending: " + ads.Count + " ads & " + products.Count + " products");
 
             // Extra liste für die ziel lampen benötigt
             targetList.AddRange(packetList.Keys);
@@ -148,7 +148,7 @@ namespace StoreServer.Radio
                 // Für jede Lampe ein paket
                 foreach (string t in targetList)
                 {
-                    Debug.WriteLine("Send a packet to Lamp {0}", t);
+                    //Debug.WriteLine("Send a packet to Lamp {0}", t);
                     Send(packetList[t].Dequeue());
                 }
 
@@ -157,7 +157,7 @@ namespace StoreServer.Radio
                 {
                     if (packetList[t].Count == 0)
                     {
-                        Debug.WriteLine("Lamp {0} got all packets", t);
+                        //Debug.WriteLine("Lamp {0} got all packets", t);
                         targetList.Remove(t);
                     }
                 }
@@ -178,35 +178,38 @@ namespace StoreServer.Radio
                         if (serialPort.IsOpen)
                         {
                             SerialPacket p = sendQueue.Dequeue();
-                            Console.WriteLine("RadioManager: <online> sending: " + p.ToString());
+                            Debug.WriteLine("RadioManager: <online> sending: " + p.ToString());
 
                             if (p is LampPacket)
                             {
                                 if (((LampPacket)p).TargetId != destination)
                                 {
                                     AddressPacket addressPacket = new AddressPacket(((LampPacket)p).TargetId);
-                                    Console.WriteLine("RadioManager: <online> sending: " + addressPacket.ToString());
-                                    addressPacket.Send(serialPort);
+                                    Debug.WriteLine("RadioManager: <online> sending: " + addressPacket.ToString());
+                                    if (addressPacket.Send(serialPort))
+                                    {
+                                        destination = addressPacket.Address;
+                                    }
                                 }
                             }
                             
                             p.Send(serialPort);
                             Thread.Sleep(200);
                         }
-
                         else
                         {
-#if DEBUG
+#if !DEBUG
                             SerialPacket p = sendQueue.Dequeue();
-                            Console.WriteLine("RadioManager: <offline> sending: " + p.ToString());
+                            Debug.WriteLine("RadioManager: <offline> sending: " + p.ToString());
                             Thread.Sleep(200);
 #else
                             //try to reconnect
-                            Console.WriteLine("serial port is closed, try to reconnect");
+                            Thread.Sleep(1000);
+                            Console.WriteLine("Serial port is closed, try to reconnect ...");
+                            Console.WriteLine(sendQueue.Count + " packets in queue");
                             Connect();
 #endif
                         }
-
                     }
                 }
             }

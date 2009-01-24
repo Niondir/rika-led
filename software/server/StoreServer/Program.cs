@@ -103,7 +103,7 @@ namespace StoreServer
 
             Version ver = assembly.GetName().Version;
 
-            Console.SetOut(multiConOut = new MultiTextWriter(Console.Out));
+            Console.SetOut(multiConOut = new MultiTextWriter(Console.Out, new FileLogger("Logs\\last.log", false)));
 
             // Added to help future code support on forums, as a 'check' people can ask for to it see if they recompiled core or not
             Console.WriteLine("StoreServer - [http://code.google.com/p/rika-led/]");
