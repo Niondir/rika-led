@@ -76,6 +76,13 @@ namespace StoreServer.Data
                 command.Parameters.AddWithValue("@price", data.Price);
                 command.Parameters.AddWithValue("@id", this.sign.Id);
                 command.ExecuteNonQuery();
+                this.Sign.Region.Id = data.Sign.Region.Id;
+                this.name = data.Name;
+                this.Price = data.Price;
+            }
+            else
+            {
+                throw new Exception("Product for sign " + this.sign.Id + " not in databse");
             }
         }
 
