@@ -93,6 +93,7 @@ namespace StoreServer.Radio
                 {
                     Debug.WriteLine("send timer disposed");
                     ((Timer)target).Dispose();
+                    return;
                 }
                     
             }
