@@ -21,7 +21,50 @@ namespace StoreClient
 
             groups = Connection.GetInstance().GetRegions();
 
-            toolStripButtonRefresh_Click(null, null);
+            refreshContent(null, null);
+
+ 
+        }
+
+        void item_Click(object sender, EventArgs e)
+        {
+            if (((ToolStripMenuItem)sender).Name == "all")
+            {
+                bool checkstate = !((ToolStripMenuItem)sender).Checked;
+                foreach (ToolStripItem i in toolStripButtonFilterGroups.DropDownItems)
+                {
+                    if(i.Name != "seperator")
+                       ((ToolStripMenuItem)i).Checked = checkstate;
+                }
+            }
+            else
+                ((ToolStripMenuItem)sender).Checked = !((ToolStripMenuItem)sender).Checked;
+            GridProducts.Refresh();
+        }
+
+        private void toolStripButtonPNew_Click(object sender, EventArgs e)
+        {
+            FormAddProduct adder = new FormAddProduct();
+            if (adder.ShowDialog(this) == DialogResult.OK)
+            {
+                refreshContent(this, null);
+            }
+        }
+
+        private void refreshContent(object sender, EventArgs e)
+        {
+            groups = Connection.GetInstance().GetRegions(); 
+
+            toolStripButtonFilterGroups.DropDownItems.Clear();
+            ToolStripMenuItem alleItem = new ToolStripMenuItem("Alle");
+            alleItem.Name = "all";
+            alleItem.Checked = true;
+            alleItem.Click += new EventHandler(item_Click);
+            toolStripButtonFilterGroups.DropDownItems.Add(alleItem);
+
+            ToolStripSeparator sep = new ToolStripSeparator();
+            sep.Name = "seperator";
+            toolStripButtonFilterGroups.DropDownItems.Add(sep);
 
             foreach (RegionData i in groups)
             {
@@ -31,31 +74,13 @@ namespace StoreClient
 
                 toolStripButtonFilterGroups.DropDownItems.Add(item);
             }
-        }
-
-        void item_Click(object sender, EventArgs e)
-        {
-            ((ToolStripMenuItem)sender).Checked = !((ToolStripMenuItem)sender).Checked;
-            GridProducts.Refresh();
-        }
-
-        private void toolStripButtonPNew_Click(object sender, EventArgs e)
-        {
-            FormAddProduct adder = new FormAddProduct();
-            if (adder.ShowDialog(this) == DialogResult.OK)
-            {
-                toolStripButtonRefresh_Click(this, null);
-            }
-        }
-
-        private void toolStripButtonRefresh_Click(object sender, EventArgs e)
-        {
-            products = Connection.GetInstance().GetProducts();
-            if (products == null)
-                return;
-            GridProducts.Rows.Clear();
+ 
+            ((DataGridViewComboBoxColumn)GridProducts.Columns["Group"]).Items.Clear();
             foreach (RegionData i in groups)
                 ((DataGridViewComboBoxColumn)GridProducts.Columns["Group"]).Items.Add(i.Name);
+
+            products = Connection.GetInstance().GetProducts();            
+            GridProducts.Rows.Clear();
             foreach (ProductData i in products)
             {
                 GridProducts.Rows.Add(new string[] { i.Name, i.Sign.Id.ToString(), i.Sign.Region.Name, i.Price.ToString() });
@@ -70,9 +95,10 @@ namespace StoreClient
             foreach (DataGridViewRow i in GridProducts.Rows)
             {
                 bool visible = true;
-                foreach (ToolStripMenuItem j in toolStripButtonFilterGroups.DropDownItems)
+                foreach (ToolStripItem j in toolStripButtonFilterGroups.DropDownItems)
                 {
-                    if (j.Checked == false && (string)i.Cells["Group"].Value == j.Text)
+                    if(j.Name != "seperator")
+                        if (((ToolStripMenuItem)j).Checked == false && (string)i.Cells["Group"].Value == ((ToolStripMenuItem)j).Text)
                         visible = false;
                 }
                 i.Visible = visible;
@@ -142,6 +168,13 @@ namespace StoreClient
 
                 Connection.GetInstance().EditProduct(Convert.ToInt32(GridProducts.Rows[e.RowIndex].Cells["ProductID"].Value), newData);
             }
+        }
+
+        private void toolStripButtonGroups_Click(object sender, EventArgs e)
+        {
+            FormGroupManagement grouper = new FormGroupManagement();
+            grouper.groupsChanged += new EventHandler(refreshContent);
+            grouper.ShowDialog(this);
         }
     }
 }
