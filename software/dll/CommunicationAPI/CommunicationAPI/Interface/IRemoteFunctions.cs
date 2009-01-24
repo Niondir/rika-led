@@ -98,6 +98,9 @@ namespace CommunicationAPI.Interface
         RegionData[] GetRegions(SessionData session);
 
         [XmlRpcMethod]
+        ProductData[] GetProductsByRegion(SessionData session, int regionId);
+        
+        [XmlRpcMethod]
         ProductData[] GetProducts(SessionData session);
 
         [XmlRpcMethod]

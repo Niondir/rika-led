@@ -88,6 +88,27 @@ namespace StoreServer.Data
             }
         }
 
+        public static List<Product> Load(OdbcConnection connection, int regionId)
+        {
+            OdbcCommand command = connection.CreateCommand();
+
+            command.CommandText = "SELECT id, regions_id, name, price FROM led_products WHERE regions_id = ?";
+            command.Parameters.AddWithValue("region_id", regionId);
+            OdbcDataReader reader = command.ExecuteReader();
+
+            List<Product> products = new List<Product>();
+
+            while (reader.Read())
+            {
+                RegionData region = new RegionData(reader.GetInt32(1), "Not requested!");
+                SignData sign = new SignData((int)reader.GetInt64(0), region);
+                ProductData pData = new ProductData(sign, reader.GetString(2), reader.GetDouble(3));
+                products.Add(new Product(pData));
+            }
+
+            return products;
+        }
+
         public static List<Product> Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
