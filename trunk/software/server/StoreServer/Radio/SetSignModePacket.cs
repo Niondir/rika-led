@@ -12,9 +12,10 @@ namespace StoreServer.Radio
 
     public class SetSignModePacket : LampPacket
     {
-        public SetSignModePacket(SignMode mode) 
+        public SetSignModePacket(string lampId, SignMode mode) 
             : base(LampCommand.SetSignMode, ((int)mode).ToString())
         {
+            this.targetId = lampId;
         }
     }
 }
