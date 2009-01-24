@@ -71,11 +71,11 @@ namespace StoreServer.Data
             if (reader.HasRows)
             {
                 reader.Close();
-                command.CommandText = "UPDATE led_products SET regions_id = @region_id, name = @name price = @price WHERE id = @id";
-                command.Parameters.AddWithValue("@region_id", data.Sign.Region.Id);
-                command.Parameters.AddWithValue("@name", data.Name);
-                command.Parameters.AddWithValue("@price", data.Price);
-                command.Parameters.AddWithValue("@id", this.sign.Id);
+                command.CommandText = "UPDATE led_products SET regions_id = ?, name = ?, price = ? WHERE id = ?";
+                command.Parameters.AddWithValue("region_id", data.Sign.Region.Id);
+                command.Parameters.AddWithValue("name", data.Name);
+                command.Parameters.AddWithValue("price", data.Price);
+                command.Parameters.AddWithValue("id", this.sign.Id);
                 command.ExecuteNonQuery();
                 this.Sign.Region.Id = data.Sign.Region.Id;
                 this.name = data.Name;
