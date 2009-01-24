@@ -92,6 +92,9 @@ namespace CommunicationAPI.Interface
         UserData GetUser(SessionData session, string loginName);
 
         [XmlRpcMethod]
+        UserData[] GetUsers(SessionData session);
+
+        [XmlRpcMethod]
         LampData[] GetLamps(SessionData session);
 
         [XmlRpcMethod]

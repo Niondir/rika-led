@@ -360,6 +360,31 @@ namespace StoreServer.WebService
             }
         }
 
+        public UserData[] GetUsers(SessionData session)
+        {
+            Debug.WriteLine("GetUsers()");
+            this.ValidateRequest(session, AccessFlags.Authenticated);
+
+            List<UserData> users = new List<UserData>();
+            try
+            {
+                int i = 0;
+                foreach (User u in User.Load(this.DataManager.Connection))
+                {
+                    i++;
+                    users.Add(u.Data);
+                    Debug.WriteLine("User name " + i + ": " + u.Username);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
+            }
+
+            return users.ToArray();
+        }
+
         public LampData[] GetLamps(SessionData session)
         {
             this.ValidateRequest(session, AccessFlags.Authenticated);
