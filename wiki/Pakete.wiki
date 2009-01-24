@@ -19,8 +19,8 @@ set ad
 reset lamp buffers
 <3|csum>
 
-toggle ad / pricetag
-<4|param|csum> param 0: ad  param 1: pricetag
+//toggle ad / pricetag
+//<4|mode|csum> mode=0: ad  mode=1: pricetag
 
 changelampid (für traces)
 <5|neuelampenid|csum>
