@@ -70,6 +70,7 @@ namespace StoreServer.Data
             // Got our product id
             if (reader.HasRows)
             {
+                reader.Close();
                 command.CommandText = "UPDATE led_products SET regions_id = @region_id, name = @name price = @price WHERE id = @id";
                 command.Parameters.AddWithValue("@region_id", data.Sign.Region.Id);
                 command.Parameters.AddWithValue("@name", data.Name);
@@ -79,7 +80,6 @@ namespace StoreServer.Data
                 this.Sign.Region.Id = data.Sign.Region.Id;
                 this.name = data.Name;
                 this.Price = data.Price;
-                reader.Close();
             }
             else
             {
