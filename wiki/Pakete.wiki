@@ -26,7 +26,7 @@ changelampid (für traces)
 <5|neuelampenid|csum>
 
 schild: show id
-<6|zielid|csum>
+<6|csum>
 
 set pricetag
 <7|zielid|produktname|preis|csum>
