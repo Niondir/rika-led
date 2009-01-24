@@ -68,6 +68,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Radio\AddressPacket.cs" />
+    <Compile Include="Radio\DisplayIdPacket.cs" />
     <Compile Include="Radio\LampPacket.cs" />
     <Compile Include="Radio\RadioManager.cs" />
     <Compile Include="Radio\ResetLampBufferPacket.cs" />

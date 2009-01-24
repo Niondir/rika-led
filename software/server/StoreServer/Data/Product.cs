@@ -134,7 +134,7 @@ namespace StoreServer.Data
                     }
                 }
 
-                /* TODO: Product table: key as int not unsigned! */
+                /* TODO: Product table: key as int not unsigned!? */
                 SignData sign = new SignData((int)reader.GetInt64(0), region);
                 ProductData pData = new ProductData(sign, reader.GetString(2), reader.GetDouble(3));
                 products.Add(new Product(pData));
