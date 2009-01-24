@@ -61,14 +61,22 @@ namespace StoreServer.Data
 
         public void Save(OdbcConnection connection)
         {
-            // TODO: Not implemented: Save Role
-            throw new Exception("Not implemented");
+            OdbcCommand command = connection.CreateCommand();
+            command.CommandText = "INSERT INTO led_roles (name, flags) VALUES(?, ?)";
+            command.Parameters.AddWithValue("name", this.name);
+            command.Parameters.AddWithValue("flags", this.flags);
+
+            command.ExecuteNonQuery();
         }
 
         public void Update(OdbcConnection connection, RoleData data)
         {
-            // TODO: Not implemented: Update Role
-            throw new Exception("Not implemented");
+            OdbcCommand command = connection.CreateCommand();
+            command.CommandText = "UPDATE led_roles SET name = @name, flags = @flags WHERE name = @name";
+            command.Parameters.AddWithValue("name", data.name);
+            command.Parameters.AddWithValue("flags", data.flags);
+
+            command.ExecuteNonQuery();
         }
 
         public static List<Role> Load(OdbcConnection connection)
@@ -94,11 +102,12 @@ namespace StoreServer.Data
             OdbcCommand command = connection.CreateCommand();
             command.CommandText = "DELETE FROM led_roles WHERE name = ?";
 
-            // TODO: delete all users with this role
-
             command.Parameters.AddWithValue("name", this.name);
-
             command.ExecuteNonQuery();
+            command.Parameters.Clear();
+
+            command.CommandText = "DELETE FROM led_users WHERE roles_name = ?";
+            command.Parameters.AddWithValue("roles_name", this.name);
         }
     }
 }

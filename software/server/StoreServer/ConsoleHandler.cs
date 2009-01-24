@@ -133,6 +133,9 @@ namespace StoreServer
                 case "setlampid":
                     Program.RadioManager.Send(new SetLampIdPacket(args[2], args[3]));
                     break;
+                case "displayid":
+                    Program.RadioManager.Send(new DisplayIdPacket(args[2]));
+                    break;
             }
         }
     }

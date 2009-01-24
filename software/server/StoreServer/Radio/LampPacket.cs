@@ -11,7 +11,7 @@ namespace StoreServer.Radio
         ResetLampBuffer = 3,
         SetSignMode = 4,
         SetLampId = 5,
-        //SetSignId = 6,
+        DisplayId = 6,
         SetPrice = 7
     }
 
