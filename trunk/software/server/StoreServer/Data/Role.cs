@@ -13,7 +13,14 @@ namespace StoreServer.Data
         private string name;
 
         public string Name { 
-            get { return name; } 
+            get { return name; }
+            set { name = value; }
+        }
+
+        public int Flags
+        {
+            get { return flags; }
+            set { flags = value; }
         }
 
         public RoleData Data

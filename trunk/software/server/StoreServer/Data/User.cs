@@ -133,8 +133,32 @@ namespace StoreServer.Data
 
         public void Update(OdbcConnection connection, UserData data)
         {
-            // TODO: Not implemented: Update user
-            throw new Exception("Not implemented");
+            OdbcCommand command = connection.CreateCommand();
+
+            // Verify that this is in db
+            command.CommandText = "SELECT id FROM led_users WHERE login = ?";
+            command.Parameters.AddWithValue("login", this.username);
+            OdbcDataReader reader = command.ExecuteReader();
+            command.Parameters.Clear();
+
+            // Got our prim key?
+            if (reader.HasRows)
+            {
+                reader.Close();
+                command.CommandText = "UPDATE led_users SET name = @name, roles_name = @roles_name, password = @pw WHERE name = @name";
+                command.Parameters.AddWithValue("name", data.Username);
+                command.Parameters.AddWithValue("roles_name", data.Role.Name);
+                command.Parameters.AddWithValue("pw", data.Password);
+                command.ExecuteNonQuery();
+                this.username = data.Username;
+                this.role.Name = data.Role.Name;
+                this.role.Flags = data.Role.Flags;
+            }
+            else
+            {
+                reader.Close();
+                throw new Exception("User with name " + this.username + " not in database");
+            }
         }
 
         public void Delete(OdbcConnection connection)
