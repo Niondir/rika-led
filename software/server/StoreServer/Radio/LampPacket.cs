@@ -17,7 +17,7 @@ namespace StoreServer.Radio
 
     public abstract class LampPacket : SerialPacket
     {
-        protected string targetId = "0";
+        protected string targetId = "FFFF";
         public string TargetId { get { return targetId; } }
 
         public LampPacket(LampCommand command)
