@@ -102,8 +102,6 @@ namespace StoreServer.Data
             command.Parameters.AddWithValue("id", this.id);
 
             command.ExecuteNonQuery();
-
-            
         }
     }
 }

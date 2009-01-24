@@ -109,6 +109,12 @@ namespace CommunicationAPI.DataTypes
             this.flags = 0;
         }
 
+        public RoleData(string name, int flags)
+        {
+            this.name = name;
+            this.flags = flags;
+        }
+
         public bool HasFlags(AccessFlags flags)
         {
             return (this.flags & (int)flags) == (int)flags; 
