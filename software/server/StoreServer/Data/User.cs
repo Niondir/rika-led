@@ -59,10 +59,16 @@ namespace StoreServer.Data
             this.username = username;
         }
 
+        /// <summary>
+        /// Is this user a valid account?
+        /// </summary>
+        /// <returns></returns>
         public bool CheckAccount()
         {
             // TODO: user im Datamanager suchen
             // TODO: get role from db
+
+
 
             Role.AddFlags(AccessFlags.Authenticated);
             return (username == "gast" && password.Check("gast"));
@@ -78,14 +84,18 @@ namespace StoreServer.Data
 
             List<User> users = new List<User>();
 
-            while (reader.Read())
+            try
             {
-                RegionData region = new RegionData(reader.GetInt32(1), "Not requested!");
-                SignData sign = new SignData((int)reader.GetInt64(0), region);
-                UserData uData = new UserData(reader.GetString(0));
-                uData.Role = new RoleData(reader.GetString(1), reader.GetInt32(2));
-                users.Add(new User(uData));
+                while (reader.Read())
+                {
+                    UserData uData = new UserData(reader.GetString(0));
+                    uData.Role = new RoleData(reader.GetString(1), reader.GetInt32(2));
+                    users.Add(new User(uData));
+                }
             }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+            reader.Close();
 
             return users;
         }
@@ -113,6 +123,10 @@ namespace StoreServer.Data
                 command.Parameters.AddWithValue("@login", username);
                 command.Parameters.AddWithValue("@password", password);
                 command.ExecuteNonQuery();
+            }
+            else
+            {
+                throw new Exception("Can't add user, role not in db: " + role.Name);
             }
 
         }

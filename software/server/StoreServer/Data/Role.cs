@@ -65,14 +65,32 @@ namespace StoreServer.Data
 
         public static List<Role> Load(OdbcConnection connection)
         {
-            // TODO: Not implemented: Load Role
-            throw new Exception("Not implemented");
+            OdbcCommand command = connection.CreateCommand();
+
+            command.CommandText = "SELECT name, flags FROM led_roles";
+            OdbcDataReader reader = command.ExecuteReader();
+
+            List<Role> roles = new List<Role>();
+
+            while (reader.Read())
+            {
+                RoleData rData = new RoleData(reader.GetString(0), reader.GetInt32(1));
+                roles.Add(new Role(rData));
+            }
+
+            return roles;
         }
 
         public void Delete(OdbcConnection connection)
         {
-            // TODO: Not implemented: Delete Role
-            throw new Exception("Not implemented");
+            OdbcCommand command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM led_roles WHERE name = ?";
+
+            // TODO: delete all users with this role
+
+            command.Parameters.AddWithValue("name", this.name);
+
+            command.ExecuteNonQuery();
         }
     }
 }
