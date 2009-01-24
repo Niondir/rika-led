@@ -79,9 +79,11 @@ namespace StoreServer.Data
                 this.Sign.Region.Id = data.Sign.Region.Id;
                 this.name = data.Name;
                 this.Price = data.Price;
+                reader.Close();
             }
             else
             {
+                reader.Close();
                 throw new Exception("Product for sign " + this.sign.Id + " not in database");
             }
         }
