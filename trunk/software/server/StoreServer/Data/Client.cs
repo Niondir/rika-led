@@ -35,16 +35,16 @@ namespace StoreServer.Data
             set { authed = value; }
         }
 
-        public Client(IPEndPoint ipEndPoint, UserData user)
+        public Client(IPEndPoint ipEndPoint, UserData user, OdbcConnection connection)
         {
             this.user = new User(user);
             this.ipEndPoint = ipEndPoint;
             this.session = Session.NewSession();
 
             /// Valid logindata?
-            this.authed = this.user.CheckAccount();
+            this.authed = this.user.CheckAccount(connection);
             
-            UpdateAccessFlags();
+            //UpdateAccessFlags();
             
             Program.UserManager.AddClient(this);
         }
@@ -81,8 +81,9 @@ namespace StoreServer.Data
 
         /// <summary>
         /// Updates the AccessFlags from the Database
+        /// Not needed, done on login check
         /// </summary>
-        public void UpdateAccessFlags() {
+        /*public void UpdateAccessFlags() {
             if (this.authed)
             {
                 // TODO: Receive role from Database
@@ -92,7 +93,7 @@ namespace StoreServer.Data
             {
                 user.Role.SetFlags(AccessFlags.None);
             }
-        }
+        } */
 
         public void Save(OdbcConnection connection)
         {

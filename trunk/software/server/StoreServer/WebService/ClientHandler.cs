@@ -37,7 +37,7 @@ namespace StoreServer.WebService
 
         public SessionData Login(UserData user)
         {
-            Client client = new Client(this.RemoteEndPoint, user);
+            Client client = new Client(this.RemoteEndPoint, user, this.DataManager.Connection);
 
             if (client.Authed)
             {

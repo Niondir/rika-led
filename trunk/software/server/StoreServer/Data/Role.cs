@@ -73,8 +73,8 @@ namespace StoreServer.Data
         {
             OdbcCommand command = connection.CreateCommand();
             command.CommandText = "UPDATE led_roles SET name = @name, flags = @flags WHERE name = @name";
-            command.Parameters.AddWithValue("name", data.name);
-            command.Parameters.AddWithValue("flags", data.flags);
+            command.Parameters.AddWithValue("name", data.Name);
+            command.Parameters.AddWithValue("flags", data.Flags);
 
             command.ExecuteNonQuery();
         }

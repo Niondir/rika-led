@@ -63,15 +63,32 @@ namespace StoreServer.Data
         /// Is this user a valid account?
         /// </summary>
         /// <returns></returns>
-        public bool CheckAccount()
+        public bool CheckAccount(OdbcConnection connection)
         {
-            // TODO: user im Datamanager suchen
-            // TODO: get role from db
+            OdbcCommand command = connection.CreateCommand();
+            command.CommandText = "SELECT login, password, flags FROM led_users JOIN led_roles ON roles_name = name WHERE login = @login";
+            command.Parameters.AddWithValue("login", this.username);
+            OdbcDataReader reader = command.ExecuteReader();
 
+            bool hasAccess = false;
+            if (reader.Read())
+            {
+                hasAccess = (username == reader.GetString(0) && password.MD5 == reader.GetString(1));
+                Role.Flags = reader.GetInt32(2);
+            }
+            else
+            {
+                Role.SetFlags(AccessFlags.None);
+            }
 
-
-            Role.AddFlags(AccessFlags.Authenticated);
+            reader.Close();
+            
+#if DEBUG
+            Role.SetFlags(AccessFlags.Authenticated);
             return (username == "gast" && password.Check("gast"));
+#else
+            return hasAccess;
+#endif
         }
 
 
