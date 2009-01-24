@@ -256,6 +256,33 @@ namespace CommunicationAPI.DataTypes
 
     public struct AdvertisementData
     {
+        private int id;
         private RegionData region;
+        private string[] text;
+
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public RegionData Region
+        {
+            get { return region; }
+            set { region = value; }
+        }
+
+        public string[] Text
+        {
+            get { return text; }
+            set { text = value; }
+        }
+
+        public AdvertisementData(int id, RegionData region, string[] text)
+        {
+            this.id = id;
+            this.region = region;
+            this.text = text;
+        }
     }
 }
