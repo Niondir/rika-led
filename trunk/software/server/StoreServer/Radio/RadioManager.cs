@@ -178,14 +178,14 @@ namespace StoreServer.Radio
                         if (serialPort.IsOpen)
                         {
                             SerialPacket p = sendQueue.Dequeue();
-                            Debug.WriteLine("RadioManager: <online> sending: " + p.ToString());
+                            Console.WriteLine("RadioManager: <online> sending: " + p.ToString());
 
                             if (p is LampPacket)
                             {
                                 if (((LampPacket)p).TargetId != destination)
                                 {
                                     AddressPacket addressPacket = new AddressPacket(((LampPacket)p).TargetId);
-                                    Debug.WriteLine("RadioManager: <online> sending: " + addressPacket.ToString());
+                                    Console.WriteLine("RadioManager: <online> sending: " + addressPacket.ToString());
                                     addressPacket.Send(serialPort);
                                 }
                             }
@@ -198,7 +198,7 @@ namespace StoreServer.Radio
                         {
 #if DEBUG
                             SerialPacket p = sendQueue.Dequeue();
-                            Debug.WriteLine("RadioManager: <offline> sending: " + p.ToString());
+                            Console.WriteLine("RadioManager: <offline> sending: " + p.ToString());
                             Thread.Sleep(200);
 #else
                             //try to reconnect

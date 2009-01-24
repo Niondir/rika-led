@@ -30,6 +30,7 @@ namespace StoreServer
         private static ClientManager userManager;
         private static ClientHandler clientHandler;
         private static RadioManager radioManager;
+        private static MultiTextWriter multiConOut;
 
         private static bool unix = false;
         public static bool Unix { get { return unix; } }
@@ -47,6 +48,7 @@ namespace StoreServer
         public static ClientManager UserManager { get { return userManager; } }
         public static ClientHandler ClientHandler { get { return clientHandler; } }
         public static RadioManager RadioManager { get { return radioManager; } }
+        public static MultiTextWriter MultiConsoleOut { get { return multiConOut; } }
 
         public static string ExePath
         {
@@ -100,7 +102,9 @@ namespace StoreServer
 				Directory.SetCurrentDirectory( BaseDirectory );
 
             Version ver = assembly.GetName().Version;
-            
+
+            Console.SetOut(multiConOut = new MultiTextWriter(Console.Out));
+
             // Added to help future code support on forums, as a 'check' people can ask for to it see if they recompiled core or not
             Console.WriteLine("StoreServer - [http://code.google.com/p/rika-led/]");
             Console.WriteLine("Version {0}.{1}, Build {2}.{3}", ver.Major, ver.Minor, ver.Build, ver.Revision);
@@ -147,7 +151,6 @@ namespace StoreServer
                     httpService.Slice();
                     consoleHandler.Slice();
                     Console.WriteLine("--- MainLoop ---");
-                    
                 }
 
             }

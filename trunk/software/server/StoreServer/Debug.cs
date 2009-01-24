@@ -14,7 +14,7 @@ namespace StoreServer
         public static void WriteLine(string value)
         {
 #if DEBUG
-            Console.WriteLine(value);
+            //Console.WriteLine(value);
 #endif
         }
     }

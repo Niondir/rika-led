@@ -48,8 +48,27 @@ namespace StoreServer.Data
 
         public void Update(OdbcConnection connection, RegionData data)
         {
-            // TODO: Not Implemented: Region Update
-            throw new Exception("Not implemented");
+            OdbcCommand command = connection.CreateCommand();
+
+            // Verify that this is in db
+            command.CommandText = "SELECT id FROM led_regions WHERE id = ?";
+            command.Parameters.AddWithValue("id", this.id);
+            OdbcDataReader reader = command.ExecuteReader();
+            command.Parameters.Clear();
+
+            // Got our region id
+            if (reader.HasRows)
+            {
+                command.CommandText = "UPDATE led_regions SET name = @name WHERE id = @id";
+                command.Parameters.AddWithValue("@id", this.id);
+                command.Parameters.AddWithValue("@name", data.Name);
+                command.ExecuteNonQuery();
+                this.name = data.Name;
+            }
+            else
+            {
+                throw new Exception("Region id " + this.id + " not in database");
+            }
         }
 
         public static RegionData[] Load(OdbcConnection connection)

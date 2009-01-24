@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{48A78EF4-3ADB-45C8-A820-C5DC003ABDFD}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -62,16 +62,21 @@
     <Compile Include="Data\Client.cs" />
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="Debug.cs" />
+    <Compile Include="FileLogger.cs" />
     <Compile Include="HttpService.cs" />
+    <Compile Include="MultiTextWriter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Radio\AddressPacket.cs" />
     <Compile Include="Radio\LampPacket.cs" />
     <Compile Include="Radio\RadioManager.cs" />
+    <Compile Include="Radio\ResetLampBufferPacket.cs" />
     <Compile Include="Radio\SendTracePacket.cs" />
     <Compile Include="Radio\SerialPacket.cs" />
     <Compile Include="Radio\SetAdPacket.cs" />
+    <Compile Include="Radio\SetLampIdPacket.cs" />
     <Compile Include="Radio\SetPricePacket.cs" />
+    <Compile Include="Radio\SetSignModePacket.cs" />
     <Compile Include="WebService\ClientHandler.cs" />
     <Compile Include="WebService\MyXmlRpcListenerService.cs" />
     <Compile Include="WebService\WebServiceEvents.cs" />
