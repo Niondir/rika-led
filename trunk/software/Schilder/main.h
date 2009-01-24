@@ -7,12 +7,7 @@ void setup_read_x(void);
 void setup_read_y(void);
 char init_Buttons(void);
 
-//Zeit zwischen 2 Messungen 
-//falls Touch gedrückt gehalten wird
-#define UPDATE_RATE_MS 2 //pause zwischen 2 Messvorgängen
-#define SPEED_MULTI    3  //Speed multiplikator
-#define EQUAL_CNT      5 //Soviele Ähnliche Messungen bis neuer Messwert ausgeben wird (an arm)
-#define EQUAL_DISTANCE 60 //max +- Abweichung damit messungen als Ähnlich gelten (pixel)
+
 
 #define WARMUP_CNT 7 //Anzahl komplette x,y Messung bis ergebnisse "ausgespuckt" werden, "entprellen"
 

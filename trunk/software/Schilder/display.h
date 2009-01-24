@@ -1,0 +1,18 @@
+#ifndef DISPLAYH
+#define DISPLAYH
+
+#include "uart.h"
+
+#define LCD_PUTC uartSW_putc 
+#define LCD_PUTS uartSW_puts
+
+
+void init_Display(void);
+void clr_Screen(void);
+void set_CursorPos(char col, char row);
+void set_CursorForm(char mode);
+void set_DisplayModus(char mode);
+void write_Display(char* data, char col, char row);
+void clear_row(char row);
+
+#endif

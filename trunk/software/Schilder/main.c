@@ -1,6 +1,5 @@
 /*
- - RIKA EMPFÄNGER -
- 
+  Schild Firmware
 */
 
 #include <avr/io.h>
@@ -8,48 +7,67 @@
 #include <util/delay.h>
 #include <avr/sleep.h>
 #include <stdlib.h>
-
 #include <stdint.h>
 #include <stdio.h>
 
 #include "main.h"
 #include "uart.h"
 #include "xbee.h"
+#include "board.h"
+#include "display.h"
 
 
-#define SET_LED1   (PORTD |= 1<<PD5)
-#define CLR_LED1   (PORTD &= ~(1<<PD5))
-#define TGL_LED1   ((PORTD & (1<<PD5))?CLR_LED1:SET_LED1);
+#define FIRMWARE_VERSION 100
+#define SIGN_TYPE_TROLLEY 0
+#define SIGN_TYPE_PRICE   1
 
+void detectSignMode(void);
+void show_status(void);
 
-typedef struct {
-    uint8_t  ID[10];
-    uint8_t  Text1[40];
-	uint8_t  Text2[40];
-    uint8_t  csum;
-} Anzeige_t;
+typedef struct 
+{
+   uint16_t signUniqueAdress; //Nur für Preisschilder, Werbeschilder haben keine Adresse
+   uint8_t  signType;
+} sign_t;
+
+sign_t sign;
+char textvalue[25]; // für sprintf im prog
+
 
 
 int main(void)
 {
   uint8_t i;
-  Anzeige_t anzg;
-
+ _delay_ms(1000);
   sei(); //global irq an
-
   uartSW_init(); // software uart
+  init_Display();
+  initPIOs(); 
+  detectSignMode(); //Hardware kann von extern als Wagen oder Presischild konfiguriert werden, Preisschiler sogar mit bis zu 7 IDs
 
-  uartSW_putc(12);//clear display
-  
-  DDRD|= 1<<PD5; //LED1
-  CLR_LED1;;
+  show_status();
+   _delay_ms(500);
 
-  //Cursor nicht anzeigen cmd:
-  uartSW_putc(27);
-  uartSW_putc('C');
-  uartSW_putc(0);
+   
 
 
+  while(1);
+
+  /*
+  write_Display("Hallo Welt!", 1,1 );
+  while(1)
+  {
+   clr_Screen();
+    if(ISSET_PIO1)write_Display("PIO1 set!", 1,2 );
+	else          write_Display("PIO1     ", 1,2 );
+	if(ISSET_PIO2)write_Display("PIO2 set!", 1,3 );
+	else          write_Display("PIO2     ", 1,3 );
+	if(ISSET_PIO3)write_Display("PIO3 set!", 1,4 );
+	else          write_Display("PIO3     ", 1,4 );
+	_delay_ms(500);
+  }
+  */
+/*
   while(1)
   {
      
@@ -115,9 +133,47 @@ int main(void)
   
 
   }
+*/
   return 0;
 }
 
+
+void detectSignMode(void)
+{
+  if(!ISSET_PIO1 && !ISSET_PIO2 && !ISSET_PIO3) // kein Jumper gesteckt => Wagen Schild
+  {
+    sign.signType        = SIGN_TYPE_TROLLEY;
+	sign.signUniqueAdress = 0; // Dummy, wird bei Wagenschild nicht benötigt
+  }
+  else
+  {
+    char adr=0;
+
+	sign.signType        = SIGN_TYPE_PRICE;
+    //Adresse dekodieren, nur für Präsentation um unterschiedliche Preisschilder realisieren zu können
+    
+	adr|=ISSET_PIO1;
+    adr|=ISSET_PIO2<<1;
+	adr|=ISSET_PIO3<<2;
+
+	sign.signUniqueAdress=(uint16_t)adr;
+
+  }
+
+}
+
+void show_status(void)
+{
+  //Status Infos ausgeben
+  sprintf(textvalue, "FirmwareVersion:%d",  FIRMWARE_VERSION);
+  write_Display(textvalue,1,1);
+  if(sign.signType==SIGN_TYPE_TROLLEY) write_Display("SignType: Trolley", 1, 2);
+  else write_Display("SignType: AD ", 1, 2);
+
+  sprintf(textvalue, "UniqueAdress: %d",  sign.signUniqueAdress);
+  write_Display(textvalue,1,3); 
+ 
+}
 
 
 
