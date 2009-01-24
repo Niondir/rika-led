@@ -28,7 +28,8 @@ namespace StoreServer.Data
 
         public Role(RoleData role)
         {
-
+            this.name = role.Name;
+            this.flags = role.Flags;
         }
 
         public void SetFlags(AccessFlags flags)
