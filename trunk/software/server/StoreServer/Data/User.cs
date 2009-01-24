@@ -152,7 +152,6 @@ namespace StoreServer.Data
                 command.ExecuteNonQuery();
                 this.username = data.Username;
                 this.role.Name = data.Role.Name;
-                this.role.Flags = data.Role.Flags;
             }
             else
             {
