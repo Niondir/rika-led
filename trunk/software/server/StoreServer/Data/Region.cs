@@ -90,7 +90,12 @@ namespace StoreServer.Data
 
         public void Delete(OdbcConnection connection)
         {
-            List<Product> products = Product.Load(connection);
+            // Delete all products in this region
+            List<Product> products = Product.Load(connection, this.id);
+            foreach (Product p in products)
+            {
+                p.Delete(connection);
+            }
 
             OdbcCommand command = connection.CreateCommand();
             command.CommandText = "DELETE FROM led_regions WHERE id = ?";
@@ -98,7 +103,7 @@ namespace StoreServer.Data
 
             command.ExecuteNonQuery();
 
-            // Delete all products in this region
+            
         }
     }
 }
