@@ -96,11 +96,11 @@ namespace StoreServer
                         RegionData region = new RegionData(1, "fooRegion");
                         SignData sign = new SignData(int.Parse(tokens[1]), region);
                         Product product = new Product(new ProductData(sign, tokens[2], 16.22));
-                        
-                        
-                        
                         //s.Text = tokens[2];
                         Program.RadioManager.Send(new SetPricePacket(product));
+                        break;
+                    case "packet":
+                        SendPacket(tokens);
                         break;
                     default:
                         Console.WriteLine("Unknown Command");
@@ -110,6 +110,29 @@ namespace StoreServer
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void SendPacket(string[] args)
+        {
+            //packet <name> <param>
+            switch (args[1])
+            {
+                case "sendtrace":
+                    Program.RadioManager.Send(new SendTracePacket(bool.Parse(args[2])));
+                    break;
+                case "resetlampbuffer":
+                    Program.RadioManager.Send(new ResetLampBufferPacket());
+                    break;
+                case "setsignmode":
+                    if (args[2] == "ad")
+                        Program.RadioManager.Send(new SetSignModePacket(SignMode.Ad));
+                    else if (args[2] == "price")
+                        Program.RadioManager.Send(new SetSignModePacket(SignMode.Price));
+                    break;
+                case "setlampid":
+                    Program.RadioManager.Send(new SetLampIdPacket(args[2]));
+                    break;
             }
         }
     }

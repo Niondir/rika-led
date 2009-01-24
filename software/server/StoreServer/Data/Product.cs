@@ -82,7 +82,7 @@ namespace StoreServer.Data
             }
             else
             {
-                throw new Exception("Product for sign " + this.sign.Id + " not in databse");
+                throw new Exception("Product for sign " + this.sign.Id + " not in database");
             }
         }
 
