@@ -10,25 +10,25 @@ Add your content here.
 Checksumme:
 Checksummen immer über alle Zeichen bis zur csum, inklusive "|", ohne "<". Checksummen werden auf einem unsigned char (8Bit) berechnet und übertragen. Daraus folgen max. 3 Ascii Ziffern für die Checksumme.
 
-*sendtrace
+-sendtrace
 <1|anaus|csum>    anaus=1 -> lampe schickt "schicktraceraus"
 an wagen, 0 -> tuts nicht
 
-*set ad
+-set ad
 <2|lampid|text1|text2|text3|text4|csum>
 
-*reset lamp buffers
+-reset lamp buffers
 <3|csum>
 
 //toggle ad / pricetag
 //<4|mode|csum> mode=0: ad  mode=1: pricetag
 //Ersetzt durch Jumper an der Hardware, später event. durch "Dip Schalter" realisiert.
 
-*changelampid (für traces)
+-changelampid (für traces)
 <5|neuelampenid|csum>
 
-*show SchildID(schild)
+-show SchildID(schild)
 <6|csum> Das Schild zeigt seine (eindeutige) ID/Adresse an mit der die Preisschilder in CMD7 angesprochen werden.
 
-*set pricetag
+-set pricetag
 <7|schildID|produktname|preis|csum>
