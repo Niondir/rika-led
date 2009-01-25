@@ -12,7 +12,6 @@ namespace StoreServer.WebService
 {
     public class ClientHandler : MyXmlRpcListenerService, IRemoteFunctions
     {
-
         public ClientHandler(DataManager dataManager)
             : base(dataManager)
         {
@@ -340,7 +339,7 @@ namespace StoreServer.WebService
             }
         }
 
-        public RoleData[] GetRoles(SessionData session, string roleName)
+        public RoleData[] GetRoles(SessionData session)
         {
             Debug.WriteLine("GetRoles()");
             this.ValidateRequest(session, AccessFlags.Authenticated);
@@ -503,6 +502,287 @@ namespace StoreServer.WebService
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
             throw new XmlRpcFaultException(1, "Not implemented");
+        }
+
+        #endregion
+
+        #region IXmlRpcProxy Member
+
+        public System.Security.Cryptography.X509Certificates.X509CertificateCollection ClientCertificates
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string ConnectionGroupName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public CookieContainer CookieContainer
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public ICredentials Credentials
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool EnableCompression
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool Expect100Continue
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public WebHeaderCollection Headers
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public Guid Id
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int Indentation
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool KeepAlive
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public XmlRpcNonStandard NonStandard
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool PreAuthenticate
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Version ProtocolVersion
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IWebProxy Proxy
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public event XmlRpcRequestEventHandler RequestEvent;
+
+        public CookieCollection ResponseCookies
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public event XmlRpcResponseEventHandler ResponseEvent;
+
+        public WebHeaderCollection ResponseHeaders
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string[] SystemListMethods()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string SystemMethodHelp(string MethodName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object[] SystemMethodSignature(string MethodName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Timeout
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string Url
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool UseEmptyParamsTag
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool UseIndentation
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool UseIntTag
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public bool UseStringTag
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string UserAgent
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Encoding XmlEncoding
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string XmlRpcMethod
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #endregion

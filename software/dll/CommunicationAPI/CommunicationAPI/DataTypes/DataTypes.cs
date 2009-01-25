@@ -256,8 +256,20 @@ namespace CommunicationAPI.DataTypes
 
     }
 
+    public struct LocationData
+    {
+        public int Timestamp;
+        public string LampId;
+    }
+
     public struct TraceData
     {
+        public LocationData[] locations;
+
+        public TraceData(LocationData[] locations)
+        {
+            this.locations = locations;
+        }
     }
 
     public struct AdvertisementData

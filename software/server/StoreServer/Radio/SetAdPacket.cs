@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using StoreServer.Data;
+using CommunicationAPI.Radio;
 
 namespace StoreServer.Radio
 {

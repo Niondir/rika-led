@@ -23,7 +23,6 @@ namespace StoreServer.Data
         {
             // TODO: Not implemented: Load Lamp
             throw new Exception("Not implemented");
-            return null;
         }
 
         public void Delete(OdbcConnection connection)

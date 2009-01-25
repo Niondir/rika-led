@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{433D4C5E-44DD-4B00-952E-F0504E6DE751}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{381AFF0E-6245-4BDB-834C-4B8295CF2B99}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommunicationAPI</RootNamespace>
-    <AssemblyName>CommunicationAPI</AssemblyName>
+    <RootNamespace>Kasse</RootNamespace>
+    <AssemblyName>Kasse</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,7 +33,7 @@
   <ItemGroup>
     <Reference Include="CookComputing.XmlRpcV2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CookComputing.XmlRpcV2.dll</HintPath>
+      <HintPath>..\dll\CookComputing.XmlRpcV2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -49,12 +49,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessFlags.cs" />
-    <Compile Include="DataTypes\DataTypes.cs" />
-    <Compile Include="Interface\ErrorCodes.cs" />
-    <Compile Include="Interface\IRemoteFunctions.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="Connection.cs" />
+    <Compile Include="PacketReader.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Radio\LampCommands.cs" />
+    <Compile Include="RadioReceiver.cs" />
+    <Compile Include="SerialPacket.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\dll\CommunicationAPI\CommunicationAPI\CommunicationAPI.csproj">
+      <Project>{433D4C5E-44DD-4B00-952E-F0504E6DE751}</Project>
+      <Name>CommunicationAPI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -64,7 +76,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
-    <PostBuildEvent>DIR</PostBuildEvent>
-  </PropertyGroup>
 </Project>

@@ -76,7 +76,11 @@ namespace StoreServer.Data
             command.Parameters.AddWithValue("name", data.Name);
             command.Parameters.AddWithValue("flags", data.Flags);
 
-            command.ExecuteNonQuery();
+            if (command.ExecuteNonQuery() == 0)
+            {
+                throw new Exception("Nothing changed");
+            }
+
         }
 
         public static List<Role> Load(OdbcConnection connection)
