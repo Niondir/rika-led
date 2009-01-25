@@ -340,9 +340,29 @@ namespace StoreServer.WebService
             }
         }
 
-        public RoleData GetRole(SessionData session, string roleName)
+        public RoleData[] GetRoles(SessionData session, string roleName)
         {
-            throw new XmlRpcFaultException(1, "Not implemented");
+            Debug.WriteLine("GetRoles()");
+            this.ValidateRequest(session, AccessFlags.Authenticated);
+
+            List<RoleData> roles = new List<RoleData>();
+            try
+            {
+                int i = 0;
+                foreach (Role r in Role.Load(this.DataManager.Connection))
+                {
+                    i++;
+                    roles.Add(r.Data);
+                    Debug.WriteLine("Role name " + i + ": " + r.Name);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
+            }
+
+            return roles.ToArray();
         }
 
         public UserData GetUser(SessionData session, string loginName)

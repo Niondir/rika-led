@@ -86,7 +86,7 @@ namespace CommunicationAPI.Interface
         #region Get()
 
         [XmlRpcMethod]
-        RoleData GetRole(SessionData session, string roleName);
+        RoleData[] GetRoles(SessionData session, string roleName);
 
         [XmlRpcMethod]
         UserData GetUser(SessionData session, string loginName);
