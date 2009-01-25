@@ -13,7 +13,7 @@ Checksummen immer über alle Zeichen bis zur csum, inklusive "|", ohne "<". Chec
 sendtrace
 <1|anaus|csum>    anaus=1 -> lampe schickt "schicktraceraus"
 an wagen, 0 -> tuts nicht
-   
+
 set ad
 <2|lampid|text1|text2|text3|text4|csum>
 
@@ -27,8 +27,8 @@ reset lamp buffers
 changelampid (für traces)
 <5|neuelampenid|csum>
 
-schild: show id
-<6|csum>
+show SchildID(schild)
+<6|csum> Das Schild zeigt seine (eindeutige) ID/Adresse an mit der die Preisschilder in CMD7 angesprochen werden.
 
 set pricetag
-<7|zielid|produktname|preis|csum>
+<7|schildID|produktname|preis|csum>
