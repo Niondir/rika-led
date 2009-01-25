@@ -21,18 +21,7 @@ namespace StoreClient
             InitializeComponent();
             this.Dock = DockStyle.Fill;
 
-            users = Connection.GetInstance().GetUsers();
-            foreach (UserData i in users)
-            {
-                listBox1.Items.Add(i.Username);
-            }
-
-            roles = Connection.GetInstance().GetRoles();
-            foreach (RoleData i in roles)
-            {
-                comboBox1.Items.Add(i.Name);
-                listBox2.Items.Add(i.Name);
-            }
+            refreshContent();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -46,6 +35,9 @@ namespace StoreClient
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (listBox2.SelectedIndex < 0)
+                return;
+
             if ((roles[listBox2.SelectedIndex].Flags & (int)CommunicationAPI.AccessFlags.Ads) != 0)
                 checkBoxAds.Checked = true;
             else
@@ -58,6 +50,8 @@ namespace StoreClient
                 checkBoxUser.Checked = true;
             else
                 checkBoxUser.Checked = false;
+
+            textBox5.Text = roles[listBox2.SelectedIndex].Name;
         }
 
         private void toolStripButtonEdit_Click(object sender, EventArgs e)
@@ -78,11 +72,28 @@ namespace StoreClient
             if(checkBoxUser.Checked)
                 flags |= (int)CommunicationAPI.AccessFlags.User;
 
-            Connection.GetInstance().EditRole(new RoleData("testalda", 9), new RoleData("tmp", flags));
+            Connection.GetInstance().EditRole(roles[listBox2.SelectedIndex], new RoleData(textBox5.Text, flags));
 
-            Connection.GetInstance().EditRole(roles[listBox2.SelectedIndex], new RoleData("tmp", flags));
+            refreshContent();
+        }
 
+        private void refreshContent()
+        {
+            listBox1.Items.Clear();
+            users = Connection.GetInstance().GetUsers();
+            foreach (UserData i in users)
+            {
+                listBox1.Items.Add(i.Username);
+            }
 
+            comboBox1.Items.Clear();
+            listBox2.Items.Clear();
+            roles = Connection.GetInstance().GetRoles();
+            foreach (RoleData i in roles)
+            {
+                comboBox1.Items.Add(i.Name);
+                listBox2.Items.Add(i.Name);
+            }
         }
     }
 }

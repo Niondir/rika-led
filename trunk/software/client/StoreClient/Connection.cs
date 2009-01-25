@@ -125,6 +125,7 @@ namespace StoreClient
         internal void EditRole(RoleData oldRole, RoleData newRole)
         {
             remote.EditRole(session, oldRole, newRole);
+            
         }
     }
 }
