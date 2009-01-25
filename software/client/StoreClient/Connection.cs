@@ -119,7 +119,12 @@ namespace StoreClient
 
         internal RoleData[] GetRoles()
         {
-            //return remote.GetRoles(session);
+            return remote.GetRoles(session, "");
+        }
+
+        internal void EditRole(RoleData oldRole, RoleData newRole)
+        {
+            remote.EditRole(session, oldRole, newRole);
         }
     }
 }
