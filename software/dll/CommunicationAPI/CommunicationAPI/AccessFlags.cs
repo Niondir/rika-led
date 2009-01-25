@@ -11,6 +11,7 @@ namespace CommunicationAPI
         None = 0,
         User = 1,
         Product = 2,
-        Ads = 4
+        Ads = 4,
+        Authenticated
     }
 }
