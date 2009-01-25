@@ -122,6 +122,7 @@
             this.produktgruppenToolStripMenuItem.Name = "produktgruppenToolStripMenuItem";
             this.produktgruppenToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.produktgruppenToolStripMenuItem.Text = "Produktgruppen";
+            this.produktgruppenToolStripMenuItem.Click += new System.EventHandler(this.produktgruppenToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -132,7 +133,7 @@
             // 
             this.werbungToolStripMenuItem.Name = "werbungToolStripMenuItem";
             this.werbungToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.werbungToolStripMenuItem.Text = "Werbung";
+            this.werbungToolStripMenuItem.Text = "Werbungen";
             this.werbungToolStripMenuItem.Click += new System.EventHandler(this.werbungToolStripMenuItem_Click);
             // 
             // benutzerToolStripMenuItem
@@ -140,6 +141,7 @@
             this.benutzerToolStripMenuItem.Name = "benutzerToolStripMenuItem";
             this.benutzerToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.benutzerToolStripMenuItem.Text = "Benutzer";
+            this.benutzerToolStripMenuItem.Click += new System.EventHandler(this.benutzerToolStripMenuItem_Click);
             // 
             // hilfeToolStripMenuItem
             // 

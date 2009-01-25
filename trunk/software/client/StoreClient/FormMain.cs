@@ -51,10 +51,16 @@ namespace StoreClient
                         panelMain.Controls.Add(new ucLogin());
                         break;
                     case DisplayWindow.Groups:
+                        FormGroupManagement f = new FormGroupManagement();
+                        f.ShowDialog();
                         break;
                     case DisplayWindow.Products:
                         this.Text = FormMain.title + " - Produkte";
-                        panelMain.Controls.Add(new ucProducts());
+                        panelMain.Controls.Add(new ucProducts(false));
+                        break;
+                    case DisplayWindow.User:
+                        this.Text = FormMain.title + " - Benutzer";
+                        panelMain.Controls.Add(new ucUser());
                         break;
                 }
                 currWindow = value;
@@ -128,12 +134,23 @@ namespace StoreClient
             }
         }
 
+        private void produktgruppenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CurrWindow = DisplayWindow.Groups;
+        }
+
+        private void benutzerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CurrWindow = DisplayWindow.User;
+        }
+
     }
     public enum DisplayWindow
     {
         Login,
         Products,
         Groups,
+        User,
         Advertisement
     }
 }

@@ -109,6 +109,14 @@ namespace StoreClient
             remote.DeleteRegion(session, new RegionData(id, ""));
         }
 
+        internal UserData[] GetUsers()
+        {
+            return remote.GetUsers(session);
+        }
 
+        internal RoleData[] GetRoles()
+        {
+            //return remote.GetRoles(session);
+        }
     }
 }
