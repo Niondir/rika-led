@@ -72,11 +72,12 @@ namespace StoreServer.Data
         public void Update(OdbcConnection connection, RoleData data)
         {
             OdbcCommand command = connection.CreateCommand();
-            command.CommandText = "UPDATE led_roles SET name = @name, flags = @flags WHERE name = @name";
+            command.CommandText = "UPDATE led_roles SET name = ?, flags = ? WHERE name = ?";
             command.Parameters.AddWithValue("name", data.Name);
             command.Parameters.AddWithValue("flags", data.Flags);
+            command.Parameters.AddWithValue("where_name", this.name);
 
-            if (command.ExecuteNonQuery() == 0)
+            if (command.ExecuteNonQuery() <= 0)
             {
                 throw new Exception("Nothing changed");
             }
