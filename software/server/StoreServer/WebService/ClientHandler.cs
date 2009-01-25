@@ -358,6 +358,7 @@ namespace StoreServer.WebService
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
             }
 
