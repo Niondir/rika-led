@@ -9,7 +9,8 @@ namespace CommunicationAPI
     public enum AccessFlags : int
     {
         None = 0,
-        Guest = 1,
-        Authenticated = 2
+        User = 1,
+        Product = 2,
+        Ads = 4
     }
 }

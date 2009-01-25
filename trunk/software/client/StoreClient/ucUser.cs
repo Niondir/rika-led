@@ -62,7 +62,7 @@ namespace StoreClient
 
         private void toolStripButtonEdit_Click(object sender, EventArgs e)
         {
-            groupBoxSingleUser.Enabled = !groupBoxSingleUser.Enabled;
+            tableLayoutPanel1.Enabled = !tableLayoutPanel1.Enabled;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -77,6 +77,8 @@ namespace StoreClient
                 flags |= (int)CommunicationAPI.AccessFlags.Product;
             if(checkBoxUser.Checked)
                 flags |= (int)CommunicationAPI.AccessFlags.User;
+
+            Connection.GetInstance().EditRole(new RoleData("testalda", 9), new RoleData("tmp", flags));
 
             Connection.GetInstance().EditRole(roles[listBox2.SelectedIndex], new RoleData("tmp", flags));
 
