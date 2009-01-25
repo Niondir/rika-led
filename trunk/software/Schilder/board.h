@@ -1,6 +1,7 @@
 #ifndef BOARDH
 #define BOARDH
 
+void initPIOs(void);
 
 #define SET_LED1   (PORTD |= 1<<PD5)
 #define CLR_LED1   (PORTD &= ~(1<<PD5))
