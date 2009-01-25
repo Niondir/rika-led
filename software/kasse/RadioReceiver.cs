@@ -5,6 +5,7 @@ using System.Threading;
 using System.Linq;
 using System.Text;
 using CommunicationAPI.DataTypes;
+using CommunicationAPI.Radio;
 
 namespace Kasse
 {
@@ -13,6 +14,11 @@ namespace Kasse
         private SerialPort serialPort;
         private Queue<SerialPacket> rcvQueue;
         private Thread rcvThread;
+
+        public Queue<SerialPacket> ReceiveQueue
+        {
+            get { return rcvQueue; }
+        }
 
         public RadioReceiver(string portName)
         {
@@ -49,44 +55,19 @@ namespace Kasse
                     Console.WriteLine("Got: " + packetStr);
 
                     PacketReader reader = new PacketReader(packetStr);
-                    // Gibt nur eine art von Packeten die wir gleich hier in Traces umwandeln
-                    if (reader.IsValidChkSum)
-                    {
-                        List<LocationData> locations = new List<LocationData>();
 
-                        if (reader.Args.Count % 2 == 0) 
+                    if (reader.Command == LampCommand.TracePacket) {
+                        TracePacket tracePacket = new TracePacket(reader);
+                        if (tracePacket.IsValid)
                         {
-                            LocationData loc = new LocationData();
-                            for (int i = 0; i < reader.Args.Count; i++) 
+                            lock (rcvQueue)
                             {
-                                if (i % 2 == 0) 
-                                { // grade
-                                   loc.LampId = reader.Args[i];
-                                }
-                                else 
-                                {
-                                    try 
-                                    {
-                                        loc.Timestamp = int.Parse(reader.Args[i]);
-                                        locations.Add(loc); // struct will be copied
-                                    }
-                                    catch 
-                                    {
-                                        Console.WriteLine("Invalid argument: " + reader.Args[i]);
-                                        break;
-                                    }
-                                }
+                                rcvQueue.Enqueue(tracePacket);
+                                Program.Set();
                             }
-
-                            TraceData trace = new TraceData(locations.ToArray());
                         }
-                        else {
-                            Console.WriteLine("Invalid argument count: " + reader.PacketString);
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Wooops, invaid chk sum: " + reader.PacketString);
+                        else
+                            Console.WriteLine("Got invalid packet");
                     }
                 }
                 else
