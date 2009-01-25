@@ -14,7 +14,7 @@ namespace StoreClient
     {
         private ProductData[] products;
         private RegionData[] groups;
-        public ucProducts()
+        public ucProducts(bool showGroups)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
@@ -23,7 +23,8 @@ namespace StoreClient
 
             refreshContent(null, null);
 
- 
+            if (showGroups)
+                toolStripButtonGroups_Click(null, null);
         }
 
         void item_Click(object sender, EventArgs e)
@@ -116,9 +117,8 @@ namespace StoreClient
 
         private void toolStripButtonPEdit_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow i in GridProducts.SelectedRows)
-            {
-            }
+            if (GridProducts.SelectedRows.Count > 0)
+                GridProducts.BeginEdit(true);
         }
 
         private string tmpValueInCell;
