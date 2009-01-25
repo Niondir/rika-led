@@ -28,6 +28,9 @@ namespace StoreClient
         private Connection()
         {
             remote = XmlRpcProxyGen.Create<IRemoteFunctions>();
+            
+            IRemoteFunctions proxy = (IRemoteFunctions)XmlRpcProxyGen.Create(typeof(IRemoteFunctions));
+            //proxy.Url = "Hier die URL";
         }
 
         static public Connection GetInstance()

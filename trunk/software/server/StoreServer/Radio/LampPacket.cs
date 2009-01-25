@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CommunicationAPI.Radio;
 
 namespace StoreServer.Radio
 {
-    public enum LampCommand : int
-    {
-        SendTrace = 1,
-        SetAd = 2,
-        ResetLampBuffer = 3,
-        SetSignMode = 4,
-        SetLampId = 5,
-        DisplayId = 6,
-        SetPrice = 7
-    }
+    
 
     public abstract class LampPacket : SerialPacket
     {
