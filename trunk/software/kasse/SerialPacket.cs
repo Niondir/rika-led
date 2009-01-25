@@ -52,5 +52,6 @@ namespace Kasse
         {
             return base.ToString() + "\n" + Decode(sendBytes) + "\n";
         }
+
     }
 }

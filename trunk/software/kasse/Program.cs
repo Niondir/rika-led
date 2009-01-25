@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using CommunicationAPI.DataTypes;
 
 namespace Kasse
@@ -12,6 +13,9 @@ namespace Kasse
 
         private static bool closing = false;
         public static bool Closing { get { return closing; } }
+
+        private static AutoResetEvent signal = new AutoResetEvent(true);
+        public static void Set() { signal.Set(); }
 
         public static void Main(string[] args)
         {
@@ -25,7 +29,20 @@ namespace Kasse
 
             radioReveiver = new RadioReceiver(config.ComPort);
 
-            Console.ReadKey();
+            while (signal.WaitOne())
+            {
+                lock (radioReveiver.ReceiveQueue) {
+                    while (radioReveiver.ReceiveQueue.Count < 0)
+                    {
+                        SerialPacket p = radioReveiver.ReceiveQueue.Dequeue();
+                        if (p is TracePacket)
+                        {
+                            (p as TracePacket).SendToServer();
+                        }
+                    }
+                }
+            }
+
             closing = true;
 
             // Traces empfangen und an Server schicken

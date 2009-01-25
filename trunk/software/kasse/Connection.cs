@@ -68,9 +68,9 @@ namespace Kasse
             
         }
 
-        internal void Add(RegionData regionData)
+        internal void Add(TraceData traceData)
         {
-            remote.AddRegion(session, regionData);
+            remote.AddTrace(session, traceData);
         }
     }
 }
