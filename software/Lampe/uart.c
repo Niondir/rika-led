@@ -2,6 +2,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h> 
 
+
 #define UBRR_VAL ((F_CPU+BAUD*8)/(BAUD*16)-1)   // clever runden
 
 int uart_putc(char c)
@@ -31,30 +32,6 @@ uint8_t uart_getc(void)
         ;
     return UDR;                   // Zeichen aus UDR an Aufrufer zurueckgeben
 }
-
-
-void uart_gets( char* Buffer, uint8_t MaxLen )
-{
-  uint8_t NextChar;
-  uint8_t StringLen = 0;
- 
-  NextChar = uart_getc();         // Warte auf und empfange das nächste Zeichen
- 
-                                  // Sammle solange Zeichen, bis:
-                                  // * entweder das String Ende Zeichen kam
-                                  // * oder das aufnehmende Array voll ist
-  while( (NextChar != '>') && (StringLen < MaxLen - 1 )) {
-    *Buffer++ = NextChar;
-    StringLen++;
-    NextChar = uart_getc();
-  }
- 
-                                  // Noch ein '\0' anhängen um einen Standard
-                                  // C-String daraus zu machen
-  *Buffer = '\0';
-}
-
-
 
 void init_uart(void)
 {
