@@ -90,24 +90,24 @@ namespace StoreClient
             return remote.GetProducts(session);
         }
 
-        internal ProductData[] GetProducts(int regionID)
+        internal ProductData[] GetProducts(string regionID)
         {
             return remote.GetProductsByRegion(session, regionID);
         }
 
         internal void DeleteProduct(int id)
         {
-            remote.DeleteProduct(session, new ProductData(new SignData(id, new RegionData(0, "")), "", 0));
+            remote.DeleteProduct(session, new ProductData(new SignData(id, new RegionData("0", "")), "", 0));
         }
 
         internal void EditProduct(int id, ProductData newValue)
         {
             remote.EditProduct(session,
-                                new ProductData(new SignData(id, new RegionData(0, "")), "", 0),
+                                new ProductData(new SignData(id, new RegionData("0", "")), "", 0),
                                 newValue);
         }
 
-        internal void DeleteRegion(int id)
+        internal void DeleteRegion(string id)
         {
             remote.DeleteRegion(session, new RegionData(id, ""));
         }

@@ -7,7 +7,7 @@
 #define LCD_PUTS uartSW_puts
 
 
-void init_Display(void);
+void init_Display(int8_t modus);
 void clr_Screen(void);
 void set_CursorPos(char col, char row);
 void set_CursorForm(char mode);

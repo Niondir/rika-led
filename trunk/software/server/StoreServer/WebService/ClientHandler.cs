@@ -459,7 +459,7 @@ namespace StoreServer.WebService
             return products.ToArray();
         }
 
-        public ProductData[] GetProductsByRegion(SessionData session, int regionId)
+        public ProductData[] GetProductsByRegion(SessionData session, string regionId)
         {
             Debug.WriteLine("GetProductsByRegion()");
             this.ValidateRequest(session, AccessFlags.Authenticated);

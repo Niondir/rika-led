@@ -8,10 +8,10 @@ namespace StoreServer.Data
 {
     public class Region
     {
-        private int id;
+        private string id;
         private string name;
 
-        public int Id
+        public string Id
         {
             get { return id; }
             set { id = value; }
@@ -82,7 +82,7 @@ namespace StoreServer.Data
 
             while (reader.Read())
             {
-                regions.Add(new RegionData(reader.GetInt32(0), reader.GetString(1)));
+                regions.Add(new RegionData(reader.GetString(0), reader.GetString(1)));
             }
 
             return regions.ToArray();

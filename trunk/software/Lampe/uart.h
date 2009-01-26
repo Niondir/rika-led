@@ -45,10 +45,14 @@ void uartSW_puts (char *s);
 
 //normal mode
 /*
-    #define SUART_TXD_PORT PORTB
-    #define SUART_TXD_DDR  DDRB
-    #define SUART_TXD_BIT  PB1 
+//    #define SUART_TXD_PORT PORTB
+//    #define SUART_TXD_DDR  DDRB
+//    #define SUART_TXD_BIT  PB1 
 */	
+    #define SUART_TXD_PORT PORTC
+    #define SUART_TXD_DDR  DDRC
+	#define SUART_TXD_BIT  PC5 
+
     static volatile uint16_t outframe;
 #endif // SUART_TXD 
 

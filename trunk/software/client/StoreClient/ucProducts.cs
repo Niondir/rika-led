@@ -150,7 +150,7 @@ namespace StoreClient
                     GridProducts.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = tmpValueInCell;
                     return;
                 }
-                int regionID = -1;
+                string regionID = "-1";
                 foreach (RegionData i in groups)
                 {
                     if (i.Name == (string)((DataGridViewComboBoxCell)GridProducts["Group", e.RowIndex]).Value)
@@ -159,7 +159,7 @@ namespace StoreClient
                         break;
                     }
                 }
-                if (regionID == -1)
+                if (regionID == "-1")
                 {
                     MessageBox.Show("Die Produktgruppe \"\" existiert nicht", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     return;

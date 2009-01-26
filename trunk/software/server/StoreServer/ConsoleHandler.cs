@@ -81,10 +81,10 @@ namespace StoreServer
                         Program.ClientHandler.AddUser(session, user);
                         break;
                     case "addregion":
-                        Program.ClientHandler.AddRegion(session, new RegionData(1, "foobar"));
+                        Program.ClientHandler.AddRegion(session, new RegionData("1", "foobar"));
                         break;
                     case "addproduct":
-                        Program.ClientHandler.AddProduct(session, new ProductData(new SignData(int.Parse(tokens[1]), new RegionData(1234, "testregion")), tokens[2], double.Parse(tokens[3])));
+                        Program.ClientHandler.AddProduct(session, new ProductData(new SignData(int.Parse(tokens[1]), new RegionData("1234", "testregion")), tokens[2], double.Parse(tokens[3])));
                         break;
                     case "address":
                         Program.RadioManager.Destination = tokens[1];
@@ -93,7 +93,7 @@ namespace StoreServer
                         Program.RadioManager.Send(new SendTracePacket(tokens[1], bool.Parse(tokens[2])));
                         break;
                     case "settext":
-                        RegionData region = new RegionData(1, "fooRegion");
+                        RegionData region = new RegionData("1", "fooRegion");
                         SignData sign = new SignData(int.Parse(tokens[1]), region);
                         Product product = new Product(new ProductData(sign, tokens[2], 16.22));
                         //s.Text = tokens[2];

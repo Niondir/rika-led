@@ -101,7 +101,7 @@ namespace CommunicationAPI.Interface
         RegionData[] GetRegions(SessionData session);
 
         [XmlRpcMethod]
-        ProductData[] GetProductsByRegion(SessionData session, int regionId);
+        ProductData[] GetProductsByRegion(SessionData session, string regionId);
         
         [XmlRpcMethod]
         ProductData[] GetProducts(SessionData session);
