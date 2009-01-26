@@ -52,7 +52,7 @@ namespace StoreServer.Radio
 
             Console.WriteLine("Starting the send timer");
             sendTimer = new Timer(sendTimerCallback);
-            sendTimer.Change(1000, 5000);
+            sendTimer.Change(1000, 1000);
         }
 
         private void Connect()

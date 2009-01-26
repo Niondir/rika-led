@@ -88,7 +88,7 @@ namespace StoreServer.Data
             }
         }
 
-        public static List<Product> Load(OdbcConnection connection, int regionId)
+        public static List<Product> Load(OdbcConnection connection, string regionId)
         {
             OdbcCommand command = connection.CreateCommand();
 
@@ -100,7 +100,7 @@ namespace StoreServer.Data
 
             while (reader.Read())
             {
-                RegionData region = new RegionData(reader.GetInt32(1), "Not requested!");
+                RegionData region = new RegionData(reader.GetString(1), "Not requested!");
                 SignData sign = new SignData((int)reader.GetInt64(0), region);
                 ProductData pData = new ProductData(sign, reader.GetString(2), reader.GetDouble(3));
                 products.Add(new Product(pData));
@@ -123,7 +123,7 @@ namespace StoreServer.Data
 
             while (reader.Read())
             {
-                RegionData region = new RegionData(reader.GetInt32(1), "Region not found!");
+                RegionData region = new RegionData(reader.GetString(1), "Region not found!");
                 //TODO: Veryfy region !??!? Or get the name??
 
                 foreach (RegionData r in regions)

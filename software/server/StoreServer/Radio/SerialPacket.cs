@@ -25,6 +25,11 @@ namespace StoreServer.Radio
 
         protected virtual void Write(SerialPort port, Byte[] bytes)
         {
+            string msg = Decode(bytes);
+            if (this is LampPacket)
+            {
+                Debug.WriteLine("Sending: " + msg + " to " + ((LampPacket)this).TargetId);
+            }
             port.Write(bytes, 0, bytes.Length);
         }
 

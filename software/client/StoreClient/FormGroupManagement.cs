@@ -43,14 +43,14 @@ namespace StoreClient
         {
             int regCount = 0;
             foreach (DataGridViewRow i in GridRegions.SelectedRows){
-                regCount += Connection.GetInstance().GetProducts(Convert.ToInt32(i.Cells["id"].Value)).Length;
+                regCount += Connection.GetInstance().GetProducts(Convert.ToString(i.Cells["id"].Value)).Length;
             }
             if (MessageBox.Show("Wollen Sie wirklich die " + GridRegions.SelectedRows.Count + " Produktgruppen löschen?\r\nHiermit löschen Sie auch die beinhaltenden " + regCount + " Produkte", "Warnung", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) != DialogResult.Yes)
                 return;
 
             foreach (DataGridViewRow i in GridRegions.SelectedRows)
             {
-                Connection.GetInstance().DeleteRegion(Convert.ToInt32(i.Cells["id"].Value));
+                Connection.GetInstance().DeleteRegion(Convert.ToString(i.Cells["id"].Value));
                 GridRegions.Rows.Remove(i);
             }
             if (groupsChanged != null)

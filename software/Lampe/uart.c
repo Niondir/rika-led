@@ -34,7 +34,9 @@ uint8_t uart_getc(void)
 
 void init_uart(void)
 {
-    UCSRB |= (1<<TXEN);                // UART TX einschalten
+    
+
+	UCSRB |= (1<<TXEN);                // UART TX einschalten
 	UCSRB |= ( 1 << RXEN );
 
     UCSRC |= (1<<URSEL)|(3<<UCSZ0);    // Asynchron 8N1 
@@ -71,6 +73,9 @@ void uartSW_init()
     SUART_RXD_PORT |=  (1 << SUART_RXD_BIT);
     TIMSK |= (1 << TICIE1);
     tifr  |= (1 << ICF1) | (1 << OCF1B);
+
+	//Enable Analog Comparator
+	ACSR = 4; //Conncect analog comparator -> 
 #else
     TIMSK &= ~(1 << TICIE1);
 #endif // SUART_RXD 
@@ -117,6 +122,9 @@ void uartSW_puts (char *s)
 
 #endif // SUART_TXD 
 
+
+
+
 #ifdef SUART_TXD
 SIGNAL (SIG_OUTPUT_COMPARE1A)
 {
@@ -140,7 +148,7 @@ SIGNAL (SIG_INPUT_CAPTURE1)
 {
     uint16_t icr1  = ICR1;
     uint16_t ocr1a = OCR1A;
-   
+ 
     // Eine halbe Bitzeit zu ICR1 addieren (modulo OCR1A) und nach OCR1B
     uint16_t ocr1b = icr1 + ocr1a/2;
     if (ocr1b >= ocr1a)

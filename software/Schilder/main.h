@@ -26,7 +26,7 @@ void show_status(void);
 int8_t get_packet(void);
 void packet_action(void);
 void initTraceCounter(int8_t run);
-
+void debug_packet(void);
 // Typedefs
 typedef struct 
 {

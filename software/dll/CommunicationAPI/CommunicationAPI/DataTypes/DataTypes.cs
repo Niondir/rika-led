@@ -177,10 +177,10 @@ namespace CommunicationAPI.DataTypes
 
     public struct RegionData
     {
-        private int id;
+        private string id;
         private string name;
 
-        public int Id
+        public string Id
         {
             get { return id; }
             set { id = value; }
@@ -192,7 +192,7 @@ namespace CommunicationAPI.DataTypes
             set { name = value; }
         }
 
-        public RegionData(int id, string name)
+        public RegionData(string id, string name)
         {
             this.id = id;
             this.name = name;

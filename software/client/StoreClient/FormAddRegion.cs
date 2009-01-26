@@ -28,10 +28,10 @@ namespace StoreClient
         {
             if (Valid())
             {
-                int res;
-                int.TryParse(textBox2.Text, out res);
-                Connection.GetInstance().Add(new RegionData(res, textBox1.Text));
-                region = new RegionData(res, textBox1.Text);
+                //int res;
+                //int.TryParse(textBox2.Text, out res);
+                Connection.GetInstance().Add(new RegionData(textBox2.Text, textBox1.Text));
+                region = new RegionData(textBox2.Text, textBox1.Text);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

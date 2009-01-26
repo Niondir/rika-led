@@ -57,7 +57,7 @@ namespace StoreServer.Data
 
             while (reader.Read())
             {
-                RegionData region = new RegionData(reader.GetInt32(1), "Region not found!");
+                RegionData region = new RegionData(reader.GetString(1), "Region not found!");
                 //TODO: Veryfy region !??!? Or get the name??
 
                 foreach (RegionData r in regions)
