@@ -1,7 +1,6 @@
 /*
   Schild Firmware
 */
-
 #include <avr/io.h>
 #include <avr/interrupt.h> 
 #include <util/delay.h>
@@ -17,63 +16,27 @@
 #include "board.h"
 #include "display.h"
 
-// Constants
-#define FIRMWARE_VERSION    100
-#define SIGN_TYPE_TROLLEY   0
-#define SIGN_TYPE_PRICE     1
-
-#define CMDNR_SEND_TRACE    1
-#define CMDNR_SET_AD        2 
-#define CMDNR_SET_PRICE     7
-#define CMDNR_SHOW_ID       6
-
-#define ARGCNT_SEND_TRACE   0
-#define ARGCNT_SET_AD       5
-#define ARGCNT_SET_PRICE    3
-#define ARGCNT_SHOW_ID      0
-
-#define MAX_ARGS            5
-#define ARG_SIZE            25
-
-// Prototypes
-void detectSignMode(void);
-void show_status(void);
-int8_t get_packet(void);
-void packet_action(void);
-
-// Typedefs
-typedef struct 
-{
-   uint16_t signUniqueID; //Nur für Preisschilder, Werbeschilder haben keine Adresse, auch schildID
-   uint8_t  signType;
-} sign_t;
-
-typedef struct 
-{
-   uint8_t packetCmdNr; 
-   char    args[MAX_ARGS][ARG_SIZE];
-} packet_t;
-
 // Gloable Vars
 sign_t    sign;
 packet_t  packet;
-volatile  int16_t trace_cnt=0;
+trace_t   trace;
 
 int main(void)
 {
 
-  _delay_ms(500);   // startup delay
-  sei();            // global irq an
-  uartSW_init();    // software uart
-  init_Display();
-  initPIOs(); 
-  detectSignMode(); // Hardware kann von extern als Wagen oder Presischild konfiguriert werden, Preisschiler sogar mit bis zu 7 Adressen
+  _delay_ms(300);      // startup delay
+  sei();               // global irq an
+  uartSW_init();       // software uart
+  init_Display();      // Display initialisieren
+  initPIOs();          // Mode Jumper Pins konfigurieren
+  detectSignMode();    // Hardware kann von extern als Wagen oder Presischild konfiguriert werden, Preisschiler sogar mit bis zu 7 Adressen
+  initTraceCounter(1); // TraceTimer konfigurieren und starten
 
-  show_status();
+  if(sign.signType == SIGN_TYPE_TROLLEY);  //initXbee();        // Xbee auf zeiladresse des trace empfängers konfigurieren
+ 
+  show_status();       // Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
+  
    _delay_ms(500);
-
-   
-
 
   while(1)
   {
@@ -81,6 +44,7 @@ int main(void)
 	 packet_action();
 
   }
+  //todo watchdog nutzen um reset auslösen zu können, wenn via pio mode umgestellt wurde
 
   /*
   write_Display("Hallo Welt!", 1,1 );
@@ -159,7 +123,7 @@ int8_t get_packet(void)
   while(uartSW_getc_wait()!='<');                        //Auf Start eines Pakets warten
  
 
-//----------> CMD Nr empfangen
+// CMD Nr empfangen:
   
   //CMD Nr muss folgen
   lastChar = uartSW_getc_wait();                         
@@ -186,7 +150,7 @@ int8_t get_packet(void)
 
 
 
-//----------> Argumente empfangen
+// Argumente empfangen:
   switch(packet.packetCmdNr)
   { 
     case CMDNR_SEND_TRACE: ArgAnzahl = ARGCNT_SEND_TRACE; break;
@@ -212,7 +176,7 @@ int8_t get_packet(void)
   }
 
 
-//----------> Csum empfangen
+// Csum empfangen:
    pos=0;
    lastChar = uartSW_getc_wait();  
 
@@ -232,7 +196,7 @@ int8_t get_packet(void)
 
    
 
-//----------> Checksummen vergleichen
+// Checksummen vergleichen:
   csumCompare[pos]  = '\0'; 
   csumCompareInt    = (uint8_t)atoi(csumCompare);
 
@@ -248,14 +212,37 @@ void packet_action(void)
   { 
     case CMDNR_SEND_TRACE:  
 
-	
-	
+	  					if(trace.pos != 0)
+						{
+							for(int i=0;i<trace.pos;i++)
+							{
+							  //xbeesend(trace.times[i]);
+							  //xbeesend(trace.lampIDs[i]);
+							   trace.pos = 0;
+							}
+						}
+					
 						break;
 
 	case CMDNR_SET_AD: 
 	                    if(sign.signType==SIGN_TYPE_TROLLEY)
 						{
-							//packet.args[0] //lampen id für trace
+			
+                            if(trace.pos < (TRACE_LAMP_CNT-1)) // nur bearbeiten wenn min. noch ein freier traceplatz zur verfügung steht
+							{
+							  
+							  uint16_t aktLampID = (uint16_t)atoi(packet.args[0]); //lamp id char->int
+							  
+							  if(trace.pos==0 || (aktLampID != (trace.lampIDs)[trace.pos])) //Nur "Neue" traces bzw. lampenIDs abspeichern
+                              {
+                                trace.pos++;
+								trace.times[trace.pos]   = trace.TimeNow;
+								trace.lampIDs[trace.pos] = aktLampID;
+							  }
+							 							 
+							  
+							}
+
 							write_Display(packet.args[1],1,1); //Text1 in 1. Zeile schreiben
 							write_Display(packet.args[2],1,2); //Text2 in 2. Zeile schreiben
 							write_Display(packet.args[3],1,3); //Text3 in 3. Zeile schreiben
@@ -281,8 +268,10 @@ void packet_action(void)
 }
 
 
-void cfgTraceCounter(int8_t run)
+void initTraceCounter(int8_t run)
 { 
+  trace.pos=0;      // init
+
   if(run)
   {
     TIMSK |= 1; //enable Overflow Interrupt
@@ -298,5 +287,5 @@ void cfgTraceCounter(int8_t run)
 
 SIGNAL (SIG_OVERFLOW0)
 {
-
+  trace.TimeNow++;
 }
