@@ -227,6 +227,7 @@ int overwrite=nextSchildOverwriteslot;
 			}
 		}
 	}
+	sprintf(tempstring, "ueberschrieben wird slot %d", overwrite);
 	uartSW_puts(tempstring);
 	return(overwrite);
 }
@@ -311,8 +312,8 @@ void process_packet(){
 								}
 		}
 	} else {
-			uartSW_puts(csum);
-			uartSW_putc('?');
+			//uartSW_puts(csum);
+			//uartSW_putc('?');
 			rcvbuf_invalid= TRUE;	
 	}
 }
@@ -516,7 +517,6 @@ while (1){
 	}
 
 	if(rcvbuf_invalid){
-		uartSW_putc('!');
 		rcvbuf_iterator=0;
 		rcvbuf_receiving=FALSE;
 		packet_received=FALSE;

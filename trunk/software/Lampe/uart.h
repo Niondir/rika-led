@@ -37,18 +37,18 @@ void uartSW_puts (char *s);
 #ifdef SUART_TXD
 
      //TOBIMODE
-	 
+/*	 
 #define SUART_TXD_PORT PORTC
 #define SUART_TXD_DDR DDRC
 #define SUART_TXD_BIT PC5
-
+*/
 
 //normal mode
-/*
+
 //    #define SUART_TXD_PORT PORTB
 //    #define SUART_TXD_DDR  DDRB
 //    #define SUART_TXD_BIT  PB1 
-*/	
+		
     #define SUART_TXD_PORT PORTC
     #define SUART_TXD_DDR  DDRC
 	#define SUART_TXD_BIT  PC5 
