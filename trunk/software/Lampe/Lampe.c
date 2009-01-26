@@ -13,7 +13,7 @@
 #define SCHILDIDBYTES 4
 #define CYCLEDELAY 1000
 #define RCVBUFSIZE 120
-#define DEBUG
+//#define DEBUG
 #define TRUE  1
 #define FALSE  0
 #define UBRR_VAL ((F_CPU+BAUD*8)/(BAUD*16)-1)   // clever runden
@@ -56,18 +56,12 @@ char adbuffer[ADBUFFERMAXSLOTS][120];
 
 
 
-
-void set_dest(uint32_t destlow, uint32_t desthigh){
-char dat;
-	_delay_ms(20);
-	sprintf(tempstring, "+++");
-	uart_puts(tempstring);
-	_delay_ms(20);
-	sprintf(tempstring, "ATDH%lx,DL%lx,CN\r",desthigh,destlow); //, desthigh);
-	uart_puts(tempstring);
-	_delay_ms(10);
-}
-
+ /**
+  * \brief  clears buffers
+  *
+  *         resets adbuffer and signbuffer		
+  *
+  */
 void clear_buffers(){
 	signbuf_empty = TRUE;
 	nextSchildOverwriteslot=0;
@@ -85,9 +79,13 @@ void clear_buffers(){
 };
 
 
-///////////////////////////////////////////
-/// gets lampid
-///////////////////////////////////////////
+ /**
+  * \brief  init lamp
+  *
+  *         sends command to xbee module to get
+  *			current my-id, saves it in lampid
+  *
+  */
 void init_lamp(){
 	_delay_ms(20);
 	sprintf(tempstring, "+++");
@@ -95,7 +93,7 @@ void init_lamp(){
 	_delay_ms(20);
 	sprintf(tempstring, "ATMY\r");
 	uart_puts(tempstring);
-	_delay_ms(1000);
+	_delay_ms(500);
 	for(int i=0; i<5; i++){
 		lampid[i]=rcvbuf[i];
 		if(rcvbuf[i]=='\0') break;
@@ -105,6 +103,16 @@ void init_lamp(){
 	rcvbuf_invalid = TRUE;
 	setupmode = FALSE;
 };
+
+ /**
+  * \brief  gets csum index
+  *
+  *         This Function searches the location of the
+  *			checksum in the recieve buffer array. 
+  *
+  * \return	            index of checksum in recievebuffer
+  *
+  */
 
 int get_csum_index(){
 	int csumindex=0;
@@ -118,11 +126,19 @@ int get_csum_index(){
 	return(csumindex);
 }
 
-////////////////////////////////
-//// calculates csum
-////////////////////////////////
+ /**
+  * \brief  calculates checksum
+  *
+  *         This Function calculates the checksum by
+  *         adding the ascii values of all signs of the
+  *			packet exept '<' '>' and the checksum and saves
+  *			result in csum[]
+  *
+  * \param	csumindex   index of checksum in receivebufferarray
+  *
+  */
 void calculate_csum(int csumindex){
-	int tmpcsum=0;
+	uint8_t tmpcsum=0;
 	int i=0;
 	
 	while(i<csumindex){
@@ -133,18 +149,34 @@ void calculate_csum(int csumindex){
 	strcpy(csum, tempstring);
 }
 
+ /**
+  * \brief  checks if checksum is wrong
+  *
+  *         This Function compares the recieved and the
+  *			calculated checksum. It returns 0 if the checksum 
+  *			is correct.
+  *
+  * \return	            Status-Code
+  *
+  */
 int checksum_failed(){
 	int csum_index=get_csum_index();
 	calculate_csum(csum_index);
+#ifdef DEBUG
 	uartSW_puts("\r\n die richtige csum waere: ");
 	uartSW_puts(csum);
 	uartSW_puts("\r\n");
-	//uartSW_putc(';');
-	//uartSW_puts(&rcvbuf[csum_index]);
+#endif
 	return(strcmp(csum, &rcvbuf[csum_index]));
 }
 
-
+ /**
+  * \brief  changes lamp id
+  *
+  *         This Function changes the lamp id in the
+  *         XBee module as well as in lampid[]
+  *
+  */
 void change_lampid(){
 	int i=2;
 	while(rcvbuf[i]!='|'){
@@ -158,21 +190,19 @@ void change_lampid(){
 	_delay_ms(20);
 	sprintf(tempstring, "ATMY%s,CN\r",lampid);
 	uart_puts(tempstring);
-//	uartSW_puts(tempstring);
 	_delay_ms(10);
 }
 
-/*
-void forwardPacketThroughSignbuffer(){
-	strcpy(schildbuffer[nextSchildOverwriteslot], rcvbuf);
-	nextSchildOverwriteslot=(nextSchildOverwriteslot+1)%SCHILDBUFFERMAXSLOTS;
-	if(Schildslotsused<SCHILDBUFFERMAXSLOTS){
-		Schildslotsused++;
-	}
-	signbuf_empty=FALSE;
-}*/
-
-
+ /**
+  * \brief  Exemplarische Funktion
+  *
+  *         Diese Funktion gibt den übergebenen Parameter
+  *         auf der Konsole aus.
+  *
+  * \param	parameter   Auszugebender Parameter
+  * \return	            Status-Code
+  *
+  */
 void set_send_trace(){
 	if(rcvbuf[2]=='0'){
 		send_trace_mode=FALSE;
@@ -181,7 +211,9 @@ void set_send_trace(){
 	}
 }
 
-
+//************************************
+// 
+//************************************
 int calculate_overwriteslot(){
 int overwrite=nextSchildOverwriteslot;
 	for(int i=0; i<Schildslotsused; i++){
@@ -195,17 +227,22 @@ int overwrite=nextSchildOverwriteslot;
 			}
 		}
 	}
-	sprintf(tempstring, "write to slot %d ", overwrite);
 	uartSW_puts(tempstring);
 	return(overwrite);
 }
 
+//************************************
+// 
+//************************************
 void forward_packet(){
 	uartSW_putc('<');
 	uartSW_puts(rcvbuf);
 	uartSW_putc('>');
 }
 
+//************************************
+// 
+//************************************
 void insert_in_ad_buffer(){
 	strcpy(adbuffer[nextAdOverwriteslot],rcvbuf);
 	nextAdOverwriteslot=(nextAdOverwriteslot+1)%ADBUFFERMAXSLOTS;
@@ -215,6 +252,9 @@ void insert_in_ad_buffer(){
 	adbuf_empty = FALSE;
 };
 
+//************************************
+// 
+//************************************
 void insert_in_pricetag_buffer(){
 	int overwriteslot=calculate_overwriteslot();
 	strcpy(schildbuffer[overwriteslot],rcvbuf);
@@ -225,9 +265,9 @@ void insert_in_pricetag_buffer(){
 	signbuf_empty = FALSE;
 };
 
-void insert_in_command_buffer(){
-};
-
+//************************************
+// 
+//************************************
 void process_packet(){
 	if(!checksum_failed()){
 		switch (rcvbuf[0]){
@@ -277,13 +317,19 @@ void process_packet(){
 	}
 }
 
-
+//************************************
+// 
+//************************************
 void send_next_sign(){
 	uartSW_putc('<');
 	uartSW_puts(schildbuffer[nextSchildShowslot]);
 	uartSW_putc('>');
 	nextSchildShowslot=(nextSchildShowslot+1)%Schildslotsused;
 }
+
+//************************************
+// 
+//************************************
 void send_next_ad(){
 	uartSW_putc('<');
 	uartSW_puts(adbuffer[nextAdShowslot]);
@@ -339,22 +385,13 @@ ISR(USART_RXC_vect)
 			}
 		}
 	}	else{
-			if(tempchar!='O' && tempchar!='K' && tempchar!='\r'){
+			if(tempchar!='O' && tempchar!='K' && tempchar!='\r'  && rcvbuf_iterator<RCVBUFSIZE){
 				rcvbuf[rcvbuf_iterator]=tempchar;
 				rcvbuf_iterator++;
 				rcvbuf[rcvbuf_iterator]='\0';
 			}
 		}
 }
-
-
-// Timer 0 overflow interrupt service routine
-ISR(TIMER0_OVF_vect) 
-{
-// Place your code here
-}
-
-
 
 void main(void)
 {
@@ -378,6 +415,7 @@ DDRC=0x00;
 PORTD=0x00;
 DDRD=0xE2;
 
+/*
 // Timer/Counter 0 initialization
 // Clock source: System Clock
 // Clock value: 1,800 kHz
@@ -416,6 +454,7 @@ ASSR=0x00;
 TCCR2=0x00;
 TCNT2=0x00;
 OCR2=0x00;
+*/
 
 // External Interrupt(s) initialization
 // INT0: Off
@@ -454,16 +493,16 @@ init_uart();
 uartSW_init(); //software uart
 init_lamp();
 
-
+//************************************
+// 	main loop
+//************************************
 while (1){
 	if(packet_received){
-
 		#ifdef DEBUG
 		uartSW_puts("Paket erkannt, Processing \r\n");
 		sprintf(tempstring, "Inhalt: %s \r\n", rcvbuf);		
 		uartSW_puts(tempstring);
 		#endif
-
 		process_packet();
 		packet_received=FALSE;
 	}
@@ -487,22 +526,16 @@ while (1){
 		sprintf(tempstring, "<1|173>");
 		uartSW_puts(tempstring);	
 	}
-	uartSW_puts("\r\n");
-	uartSW_puts(lampid);
-	uartSW_puts("\r\n");
 	_delay_ms(500);
-/*
-	if(Schildslotsused) uartSW_putc('<');
-	uartSW_puts(&schildbuffer[nextSchildShowslot][0]);
-	if(Schildslotsused) uartSW_putc('>');
-	if(Schildslotsused!=0) nextSchildShowslot=(nextSchildShowslot+1)%Schildslotsused;
-	_delay_ms(CYCLEDELAY);
-*/
+
 #ifdef DEBUG
 	//sprintf(tempstring, "  nextSchildOverwriteslot=%d;nextSchildShow=%d;Schildslotsused=%d; \r\n", nextSchildOverwriteslot, nextSchildShowslot, Schildslotsused);		
-	//sprintf(tempstring, "  nextadOverwriteslot=%d;nextadShow=%d;adsused=%d; \r\n", nextAdOverwriteslot, nextAdShowslot, Adslotsused);		
+	sprintf(tempstring, "  nextadOverwriteslot=%d;nextadShow=%d;adsused=%d; \r\n", nextAdOverwriteslot, nextAdShowslot, Adslotsused);		
 	//sprintf(tempstring, "  recd %d; invalid %d; rcv: %d ; lampid %c \r\n", packet_received, rcvbuf_invalid, rcvbuf_receiving, lampid[0]);		
 	//uartSW_puts(tempstring);
+		uartSW_puts("\r\n");
+	uartSW_puts(lampid);
+	uartSW_puts("\r\n");
 	_delay_ms(500);
 #endif
 
