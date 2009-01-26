@@ -227,7 +227,9 @@ int overwrite=nextSchildOverwriteslot;
 			}
 		}
 	}
+	#ifdef DEBUG
 	sprintf(tempstring, "ueberschrieben wird slot %d", overwrite);
+	#endif
 	uartSW_puts(tempstring);
 	return(overwrite);
 }
@@ -326,6 +328,9 @@ void send_next_sign(){
 	uartSW_puts(schildbuffer[nextSchildShowslot]);
 	uartSW_putc('>');
 	nextSchildShowslot=(nextSchildShowslot+1)%Schildslotsused;
+	#ifdef DEBUG
+	uartSW_puts("\r\n");
+	#endif
 }
 
 //************************************
@@ -336,6 +341,9 @@ void send_next_ad(){
 	uartSW_puts(adbuffer[nextAdShowslot]);
 	uartSW_putc('>');
 	nextAdShowslot=(nextAdShowslot+1)%Adslotsused;
+	#ifdef DEBUG
+	uartSW_puts("\r\n");
+	#endif
 }
 
 
@@ -347,7 +355,6 @@ ISR(USART_RXC_vect)
 {
 // Code to be executed when the USART receives a byte here
 	char tempchar=uart_getc();
-
 	if(!setupmode){
 		switch (tempchar) {
 			case '<': 	{
@@ -494,6 +501,8 @@ init_uart();
 uartSW_init(); //software uart
 init_lamp();
 
+
+
 //************************************
 // 	main loop
 //************************************
@@ -529,16 +538,12 @@ while (1){
 	_delay_ms(500);
 
 #ifdef DEBUG
-	//sprintf(tempstring, "  nextSchildOverwriteslot=%d;nextSchildShow=%d;Schildslotsused=%d; \r\n", nextSchildOverwriteslot, nextSchildShowslot, Schildslotsused);		
-	sprintf(tempstring, "  nextadOverwriteslot=%d;nextadShow=%d;adsused=%d; \r\n", nextAdOverwriteslot, nextAdShowslot, Adslotsused);		
+	sprintf(tempstring, "  nextSchildOverwriteslot=%d;nextSchildShow=%d;Schildslotsused=%d; \r\n", nextSchildOverwriteslot, nextSchildShowslot, Schildslotsused);		
+	//sprintf(tempstring, "  nextadOverwriteslot=%d;nextadShow=%d;adsused=%d; \r\n", nextAdOverwriteslot, nextAdShowslot, Adslotsused);		
 	//sprintf(tempstring, "  recd %d; invalid %d; rcv: %d ; lampid %c \r\n", packet_received, rcvbuf_invalid, rcvbuf_receiving, lampid[0]);		
-	//uartSW_puts(tempstring);
-		uartSW_puts("\r\n");
-	uartSW_puts(lampid);
-	uartSW_puts("\r\n");
+	uartSW_puts(tempstring);
 	_delay_ms(500);
 #endif
-
 };
 };
 
