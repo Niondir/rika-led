@@ -11,10 +11,10 @@ Checksumme:
 Checksummen immer über alle Zeichen bis zur csum, inklusive "|", ohne "<". Checksummen werden auf einem unsigned char (8Bit) berechnet und übertragen. Daraus folgen max. 3 Ascii Ziffern für die Checksumme.
 
 -sendtrace
-<1|anaus|kassen id|csum>    anaus=1 -> lampe schickt "schicktraceraus"
-an wagen, 0 -> tuts nicht
-von lampe an schild:
-<1|csum>
+  * <1|anaus|kassen id|csum>    anaus=1 -> lampe schickt "schicktraceraus"
+  * an wagen, 0 -> tuts nicht
+  * von lampe an schild:
+  * <1|csum>
 
 -tracepacket (beinhaltet einen trace)
 <8|{timestamp|lampid}|csum> alles in {} wiederholt sich beliebig oft
