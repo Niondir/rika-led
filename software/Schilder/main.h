@@ -2,7 +2,7 @@
 #define AVRTOUCH
 
 // Constants
-#define FIRMWARE_VERSION    103
+#define FIRMWARE_VERSION    104
 #define SIGN_TYPE_TROLLEY   0
 #define SIGN_TYPE_PRICE     1
 #define SIGN_TYPE_NOTHING   2

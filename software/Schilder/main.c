@@ -78,9 +78,12 @@ int main(void)
 	#ifdef DEBUG_ON
 		else
 		{ // Debugging
-			sprintf(debug, "E%d",packetRecvStatus);
-			write_Display(debug,19,4);
-			_delay_ms(500);
+			if(packetRecvStatus!=1) //Error1 ignorieren 
+			{
+				sprintf(debug, "E%d",packetRecvStatus);
+				write_Display(debug,19,4);
+				//_delay_ms(500);
+			}
 		} 
   #endif
 
@@ -168,8 +171,9 @@ int8_t get_packet(void)
   csum_debug_calc = 0;
   csum_debug = 0;
 
-  while(uartSW_getc_wait()!='<');                        //Auf Start eines Pakets warten
-  //if (uartSW_getc_wait()!='<') return 1;
+
+  //while(uartSW_getc_wait()!='<');                        //Auf Start eines Pakets warten
+  if (uartSW_getc_nowait()!='<') return 1;
  
 
 // CMD Nr empfangen:
