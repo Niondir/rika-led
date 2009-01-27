@@ -39,6 +39,8 @@
             this.produktgruppenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.werbungToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kundenanalyseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.benutzerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hilfeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelMain = new System.Windows.Forms.Panel();
@@ -105,6 +107,8 @@
             this.produktgruppenToolStripMenuItem,
             this.toolStripSeparator1,
             this.werbungToolStripMenuItem,
+            this.kundenanalyseToolStripMenuItem,
+            this.toolStripSeparator2,
             this.benutzerToolStripMenuItem});
             this.fensterToolStripMenuItem.Name = "fensterToolStripMenuItem";
             this.fensterToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
@@ -135,6 +139,18 @@
             this.werbungToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.werbungToolStripMenuItem.Text = "Werbungen";
             this.werbungToolStripMenuItem.Click += new System.EventHandler(this.werbungToolStripMenuItem_Click);
+            // 
+            // kundenanalyseToolStripMenuItem
+            // 
+            this.kundenanalyseToolStripMenuItem.Name = "kundenanalyseToolStripMenuItem";
+            this.kundenanalyseToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.kundenanalyseToolStripMenuItem.Text = "Kundenanalyse";
+            this.kundenanalyseToolStripMenuItem.Click += new System.EventHandler(this.kundenanalyseToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(158, 6);
             // 
             // benutzerToolStripMenuItem
             // 
@@ -222,6 +238,8 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripConnectionStatus;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripMenuItem kundenanalyseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 

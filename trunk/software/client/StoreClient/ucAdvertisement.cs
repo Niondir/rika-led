@@ -5,22 +5,27 @@ using System.Drawing;
 using System.Data;
 using System.Text;
 using System.Windows.Forms;
+using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
     public partial class ucAdvertisement : UserControl
     {
+        AdvertisementData[] ads;
+        RegionData[] regions;
+
         public ucAdvertisement()
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
 
-            outlookGrid1.Columns.Add("AdName", "Kurzname");
-            outlookGrid1.Columns.Add("AdText", "Werbetext");
-            outlookGrid1.Columns.Add("AdStartDate", "Start Datum");
-            outlookGrid1.Columns.Add("AdEndDate", "Stop Datum");
-            outlookGrid1.Columns.Add("AdStartTime", "Startzeit");
-            outlookGrid1.Columns.Add("AdStopTime", "Stopzeit");
+            RefreshData();
+        }
+
+        private void RefreshData()
+        {
+            ads = Connection.GetInstance().GetAds();
+            regions = Connection.GetInstance().GetRegions();
         }
 
         private void toolStripButtonNew_Click(object sender, EventArgs e)

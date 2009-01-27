@@ -62,6 +62,14 @@ namespace StoreClient
                         this.Text = FormMain.title + " - Benutzer";
                         panelMain.Controls.Add(new ucUser());
                         break;
+                    case DisplayWindow.Advertisement:
+                        this.Text = FormMain.title + " - Werbungen";
+                        panelMain.Controls.Add(new ucAdvertisement());
+                        break;
+                    case DisplayWindow.Analysis:
+                        this.Text = FormMain.title + " - Analyse";
+                        panelMain.Controls.Add(new ucAnalysis());
+                        break;
                 }
                 currWindow = value;
             }
@@ -144,6 +152,11 @@ namespace StoreClient
             CurrWindow = DisplayWindow.User;
         }
 
+        private void kundenanalyseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CurrWindow = DisplayWindow.Analysis;
+        }
+
     }
     public enum DisplayWindow
     {
@@ -151,6 +164,7 @@ namespace StoreClient
         Products,
         Groups,
         User,
-        Advertisement
+        Advertisement,
+        Analysis
     }
 }

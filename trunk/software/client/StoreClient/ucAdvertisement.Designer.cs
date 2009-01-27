@@ -35,9 +35,9 @@
             this.toolStripButtonNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
-            this.outlookGrid1 = new OutlookStyleControls.OutlookGrid();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outlookGrid1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -100,33 +100,26 @@
             this.toolStripButtonDelete.Text = "toolStripButton4";
             this.toolStripButtonDelete.ToolTipText = "Ausgewählte Werbung löschen";
             // 
-            // outlookGrid1
+            // dataGridView1
             // 
-            this.outlookGrid1.AllowUserToAddRows = false;
-            this.outlookGrid1.AllowUserToOrderColumns = true;
-            this.outlookGrid1.AllowUserToResizeRows = false;
-            this.outlookGrid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.outlookGrid1.CollapseIcon = null;
-            this.outlookGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.outlookGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outlookGrid1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.outlookGrid1.ExpandIcon = null;
-            this.outlookGrid1.Location = new System.Drawing.Point(0, 25);
-            this.outlookGrid1.Name = "outlookGrid1";
-            this.outlookGrid1.Size = new System.Drawing.Size(565, 310);
-            this.outlookGrid1.TabIndex = 1;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 25);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(565, 310);
+            this.dataGridView1.TabIndex = 1;
             // 
             // ucAdvertisement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.outlookGrid1);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "ucAdvertisement";
             this.Size = new System.Drawing.Size(565, 335);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.outlookGrid1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -140,6 +133,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonNew;
         private System.Windows.Forms.ToolStripButton toolStripButtonEdit;
         private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
-        private OutlookStyleControls.OutlookGrid outlookGrid1;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

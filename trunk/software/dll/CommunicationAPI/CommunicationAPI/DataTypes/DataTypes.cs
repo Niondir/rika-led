@@ -278,6 +278,14 @@ namespace CommunicationAPI.DataTypes
         private RegionData region;
         private string[] text;
 
+        private string Name { get; set; }
+
+        public DateTime StartDate { get; set; }
+        public DateTime StopDate { get; set; }
+
+        public DateTime StartTime { get; set; }
+        public DateTime StopTime { get; set; }
+
         public int Id
         {
             get { return id; }
@@ -296,11 +304,19 @@ namespace CommunicationAPI.DataTypes
             set { text = value; }
         }
 
-        public AdvertisementData(int id, RegionData region, string[] text)
+        public AdvertisementData(int id, RegionData region, string name, string[] text, DateTime startDate, DateTime stopDate, DateTime startTime, DateTime stopTime):this()
         {
             this.id = id;
             this.region = region;
             this.text = text;
+
+            this.Name = name;
+
+            // start stop conditions
+            StartDate = startDate;
+            StartTime = startTime;
+            StopDate = stopDate;
+            StopTime = stopTime;
         }
     }
 }

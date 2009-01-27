@@ -33,6 +33,8 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.groupBoxGroupsRights = new System.Windows.Forms.GroupBox();
+            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.checkBoxAds = new System.Windows.Forms.CheckBox();
             this.checkBoxProducts = new System.Windows.Forms.CheckBox();
@@ -57,8 +59,6 @@
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
             this.groupBoxAllUsers.SuspendLayout();
             this.groupBoxGroupsRights.SuspendLayout();
             this.groupBoxSingleUser.SuspendLayout();
@@ -122,6 +122,22 @@
             this.groupBoxGroupsRights.TabIndex = 6;
             this.groupBoxGroupsRights.TabStop = false;
             this.groupBoxGroupsRights.Text = "Gruppen und Rechte";
+            // 
+            // textBox5
+            // 
+            this.textBox5.Location = new System.Drawing.Point(50, 271);
+            this.textBox5.Name = "textBox5";
+            this.textBox5.Size = new System.Drawing.Size(144, 20);
+            this.textBox5.TabIndex = 7;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 271);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(38, 13);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "Name:";
             // 
             // button1
             // 
@@ -390,22 +406,6 @@
             this.toolStripButtonSave.Name = "toolStripButtonSave";
             this.toolStripButtonSave.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonSave.Text = "toolStripButton4";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 271);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(38, 13);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "Name:";
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(50, 271);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(144, 20);
-            this.textBox5.TabIndex = 7;
             // 
             // ucUser
             // 
