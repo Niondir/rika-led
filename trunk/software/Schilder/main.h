@@ -5,6 +5,7 @@
 #define FIRMWARE_VERSION    100
 #define SIGN_TYPE_TROLLEY   0
 #define SIGN_TYPE_PRICE     1
+#define SIGN_TYPE_NOTHING   2
 
 #define CMDNR_SEND_TRACE    1
 #define CMDNR_SET_AD        2 
@@ -20,18 +21,25 @@
 #define ARG_SIZE            25
 #define TRACE_LAMP_CNT      25  //Plattz für 25 verschiedene Lampen IDs im Trace, max 255 derzeit (wg. pos datentyp)
 
+#define DISPLAY_ROWS        4
+#define DISPLAY_ROWCHARS    20
+
 // Prototypes
-void detectSignMode(void);
-void show_status(void);
-int8_t get_packet(void);
-void packet_action(void);
-void initTraceCounter(int8_t run);
-void debug_packet(void);
+uint8_t detectSignMode(void);
+void    show_status(void);
+int8_t  get_packet(void);
+void    packet_action(void);
+void    initTraceCounter(int8_t run);
+void    debug_packet(void);
+
+
 // Typedefs
 typedef struct 
 {
-   uint16_t signUniqueID; //Nur für Preisschilder, Werbeschilder haben keine Adresse, auch schildID
+   uint16_t signUniqueID;        // Nur für Preisschilder, Werbeschilder haben keine Adresse, auch schildID
    uint8_t  signType;
+   char     displayMemory[DISPLAY_ROWS][DISPLAY_ROWCHARS+1];
+	 uint8_t  displayRefreshFlag;  // Wird gesetzt, wenn das Display in jedem Fall neugezeichnet werden muss (mit dem Inhalt des D-Buffers)
 } sign_t;
 
 typedef struct 
@@ -47,5 +55,6 @@ typedef struct
    uint16_t           times[TRACE_LAMP_CNT]; 
    uint16_t           lampIDs[TRACE_LAMP_CNT];
 } trace_t;
+
 
 #endif
