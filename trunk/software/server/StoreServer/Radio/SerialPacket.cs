@@ -30,6 +30,8 @@ namespace StoreServer.Radio
             {
                 Debug.WriteLine("Sending: " + msg + " to " + ((LampPacket)this).TargetId);
             }
+            else Debug.WriteLine("Sending: " + msg);
+
             port.Write(bytes, 0, bytes.Length);
         }
 
