@@ -38,7 +38,7 @@ void set_CursorPos(char col, char row)
 void clr_Screen(void)
 {
   LCD_PUTC(12); //Formfeed
-  _delay_ms(100);
+  _delay_ms(200);
 }
 
 
