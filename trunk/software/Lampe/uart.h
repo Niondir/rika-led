@@ -19,7 +19,7 @@ void uart_gets( char* Buffer, uint8_t MaxLen );
 
 
 //Software UART
-#define BAUDRATE 19200
+#define BAUDRATE 9600
 #define nop() __asm volatile ("nop")
 
 #define SUART_TXD

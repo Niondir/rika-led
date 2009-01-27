@@ -535,7 +535,7 @@ while (1){
 		sprintf(tempstring, "<1|173>");
 		uartSW_puts(tempstring);	
 	}
-	_delay_ms(500);
+	_delay_ms(50);
 
 #ifdef DEBUG
 	sprintf(tempstring, "  nextSchildOverwriteslot=%d;nextSchildShow=%d;Schildslotsused=%d; \r\n", nextSchildOverwriteslot, nextSchildShowslot, Schildslotsused);		
