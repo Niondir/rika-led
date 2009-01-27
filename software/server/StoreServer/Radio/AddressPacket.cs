@@ -27,10 +27,13 @@ namespace StoreServer.Radio
             //guard time, sending +++ to switch to cmd mode
             Thread.Sleep(20);
             port.Write(swtichModeCmd, 0, swtichModeCmd.Length);
+            
             Thread.Sleep(20);
             //setup the destination id
             port.Write(bytes, 0, sendBytes.Length);
             Thread.Sleep(20);
+
+            Debug.WriteLine(String.Format("Sending: {0} {1}", Decode(swtichModeCmd), Decode(bytes)));
         }
     }
 }
