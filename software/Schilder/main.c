@@ -101,6 +101,7 @@ uint8_t detectSignMode(void) //gibt 1 zurück wenn sich der Mode geändert hat
 {
   
 	uint8_t signType_yet = sign.signType;
+	uint8_t adr_yet      = sign.signUniqueID;
 	
 	if(!ISSET_PIO1 && !ISSET_PIO2 && !ISSET_PIO3) // kein Jumper = Wagen-Schild
   {
@@ -124,7 +125,7 @@ uint8_t detectSignMode(void) //gibt 1 zurück wenn sich der Mode geändert hat
 		sign.signUniqueID=(uint16_t)adr;
   }
 
-	if(signType_yet!=sign.signType)return 1;
+	if((signType_yet!=sign.signType) || (adr_yet!=sign.signUniqueID))return 1;
 	else                           return 0;
 
 }
