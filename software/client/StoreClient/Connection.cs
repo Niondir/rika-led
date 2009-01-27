@@ -127,5 +127,20 @@ namespace StoreClient
             remote.EditRole(session, oldRole, newRole);
             
         }
+
+        internal AdvertisementData[] GetAds()
+        {
+            AdvertisementData[] ads = new AdvertisementData[4];
+
+            RegionData r = new RegionData("1", "test");
+
+            ads[0] = new AdvertisementData(1, r, new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1,0,0,0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
+            ads[1] = new AdvertisementData(2, r, new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
+            ads[2] = new AdvertisementData(3, r, new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
+            ads[3] = new AdvertisementData(4, r, new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
+
+            return ads;
+            return remote.GetAdvertisement(session);
+        }
     }
 }
