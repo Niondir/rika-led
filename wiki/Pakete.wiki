@@ -14,8 +14,6 @@ Checksummen immer über alle Zeichen bis zur csum, inklusive "|", ohne "<". Chec
   * <1|anaus|kassen id|csum>    
   * anaus=1 -> lampe schickt "schicktraceraus"
   * an wagen, 0 -> tuts nicht
-  * von lampe an schild:
-  * <1|csum>
 
 -tracepacket (beinhaltet einen trace)
   * <8|{timestamp|lampid}|csum> 
