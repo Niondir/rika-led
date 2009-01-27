@@ -10,7 +10,9 @@
 #define XBEE_ENTER_SLEEP    PORT_XBEE_SLEEP |= 1<< XBEE_SLEEP
 #define XBEE_LEAVE_SLEEP   PORT_XBEE_SLEEP &= ~(1<< XBEE_SLEEP)
 
+#define XBEE_GUARDTIME 20
 
 void init_xbee(void);
+void set_dest(uint32_t destlow, uint32_t desthigh);
 
 #endif
