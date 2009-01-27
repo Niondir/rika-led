@@ -16,6 +16,8 @@
 //#define DEBUG
 #define TRUE  1
 #define FALSE  0
+#define AD_DELAY 30
+#define PRICETAG_DELAY 100
 #define UBRR_VAL ((F_CPU+BAUD*8)/(BAUD*16)-1)   // clever runden
 
 char tempstring[120];
@@ -27,8 +29,8 @@ long count=0;
 
 char lampid[5];
 char csum[7];
-int	 compare=0;
-int	 command=0;
+int addelay = AD_DELAY;
+int pricetagdelay = PRICETAG_DELAY;
 
 //FLAGS
 int rcvbuf_receiving = FALSE;		//
@@ -99,7 +101,6 @@ void init_lamp(){
 		if(rcvbuf[i]=='\0') break;
 	}
 	//uartSW_puts(lampid);
-	_delay_ms(1000);
 	rcvbuf_invalid = TRUE;
 	setupmode = FALSE;
 };
@@ -229,8 +230,8 @@ int overwrite=nextSchildOverwriteslot;
 	}
 	#ifdef DEBUG
 	sprintf(tempstring, "ueberschrieben wird slot %d", overwrite);
-	#endif
 	uartSW_puts(tempstring);
+	#endif
 	return(overwrite);
 }
 
@@ -347,6 +348,15 @@ void send_next_ad(){
 }
 
 
+// Timer 0 overflow interrupt service routine
+ISR(TIMER0_OVF_vect) 
+{
+	if(addelay>0) {
+		addelay--;
+	}
+	if(pricetagdelay>0) pricetagdelay--;
+}
+
 /// ****************************************
 /// ******    ISR RX           *************
 /// ****************************************
@@ -423,13 +433,13 @@ DDRC=0x00;
 PORTD=0x00;
 DDRD=0xE2;
 
-/*
 // Timer/Counter 0 initialization
 // Clock source: System Clock
-// Clock value: 1,800 kHz
-TCCR0=0x05;
+// Clock value: 28,800 kHz
+TCCR0=0x03;
 TCNT0=0x00;
 
+/*
 // Timer/Counter 1 initialization
 // Clock source: System Clock
 // Clock value: Timer 1 Stopped
@@ -452,16 +462,6 @@ OCR1AH=0x00;
 OCR1AL=0x00;
 OCR1BH=0x00;
 OCR1BL=0x00;
-
-// Timer/Counter 2 initialization
-// Clock source: System Clock
-// Clock value: Timer 2 Stopped
-// Mode: Normal top=FFh
-// OC2 output: Disconnected
-ASSR=0x00;
-TCCR2=0x00;
-TCNT2=0x00;
-OCR2=0x00;
 */
 
 // External Interrupt(s) initialization
@@ -470,7 +470,7 @@ OCR2=0x00;
 MCUCR=0x00;
 
 // Timer(s)/Counter(s) Interrupt(s) initialization
-TIMSK=0x01;
+TIMSK|=0x01;
 
 // Analog Comparator initialization
 // Analog Comparator: Off
@@ -517,12 +517,14 @@ while (1){
 		packet_received=FALSE;
 	}
 
-	if(!signbuf_empty){
+	if(!signbuf_empty && !pricetagdelay){
 		send_next_sign();
+		pricetagdelay = PRICETAG_DELAY;
 	}
 
-	if(!adbuf_empty){
+	if(!adbuf_empty && !addelay){
 		send_next_ad();
+		addelay = AD_DELAY;
 	}
 
 	if(rcvbuf_invalid){
@@ -538,11 +540,11 @@ while (1){
 	_delay_ms(50);
 
 #ifdef DEBUG
-	sprintf(tempstring, "  nextSchildOverwriteslot=%d;nextSchildShow=%d;Schildslotsused=%d; \r\n", nextSchildOverwriteslot, nextSchildShowslot, Schildslotsused);		
+	//sprintf(tempstring, "  nextOverwriteslot=%d;nextShow=%d;slotsused=%d; \r\n", nextSchildOverwriteslot, nextSchildShowslot, Schildslotsused);		
 	//sprintf(tempstring, "  nextadOverwriteslot=%d;nextadShow=%d;adsused=%d; \r\n", nextAdOverwriteslot, nextAdShowslot, Adslotsused);		
 	//sprintf(tempstring, "  recd %d; invalid %d; rcv: %d ; lampid %c \r\n", packet_received, rcvbuf_invalid, rcvbuf_receiving, lampid[0]);		
-	uartSW_puts(tempstring);
-	_delay_ms(500);
+	//uartSW_puts(tempstring);
+	//_delay_ms(500);
 #endif
 };
 };
