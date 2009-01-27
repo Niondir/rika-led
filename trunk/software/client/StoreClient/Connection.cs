@@ -134,10 +134,10 @@ namespace StoreClient
 
             RegionData r = new RegionData("1", "test");
 
-            ads[0] = new AdvertisementData(1, r, new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1,0,0,0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
-            ads[1] = new AdvertisementData(2, r, new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
-            ads[2] = new AdvertisementData(3, r, new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
-            ads[3] = new AdvertisementData(4, r, new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
+            ads[0] = new AdvertisementData(1, r, "eins", new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1,0,0,0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
+            ads[1] = new AdvertisementData(2, r, "zwei", new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
+            ads[2] = new AdvertisementData(3, r, "drei", new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
+            ads[3] = new AdvertisementData(4, r, "vier", new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
 
             return ads;
             return remote.GetAdvertisement(session);
