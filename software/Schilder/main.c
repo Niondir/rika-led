@@ -341,8 +341,10 @@ void packet_action(void)
 												sign.displayRefreshFlag = 1;
 												strcpy(sign.displayMemory[0], packet.args[1]); //Name
 												strcpy(sign.displayMemory[1], packet.args[2]); //Preis
-												sign.displayMemory[2][0]='\0'; //Zeile 3 leer
-												sign.displayMemory[3][0]='\0'; //Zeile 4 leer
+												memset(sign.displayMemory[2],' ', 20); sign.displayMemory[2][20]='\0';
+												memset(sign.displayMemory[3],' ', 20); sign.displayMemory[3][20]='\0';
+												//sign.displayMemory[2][0]='\0'; //Zeile 3 leer
+												//2sign.displayMemory[3][0]='\0'; //Zeile 4 leer
 											}
 
 										}
