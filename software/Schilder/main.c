@@ -1,5 +1,6 @@
 /*
   Schild Firmware
+	T.Rohde, Rika Projekt
 */
 #include <avr/io.h>
 #include <avr/interrupt.h> 
@@ -16,9 +17,6 @@
 #include "board.h"
 #include "display.h"
 
-#define DISPLAYMODE_WRITELINE 4
-#define DISPLAYMODE_WRITEPOS 1
-
 // Gloable Vars
 sign_t    sign;
 packet_t  packet;
@@ -26,10 +24,14 @@ trace_t   trace;
 uint8_t   csum_debug = 22;
 uint8_t   csum_debug_calc = 22;
 
+#define DEBUG_ON
 
 int main(void)
 {
   uint8_t packetRecvStatus;
+
+	char    debug[21];
+	uint8_t toggleFlag=0;
 
   _delay_ms(1000);     // startup delay
   sign.signType = SIGN_TYPE_NOTHING;
@@ -48,30 +50,39 @@ int main(void)
 		if ( (packetRecvStatus = get_packet()) == 0)
 		{ 
 		   //debug_packet();
-		   packet_action();
-			 if(sign.displayRefreshFlag)
-			 {
-			   clr_Screen();
-         write_Display(sign.displayMemory[0],1,1);
-				 write_Display(sign.displayMemory[1],1,2);
-				 write_Display(sign.displayMemory[2],1,3);
-				 write_Display(sign.displayMemory[3],1,4);
-				 sign.displayRefreshFlag = 0;
-			 }
-
-		}
-		
-		/*
+		    packet_action();
+			  if(sign.displayRefreshFlag)
+			  {
+				   clr_Screen();
+	         write_Display(sign.displayMemory[0],1,1);
+					 write_Display(sign.displayMemory[1],1,2);
+					 write_Display(sign.displayMemory[2],1,3);
+					 write_Display(sign.displayMemory[3],1,4);
+					 sign.displayRefreshFlag = 0;
+			   }
+       
+  #ifdef DEBUG_ON
+	       toggleFlag=!toggleFlag;
+				 if(toggleFlag)
+				 {
+			   	sprintf(debug, "OK");
+				  write_Display(debug,19,4);			   
+				 }
+				 else
+				 {
+			   	sprintf(debug, "ok");
+				  write_Display(debug,19,4);			   
+				 }
+  #endif
+		}	
+	#ifdef DEBUG_ON
 		else
 		{ // Debugging
-			currText[0] = '\0';
-	    currPrice[0] = '\0';
-			clr_Screen(); sign.displayRefreshFlag = 1;
-			sprintf(debug, "Error!: %d %d %d", packetRecvStatus, csum_debug, csum_debug_calc);
-			write_Display(debug,1,4);
+			sprintf(debug, "E%d",packetRecvStatus);
+			write_Display(debug,19,4);
 			_delay_ms(500);
-
-		} */
+		} 
+  #endif
 
 		if(detectSignMode()) // Mode wurde verstellt!
 		{
