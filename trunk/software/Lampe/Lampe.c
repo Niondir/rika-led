@@ -8,12 +8,19 @@
 #include <stdio.h>
 #include <string.h>
 
-#define ADBUFFERMAXSLOTS 2
-#define SCHILDBUFFERMAXSLOTS 3
+//#define DEBUG
+
+#define ADBUFFERMAXSLOTS 1
+
+#ifdef DEBUG
+#define SCHILDBUFFERMAXSLOTS 6
+#else 
+#define SCHILDBUFFERMAXSLOTS 8
+#endif
+
 #define SCHILDIDBYTES 4
 #define CYCLEDELAY 1000
 #define RCVBUFSIZE 120
-//#define DEBUG
 #define TRUE  1
 #define FALSE  0
 #define AD_DELAY 30
@@ -28,6 +35,7 @@ int  rcvbuf_iterator=0;
 long count=0;
 
 char lampid[5];
+char sendtracepacket[30];
 char csum[7];
 int addelay = AD_DELAY;
 int pricetagdelay = PRICETAG_DELAY;
@@ -205,6 +213,7 @@ void change_lampid(){
   *
   */
 void set_send_trace(){
+	strcpy(sendtracepacket, rcvbuf);
 	if(rcvbuf[2]=='0'){
 		send_trace_mode=FALSE;
 	}	else	{
@@ -276,12 +285,12 @@ void process_packet(){
 	if(!checksum_failed()){
 		switch (rcvbuf[0]){
 		// send trace packet
-			case '1':	{
+			case '1':			{	
 									set_send_trace();
 									break;
 								}
 		// set ad packet
-			case '2':	{
+			case '2':			{
 									insert_in_ad_buffer();
 									break;
 								}
@@ -306,11 +315,12 @@ void process_packet(){
 									break;
 								}
 		// set pricetag packet
-			case '7':	{
+			case '7':			{			
+									forward_packet();
 									insert_in_pricetag_buffer();
 									break;
 								}
-			default:	{
+			default:			{
 									rcvbuf_invalid= TRUE;
 								}
 		}
@@ -363,7 +373,6 @@ ISR(TIMER0_OVF_vect)
 
 ISR(USART_RXC_vect)
 {
-// Code to be executed when the USART receives a byte here
 	char tempchar=uart_getc();
 	if(!setupmode){
 		switch (tempchar) {
@@ -439,31 +448,6 @@ DDRD=0xE2;
 TCCR0=0x03;
 TCNT0=0x00;
 
-/*
-// Timer/Counter 1 initialization
-// Clock source: System Clock
-// Clock value: Timer 1 Stopped
-// Mode: Normal top=FFFFh
-// OC1A output: Discon.
-// OC1B output: Discon.
-// Noise Canceler: Off
-// Input Capture on Falling Edge
-// Timer 1 Overflow Interrupt: Off
-// Input Capture Interrupt: Off
-// Compare A Match Interrupt: Off
-// Compare B Match Interrupt: Off
-TCCR1A=0x00;
-TCCR1B=0x00;
-TCNT1H=0x00;
-TCNT1L=0x00;
-ICR1H=0x00;
-ICR1L=0x00;
-OCR1AH=0x00;
-OCR1AL=0x00;
-OCR1BH=0x00;
-OCR1BL=0x00;
-*/
-
 // External Interrupt(s) initialization
 // INT0: Off
 // INT1: Off
@@ -534,8 +518,9 @@ while (1){
 		rcvbuf_invalid=FALSE;
 	}
 	if(send_trace_mode){
-		sprintf(tempstring, "<1|173>");
-		uartSW_puts(tempstring);	
+		uartSW_putc('<');
+		uartSW_puts(sendtracepacket);
+		uartSW_putc('>');	
 	}
 	_delay_ms(50);
 
