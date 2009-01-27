@@ -26,6 +26,10 @@ trace_t   trace;
 uint8_t   csum_debug = 22;
 uint8_t   csum_debug_calc = 22;
 
+char currText[ARG_SIZE];
+char currPrice[ARG_SIZE];
+
+
 int main(void)
 {
   char debug[25];
@@ -34,7 +38,7 @@ int main(void)
   _delay_ms(1000);      // startup delay
   sei();               // global irq an
   uartSW_init();       // software uart
-  init_Display(1);      // Display initialisieren
+  init_Display(4);      // Display initialisieren
   initPIOs();          // Mode Jumper Pins konfigurieren
   detectSignMode();    // Hardware kann von extern als Wagen oder Presischild konfiguriert werden, Preisschiler sogar mit bis zu 7 Adressen
   initTraceCounter(1); // TraceTimer konfigurieren und starten
@@ -47,7 +51,12 @@ int main(void)
   
      uartSW_putc(uartSW_getc_wait());
   }
-*/
+	*/
+	// Buffer resetten
+	currText[0] = '\0';
+	currPrice[0] = '\0';
+	clr_Screen();
+
   show_status();       // Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
   
    _delay_ms(500);
@@ -59,19 +68,24 @@ int main(void)
   {
 		if ( (debugresult=get_packet()) == 0)
 		{ 
-		   clr_Screen();
-		   debug_packet();
-		   _delay_ms(200);
-		   //packet_action();
+		   //debug_packet();
+		   //_delay_ms(200);
+		   packet_action();
 		}
+		
+		/*
 		else
-		{
+		{ // Debugging
+			currText[0] = '\0';
+	    currPrice[0] = '\0';
 			clr_Screen();
 			sprintf(debug, "Error!: %d %d %d", debugresult, csum_debug, csum_debug_calc);
 			write_Display(debug,1,4);
-			_delay_ms(2000);
+			_delay_ms(500);
 
-		}
+		} */
+
+		detectSignMode();
   }
   //todo watchdog nutzen um reset auslösen zu können, wenn via pio mode umgestellt wurde
 
@@ -92,7 +106,6 @@ int main(void)
 
   return 0;
 }
-
 
 void detectSignMode(void)
 {
@@ -126,7 +139,7 @@ void show_status(void)
   sprintf(textvalue, "FirmwareVersion:%d",  FIRMWARE_VERSION);
   write_Display(textvalue,1,1);
   if(sign.signType==SIGN_TYPE_TROLLEY) write_Display("SignType: Trolley", 1, 2);
-  else write_Display("SignType: AD ", 1, 2);
+  else write_Display("SignType: Price ", 1, 2);
 
   sprintf(textvalue, "UniqueSignID: %d",  sign.signUniqueID);
   write_Display(textvalue,1,3); 
@@ -146,8 +159,12 @@ int8_t get_packet(void)
   int8_t  ArgAnzahl;
   uint8_t csum=0;     									 //checksummen immer über alles bis vor der csum, inklusive "|", ohne "<" 
   char    csumCompare[4];                                 //8Bit Checksum max Val 254+'\0' = 4 Zeichen
-  int8_t  csumCompareInt;
+  uint8_t  csumCompareInt;
   
+
+ // Reset buffers
+  csum_debug_calc = 0;
+  csum_debug = 0;
 
   while(uartSW_getc_wait()!='<');                        //Auf Start eines Pakets warten
   //if (uartSW_getc_wait()!='<') return 1;
@@ -201,7 +218,7 @@ int8_t get_packet(void)
 		  if      ( lastChar == '<' || lastChar == '>' || pos > 24) return 6;                            //ungültiges Zeichen, oder zuviele empfangen
 
 		  if      ( lastChar != '|' ) {(packet.args)[i][pos++]=lastChar; csum+=lastChar;}     //Zeichen abspeichern
-	      else                        { csum+=lastChar;  break;                }             //Separator gefunden
+	      else                        { (packet.args)[i][pos]='\0'; csum+=lastChar;  break; }             //Separator gefunden
 	  }while(1);
   }
 
@@ -240,6 +257,7 @@ int8_t get_packet(void)
 
 void packet_action(void)
 {
+
   switch(packet.packetCmdNr)
   { 
     case CMDNR_SEND_TRACE:  
@@ -283,18 +301,32 @@ void packet_action(void)
 	                    }
 						break;
 
-	case CMDNR_SHOW_ID:        
-	                    show_status();
+	case CMDNR_SHOW_ID:   
+						currText[0] = '\0';
+						currPrice[0] = '\0';     
+	          show_status();
 						_delay_ms(2000);
 
 						break;
 
-	case CMDNR_SET_PRICE:   
-	                    if((sign.signType==SIGN_TYPE_PRICE) && atoi(packet.args[0]) == sign.signUniqueID) //Check, ob Preis für dieses Schild bestimmt ist
+	case CMDNR_SET_PRICE:   // Validated!
+	                        if((sign.signType==SIGN_TYPE_PRICE) && ((uint16_t)atoi(packet.args[0])) == sign.signUniqueID) //Check, ob Preis für dieses Schild bestimmt ist
 						{
-						    clr_Screen();
+						    // Hat sich der Preis geändert?
+							if ( (strcmp(currText, packet.args[1]) == 0) && (strcmp(currPrice, packet.args[2]) == 0) ) {
+								write_Display("Buffer used",1,4);
+								return; //keine neue Info
+							}
+
+							
+
+							clr_Screen();
+
+							strcpy(currText, packet.args[1]);
+							strcpy(currPrice, packet.args[2]);
 							write_Display(packet.args[1],1,1); //Name in 1. Zeile schreiben
 							write_Display(packet.args[2],1,2); //Preis in 2. Zeile schreiben
+
 						}
 	
 						break;
