@@ -8,25 +8,29 @@ using System.Reflection;
 using StoreServer.WebService;
 using StoreServer.Data;
 using StoreServer.Radio;
+using System.Runtime.InteropServices;
 
 
 using System.Data;
 using System.Xml;
+using StoreServer.GUI;
+using System.Windows.Forms;
 /* TODO: Program.cs
  * 
- * 2. Console (GUI)
- * Advertisement mit Timestamps & beschreibung
- * Ip adresse einstellbar
- * 
- * 
- * sign id 0 bedeutet Einkaufswagen!
  * */
 
 namespace StoreServer
 {
     class Program
     {
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
         private static Thread thread;
+        private static Thread guiThread;
         private static Process process;
         private static Assembly assembly;
         private static string baseDirectory;
@@ -35,6 +39,7 @@ namespace StoreServer
         private static ClientHandler clientHandler;
         private static RadioManager radioManager;
         private static MultiTextWriter multiConOut;
+        private static FormConsole formConsole;
 
         private static bool unix = false;
         public static bool Unix { get { return unix; } }
@@ -107,7 +112,11 @@ namespace StoreServer
 
             Version ver = assembly.GetName().Version;
 
+            Console.Title = "Store Server";
             Console.SetOut(multiConOut = new MultiTextWriter(Console.Out, new FileLogger("Logs\\last.log", false)));
+
+            guiThread = new Thread(new ThreadStart(GuiThread));
+            guiThread.Start();
 
             // Added to help future code support on forums, as a 'check' people can ask for to it see if they recompiled core or not
             Console.WriteLine("StoreServer - [http://code.google.com/p/rika-led/]");
@@ -160,6 +169,7 @@ namespace StoreServer
             }
             catch (Exception ex)
             {
+                ConsoleVisibility(true);
                 Console.WriteLine(ex.Message);
             }
             // TODO: Loop for async actions, linke console input
@@ -167,10 +177,12 @@ namespace StoreServer
             Console.WriteLine("Server: shuting down...");
             closing = true;
             Thread.Sleep(500);
-            Console.WriteLine("Server: Pres any key to exit");
-            Console.ReadKey();
 
             httpService.Abort();
+
+            Console.WriteLine("Server: Closed");
+            //Console.WriteLine("Server: Pres any key to exit");
+            //Console.ReadKey();
         }
 
         public static void Close()
@@ -179,7 +191,35 @@ namespace StoreServer
             Set();
         }
 
-        
+        public static void ConsoleVisibility(bool visible)
+        {
+            //Sometimes System.Windows.Forms.Application.ExecutablePath works for the caption depending on the system you are running under.          
+            IntPtr hWnd = FindWindow(null, Console.Title);
+
+            if (hWnd != IntPtr.Zero)
+            {
+                if (!visible)
+                    //Hide the window                   
+                    ShowWindow(hWnd, 0); // 0 = SW_HIDE               
+                else
+                    //Show window again                   
+                    ShowWindow(hWnd, 1); //1 = SW_SHOWNORMA          
+            }
+        }
+
+        public static void GuiThread()
+        {
+            while (!closing)
+            {
+                Program.ConsoleVisibility(false);
+                formConsole = new FormConsole();
+                multiConOut.Add(formConsole.Out);
+                Application.Run(formConsole);
+                multiConOut.Remove(formConsole.Out);
+                Program.ConsoleVisibility(true);
+                Close();
+             }
+        }
 
 
 
