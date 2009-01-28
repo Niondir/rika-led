@@ -12,6 +12,32 @@ namespace StoreClient
     public partial class FormAddAd : Form
     {
         private RegionData[] regions;
+        public AdvertisementData Value {
+            get
+            {
+                return new AdvertisementData(-1, (RegionData)comboBoxGroup.Tag, textBoxName.Text,
+                    new string[] { textBoxAdLine1.Text, textBoxAdLine2.Text, textBoxAdLine3.Text, textBoxAdLine4.Text },
+                    dateTimePickerStartDate.Value, dateTimePickerStopDate.Value,
+                    dateTimePickerStartTime.Value, dateTimePickerStopTime.Value);
+            }
+            set
+            {
+                textBoxAdLine1.Text = value.Text[0];
+                textBoxAdLine2.Text = value.Text[1];
+                textBoxAdLine3.Text = value.Text[2];
+                textBoxAdLine4.Text = value.Text[3];
+
+                textBoxName.Text = value.Name;
+
+                dateTimePickerStartDate.Value = value.StartDate;
+                dateTimePickerStopDate.Value = value.StopDate;
+                dateTimePickerStartTime.Value = value.StartTime;
+                dateTimePickerStopTime.Value = value.StopTime;
+
+                comboBoxGroup.Text = value.Region.Name;
+                comboBoxGroup.Tag = value.Region;
+            }
+        }
 
         public FormAddAd()
         {
@@ -19,13 +45,20 @@ namespace StoreClient
 
             // init datetime pickers
             dateTimePicker1_ValueChanged(null, null);
-            dateTimePicker1.MinDate = DateTime.Now;
+            dateTimePickerStartDate.MinDate = DateTime.Now;
 
+            SetRegions();
+
+        }
+        public FormAddAd(AdvertisementData ad)
+            : this()
+        {
+            this.Value = ad;            
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            dateTimePicker2.MinDate = dateTimePicker1.Value + new TimeSpan(1, 0, 0, 0);
+            dateTimePickerStopDate.MinDate = dateTimePickerStartDate.Value + new TimeSpan(1, 0, 0, 0);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -42,21 +75,16 @@ namespace StoreClient
             this.Close();
         }
 
-        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            MessageBox.Show(((int)e.KeyChar).ToString());
-            if (e.KeyChar == ' ')
-                ;
-        }
-
         private bool Valid()
         {
             string errorMsg = string.Empty;
             int i = 1;
 
+            if (textBoxAdLine1.Text.Length + textBoxAdLine2.Text.Length + textBoxAdLine3.Text.Length + textBoxAdLine4.Text.Length == 0)
+                errorMsg += i++.ToString() + ". Der Werbetext ist leer." + Environment.NewLine;
+
             // check if region is valid and add it in case
             if (comboBoxGroup.Text.Length == 0)
-            //if (comboBoxGroup.SelectedItem == null)
             {
                 comboBoxGroup.BackColor = Color.OrangeRed;
                 errorMsg += i++.ToString() + ". Bitte wählen Sie eine Produktgruppe." + Environment.NewLine;
@@ -108,6 +136,11 @@ namespace StoreClient
         private void SetWhiteAgain(object sender, EventArgs e)
         {
             ((Control)sender).BackColor = SystemColors.Window;
+        }
+
+        private void comboBoxGroup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBoxGroup.Tag = (RegionData)regions[comboBoxGroup.SelectedIndex];
         }
     }
 }

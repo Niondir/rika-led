@@ -105,9 +105,6 @@ namespace StoreClient
 
             connection = Connection.GetInstance();
             connection.LoginChanged += new EventHandler<ConnectionChangedEventArgs>(connection_LoginChanged);
-
-            FormAddAd f = new FormAddAd();
-            f.ShowDialog();
         }
 
         void connection_LoginChanged(object sender, ConnectionChangedEventArgs e)

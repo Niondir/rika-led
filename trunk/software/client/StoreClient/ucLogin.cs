@@ -86,13 +86,12 @@ namespace StoreClient
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            Connection con = Connection.GetInstance();
             if (!this.PasswordEntered || !this.UserEntered)
             {
                 MessageBox.Show("Geben Sie bitte den Benutzernamen und das Passwort ein", "Achtung", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            con.Login(textBoxUsername.Text, textBoxPassword.Text);
+            Connection.GetInstance().Login(textBoxUsername.Text, textBoxPassword.Text);
         }
 
         private void textBoxUsername_KeyPress(object sender, KeyPressEventArgs e)

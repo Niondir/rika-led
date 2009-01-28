@@ -85,6 +85,11 @@ namespace StoreClient
             remote.AddProduct(session, productData);
         }
 
+        internal void Add(AdvertisementData advertisementData)
+        {
+            remote.AddAdvertisement(session, advertisementData);
+        }
+
         internal ProductData[] GetProducts()
         {
             return remote.GetProducts(session);
@@ -143,5 +148,6 @@ namespace StoreClient
             return ads;
             return remote.GetAdvertisement(session);
         }
+
     }
 }

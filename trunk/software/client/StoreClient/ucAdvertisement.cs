@@ -41,8 +41,11 @@ namespace StoreClient
 
         private void toolStripButtonNew_Click(object sender, EventArgs e)
         {
-            FormAddAd addad = new FormAddAd();
-            DialogResult r = addad.ShowDialog();
+            FormAddAd addAd = new FormAddAd();
+            if (addAd.ShowDialog() == DialogResult.OK)
+            {
+                Connection.GetInstance().Add(addAd.Value);
+            }
         }
     }
 }
