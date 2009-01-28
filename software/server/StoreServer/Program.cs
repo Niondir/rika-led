@@ -16,6 +16,7 @@ using System.Xml;
  * 
  * 
  * sign id 0 bedeutet Einkaufswagen!
+ * Advertisements aufs Datum achten!
  * */
 
 namespace StoreServer

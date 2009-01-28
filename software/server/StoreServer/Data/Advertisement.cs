@@ -12,6 +12,12 @@ namespace StoreServer.Data
         private Region region;
         private string[] text;
 
+        public string Name { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime StopDate { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime StopTime { get; set; }
+
         public int Id
         {
             get { return id; }
@@ -22,6 +28,7 @@ namespace StoreServer.Data
             get { return region; }
         }
 
+
         public string[] Text
         {
             get { return text; }
@@ -31,14 +38,28 @@ namespace StoreServer.Data
             this.id = advertisement.Id;
             this.region = new Region(advertisement.Region);
             this.text = advertisement.Text;
+            this.Name = advertisement.Name;
+            this.StartDate = advertisement.StartDate;
+            this.StopDate = advertisement.StopDate;
+            this.StartTime = advertisement.StartTime;
+            this.StopTime = advertisement.StopTime;
+
         }
 
         public void Save(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO led_advertisements (regions_id, text) VALUES(?, ?, ?)";
+            command.CommandText = "INSERT INTO led_advertisements (regions_id, line1, line2, line3, line4, name, startDate, stopDate, startTime, stopTime ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             command.Parameters.AddWithValue("regions_id", this.region.Id);
-            command.Parameters.AddWithValue("text", this.text);
+            command.Parameters.AddWithValue("line1", this.text[0]);
+            command.Parameters.AddWithValue("line2", this.text[1]);
+            command.Parameters.AddWithValue("line3", this.text[2]);
+            command.Parameters.AddWithValue("line4", this.text[3]);
+            command.Parameters.AddWithValue("name", this.Name);
+            command.Parameters.AddWithValue("startDate", this.StartDate);
+            command.Parameters.AddWithValue("stopDate", this.StopDate);
+            command.Parameters.AddWithValue("startTime", this.StartTime);
+            command.Parameters.AddWithValue("stopTime", this.StopTime);
 
             command.ExecuteNonQuery();
         }
@@ -47,7 +68,7 @@ namespace StoreServer.Data
         {
             OdbcCommand command = connection.CreateCommand();
 
-            command.CommandText = "SELECT id, regions_id, line1, line2, line3, line4 FROM led_advertisements";
+            command.CommandText = "SELECT id, regions_id, line1, line2, line3, line4, name, startDate, stopDate, startTime, stopTime FROM led_advertisements";
             OdbcDataReader reader = command.ExecuteReader();
 
             List<Advertisement> ads = new List<Advertisement>();
@@ -74,8 +95,20 @@ namespace StoreServer.Data
 
                 string[] adText = new string[] { reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5) };
 
-                AdvertisementData aData = new AdvertisementData(reader.GetInt32(0), region, adText);
-                ads.Add(new Advertisement(aData));
+                AdvertisementData aData = new AdvertisementData(reader.GetInt32(0), region, reader.GetString(6), adText, reader.GetDate(7), reader.GetDate(8), reader.GetDate(9), reader.GetDate(10));
+
+                
+                Advertisement ad = new Advertisement(aData);
+
+                if (ad.StopDate < DateTime.Now)
+                {
+                    // Delete if invalid, or just don't send back?
+                    ad.Delete(connection);
+                }
+                else
+                {
+                    ads.Add(ad);
+                }
             }
 
             return ads;

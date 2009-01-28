@@ -53,6 +53,12 @@ namespace Kasse
                 {
                     string packetStr = serialPort.ReadTo(">");
                     Console.WriteLine("Got: " + packetStr);
+                    // Packet reader auf den String
+                    // - Checksumme Prüfen
+                    // - Paket ID und Args parsen
+                    // - Je nach Paketid packet bauen und Event schicken
+                    // Timestamp to second: (1800/255) ticks = 1 Sec
+
 
                     PacketReader reader = new PacketReader(packetStr);
 

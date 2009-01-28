@@ -101,7 +101,17 @@ namespace StoreServer.Radio
             // Alle Produkte raussuchen
             List<Product> products = Product.Load(dataManager.Connection);
             // Alle Webungen raussuchen
-            List<Advertisement> ads = Advertisement.Load(dataManager.Connection);
+            List<Advertisement> ads_tmp = Advertisement.Load(dataManager.Connection);
+
+            // nur aktuelle Werbung Zeigen
+            List<Advertisement> ads = new List<Advertisement>();
+            foreach (Advertisement ad in ads_tmp)
+            {
+                if (ad.StartTime <= DateTime.Now && ad.StopTime >= DateTime.Now)
+                {
+                    ads.Add(ad);
+                }
+            }
 
             // Alle Produkte und Werbungen in packete packen
             Dictionary<string, Queue<LampPacket>> packetList = new Dictionary<string, Queue<LampPacket>>();
