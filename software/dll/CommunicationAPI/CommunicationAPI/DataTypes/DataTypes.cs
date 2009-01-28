@@ -161,20 +161,6 @@ namespace CommunicationAPI.DataTypes
 
     }
 
-    public struct LampData
-    {
-        private int id;
-        public int ID
-        {
-            get { return id; }
-            set { id = value; }
-        }
-        public LampData(int id)
-        {
-            this.id = id;
-        }
-    }
-
     public struct RegionData
     {
         private string id;

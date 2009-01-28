@@ -7,6 +7,7 @@ using CommunicationAPI.Interface;
 using CommunicationAPI.DataTypes;
 using CommunicationAPI;
 using StoreServer.Data;
+using StoreServer.Radio;
 
 namespace StoreServer.WebService
 {
@@ -80,22 +81,6 @@ namespace StoreServer.WebService
             try
             {
                 acc.Save(this.DataManager.Connection);
-            }
-            catch (Exception ex)
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.DBWriteError, ex.Message);
-            }
-        }
-
-        public void AddLamp(SessionData session, LampData value)
-        {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
-
-            Lamp lamp = new Lamp(value);
-
-            try
-            {
-                lamp.Save(this.DataManager.Connection);
             }
             catch (Exception ex)
             {
@@ -192,22 +177,6 @@ namespace StoreServer.WebService
             try
             {
                 user.Delete(this.DataManager.Connection);
-            }
-            catch (Exception ex)
-            {
-                throw new XmlRpcFaultException((int)ErrorCodes.DBWriteError, ex.Message);
-            }
-        }
-
-        public void DeleteLamp(SessionData session, LampData value)
-        {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
-
-            Lamp lamp = new Lamp(value);
-
-            try
-            {
-                lamp.Delete(this.DataManager.Connection);
             }
             catch (Exception ex)
             {
@@ -405,13 +374,6 @@ namespace StoreServer.WebService
             return users.ToArray();
         }
 
-        public LampData[] GetLamps(SessionData session)
-        {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
-
-            throw new XmlRpcFaultException(1, "Not implemented");
-        }
-
         public RegionData[] GetRegions(SessionData session)
         {
             Debug.WriteLine("GetRegions()");
@@ -500,9 +462,50 @@ namespace StoreServer.WebService
 
         public AdvertisementData[] GetAdvertisement(SessionData session)
         {
+            Debug.WriteLine("GetAdvertisement()");
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
-            throw new XmlRpcFaultException(1, "Not implemented");
+            List<AdvertisementData> ads = new List<AdvertisementData>();
+            try
+            {
+                int i = 0;
+                foreach (Advertisement ad in Advertisement.Load(this.DataManager.Connection))
+                {
+                    i++;
+                    ads.Add(ad.Data);
+                    Debug.WriteLine("Ad name " + i + ": " + ad.Name);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
+            }
+
+            return ads.ToArray();
+        }
+
+        public void ShowSignId(RegionData region)
+        {
+            try
+            {
+                Program.RadioManager.Send(new DisplayIdPacket(region.Id));
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.PacketSendError, ex.Message);
+            }
+        }
+
+        public void SetLampId(string oldId, string newId)
+        {
+            try
+            {
+                Program.RadioManager.Send(new SetLampIdPacket(oldId, newId));
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.PacketSendError, ex.Message);
+            }
         }
 
         #endregion
@@ -787,5 +790,9 @@ namespace StoreServer.WebService
         }
 
         #endregion
+
+
+        
+
     }
 }

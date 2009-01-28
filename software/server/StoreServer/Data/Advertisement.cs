@@ -17,6 +17,7 @@ namespace StoreServer.Data
         public DateTime StopDate { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime StopTime { get; set; }
+       
 
         public int Id
         {
@@ -34,6 +35,14 @@ namespace StoreServer.Data
             get { return text; }
         }
 
+        public AdvertisementData Data
+        {
+            get
+            {
+                return new AdvertisementData(this.Id, this.region.Data, this.Name, this.text, this.StartDate, this.StopDate, this.StartTime, this.StopTime);
+            }
+        }
+
         public Advertisement(AdvertisementData advertisement) {
             this.id = advertisement.Id;
             this.region = new Region(advertisement.Region);
@@ -43,7 +52,6 @@ namespace StoreServer.Data
             this.StopDate = advertisement.StopDate;
             this.StartTime = advertisement.StartTime;
             this.StopTime = advertisement.StopTime;
-
         }
 
         public void Save(OdbcConnection connection)

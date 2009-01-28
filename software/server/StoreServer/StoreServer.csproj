@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{48A78EF4-3ADB-45C8-A820-C5DC003ABDFD}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -15,7 +15,6 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <StartupObject>StoreServer.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -51,7 +50,6 @@
     <Compile Include="ConsoleHandler.cs" />
     <Compile Include="Data\Advertisement.cs" />
     <Compile Include="Data\ClientManager.cs" />
-    <Compile Include="Data\Lamp.cs" />
     <Compile Include="Data\Password.cs" />
     <Compile Include="Data\Product.cs" />
     <Compile Include="Data\Region.cs" />
@@ -74,9 +72,7 @@
     <Compile Include="Radio\RadioManager.cs" />
     <Compile Include="Radio\ResetLampBufferPacket.cs" />
     <Compile Include="Radio\SendTracePacket.cs" />
-    <Compile Include="Radio\SerialPacket.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Radio\SerialPacket.cs" />
     <Compile Include="Radio\SetAdPacket.cs" />
     <Compile Include="Radio\SetLampIdPacket.cs" />
     <Compile Include="Radio\SetPricePacket.cs" />
@@ -112,6 +108,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Sql\1.0.0.5_regionidToInt.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Sql\1.0.0.6_advertisements.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
