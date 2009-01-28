@@ -166,7 +166,7 @@ void clear_buffers(){
  /**
   * \brief  init lamp
   *
-  *     This function sends command to xbee module to get
+  *		This function sends command to xbee module to get
   *			current my-id and saves it in lampid
   *
   */
@@ -186,7 +186,7 @@ void init_lamp(){
  /**
   * \brief  gets csum index
   *
-  *     This function searches the location of the
+  *			This function searches the location of the
   *			checksum in the recieve buffer array. 
   *
   * \return	            index of checksum in receivebuffer
@@ -298,8 +298,7 @@ void change_lampid(){
   *
   */
 void set_send_trace(){
-	strcpy(sendtracepacket, rcvbuf);
-	if(rcvbuf[2]=='0'){
+	if(rcvbuf[FIRST_ARG_INDEX]=='0'){
 		send_trace_mode=FALSE;
 	}	else	{
 			strcpy(sendtracepacket, rcvbuf);
