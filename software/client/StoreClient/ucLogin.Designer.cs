@@ -31,8 +31,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.labelCaption = new System.Windows.Forms.Label();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
-            this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.buttonLogin = new System.Windows.Forms.Button();
+            this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,19 +80,6 @@
             this.textBoxUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsername_KeyPress);
             this.textBoxUsername.Enter += new System.EventHandler(this.textBoxUsername_Click);
             // 
-            // textBoxPassword
-            // 
-            this.textBoxPassword.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBoxPassword.ForeColor = System.Drawing.Color.Silver;
-            this.textBoxPassword.Location = new System.Drawing.Point(186, 126);
-            this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(194, 20);
-            this.textBoxPassword.TabIndex = 3;
-            this.textBoxPassword.Text = "Passwort";
-            this.textBoxPassword.Leave += new System.EventHandler(this.textBoxPassword_Leave);
-            this.textBoxPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsername_KeyPress);
-            this.textBoxPassword.Enter += new System.EventHandler(this.textBox1_Click);
-            // 
             // buttonLogin
             // 
             this.buttonLogin.Dock = System.Windows.Forms.DockStyle.Top;
@@ -105,6 +92,19 @@
             this.buttonLogin.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonLogin.UseVisualStyleBackColor = true;
             this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
+            // 
+            // textBoxPassword
+            // 
+            this.textBoxPassword.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBoxPassword.ForeColor = System.Drawing.Color.Silver;
+            this.textBoxPassword.Location = new System.Drawing.Point(186, 126);
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.Size = new System.Drawing.Size(194, 20);
+            this.textBoxPassword.TabIndex = 3;
+            this.textBoxPassword.Text = "Passwort";
+            this.textBoxPassword.Leave += new System.EventHandler(this.textBoxPassword_Leave);
+            this.textBoxPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsername_KeyPress);
+            this.textBoxPassword.Enter += new System.EventHandler(this.textBox1_Click);
             // 
             // ucLogin
             // 

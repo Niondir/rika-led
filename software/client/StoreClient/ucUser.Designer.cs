@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBoxAllUsers = new System.Windows.Forms.GroupBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBoxUsers = new System.Windows.Forms.ListBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.groupBoxGroupsRights = new System.Windows.Forms.GroupBox();
@@ -43,17 +43,20 @@
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.groupBoxSingleUser = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
+            this.textBoxNewPW = new System.Windows.Forms.TextBox();
+            this.textBoxNewPWagain = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxGroup = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.textBoxOldPW = new System.Windows.Forms.TextBox();
+            this.buttonSaveUser = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
@@ -68,7 +71,7 @@
             // 
             // groupBoxAllUsers
             // 
-            this.groupBoxAllUsers.Controls.Add(this.listBox1);
+            this.groupBoxAllUsers.Controls.Add(this.listBoxUsers);
             this.groupBoxAllUsers.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBoxAllUsers.Location = new System.Drawing.Point(0, 0);
             this.groupBoxAllUsers.Name = "groupBoxAllUsers";
@@ -77,15 +80,15 @@
             this.groupBoxAllUsers.TabStop = false;
             this.groupBoxAllUsers.Text = "Aktuell registrierte Benutzer";
             // 
-            // listBox1
+            // listBoxUsers
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(3, 16);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(245, 433);
-            this.listBox1.TabIndex = 0;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.listBoxUsers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxUsers.FormattingEnabled = true;
+            this.listBoxUsers.Location = new System.Drawing.Point(3, 16);
+            this.listBoxUsers.Name = "listBoxUsers";
+            this.listBoxUsers.Size = new System.Drawing.Size(245, 433);
+            this.listBoxUsers.TabIndex = 0;
+            this.listBoxUsers.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // splitter1
             // 
@@ -223,16 +226,17 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.textBox2, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox3, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxName, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxNewPW, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxNewPWagain, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.comboBox1, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.comboBoxGroup, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.textBox4, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxOldPW, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.buttonSaveUser, 1, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Enabled = false;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 41);
@@ -247,29 +251,34 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(301, 411);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // textBox1
+            // textBoxName
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(123, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(175, 20);
-            this.textBox1.TabIndex = 0;
+            this.textBoxName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxName.Location = new System.Drawing.Point(123, 3);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(175, 20);
+            this.textBoxName.TabIndex = 0;
+            this.textBoxName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxOldPW_KeyPress);
             // 
-            // textBox2
+            // textBoxNewPW
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(123, 35);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(175, 20);
-            this.textBox2.TabIndex = 1;
+            this.textBoxNewPW.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxNewPW.Location = new System.Drawing.Point(123, 35);
+            this.textBoxNewPW.Name = "textBoxNewPW";
+            this.textBoxNewPW.Size = new System.Drawing.Size(175, 20);
+            this.textBoxNewPW.TabIndex = 1;
+            this.textBoxNewPW.UseSystemPasswordChar = true;
+            this.textBoxNewPW.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxOldPW_KeyPress);
             // 
-            // textBox3
+            // textBoxNewPWagain
             // 
-            this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox3.Location = new System.Drawing.Point(123, 67);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(175, 20);
-            this.textBox3.TabIndex = 2;
+            this.textBoxNewPWagain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxNewPWagain.Location = new System.Drawing.Point(123, 67);
+            this.textBoxNewPWagain.Name = "textBoxNewPWagain";
+            this.textBoxNewPWagain.Size = new System.Drawing.Size(175, 20);
+            this.textBoxNewPWagain.TabIndex = 2;
+            this.textBoxNewPWagain.UseSystemPasswordChar = true;
+            this.textBoxNewPWagain.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxOldPW_KeyPress);
             // 
             // label1
             // 
@@ -319,14 +328,15 @@
             this.label4.Text = "Gruppe";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // comboBox1
+            // comboBoxGroup
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(123, 99);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(175, 21);
-            this.comboBox1.TabIndex = 8;
+            this.comboBoxGroup.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxGroup.FormattingEnabled = true;
+            this.comboBoxGroup.Location = new System.Drawing.Point(123, 99);
+            this.comboBoxGroup.Name = "comboBoxGroup";
+            this.comboBoxGroup.Size = new System.Drawing.Size(175, 21);
+            this.comboBoxGroup.TabIndex = 8;
             // 
             // label5
             // 
@@ -340,19 +350,34 @@
             this.label5.Text = "Altes Passwort";
             this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // textBox4
+            // textBoxOldPW
             // 
-            this.textBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox4.Location = new System.Drawing.Point(123, 131);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.PasswordChar = 'o';
-            this.textBox4.Size = new System.Drawing.Size(175, 20);
-            this.textBox4.TabIndex = 10;
+            this.textBoxOldPW.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxOldPW.Location = new System.Drawing.Point(123, 131);
+            this.textBoxOldPW.Name = "textBoxOldPW";
+            this.textBoxOldPW.Size = new System.Drawing.Size(175, 20);
+            this.textBoxOldPW.TabIndex = 10;
+            this.textBoxOldPW.UseSystemPasswordChar = true;
+            this.textBoxOldPW.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxOldPW_KeyPress);
+            // 
+            // buttonSaveUser
+            // 
+            this.buttonSaveUser.Image = global::StoreClient.Properties.Resources.page_save;
+            this.buttonSaveUser.Location = new System.Drawing.Point(123, 163);
+            this.buttonSaveUser.Name = "buttonSaveUser";
+            this.buttonSaveUser.Size = new System.Drawing.Size(102, 26);
+            this.buttonSaveUser.TabIndex = 11;
+            this.buttonSaveUser.Text = "Speichern";
+            this.buttonSaveUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonSaveUser.UseVisualStyleBackColor = true;
+            this.buttonSaveUser.Click += new System.EventHandler(this.toolStripButtonSave_Click);
             // 
             // toolStrip1
             // 
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonRefresh,
+            this.toolStripSeparator2,
             this.toolStripButtonNew,
             this.toolStripButtonEdit,
             this.toolStripButtonDelete,
@@ -365,6 +390,21 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // toolStripButtonRefresh
+            // 
+            this.toolStripButtonRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRefresh.Image = global::StoreClient.Properties.Resources.arrow_refresh;
+            this.toolStripButtonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRefresh.Name = "toolStripButtonRefresh";
+            this.toolStripButtonRefresh.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonRefresh.Text = "toolStripButton1";
+            this.toolStripButtonRefresh.Click += new System.EventHandler(this.refreshContent);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripButtonNew
             // 
             this.toolStripButtonNew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -373,10 +413,12 @@
             this.toolStripButtonNew.Name = "toolStripButtonNew";
             this.toolStripButtonNew.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonNew.Text = "toolStripButton1";
+            this.toolStripButtonNew.Click += new System.EventHandler(this.toolStripButtonNew_Click);
             // 
             // toolStripButtonEdit
             // 
             this.toolStripButtonEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonEdit.Enabled = false;
             this.toolStripButtonEdit.Image = global::StoreClient.Properties.Resources.page_edit;
             this.toolStripButtonEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonEdit.Name = "toolStripButtonEdit";
@@ -387,6 +429,7 @@
             // toolStripButtonDelete
             // 
             this.toolStripButtonDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonDelete.Enabled = false;
             this.toolStripButtonDelete.Image = global::StoreClient.Properties.Resources.page_delete;
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
@@ -401,11 +444,13 @@
             // toolStripButtonSave
             // 
             this.toolStripButtonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSave.Enabled = false;
             this.toolStripButtonSave.Image = global::StoreClient.Properties.Resources.page_save;
             this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSave.Name = "toolStripButtonSave";
             this.toolStripButtonSave.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonSave.Text = "toolStripButton4";
+            this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
             // 
             // ucUser
             // 
@@ -434,7 +479,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBoxAllUsers;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBoxUsers;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.GroupBox groupBoxGroupsRights;
@@ -446,16 +491,16 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBoxSingleUser;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBoxName;
+        private System.Windows.Forms.TextBox textBoxNewPW;
+        private System.Windows.Forms.TextBox textBoxNewPWagain;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxGroup;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBoxOldPW;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButtonNew;
         private System.Windows.Forms.ToolStripButton toolStripButtonEdit;
@@ -464,5 +509,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonSave;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button buttonSaveUser;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRefresh;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

@@ -56,5 +56,10 @@ namespace StoreClient
                 Connection.GetInstance().EditAd(((AdvertisementData)gridAds.SelectedRows[0].Tag).Id, editAdd.Value);
             }
         }
+
+        private void gridAds_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            toolStripButtonEdit_Click(null, null);
+        }
     }
 }

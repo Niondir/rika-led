@@ -129,6 +129,7 @@
             this.gridAds.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridAds.Size = new System.Drawing.Size(735, 442);
             this.gridAds.TabIndex = 1;
+            this.gridAds.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAds_CellContentClick);
             // 
             // name
             // 
