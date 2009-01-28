@@ -8,7 +8,7 @@ namespace StoreServer.Radio
     public class SendTracePacket : LampPacket
     {
         public SendTracePacket(string lampId, bool enabled)
-            : base(LampCommand.SendTrace, enabled ? "1" : "0")
+            : base(LampCommand.SendTrace, enabled ? "1" : "0", "FFFF")
         {
             this.targetId = lampId;
         }

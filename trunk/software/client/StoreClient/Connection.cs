@@ -110,6 +110,7 @@ namespace StoreClient
         internal void DeleteRegion(string id)
         {
             remote.DeleteRegion(session, new RegionData(id, ""));
+            
         }
 
         internal UserData[] GetUsers()
