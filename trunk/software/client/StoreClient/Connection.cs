@@ -145,7 +145,7 @@ namespace StoreClient
             ads[2] = new AdvertisementData(3, r, "drei", new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
             ads[3] = new AdvertisementData(4, r, "vier", new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
 
-            return ads;
+            //return ads;
             return remote.GetAdvertisement(session);
         }
 
@@ -153,6 +153,17 @@ namespace StoreClient
         internal void EditAd(int p, AdvertisementData advertisementData)
         {
             return;
+        }
+
+        internal void EditUser(UserData oldUser, UserData newUser)
+        {
+            remote.DeleteUser(session, oldUser);
+            remote.AddUser(session, newUser);
+        }
+
+        internal void Add(UserData newUser)
+        {
+            remote.AddUser(session, newUser);
         }
     }
 }

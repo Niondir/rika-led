@@ -21,15 +21,26 @@ namespace StoreClient
             InitializeComponent();
             this.Dock = DockStyle.Fill;
 
-            refreshContent();
+            refreshContent(null, null);
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBox1.SelectedIndex >= 0)
+            if (listBoxUsers.SelectedIndex >= 0)
             {
-                textBox1.Text = users[listBox1.SelectedIndex].Username;
-                comboBox1.Text = users[listBox1.SelectedIndex].Role.Name;
+                textBoxName.Text = users[listBoxUsers.SelectedIndex].Username;
+                comboBoxGroup.Text = users[listBoxUsers.SelectedIndex].Role.Name;
+
+                listBoxUsers.Tag = users[listBoxUsers.SelectedIndex];
+
+                toolStripButtonDelete.Enabled = true;
+                toolStripButtonEdit.Enabled = true;
+            }
+            else
+            {
+                toolStripButtonDelete.Enabled = false;
+                toolStripButtonEdit.Enabled = false;
+                toolStripButtonSave.Enabled = false;
             }
         }
 
@@ -56,7 +67,10 @@ namespace StoreClient
 
         private void toolStripButtonEdit_Click(object sender, EventArgs e)
         {
-            tableLayoutPanel1.Enabled = !tableLayoutPanel1.Enabled;
+            bool setVal = !tableLayoutPanel1.Enabled;
+
+            tableLayoutPanel1.Enabled = setVal;
+            toolStripButtonSave.Enabled = setVal;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -74,25 +88,92 @@ namespace StoreClient
 
             Connection.GetInstance().EditRole(roles[listBox2.SelectedIndex], new RoleData(textBox5.Text, flags));
 
-            refreshContent();
+            refreshContent(null, null);
         }
 
-        private void refreshContent()
+        private void refreshContent(object sender, EventArgs e)
         {
-            listBox1.Items.Clear();
+            listBoxUsers.Items.Clear();
             users = Connection.GetInstance().GetUsers();
             foreach (UserData i in users)
             {
-                listBox1.Items.Add(i.Username);
+                listBoxUsers.Items.Add(i.Username);
             }
 
-            comboBox1.Items.Clear();
+            comboBoxGroup.Items.Clear();
             listBox2.Items.Clear();
             roles = Connection.GetInstance().GetRoles();
             foreach (RoleData i in roles)
             {
-                comboBox1.Items.Add(i.Name);
+                comboBoxGroup.Items.Add(i.Name);
                 listBox2.Items.Add(i.Name);
+            }
+        }
+
+        private void toolStripButtonSave_Click(object sender, EventArgs e)
+        {
+            if (textBoxName.Text.Length == 0)
+            {
+                MessageBox.Show("Bitte geben Sie einen Benutzernamen ein", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                clearPWBoxes();
+                return;
+            }
+            if (comboBoxGroup.SelectedIndex == -1)
+            {
+                MessageBox.Show("Ein Benutzer muss einer Gruppe angehören, die bereits exisitert.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                clearPWBoxes();
+                return;
+            }
+            if (textBoxNewPW.Text != textBoxNewPWagain.Text || textBoxNewPW.Text.Length == 0)
+            {
+                MessageBox.Show("Die Eingabe der beiden neuen Passwörter stimmen nicht überein", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                clearPWBoxes();
+                return;
+            }
+            UserData newUser = new UserData(textBoxName.Text, textBoxNewPW.Text);
+            newUser.Role = new RoleData(comboBoxGroup.Text);
+            if (listBoxUsers.SelectedIndex >= 0)
+            {
+                UserData oldUser = new UserData(((UserData)listBoxUsers.Tag).Username, textBoxOldPW.Text);
+                Connection.GetInstance().EditUser(oldUser, newUser);
+            }
+            else
+                Connection.GetInstance().Add(newUser);
+            
+
+            tableLayoutPanel1.Enabled = false;
+            toolStripButtonSave.Enabled = false;
+
+            refreshContent(null, null);
+
+            clearAllBoxes();
+        }
+        private void clearPWBoxes()
+        {
+            textBoxNewPW.Text = textBoxNewPWagain.Text = textBoxOldPW.Text = "";
+        }
+        private void clearAllBoxes()
+        {
+            textBoxName.Text = "";
+            comboBoxGroup.Text = "";
+            clearPWBoxes();
+        }
+        private void toolStripButtonNew_Click(object sender, EventArgs e)
+        {
+            tableLayoutPanel1.Enabled = true;
+            toolStripButtonSave.Enabled = true;
+
+            clearAllBoxes();
+
+            listBoxUsers.SelectedIndex = -1;
+        }
+
+        private void textBoxOldPW_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\r')
+            {
+                toolStripButtonSave_Click(null, null);
+                e.Handled = true;
             }
         }
     }

@@ -76,15 +76,18 @@
             // verbindungHerstellenToolStripMenuItem
             // 
             this.verbindungHerstellenToolStripMenuItem.Name = "verbindungHerstellenToolStripMenuItem";
-            this.verbindungHerstellenToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.verbindungHerstellenToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.verbindungHerstellenToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.verbindungHerstellenToolStripMenuItem.Text = "Verbindung herstellen";
             this.verbindungHerstellenToolStripMenuItem.Click += new System.EventHandler(this.verbindungHerstellenToolStripMenuItem_Click);
             // 
             // beendenToolStripMenuItem
             // 
             this.beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
-            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.beendenToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.beendenToolStripMenuItem.Text = "Beenden";
+            this.beendenToolStripMenuItem.Click += new System.EventHandler(this.beendenToolStripMenuItem_Click);
             // 
             // einstellungenToolStripMenuItem
             // 

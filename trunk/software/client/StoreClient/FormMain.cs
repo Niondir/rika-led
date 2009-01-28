@@ -157,6 +157,11 @@ namespace StoreClient
             CurrWindow = DisplayWindow.Analysis;
         }
 
+        private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
     }
     public enum DisplayWindow
     {

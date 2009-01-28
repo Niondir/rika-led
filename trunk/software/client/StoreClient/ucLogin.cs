@@ -39,6 +39,7 @@ namespace StoreClient
             set
             {
                 passwordEntered = value;
+                textBoxPassword.UseSystemPasswordChar = value;
                 if (value == false)
                 {
                     textBoxPassword.ForeColor = Color.Silver;
@@ -49,7 +50,6 @@ namespace StoreClient
                 {
                     textBoxPassword.ForeColor = SystemColors.ControlText;
                     textBoxPassword.Text = string.Empty;
-                    textBoxPassword.PasswordChar = '*';
                 }
             }
         }
