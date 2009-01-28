@@ -63,6 +63,9 @@ namespace StoreServer
             {
                 switch (command)
                 {
+                    case "sendtimer":
+                        Program.RadioManager.SendTimer.Change(int.Parse(tokens[1]), int.Parse(tokens[1]));
+                        break;
                     case "login":
                         try
                         {

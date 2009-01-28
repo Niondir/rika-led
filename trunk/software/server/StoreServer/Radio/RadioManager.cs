@@ -20,6 +20,11 @@ namespace StoreServer.Radio
         private Thread sendThread;
         private Timer sendTimer;
 
+        public Timer SendTimer
+        {
+            get { return sendTimer; }
+        }
+
         private DataManager dataManager;
 
         private string destination = "-1";
