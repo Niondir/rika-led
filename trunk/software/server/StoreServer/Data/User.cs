@@ -139,7 +139,7 @@ namespace StoreServer.Data
                 command.CommandText = "INSERT INTO led_users (roles_id, login, password) VALUES(?, ?, ?)";
                 command.Parameters.AddWithValue("role", role.Name);
                 command.Parameters.AddWithValue("login", username);
-                command.Parameters.AddWithValue("password", password);
+                command.Parameters.AddWithValue("password", password.MD5);
                 command.ExecuteNonQuery();
             }
             else
