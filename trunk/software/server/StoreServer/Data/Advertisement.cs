@@ -82,7 +82,10 @@ namespace StoreServer.Data
             command.Parameters.AddWithValue("startTime", this.StartTime);
             command.Parameters.AddWithValue("stopTime", this.StopTime);
 
-            command.ExecuteNonQuery();
+            if (command.ExecuteNonQuery() == 0)
+            {
+                throw new Exception("No advertise added for unknown reason");
+            }
         }
 
         public static List<Advertisement> Load(OdbcConnection connection)
