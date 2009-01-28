@@ -99,7 +99,7 @@ namespace StoreServer
                         //s.Text = tokens[2];
                         Program.RadioManager.Send(new SetPricePacket(product));
                         break;
-                    case "packet":
+                    case "p":
                         SendPacket(tokens);
                         break;
                     default:
@@ -121,20 +121,14 @@ namespace StoreServer
                 case "sendtrace":
                     Program.RadioManager.Send(new SendTracePacket(args[2], bool.Parse(args[3])));
                     break;
-                case "resetlampbuffer":
+                case "clr":
                     Program.RadioManager.Send(new ResetLampBufferPacket(args[2]));
-                    break;
-                case "setsignmode":
-                    if (args[3] == "ad")
-                        Program.RadioManager.Send(new SetSignModePacket(args[2], SignMode.Ad));
-                    else if (args[3] == "price")
-                        Program.RadioManager.Send(new SetSignModePacket(args[2], SignMode.Price));
                     break;
                 case "setlampid":
                     Program.RadioManager.Send(new SetLampIdPacket(args[2], args[3]));
                     break;
-                case "displayid":
-                    Program.RadioManager.Send(new DisplayIdPacket(args[2]));
+                case "showid":
+                    Program.RadioManager.Send(new DisplayIdPacket("FFFF"));
                     break;
             }
         }

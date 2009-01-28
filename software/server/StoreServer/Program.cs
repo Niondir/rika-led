@@ -14,6 +14,13 @@ using System.Data;
 using System.Xml;
 /* TODO: Program.cs
  * 
+ * 2. Console (GUI)
+ * Advertisement mit Timestamps & beschreibung
+ * Ip adresse einstellbar
+ * lampID string.ToLower
+ * Show ID
+ * Set Lamp id
+ * 
  * 
  * sign id 0 bedeutet Einkaufswagen!
  * Advertisements aufs Datum achten!
