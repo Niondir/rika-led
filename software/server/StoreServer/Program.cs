@@ -16,7 +16,8 @@ using System.Xml;
 using StoreServer.GUI;
 using System.Windows.Forms;
 /* TODO: Program.cs
- * 
+ * Consolen history
+ * auf die neue console hören
  * */
 
 namespace StoreServer
@@ -113,7 +114,7 @@ namespace StoreServer
             Version ver = assembly.GetName().Version;
 
             Console.Title = "Store Server";
-            Console.SetOut(multiConOut = new MultiTextWriter(Console.Out, new FileLogger("Logs\\last.log", false)));
+            Console.SetOut(multiConOut = new MultiTextWriter(new FileLogger("Logs\\last.log", false)));
 
             guiThread = new Thread(new ThreadStart(GuiThread));
             guiThread.Start();
@@ -211,7 +212,7 @@ namespace StoreServer
         {
             while (!closing)
             {
-                Program.ConsoleVisibility(false);
+                //Program.ConsoleVisibility(false);
                 formConsole = new FormConsole();
                 multiConOut.Add(formConsole.Out);
                 Application.Run(formConsole);

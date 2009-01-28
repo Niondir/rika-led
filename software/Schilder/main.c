@@ -336,7 +336,7 @@ void packet_action(void)
 
 	case CMDNR_SHOW_ID:                     //Statusinformationen anzeigen und dannach ein Neuzeichnen des Displays über das Flag veranlassen
 						                    show_status();
-											_delay_ms(3000);
+											_delay_ms(5000);
 											sign.displayRefreshFlag = 1;
 
 											break;
