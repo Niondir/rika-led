@@ -12,8 +12,10 @@ Checksummen immer über alle Zeichen bis zur csum, inklusive "|", ohne "<". Chec
 
 -sendtrace
   * <1|anaus|kassen id|csum>    
-  * anaus=1 -> lampe schickt "schicktraceraus"
-  * an wagen, 0 -> tuts nicht
+  * anaus=1 -> lampe schickt "sendtrace" an Schilder weiter
+  * Werbeschilder antworten mit einem Funkpaket an die "Kassen ID" der Form
+  * <LampenID,relative Zeit,.....,LampenID, relative Zeit>
+  * Die Frequenz der realtiven Uhr beträgt 1800/255 Hz
 
 -tracepacket (beinhaltet einen trace)
   * <8|{timestamp|lampid}|csum> 
