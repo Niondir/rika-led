@@ -20,7 +20,7 @@
 #define PRICETAGBUFFERMAXSLOTS 8
 #endif
 
-
+#define IDMAXLENGTH 4
 #define PRICETAGPACKETMAXLENGTH 60
 #define ADPACKETMAXLENGTH 120
 #define RCVBUFSIZE 120
@@ -306,13 +306,22 @@ void set_send_trace(){
 	}
 }
 
-//************************************
-// 
-//************************************
+ /**
+  * \brief  calculates next pricetag buffer slot to overwrite
+  *
+  *     This function calculates the next slot to be used in the pricetag
+	*			buffer by comparing the target id of the new price tag packet
+	*			with the existing ids in the price tag buffer. If the target id
+	*			exists the new packet will replace the existing one. If not the
+	*			"nextOverwritePriceTagBufferPos" will be used.
+  *
+  * \return	            the next price tag slot to overwrite
+  *
+  */
 int calculate_overwriteslot(){
-int overwrite=nextOverwritePriceTagBufferPos;
+	int overwrite=nextOverwritePriceTagBufferPos;
 	for(int i=0; i<PriceTagBufferSlotsUsed; i++){
-		for(int j=2; i<7; j++){
+		for(int j=FIRST_ARG_INDEX; j<(FIRST_ARG_INDEX+IDMAXLENGTH+1); j++){
 			if(PriceTagBuffer[i][j]==rcvbuf[j]){
 				if(PriceTagBuffer[i][j]=='|'){
 					overwrite=i;
@@ -329,9 +338,13 @@ int overwrite=nextOverwritePriceTagBufferPos;
 	return(overwrite);
 }
 
-//************************************
-// 
-//************************************
+ /**
+  * \brief  forwards packet saved in the receive buffer
+  *
+  *     This function sends the packet in the receive buffer after
+	*			adding the starting '<' and the closing '>'
+  *
+  */
 void forward_packet(){
 	uartSW_putc('<');
 	uartSW_puts(rcvbuf);
