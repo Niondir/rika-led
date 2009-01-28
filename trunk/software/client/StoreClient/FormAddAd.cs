@@ -29,6 +29,11 @@ namespace StoreClient
 
                 textBoxName.Text = value.Name;
 
+                // adjust the min values 
+                if (value.StartDate < dateTimePickerStartDate.MinDate)
+                {
+                    dateTimePickerStartDate.MinDate = dateTimePickerStartTime.MinDate = value.StartDate;
+                }
                 dateTimePickerStartDate.Value = value.StartDate;
                 dateTimePickerStopDate.Value = value.StopDate;
                 dateTimePickerStartTime.Value = value.StartTime;

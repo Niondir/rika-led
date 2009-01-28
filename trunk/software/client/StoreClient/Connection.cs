@@ -28,7 +28,7 @@ namespace StoreClient
         private Connection()
         {
             remote = XmlRpcProxyGen.Create<IRemoteFunctions>();
-            
+
             IRemoteFunctions proxy = (IRemoteFunctions)XmlRpcProxyGen.Create(typeof(IRemoteFunctions));
             proxy.Url = "http://127.0.0.1:11000/";
         }
@@ -149,5 +149,10 @@ namespace StoreClient
             return remote.GetAdvertisement(session);
         }
 
+
+        internal void EditAd(int p, AdvertisementData advertisementData)
+        {
+            return;
+        }
     }
 }
