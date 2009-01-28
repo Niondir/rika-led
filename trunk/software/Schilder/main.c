@@ -35,9 +35,10 @@ int main(void)
   uint8_t toggleFlag=0;
  #endif
 
-   sei();               											// global irq an
+   
   _delay_ms(1000);                                                  // startup delay
-  
+  sei();               										    	// global irq an
+
   sign.signType   = SIGN_TYPE_NOT_DETECTED;
   sign.packetsOK  = 0;
   sign.packetsBAD = 0;
@@ -128,7 +129,7 @@ uint8_t detectSignMode(void) //gibt 1 zurück wenn sich der Mode geändert hat
         char adr=0;
 		sign.signType        = SIGN_TYPE_PRICE;
 	  
-		// Adresse dekodieren, nur für Präsentation um unterschiedliche Preisschilder realisieren zu können
+		// Adresse dekodieren
 		adr|=ISSET_PIO1;
 	    adr|=ISSET_PIO2<<1;
 		adr|=ISSET_PIO3<<2;
@@ -280,19 +281,16 @@ void packet_action(void)
 
 												set_dest( (uint32_t)atoi(packet.args[1]), 0); //Arg1 enthält die FunkZieladresse des Traceempfängers (Kasse), Arg0 ist egal
 
+												XBEE_SEND_STRING("<");
+
 												for(int i=0;i<trace.pos;i++)
-												{
-												  XBEE_SEND_STRING("<");
-
-												  for(int i=0; i<TRACE_LAMP_CNT;i++)
-												  {
+												{											
                                                     sprintf(sendPacketBuf,"%d,%d", trace.lampIDs[i], trace.times[i] ); //Die Uhr läuft mit (1800/255) Hz
-                                                    XBEE_SEND_STRING(sendPacketBuf);
-												  }
-
-												  XBEE_SEND_STRING(">");
-												  trace.pos = 0;
+                                                    XBEE_SEND_STRING(sendPacketBuf);											  
 												}
+
+												XBEE_SEND_STRING(">");
+												trace.pos = 0;
 											}
 					
 											break;
@@ -373,6 +371,7 @@ void packet_action(void)
 void initTraceCounter(int8_t run)
 { 
   trace.pos=0;      // init
+  trace.TimeNow=0;
 
   if(run)
   {
