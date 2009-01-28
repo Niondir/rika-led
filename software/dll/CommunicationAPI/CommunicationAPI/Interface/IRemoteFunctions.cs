@@ -8,7 +8,7 @@ using CommunicationAPI.DataTypes;
 
 namespace CommunicationAPI.Interface
 {
-    //[XmlRpcUrl("http://127.0.0.1:11000/")]
+    [XmlRpcUrl("http://127.0.0.1:11000/")]
     public interface IRemoteFunctions : IXmlRpcProxy
     {
         [XmlRpcMethod]

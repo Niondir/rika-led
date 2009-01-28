@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.textBoxName = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerStartDate = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerStopDate = new System.Windows.Forms.DateTimePicker();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.labelFrom = new System.Windows.Forms.Label();
@@ -38,23 +38,23 @@
             this.labelStartDate = new System.Windows.Forms.Label();
             this.labelStopDate = new System.Windows.Forms.Label();
             this.labelCaption = new System.Windows.Forms.Label();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerStartTime = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerStopTime = new System.Windows.Forms.DateTimePicker();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxAdLine4 = new System.Windows.Forms.TextBox();
+            this.textBoxAdLine3 = new System.Windows.Forms.TextBox();
+            this.textBoxAdLine2 = new System.Windows.Forms.TextBox();
+            this.textBoxAdLine1 = new System.Windows.Forms.TextBox();
             this.groupBoxAppearance = new System.Windows.Forms.GroupBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxInfos = new System.Windows.Forms.GroupBox();
             this.comboBoxGroup = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBoxAppearance.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxInfos.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxName
@@ -64,20 +64,20 @@
             this.textBoxName.Size = new System.Drawing.Size(266, 20);
             this.textBoxName.TabIndex = 0;
             // 
-            // dateTimePicker1
+            // dateTimePickerStartDate
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(42, 76);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(305, 20);
-            this.dateTimePicker1.TabIndex = 4;
-            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            this.dateTimePickerStartDate.Location = new System.Drawing.Point(42, 76);
+            this.dateTimePickerStartDate.Name = "dateTimePickerStartDate";
+            this.dateTimePickerStartDate.Size = new System.Drawing.Size(305, 20);
+            this.dateTimePickerStartDate.TabIndex = 4;
+            this.dateTimePickerStartDate.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
-            // dateTimePicker2
+            // dateTimePickerStopDate
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(42, 103);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(305, 20);
-            this.dateTimePicker2.TabIndex = 5;
+            this.dateTimePickerStopDate.Location = new System.Drawing.Point(42, 103);
+            this.dateTimePickerStopDate.Name = "dateTimePickerStopDate";
+            this.dateTimePickerStopDate.Size = new System.Drawing.Size(305, 20);
+            this.dateTimePickerStopDate.TabIndex = 5;
             // 
             // buttonOK
             // 
@@ -145,23 +145,23 @@
             this.labelCaption.TabIndex = 15;
             this.labelCaption.Text = "Werbeausstrahlung findet statt im Zeitraum...";
             // 
-            // dateTimePicker3
+            // dateTimePickerStartTime
             // 
-            this.dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePicker3.Location = new System.Drawing.Point(114, 145);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.ShowUpDown = true;
-            this.dateTimePicker3.Size = new System.Drawing.Size(95, 20);
-            this.dateTimePicker3.TabIndex = 16;
+            this.dateTimePickerStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dateTimePickerStartTime.Location = new System.Drawing.Point(114, 145);
+            this.dateTimePickerStartTime.Name = "dateTimePickerStartTime";
+            this.dateTimePickerStartTime.ShowUpDown = true;
+            this.dateTimePickerStartTime.Size = new System.Drawing.Size(95, 20);
+            this.dateTimePickerStartTime.TabIndex = 16;
             // 
-            // dateTimePicker4
+            // dateTimePickerStopTime
             // 
-            this.dateTimePicker4.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dateTimePicker4.Location = new System.Drawing.Point(252, 145);
-            this.dateTimePicker4.Name = "dateTimePicker4";
-            this.dateTimePicker4.ShowUpDown = true;
-            this.dateTimePicker4.Size = new System.Drawing.Size(95, 20);
-            this.dateTimePicker4.TabIndex = 17;
+            this.dateTimePickerStopTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dateTimePickerStopTime.Location = new System.Drawing.Point(252, 145);
+            this.dateTimePickerStopTime.Name = "dateTimePickerStopTime";
+            this.dateTimePickerStopTime.ShowUpDown = true;
+            this.dateTimePickerStopTime.Size = new System.Drawing.Size(95, 20);
+            this.dateTimePickerStopTime.TabIndex = 17;
             // 
             // tableLayoutPanel1
             // 
@@ -185,10 +185,10 @@
             this.tableLayoutPanel2.BackColor = System.Drawing.Color.YellowGreen;
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.textBox4, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.textBox3, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.textBox2, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.textBox1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.textBoxAdLine4, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.textBoxAdLine3, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.textBoxAdLine2, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.textBoxAdLine1, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(25, 27);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -200,54 +200,53 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(291, 134);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
-            // textBox4
+            // textBoxAdLine4
             // 
-            this.textBox4.BackColor = System.Drawing.Color.GreenYellow;
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox4.Font = new System.Drawing.Font("Courier New", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(3, 102);
-            this.textBox4.MaxLength = 20;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(285, 27);
-            this.textBox4.TabIndex = 3;
+            this.textBoxAdLine4.BackColor = System.Drawing.Color.GreenYellow;
+            this.textBoxAdLine4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxAdLine4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxAdLine4.Font = new System.Drawing.Font("Courier New", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAdLine4.Location = new System.Drawing.Point(3, 102);
+            this.textBoxAdLine4.MaxLength = 20;
+            this.textBoxAdLine4.Name = "textBoxAdLine4";
+            this.textBoxAdLine4.Size = new System.Drawing.Size(285, 27);
+            this.textBoxAdLine4.TabIndex = 3;
             // 
-            // textBox3
+            // textBoxAdLine3
             // 
-            this.textBox3.BackColor = System.Drawing.Color.GreenYellow;
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox3.Font = new System.Drawing.Font("Courier New", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(3, 69);
-            this.textBox3.MaxLength = 20;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(285, 27);
-            this.textBox3.TabIndex = 2;
+            this.textBoxAdLine3.BackColor = System.Drawing.Color.GreenYellow;
+            this.textBoxAdLine3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxAdLine3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxAdLine3.Font = new System.Drawing.Font("Courier New", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAdLine3.Location = new System.Drawing.Point(3, 69);
+            this.textBoxAdLine3.MaxLength = 20;
+            this.textBoxAdLine3.Name = "textBoxAdLine3";
+            this.textBoxAdLine3.Size = new System.Drawing.Size(285, 27);
+            this.textBoxAdLine3.TabIndex = 2;
             // 
-            // textBox2
+            // textBoxAdLine2
             // 
-            this.textBox2.BackColor = System.Drawing.Color.GreenYellow;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Font = new System.Drawing.Font("Courier New", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(3, 36);
-            this.textBox2.MaxLength = 20;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(285, 27);
-            this.textBox2.TabIndex = 1;
+            this.textBoxAdLine2.BackColor = System.Drawing.Color.GreenYellow;
+            this.textBoxAdLine2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxAdLine2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxAdLine2.Font = new System.Drawing.Font("Courier New", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAdLine2.Location = new System.Drawing.Point(3, 36);
+            this.textBoxAdLine2.MaxLength = 20;
+            this.textBoxAdLine2.Name = "textBoxAdLine2";
+            this.textBoxAdLine2.Size = new System.Drawing.Size(285, 27);
+            this.textBoxAdLine2.TabIndex = 1;
             // 
-            // textBox1
+            // textBoxAdLine1
             // 
-            this.textBox1.BackColor = System.Drawing.Color.GreenYellow;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Font = new System.Drawing.Font("Courier New", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
-            this.textBox1.MaxLength = 20;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(285, 27);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            this.textBoxAdLine1.BackColor = System.Drawing.Color.GreenYellow;
+            this.textBoxAdLine1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxAdLine1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxAdLine1.Font = new System.Drawing.Font("Courier New", 17.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAdLine1.Location = new System.Drawing.Point(3, 3);
+            this.textBoxAdLine1.MaxLength = 20;
+            this.textBoxAdLine1.Name = "textBoxAdLine1";
+            this.textBoxAdLine1.Size = new System.Drawing.Size(285, 27);
+            this.textBoxAdLine1.TabIndex = 0;
             // 
             // groupBoxAppearance
             // 
@@ -259,27 +258,27 @@
             this.groupBoxAppearance.TabStop = false;
             this.groupBoxAppearance.Text = "Erscheinung";
             // 
-            // groupBox1
+            // groupBoxInfos
             // 
-            this.groupBox1.Controls.Add(this.comboBoxGroup);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.textBoxName);
-            this.groupBox1.Controls.Add(this.dateTimePicker1);
-            this.groupBox1.Controls.Add(this.dateTimePicker4);
-            this.groupBox1.Controls.Add(this.dateTimePicker2);
-            this.groupBox1.Controls.Add(this.dateTimePicker3);
-            this.groupBox1.Controls.Add(this.labelCaption);
-            this.groupBox1.Controls.Add(this.labelStopDate);
-            this.groupBox1.Controls.Add(this.labelStartDate);
-            this.groupBox1.Controls.Add(this.labelFrom);
-            this.groupBox1.Controls.Add(this.labelTo);
-            this.groupBox1.Location = new System.Drawing.Point(12, 242);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(355, 229);
-            this.groupBox1.TabIndex = 20;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Zusatzinformationen";
+            this.groupBoxInfos.Controls.Add(this.comboBoxGroup);
+            this.groupBoxInfos.Controls.Add(this.label2);
+            this.groupBoxInfos.Controls.Add(this.label1);
+            this.groupBoxInfos.Controls.Add(this.textBoxName);
+            this.groupBoxInfos.Controls.Add(this.dateTimePickerStartDate);
+            this.groupBoxInfos.Controls.Add(this.dateTimePickerStopTime);
+            this.groupBoxInfos.Controls.Add(this.dateTimePickerStopDate);
+            this.groupBoxInfos.Controls.Add(this.dateTimePickerStartTime);
+            this.groupBoxInfos.Controls.Add(this.labelCaption);
+            this.groupBoxInfos.Controls.Add(this.labelStopDate);
+            this.groupBoxInfos.Controls.Add(this.labelStartDate);
+            this.groupBoxInfos.Controls.Add(this.labelFrom);
+            this.groupBoxInfos.Controls.Add(this.labelTo);
+            this.groupBoxInfos.Location = new System.Drawing.Point(12, 242);
+            this.groupBoxInfos.Name = "groupBoxInfos";
+            this.groupBoxInfos.Size = new System.Drawing.Size(355, 229);
+            this.groupBoxInfos.TabIndex = 20;
+            this.groupBoxInfos.TabStop = false;
+            this.groupBoxInfos.Text = "Zusatzinformationen";
             // 
             // comboBoxGroup
             // 
@@ -290,6 +289,7 @@
             this.comboBoxGroup.Name = "comboBoxGroup";
             this.comboBoxGroup.Size = new System.Drawing.Size(116, 21);
             this.comboBoxGroup.TabIndex = 20;
+            this.comboBoxGroup.SelectedIndexChanged += new System.EventHandler(this.comboBoxGroup_SelectedIndexChanged);
             this.comboBoxGroup.Enter += new System.EventHandler(this.SetWhiteAgain);
             // 
             // label2
@@ -317,7 +317,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(384, 512);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBoxInfos);
             this.Controls.Add(this.groupBoxAppearance);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonCancel);
@@ -328,8 +328,8 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.groupBoxAppearance.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxInfos.ResumeLayout(false);
+            this.groupBoxInfos.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -337,8 +337,8 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBoxName;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dateTimePickerStartDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerStopDate;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labelFrom;
@@ -346,16 +346,16 @@
         private System.Windows.Forms.Label labelStartDate;
         private System.Windows.Forms.Label labelStopDate;
         private System.Windows.Forms.Label labelCaption;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker4;
+        private System.Windows.Forms.DateTimePicker dateTimePickerStartTime;
+        private System.Windows.Forms.DateTimePicker dateTimePickerStopTime;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxAdLine1;
+        private System.Windows.Forms.TextBox textBoxAdLine4;
+        private System.Windows.Forms.TextBox textBoxAdLine3;
+        private System.Windows.Forms.TextBox textBoxAdLine2;
         private System.Windows.Forms.GroupBox groupBoxAppearance;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxInfos;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxGroup;
