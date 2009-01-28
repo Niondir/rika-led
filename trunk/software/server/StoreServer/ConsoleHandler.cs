@@ -26,12 +26,15 @@ namespace StoreServer
         {
             while (!Program.Closing)
             {
-                string input = Console.ReadLine();
-
-                lock (queue)
+                if (Console.KeyAvailable)
                 {
-                    queue.Enqueue(input);
-                    Program.Set();
+                    string input = Console.ReadLine();
+
+                    lock (queue)
+                    {
+                        queue.Enqueue(input);
+                        Program.Set();
+                    }
                 }
             }
 
@@ -51,7 +54,6 @@ namespace StoreServer
                 HandleCommand(tokens);
             }
         }
-
 
         private SessionData session;
         private void HandleCommand(string[] tokens) {
