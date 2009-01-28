@@ -121,7 +121,7 @@ namespace StoreServer.Data
         {
             OdbcCommand command = connection.CreateCommand();
 
-            command.CommandText = "SELECT name FROM led_roles WHERE name = ?";
+            command.CommandText = "SELECT name, flags FROM led_roles WHERE name = ?";
             command.Parameters.AddWithValue("role", role.Name);
             OdbcDataReader reader = command.ExecuteReader();
             command.Parameters.Clear();
