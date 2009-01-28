@@ -15,9 +15,9 @@
 #define ADBUFFERMAXSLOTS 1
 
 #ifdef DEBUG
-#define PRICETAGBUFFERMAXSLOTS 6
+#define PRICETAGBUFFERMAXSLOTS 5
 #else 
-#define PRICETAGBUFFERMAXSLOTS 8
+#define PRICETAGBUFFERMAXSLOTS 7
 #endif
 
 #define IDMAXLENGTH 4
@@ -171,14 +171,15 @@ void clear_buffers(){
   *
   */
 void init_lamp(){
-	_delay_ms(GUARDTIME);
+	set_dest( (uint32_t)8, 0);
+	_delay_ms(XBEE_GUARDTIME);
 	sprintf(tempstring, "+++");
 	uart_puts(tempstring);
-	_delay_ms(GUARDTIME);
+	_delay_ms(XBEE_GUARDTIME);
 	sprintf(tempstring, "ATMY\r");
 	uart_puts(tempstring);
 	_delay_ms(500);
-	copy_argument(0, lampid);
+	copy_argument(123, lampid);
 	rcvbuf_invalid = TRUE;
 	init_mode = FALSE;
 };
@@ -280,12 +281,12 @@ void copy_argument(int rcvBufPos, char *destArray){
   */
 void change_lampid(){
 	copy_argument(FIRST_ARG_INDEX, lampid);
-	_delay_ms(GUARDTIME);
+	_delay_ms(XBEE_GUARDTIME);
 	uart_puts("+++");
-	_delay_ms(GUARDTIME);
+	_delay_ms(XBEE_GUARDTIME);
 	sprintf(tempstring, "ATMY%s,CN\r",lampid);
 	uart_puts(tempstring);
-	_delay_ms(GUARDTIME/2);
+	_delay_ms(XBEE_GUARDTIME/2);
 }
 
  /**
@@ -333,7 +334,7 @@ int calculate_overwriteslot(){
 	}
 	#ifdef DEBUG
 	sprintf(tempstring, "ueberschrieben wird slot %d", overwrite);
-	uartSW_puts(tempstring);
+	uart_puts(tempstring);
 	#endif
 	return(overwrite);
 }
@@ -346,9 +347,7 @@ int calculate_overwriteslot(){
   *
   */
 void forward_packet(){
-	uartSW_putc('<');
-	uartSW_puts(rcvbuf);
-	uartSW_putc('>');
+	send_packet(rcvbuf);
 }
 
 //************************************
@@ -375,6 +374,18 @@ void insert_in_pricetag_buffer(){
 	};
 	pricetagbuf_empty = FALSE;
 };
+
+void send_packet(char *packet){
+	uartSW_putc('<');
+	uartSW_puts(packet);
+	uartSW_putc('>');
+	#ifdef DEBUG
+	uart_putc('<');
+	uart_puts(packet);
+	uart_putc('>');
+	#endif
+
+}
 
 //************************************
 // 
@@ -413,7 +424,7 @@ void process_packet(){
 									break;
 								}
 		// set pricetag packet
-			case '7':	{			
+			case '7':			{			
 									forward_packet();
 									insert_in_pricetag_buffer();
 									break;
@@ -431,28 +442,18 @@ void process_packet(){
 // 
 //************************************
 void send_next_sign(){
-	uartSW_putc('<');
-	uartSW_puts(PriceTagBuffer[nextOutgoingPriceTag]);
-	uartSW_putc('>');
+	send_packet(PriceTagBuffer[nextOutgoingPriceTag]);
 	nextOutgoingPriceTag=(nextOutgoingPriceTag+1)%PriceTagBufferSlotsUsed;
 	pricetagdelay = PRICETAG_DELAY;
-	#ifdef DEBUG
-	uartSW_puts("\r\n");
-	#endif
 }
 
 //************************************
 // 
 //************************************
 void send_next_ad(){
-	uartSW_putc('<');
-	uartSW_puts(AdBuffer[nextOutgoingAd]);
-	uartSW_putc('>');
+	send_packet(AdBuffer[nextOutgoingAd]);
 	nextOutgoingAd=(nextOutgoingAd+1)%AdBufferSlotsUsed;
 	addelay = AD_DELAY;
-	#ifdef DEBUG
-	uartSW_puts("\r\n");
-	#endif
 }
 
 
@@ -472,39 +473,37 @@ init_lamp();
 /// ***************************************************
 /// ******          MAIN LOOP             *************
 /// ***************************************************
-while (1){
-	if(packet_received){
+	while (1){
+		if(packet_received){
 
-		#ifdef DEBUG
-		uartSW_puts("Paket erkannt, Processing \r\n");
-		sprintf(tempstring, "Inhalt: %s \r\n", rcvbuf);		
-		uartSW_puts(tempstring);
-		#endif
+			#ifdef DEBUG
+			uartSW_puts("Paket erkannt, Processing \r\n");
+			sprintf(tempstring, "Inhalt: %s \r\n", rcvbuf);		
+			uartSW_puts(tempstring);
+			#endif
 
-		process_packet();
-		packet_received=FALSE;
-	}
+			process_packet();
+			packet_received=FALSE;
+		}
 
-	if(!pricetagbuf_empty && !pricetagdelay){
-		send_next_sign();
-	}
+		if(!pricetagbuf_empty && !pricetagdelay){
+			send_next_sign();
+		}
 
-	if(!adbuf_empty && !addelay){
-		send_next_ad();
-	}
+		if(!adbuf_empty && !addelay){
+			send_next_ad();
+		}
 
-	if(rcvbuf_invalid){
-		rcvbuf_iterator=0;
-		rcvbuf_receiving=FALSE;
-		packet_received=FALSE;
-		rcvbuf_invalid=FALSE;
-	}
-	if(send_trace_mode && !sendtracedelay){
-		uartSW_putc('<');
-		uartSW_puts(sendtracepacket);
-		uartSW_putc('>');	
-		sendtracedelay = SEND_TRACE_DELAY;
-	}
-};
+		if(rcvbuf_invalid){
+			rcvbuf_iterator=0;
+			rcvbuf_receiving=FALSE;
+			packet_received=FALSE;
+			rcvbuf_invalid=FALSE;
+		}
+		if(send_trace_mode && !sendtracedelay){
+			send_packet(sendtracepacket);
+			sendtracedelay = SEND_TRACE_DELAY;
+		}
+	};
 };
 
