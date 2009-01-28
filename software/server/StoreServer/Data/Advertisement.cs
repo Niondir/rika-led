@@ -56,13 +56,26 @@ namespace StoreServer.Data
 
         public void Save(OdbcConnection connection)
         {
+            if (text.Length != 4)
+            {
+                throw new Exception("Advertisement text need 4 rows!");
+            }
+            
             OdbcCommand command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO led_advertisements (regions_id, line1, line2, line3, line4, name, startDate, stopDate, startTime, stopTime ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            command.CommandText = "INSERT INTO led_advertisements (regions_id, line1, line2, line3, line4, name, startDate, stopDate, startTime, stopTime) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             command.Parameters.AddWithValue("regions_id", this.region.Id);
-            command.Parameters.AddWithValue("line1", this.text[0]);
-            command.Parameters.AddWithValue("line2", this.text[1]);
-            command.Parameters.AddWithValue("line3", this.text[2]);
-            command.Parameters.AddWithValue("line4", this.text[3]);
+
+            try
+            {
+                command.Parameters.AddWithValue("line1", this.text[0]);
+                command.Parameters.AddWithValue("line2", this.text[1]);
+                command.Parameters.AddWithValue("line3", this.text[2]);
+                command.Parameters.AddWithValue("line4", this.text[3]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Problem with the text values: " + ex);
+            }
             command.Parameters.AddWithValue("name", this.Name);
             command.Parameters.AddWithValue("startDate", this.StartDate);
             command.Parameters.AddWithValue("stopDate", this.StopDate);
