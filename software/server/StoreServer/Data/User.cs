@@ -121,7 +121,7 @@ namespace StoreServer.Data
         {
             OdbcCommand command = connection.CreateCommand();
 
-            command.CommandText = "SELECT name FROM led_roles WHERE name = @role";
+            command.CommandText = "SELECT name FROM led_roles WHERE name = ?";
             command.Parameters.AddWithValue("role", role.Name);
             OdbcDataReader reader = command.ExecuteReader();
 
@@ -183,7 +183,10 @@ namespace StoreServer.Data
             command.CommandText = "DELETE FROM led_users WHERE login = ?";
             command.Parameters.AddWithValue("login", this.username);
 
-            command.ExecuteNonQuery();
+            if (command.ExecuteNonQuery() == 0)
+            {
+                throw new Exception("User not found");
+            }
         }
 
     }

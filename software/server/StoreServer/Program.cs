@@ -18,6 +18,8 @@ using System.Windows.Forms;
 /* TODO: Program.cs
  * Consolen history
  * auf die neue console hören
+ * edit user
+ * edit ad
  * */
 
 namespace StoreServer
