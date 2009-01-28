@@ -107,10 +107,10 @@ namespace StoreServer.Radio
             List<Advertisement> ads = new List<Advertisement>();
             foreach (Advertisement ad in ads_tmp)
             {
-                if (ad.StartTime <= DateTime.Now && ad.StopTime >= DateTime.Now)
-                {
+                //if (ad.StartTime <= DateTime.Now && ad.StopTime >= DateTime.Now)
+                //{
                     ads.Add(ad);
-                }
+                //}
             }
 
             // Alle Produkte und Werbungen in packete packen

@@ -44,7 +44,7 @@
             this.rtbConsoleOut.Margin = new System.Windows.Forms.Padding(0);
             this.rtbConsoleOut.Name = "rtbConsoleOut";
             this.rtbConsoleOut.ReadOnly = true;
-            this.rtbConsoleOut.Size = new System.Drawing.Size(559, 289);
+            this.rtbConsoleOut.Size = new System.Drawing.Size(775, 318);
             this.rtbConsoleOut.TabIndex = 0;
             this.rtbConsoleOut.Text = "";
             // 
@@ -60,16 +60,16 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(559, 309);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(775, 338);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // txtConsoleIn
             // 
             this.txtConsoleIn.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtConsoleIn.Location = new System.Drawing.Point(0, 289);
+            this.txtConsoleIn.Location = new System.Drawing.Point(0, 318);
             this.txtConsoleIn.Margin = new System.Windows.Forms.Padding(0);
             this.txtConsoleIn.Name = "txtConsoleIn";
-            this.txtConsoleIn.Size = new System.Drawing.Size(559, 20);
+            this.txtConsoleIn.Size = new System.Drawing.Size(775, 20);
             this.txtConsoleIn.TabIndex = 0;
             this.txtConsoleIn.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtConsoleIn_KeyPress);
             // 
@@ -77,7 +77,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(559, 309);
+            this.ClientSize = new System.Drawing.Size(775, 338);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormConsole";
             this.Text = "Console";

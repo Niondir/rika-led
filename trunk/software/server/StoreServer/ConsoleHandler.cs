@@ -132,6 +132,9 @@ namespace StoreServer
                 case "showid":
                     Program.RadioManager.Send(new DisplayIdPacket("FFFF"));
                     break;
+                default:
+                    Console.WriteLine("Unknown Packet");
+                    break;
             }
         }
     }

@@ -102,8 +102,8 @@ namespace StoreServer.Data
                 SignData sign = new SignData((int)reader.GetInt64(0), region);
 
                 string[] adText = new string[] { reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5) };
-
-                AdvertisementData aData = new AdvertisementData(reader.GetInt32(0), region, reader.GetString(6), adText, reader.GetDate(7), reader.GetDate(8), reader.GetDate(9), reader.GetDate(10));
+                string name = reader.GetString(6);
+                AdvertisementData aData = new AdvertisementData((int)reader.GetInt64(0), region, name, adText, reader.GetDate(7), reader.GetDate(8), reader.GetDate(9), reader.GetDate(10));
 
                 
                 Advertisement ad = new Advertisement(aData);
