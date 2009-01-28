@@ -278,7 +278,7 @@ namespace CommunicationAPI.DataTypes
         private RegionData region;
         private string[] text;
 
-        private string Name { get; set; }
+        public string Name { get; set; }
 
         public DateTime StartDate { get; set; }
         public DateTime StopDate { get; set; }
