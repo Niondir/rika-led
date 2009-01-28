@@ -95,6 +95,7 @@
             this.toolStripButtonEdit.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonEdit.Text = "toolStripButton3";
             this.toolStripButtonEdit.ToolTipText = "Ausgewählte Werbung bearbeiten";
+            this.toolStripButtonEdit.Click += new System.EventHandler(this.toolStripButtonEdit_Click);
             // 
             // toolStripButtonDelete
             // 

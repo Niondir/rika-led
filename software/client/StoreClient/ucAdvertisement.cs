@@ -47,5 +47,14 @@ namespace StoreClient
                 Connection.GetInstance().Add(addAd.Value);
             }
         }
+
+        private void toolStripButtonEdit_Click(object sender, EventArgs e)
+        {
+            FormAddAd editAdd = new FormAddAd((AdvertisementData)gridAds.SelectedRows[0].Tag);
+            if (editAdd.ShowDialog() == DialogResult.OK)
+            {
+                Connection.GetInstance().EditAd(((AdvertisementData)gridAds.SelectedRows[0].Tag).Id, editAdd.Value);
+            }
+        }
     }
 }
