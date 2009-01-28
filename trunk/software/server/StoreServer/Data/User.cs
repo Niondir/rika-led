@@ -136,7 +136,7 @@ namespace StoreServer.Data
 
             if (roleOK)
             {
-                command.CommandText = "INSERT INTO led_users (roles_id, login, password) VALUES(?, ?, ?)";
+                command.CommandText = "INSERT INTO led_users (roles_name, login, password) VALUES(?, ?, ?)";
                 command.Parameters.AddWithValue("role", role.Name);
                 command.Parameters.AddWithValue("login", username);
                 command.Parameters.AddWithValue("password", password.MD5);
