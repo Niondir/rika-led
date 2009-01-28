@@ -12,7 +12,6 @@ namespace StoreClient
     public partial class ucAdvertisement : UserControl
     {
         AdvertisementData[] ads;
-        RegionData[] regions;
 
         public ucAdvertisement()
         {
@@ -25,7 +24,19 @@ namespace StoreClient
         private void RefreshData()
         {
             ads = Connection.GetInstance().GetAds();
-            regions = Connection.GetInstance().GetRegions();
+
+            foreach (AdvertisementData i in ads)
+            {
+
+                int rowNr = gridAds.Rows.Add(new object[] { i.Name, i.Region.Name,
+                                                i.Text[0]+" ...",
+                                                i.StartDate.ToShortDateString(),
+                                                i.StopDate.ToShortDateString(),
+                                                i.StartTime.ToShortTimeString(),
+                                                i.StopTime.ToShortTimeString()});
+
+                gridAds.Rows[rowNr].Tag = i;
+            }
         }
 
         private void toolStripButtonNew_Click(object sender, EventArgs e)
