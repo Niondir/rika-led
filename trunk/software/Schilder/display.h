@@ -6,6 +6,8 @@
 #define LCD_PUTC uartSW_putc 
 #define LCD_PUTS uartSW_puts
 
+#define DISPLAY_ROWS        4
+#define DISPLAY_ROWCHARS    20
 
 void init_Display(int8_t modus);
 void clr_Screen(void);

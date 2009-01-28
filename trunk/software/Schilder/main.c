@@ -30,67 +30,80 @@ int main(void)
 {
   uint8_t packetRecvStatus;
 
-	char    debug[21];
-	uint8_t toggleFlag=0;
+ #ifdef DEBUG_ON
+  char    debug[21];
+  uint8_t toggleFlag=0;
+ #endif
 
-  _delay_ms(1000);     // startup delay
-  sign.signType = SIGN_TYPE_NOTHING;
-  sei();               // global irq an
-  uartSW_init();       // software uart
-  init_Display(4);     // Display initialisieren
-  initPIOs();          // Mode Jumper Pins konfigurieren
-  detectSignMode();    // Hardware kann von extern als Wagen oder Presischild konfiguriert werden, Preisschiler sogar mit bis zu 7 Adressen
-  initTraceCounter(1); // TraceTimer konfigurieren und starten
-
-  show_status();       // Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
-  _delay_ms(2000);     // Zeit zum Anzeigen der Informationen
+   sei();               											// global irq an
+  _delay_ms(1000);                                                  // startup delay
+  
+  sign.signType   = SIGN_TYPE_NOT_DETECTED;
+  sign.packetsOK  = 0;
+  sign.packetsBAD = 0;
+  
+  uartSW_init();       												// software uart
+  init_Display(4);    												// Display initialisieren
+  initPIOs();          												// Mode Jumper Pins konfigurieren
+  
+  detectSignMode();    												// Hardware kann von extern als Wagen oder Presischild konfiguriert werden, Preisschiler sogar mit bis zu 7 Adressen
+  initTraceCounter(1); 												// TraceTimer konfigurieren und starten
+  
+  show_status();       												// Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
+  _delay_ms(2000);     												// Zeit zum Anzeigen der Informationen
 
   while(1)
   {
 		if ( (packetRecvStatus = get_packet()) == 0)
 		{ 
-		   //debug_packet();
-		    packet_action();
-			  if(sign.displayRefreshFlag)
-			  {
+		       packet_action();                  //Das korrekt empfangende Paket verarbeiten
+			   if(sign.displayRefreshFlag)       //ggf. das Display komplett neu zeichnen 
+			   {
 				   clr_Screen();
-	         write_Display(sign.displayMemory[0],1,1);
-					 write_Display(sign.displayMemory[1],1,2);
-					 write_Display(sign.displayMemory[2],1,3);
-					 write_Display(sign.displayMemory[3],1,4);
-					 sign.displayRefreshFlag = 0;
+	               write_Display(sign.displayMemory[0],1,1);
+				   write_Display(sign.displayMemory[1],1,2);
+				   write_Display(sign.displayMemory[2],1,3);
+				   write_Display(sign.displayMemory[3],1,4);
+				   sign.displayRefreshFlag = 0;
 			   }
+
+			   if(sign.packetsOK<0xffff)sign.packetsOK++;
+			   else
+			   {
+			     sign.packetsOK=0; sign.packetsBAD=0; //Reset both Counters
+			   }             
        
-  #ifdef DEBUG_ON
-	       toggleFlag=!toggleFlag;
-				 if(toggleFlag)
-				 {
-			   	sprintf(debug, "OK");
-				  write_Display(debug,19,4);			   
-				 }
-				 else
-				 {
-			   	sprintf(debug, "ok");
-				  write_Display(debug,19,4);			   
-				 }
-  #endif
-		}	
-	#ifdef DEBUG_ON
-		else
-		{ // Debugging
-			if(packetRecvStatus!=1) //Error1 ignorieren 
+  #ifndef DEBUG_ON
+        }
+  #else
+	           toggleFlag=!toggleFlag;
+			   
+			   if(toggleFlag) sprintf(debug, "OK"); //Paket korrekt empfangen
+			   else           sprintf(debug, "ok"); //trotzdem kann sich u.U z.B. durch falsche IDs nichts tun!
+			   write_Display(debug,19,4);			//in letzter Zeile ganz Rechts diese 2 Zeichen darstellen
+	
+
+		}
+		else //Paket nicht erfolgreich empfangen
+		{		 
+			if(packetRecvStatus!=1) //Error1 ignorieren (Error1 = Derzeit kein Startzeichen "<" empfangen/verfügbar)
 			{
 				sprintf(debug, "E%d",packetRecvStatus);
 				write_Display(debug,19,4);
-				//_delay_ms(500);
 			}
 		} 
   #endif
+	    
+		if(sign.packetsBAD<0xffff)sign.packetsBAD++;
+	    else
+	    {
+			   sign.packetsOK=0; sign.packetsBAD=0; //Reset both Counters
+		}  
 
-		if(detectSignMode()) // Mode wurde verstellt!
+		if(detectSignMode()==1)  // Mode wurde über die externen Jumper verändert
 		{
-       show_status();       // Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
-       _delay_ms(2000);     // Zeit zum Anzeigen der Informationen	
+		     show_status();                  //Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
+		     _delay_ms(2000);                //Zeit zum Anzeigen der neuen Status Informationen	
 			 sign.displayRefreshFlag = 1;	 //Display Memory neuzeichnen, da durch show_status anderer Inhalt angezeigt wurde 
 		}
   }
@@ -102,58 +115,61 @@ int main(void)
 
 uint8_t detectSignMode(void) //gibt 1 zurück wenn sich der Mode geändert hat
 {
-  
 	uint8_t signType_yet = sign.signType;
 	uint8_t adr_yet      = sign.signUniqueID;
 	
 	if(!ISSET_PIO1 && !ISSET_PIO2 && !ISSET_PIO3) // kein Jumper = Wagen-Schild
-  {
-
-    sign.signType        = SIGN_TYPE_TROLLEY;
+    {
+      sign.signType        = SIGN_TYPE_TROLLEY;
 	  sign.signUniqueID = 0; // Dummy, wird bei Wagenschild nicht benötigt
-    //initXbee();          // Xbee auf zeiladresse des trace empfängers konfigurieren TODO
-
-  }
-  else // Preis-Schild mit 3 Bit Adresse über Jumper einstellbar
-  {
-    char adr=0;
-
+    }
+    else // Preis-Schild mit 3 Bit Adresse über Jumper einstellbar
+    {
+        char adr=0;
 		sign.signType        = SIGN_TYPE_PRICE;
 	  
 		// Adresse dekodieren, nur für Präsentation um unterschiedliche Preisschilder realisieren zu können
 		adr|=ISSET_PIO1;
-	  adr|=ISSET_PIO2<<1;
+	    adr|=ISSET_PIO2<<1;
 		adr|=ISSET_PIO3<<2;
 
 		sign.signUniqueID=(uint16_t)adr;
-  }
+    }
 
-	if((signType_yet!=sign.signType) || (adr_yet!=sign.signUniqueID))return 1;
-	else                           return 0;
-
+	if((signType_yet!=sign.signType) || (adr_yet!=sign.signUniqueID))																	 
+																	 return 1;
+	else                                                             return 0;
 }
 
 
 void show_status(void)
 {
-  char      textvalue[25];
+  char tempBuf[DISPLAY_ROWCHARS+1];
 
-	clr_Screen();
+  clr_Screen();
 
-  //Status Infos ausgeben
-  sprintf(textvalue, "FirmwareVersion:%d",  FIRMWARE_VERSION);
-  write_Display(textvalue,1,1);
+  //Firmware Version
+  sprintf(tempBuf, "FirmwareVersion:%d", FIRMWARE_VERSION);
+  write_Display(tempBuf,1,1);
 
-  if(sign.signType==SIGN_TYPE_TROLLEY) write_Display("SignType: Trolley", 1, 2);
-  else write_Display("SignType: Price ", 1, 2);
+  //Schild Typ
+  if(sign.signType==SIGN_TYPE_TROLLEY) 
+   write_Display("SignType: Trolley", 1, 2);
+  else 
+   write_Display("SignType: Price  ", 1, 2);
 
-  sprintf(textvalue, "UniqueSignID: %d",  sign.signUniqueID);
-  write_Display(textvalue,1,3); 
+  //Schild ID, über die Preisschilder adressiert werden
+  sprintf(tempBuf, "UniqueSignID: %d",  sign.signUniqueID);
+  write_Display(tempBuf,1,3); 
+
+  //Pakete OK und Pakete BAD anzeigen
+  sprintf(tempBuf, "PK. OK:%d E:%d",  sign.packetsOK, sign.packetsBAD);
+  write_Display(tempBuf,1,4); 
 
 }
 
 
-// Versucht Pakete der Form <CMD-NR|Field1|Field2...|....|FieldN> zu empfangen, prüft auch die csum
+// Versucht Pakete der Form <CMD-NR|Field1|Field2...|....|FieldN|CSUM> zu empfangen, prüft auch die csum
 // Returnt 0 bei korrekt empfangenen Paket
 int8_t get_packet(void)
 {
@@ -164,49 +180,41 @@ int8_t get_packet(void)
   int8_t  ArgAnzahl;
   uint8_t csum=0;     									 //checksummen immer über alles bis vor der csum, inklusive "|", ohne "<" 
   char    csumCompare[4];                                 //8Bit Checksum max Val 254+'\0' = 4 Zeichen
-  uint8_t  csumCompareInt;
+  uint8_t csumCompareInt;
   
 
- // Reset buffers
+  //Reset buffers
   csum_debug_calc = 0;
   csum_debug = 0;
 
-
-  //while(uartSW_getc_wait()!='<');                        //Auf Start eines Pakets warten
-  if (uartSW_getc_nowait()!='<') return 1;
- 
-
-// CMD Nr empfangen:
+  //Auf Start eines Pakets warten
+  if (uartSW_getc_nowait()!='<') return 1;                 
   
   //CMD Nr muss folgen
   lastChar = uartSW_getc_wait();                         
-  if(lastChar<'0' || lastChar>'9') return 2;               //Keine Ziffer, Fehler
+  if(lastChar<'0' || lastChar>'9') return 2;             //Keine Ziffer, Fehler
   else 
   {                          
      wBuff[pos++]=lastChar;                              //Ziffer speichern
 	 csum+=lastChar;
   }
   
-  //Weitere Ziffern oder Separator sind erlaubt, sonst return 1
   do                                                     
   {
-	  lastChar = uartSW_getc_wait();  
-	  if      ( lastChar == '<' || lastChar == '>') return 3;                            //StartStop Zeichen an unerwarteter Stelle => Fehler
-
+	  lastChar = uartSW_getc_wait();
+	  //Nur weitere Ziffern oder Separator sind erlaubt, sonst Fehler  
 	  if      ( !(lastChar<'0' || lastChar>'9') ) { wBuff[pos++]=lastChar; csum+=lastChar; } //weitere Ziffer abspeichern
-      else if ( lastChar == '|')				  { csum+=lastChar;  break;                } //Separator gefunden
-	  else                      				    return 4;                                //ungültiges Zeichen
+      else if ( lastChar == '|')				  { csum+=lastChar; wBuff[pos]='\0'; break;} //Separator gefunden
+	  else                      				    return 4;                                //ungültiges Zeichen, Fehler
   }while(1);
-  //char 2 int wandeln
-  wBuff[pos]='\0';                              					   
+
   packet.packetCmdNr = (uint8_t)atoi(wBuff);
 
 
-
-// Argumente empfangen:
+ //Argumente empfangen:
   switch(packet.packetCmdNr)
   { 
-		  case CMDNR_SEND_TRACE: ArgAnzahl = ARGCNT_SEND_TRACE; break;
+		    case CMDNR_SEND_TRACE: ArgAnzahl = ARGCNT_SEND_TRACE; break;
 			case CMDNR_SET_AD:     ArgAnzahl = ARGCNT_SET_AD;     break;
 			case CMDNR_SHOW_ID:    ArgAnzahl = ARGCNT_SHOW_ID;    break;
 			case CMDNR_SET_PRICE : ArgAnzahl = ARGCNT_SET_PRICE;  break;
@@ -216,47 +224,44 @@ int8_t get_packet(void)
 
   for(int i=0; i<ArgAnzahl; i++)
   {
-	  //Argumente empfangen
 	  pos=0;
 	  do                                                                   
 	  {
 		  lastChar = uartSW_getc_wait();  
-		  if      ( lastChar == '<' || lastChar == '>' || pos > 24) return 6;                            //ungültiges Zeichen, oder zuviele empfangen
-
-		  if      ( lastChar != '|' ) {(packet.args)[i][pos++]=lastChar; csum+=lastChar;}     //Zeichen abspeichern
-	      else                        { (packet.args)[i][pos]='\0'; csum+=lastChar;  break; }             //Separator gefunden
+		  if      ( lastChar == '<' || lastChar == '>' || pos > (ARG_SIZE-1))    return 6;       //ungültiges Zeichen, oder zuviele empfangen
+		  
+		  if ( lastChar != '|' ) {(packet.args)[i][pos++]=lastChar; csum+=lastChar;}             //Zeichen abspeichern
+	      else                   { (packet.args)[i][pos]='\0'; csum+=lastChar;  break; }         //Separator gefunden
 	  }while(1);
   }
 
 
-// Csum empfangen:
+ //Checksumme empfangen
    pos=0;
    lastChar = uartSW_getc_wait();  
 
    //mindestens 1 Zahl muss empfangen werden
-   if      ( !(lastChar<'0' || lastChar>'9') ) { csumCompare[pos++]=lastChar;}           //Zahl gefunden
-   else    return 7;                                                                  //Keine Zahl = Fehler
+   if      ( !(lastChar<'0' || lastChar>'9') ) { csumCompare[pos++]=lastChar;}        //Zahl gefunden
+   else    return 7;                                                                  //Keine Zahl, Fehler
 
-   do  //max 2 weitere Ziffern der checksumme empfangen                                                                 
+   do  //max 2 weitere Ziffern der checksumme empfangen, wg. 8Bit Größe                                                                
    {
 	  lastChar = uartSW_getc_wait();  
-	  if ( lastChar == '>') break;                                               //Paket empfang abgeschlossen                         
+	  if ( lastChar == '>') {csumCompare[pos]  = '\0'; break;}                        //Paket empfang abgeschlossen                         
       
-	  if      ( !(lastChar<'0' || lastChar>'9')  && pos<3 ) { csumCompare[pos++]=lastChar; }
-	  else return 8;
+	  if      ( !(lastChar<'0' || lastChar>'9')  && pos<3 ) { csumCompare[pos++]=lastChar; } //Zahl empfangen und weniger als 2 Ziffern zuvor empfangen
+	  else return 8;                                                                         //ungültiges Zeichen oder zuviele Ziffern, Fehler
 	  
    }while(1);
 
    
-
-// Checksummen vergleichen:
-  csumCompare[pos]  = '\0'; 
+ //Checksummen vergleichen
   csumCompareInt    = (uint8_t)atoi(csumCompare);
-
   csum_debug_calc = csum;
   csum_debug = csumCompareInt;
+
   if(csumCompareInt==csum)return 0; //Packet korrekt empfangen
-  else                    return 9;
+  else                    return 9; //Checksummenfehler
 
 }
 
@@ -268,62 +273,71 @@ void packet_action(void)
   { 
     case CMDNR_SEND_TRACE:  
 
-	  					if(trace.pos != 0)
-						{
-							for(int i=0;i<trace.pos;i++)
-							{
-							  //xbeesend(trace.times[i]);
-							  //xbeesend(trace.lampIDs[i]);
-							   trace.pos = 0;
-							}
-						}
+						  					if(trace.pos != 0) //Min 1 Trace muss vorhanden sein
+											{
+											    
+												char sendPacketBuf[12]; //2*5 Zeichen (16Bit Zahlen als Char) + ',' +'\0'
+
+												set_dest( (uint32_t)atoi(packet.args[1]), 0); //Arg1 enthält die FunkZieladresse des Traceempfängers (Kasse), Arg0 ist egal
+
+												for(int i=0;i<trace.pos;i++)
+												{
+												  XBEE_SEND_STRING("<");
+
+												  for(int i=0; i<TRACE_LAMP_CNT;i++)
+												  {
+                                                    sprintf(sendPacketBuf,"%d,%d", trace.lampIDs[i], trace.times[i] ); //Die Uhr läuft mit (1800/255) Hz
+                                                    XBEE_SEND_STRING(sendPacketBuf);
+												  }
+
+												  XBEE_SEND_STRING(">");
+												  trace.pos = 0;
+												}
+											}
 					
-						break;
+											break;
 
 	case CMDNR_SET_AD: 
-	                    
-										if(sign.signType==SIGN_TYPE_TROLLEY)
-										{
-			
-				              
-											//Trace Funktionalität
-											if(trace.pos < (TRACE_LAMP_CNT-1)) // nur bearbeiten wenn min. noch ein freier traceplatz zur verfügung steht
+		                                    //Paket soll nur für Werbeschilder bearbeitet werden, Preisschilder ignorieren es.       
+											if(sign.signType==SIGN_TYPE_TROLLEY)
 											{
-							  
-												  uint16_t aktLampID = (uint16_t)atoi(packet.args[0]); //lamp id char->int
-							  
-												  if(trace.pos==0 || (aktLampID != (trace.lampIDs)[trace.pos])) //Nur "Neue" traces bzw. lampenIDs abspeichern
-					                {
-							                trace.pos++;
-															trace.times[trace.pos]   = trace.TimeNow;
-															trace.lampIDs[trace.pos] = aktLampID;
-												  }
+												//Trace speichern, wenn noch Speicher für einen weiteren "Wegpunkt" verfügbar ist
+												if(trace.pos < (TRACE_LAMP_CNT-1)) 
+												{
+								                   uint16_t aktLampID = (uint16_t)atoi(packet.args[0]); //Arg0 = LampenID
+											   
+												   //Nur "Neue" Traces, d.h. LampenID im Paket != LampenID des vorherigen Packets
+												   if(trace.pos==0 || (aktLampID != (trace.lampIDs)[trace.pos])) 
+						              		   	   {
+								                      trace.pos++;
+													  trace.times[trace.pos]   = trace.TimeNow;
+													  trace.lampIDs[trace.pos] = aktLampID;
+												    }
 							 							 
-							        }
+								       			 }
 
-	                    //Werbeanzeige Funktionialität
-											if (    (strcmp(sign.displayMemory[0], packet.args[1]) == 0) //
-											     && (strcmp(sign.displayMemory[1], packet.args[2]) == 0) 
+		                    					//Anzuzeigende Felder im Paket mit dem Inhalt des Display Memory vergleichen
+												if (    (strcmp(sign.displayMemory[0], packet.args[1]) == 0)
+												     && (strcmp(sign.displayMemory[1], packet.args[2]) == 0) 
 													 && (strcmp(sign.displayMemory[2], packet.args[3]) == 0) 
-													 && (strcmp(sign.displayMemory[3], packet.args[4]) == 0) 
-												 ) 
-											{
-												return; //Der Display Memory ist noch aktuell
-											}
-											else //Display Memory neuschreiben
-											{
-												sign.displayRefreshFlag = 1;
-												strcpy(sign.displayMemory[0], packet.args[1]); //Text1
-												strcpy(sign.displayMemory[1], packet.args[2]); //Text2
-												strcpy(sign.displayMemory[2], packet.args[3]); //Text3
-												strcpy(sign.displayMemory[3], packet.args[4]); //Text4
-											}
-					          }
+													 && (strcmp(sign.displayMemory[3], packet.args[4]) == 0)) 
+												{
+													return; //Mem aktuell
+												}
+												else //Mem neubeschreiben
+												{
+													sign.displayRefreshFlag = 1;
+													strcpy(sign.displayMemory[0], packet.args[1]); //Text1
+													strcpy(sign.displayMemory[1], packet.args[2]); //Text2
+													strcpy(sign.displayMemory[2], packet.args[3]); //Text3
+													strcpy(sign.displayMemory[3], packet.args[4]); //Text4
+												}
+						                    }
 
-										break;
+											break;
 
-	case CMDNR_SHOW_ID:      
-						          show_status();
+	case CMDNR_SHOW_ID:                     //Statusinformationen anzeigen und dannach ein Neuzeichnen des Displays über das Flag veranlassen
+						                    show_status();
 											_delay_ms(3000);
 											sign.displayRefreshFlag = 1;
 
@@ -331,47 +345,30 @@ void packet_action(void)
 
 	case CMDNR_SET_PRICE:   
 
-	                  //Check, ob Preis für dieses Schild bestimmt ist  
-										if((sign.signType==SIGN_TYPE_PRICE) && ((uint16_t)atoi(packet.args[0])) == sign.signUniqueID) 
-										{
-										  // Display Memory nochaktuell?
-											if ( (strcmp(sign.displayMemory[0], packet.args[1]) == 0) && (strcmp(sign.displayMemory[1], packet.args[2]) == 0) ) 
+		                                    //Check, ob Preis für dieses Schild bestimmt ist  
+											if((sign.signType==SIGN_TYPE_PRICE) && ((uint16_t)atoi(packet.args[0])) == sign.signUniqueID) 
 											{
+											  // Display Memory nochaktuell?
+												if ( (strcmp(sign.displayMemory[0], packet.args[1]) == 0) && (strcmp(sign.displayMemory[1], packet.args[2]) == 0) ) 
+												{
 								
-												return; //Der Display Memory ist noch aktuell
-											}
-											else //Display Memory neuschreiben
-											{
-												sign.displayRefreshFlag = 1;
-												strcpy(sign.displayMemory[0], packet.args[1]); //Name
-												strcpy(sign.displayMemory[1], packet.args[2]); //Preis
-												memset(sign.displayMemory[2],' ', 20); sign.displayMemory[2][20]='\0';
-												memset(sign.displayMemory[3],' ', 20); sign.displayMemory[3][20]='\0';
-												//sign.displayMemory[2][0]='\0'; //Zeile 3 leer
-												//2sign.displayMemory[3][0]='\0'; //Zeile 4 leer
-											}
+													return; //Der Display Memory ist noch aktuell
+												}
+												else //Display Memory neuschreiben
+												{
+													sign.displayRefreshFlag = 1;
+													strcpy(sign.displayMemory[0], packet.args[1]); // Name
+													strcpy(sign.displayMemory[1], packet.args[2]); // Preis, todo Eurozeichen definieren und einfügen
+													memset(sign.displayMemory[2],' ', 20); sign.displayMemory[2][20]='\0';  // Zeile 3 leer
+													memset(sign.displayMemory[3],' ', 20); sign.displayMemory[3][20]='\0';  // Zeile 4 leer
+												}
 
-										}
+											}
 	
-						break;
-  }
+						                	break;
+	  }
 }
 
-
-void debug_packet(void)
-{
-  char buf[25];
-
-  sprintf(buf,"cmd Nr: %d", packet.packetCmdNr);
-
-	sign.displayRefreshFlag = 1;
-	strcpy(sign.displayMemory[0], buf); //Cmd Nr
-	strcpy(sign.displayMemory[1], packet.args[1]); //Arg1
-	strcpy(sign.displayMemory[2], packet.args[2]); //Arg2
-	strcpy(sign.displayMemory[3], packet.args[3]); //Arg3
-  //strcpy(sign.displayMemory[3], packet.args[4]); //Arg4
-
-}
 
 void initTraceCounter(int8_t run)
 { 
@@ -392,5 +389,21 @@ void initTraceCounter(int8_t run)
 
 SIGNAL (SIG_OVERFLOW0)
 {
-  trace.TimeNow++;
+  trace.TimeNow++; // ++Updaterate ist (MCK=1843200Hz/1024)/255(Ticks bis Overflow) = 1800Hz/255 = ca. 7.058823 Hz
+}
+
+
+void debug_packet(void)
+{
+  char buf[25];
+
+  sprintf(buf,"cmd Nr: %d", packet.packetCmdNr);
+
+	sign.displayRefreshFlag = 1;
+	strcpy(sign.displayMemory[0], buf); //Cmd Nr
+	strcpy(sign.displayMemory[1], packet.args[1]); //Arg1
+	strcpy(sign.displayMemory[2], packet.args[2]); //Arg2
+	strcpy(sign.displayMemory[3], packet.args[3]); //Arg3
+  //strcpy(sign.displayMemory[3], packet.args[4]); //Arg4
+
 }

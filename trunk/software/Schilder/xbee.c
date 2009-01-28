@@ -6,10 +6,6 @@
 #include "xbee.h"
 #include "uart.h"
 
-void sendXBeeCMD(char* cmd);
-
-
-
 void set_dest(uint32_t destlow, uint32_t desthigh)
 {
 	char tempstring[35];
@@ -17,7 +13,7 @@ void set_dest(uint32_t destlow, uint32_t desthigh)
 	sprintf(tempstring, "+++");
 	uart_puts(tempstring);
 	_delay_ms(XBEE_GUARDTIME);	
-	sprintf(tempstring, "ATDH%lx,DL%lx,CN\r",desthigh,destlow);
+	sprintf(tempstring, "ATDH%lx,DL%lx,CN\r",desthigh, destlow);
 	uart_puts(tempstring);
 	_delay_ms(XBEE_GUARDTIME/2);
 }
