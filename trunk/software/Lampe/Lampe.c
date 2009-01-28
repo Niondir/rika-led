@@ -435,6 +435,7 @@ void send_next_sign(){
 	uartSW_puts(PriceTagBuffer[nextOutgoingPriceTag]);
 	uartSW_putc('>');
 	nextOutgoingPriceTag=(nextOutgoingPriceTag+1)%PriceTagBufferSlotsUsed;
+	pricetagdelay = PRICETAG_DELAY;
 	#ifdef DEBUG
 	uartSW_puts("\r\n");
 	#endif
@@ -448,6 +449,7 @@ void send_next_ad(){
 	uartSW_puts(AdBuffer[nextOutgoingAd]);
 	uartSW_putc('>');
 	nextOutgoingAd=(nextOutgoingAd+1)%AdBufferSlotsUsed;
+	addelay = AD_DELAY;
 	#ifdef DEBUG
 	uartSW_puts("\r\n");
 	#endif
@@ -467,10 +469,9 @@ uartSW_init(); //software uart
 init_lamp();
 
 
-
-//************************************
-// 	main loop
-//************************************
+/// ***************************************************
+/// ******          MAIN LOOP             *************
+/// ***************************************************
 while (1){
 	if(packet_received){
 
@@ -486,12 +487,10 @@ while (1){
 
 	if(!pricetagbuf_empty && !pricetagdelay){
 		send_next_sign();
-		pricetagdelay = PRICETAG_DELAY;
 	}
 
 	if(!adbuf_empty && !addelay){
 		send_next_ad();
-		addelay = AD_DELAY;
 	}
 
 	if(rcvbuf_invalid){
