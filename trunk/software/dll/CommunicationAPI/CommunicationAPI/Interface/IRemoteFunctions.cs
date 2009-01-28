@@ -8,7 +8,7 @@ using CommunicationAPI.DataTypes;
 
 namespace CommunicationAPI.Interface
 {
-    [XmlRpcUrl("http://127.0.0.1:11000/")]
+    //[XmlRpcUrl("http://127.0.0.1:11000/")]
     public interface IRemoteFunctions : IXmlRpcProxy
     {
         [XmlRpcMethod]
@@ -24,9 +24,6 @@ namespace CommunicationAPI.Interface
 
         [XmlRpcMethod]
         void AddUser(SessionData session, UserData value);
-
-        [XmlRpcMethod]
-        void AddLamp(SessionData session, LampData value);
 
         [XmlRpcMethod]
         void AddRegion(SessionData session, RegionData value);
@@ -49,9 +46,6 @@ namespace CommunicationAPI.Interface
 
         [XmlRpcMethod]
         void DeleteUser(SessionData session, UserData value);
-
-        [XmlRpcMethod]
-        void DeleteLamp(SessionData session, LampData value);
 
         [XmlRpcMethod]
         void DeleteRegion(SessionData session, RegionData value);
@@ -95,9 +89,6 @@ namespace CommunicationAPI.Interface
         UserData[] GetUsers(SessionData session);
 
         [XmlRpcMethod]
-        LampData[] GetLamps(SessionData session);
-
-        [XmlRpcMethod]
         RegionData[] GetRegions(SessionData session);
 
         [XmlRpcMethod]
@@ -117,7 +108,14 @@ namespace CommunicationAPI.Interface
         
         #endregion
 
+#region Misc
+        [XmlRpcMethod]
+        void ShowSignId(RegionData region);
 
+        [XmlRpcMethod]
+        void SetLampId(string oldId, string newId);
+
+#endregion
 
 
     }

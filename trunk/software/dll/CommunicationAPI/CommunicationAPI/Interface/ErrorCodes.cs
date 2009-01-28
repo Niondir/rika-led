@@ -12,6 +12,7 @@ namespace CommunicationAPI.Interface
         InvalidLogin = 101,
         AccessDenined = 102,
         DBWriteError = 201,
-        DBReadError = 202
+        DBReadError = 202,
+        PacketSendError = 203
     }
 }

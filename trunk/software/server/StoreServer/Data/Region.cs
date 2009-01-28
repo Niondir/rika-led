@@ -13,8 +13,8 @@ namespace StoreServer.Data
 
         public string Id
         {
-            get { return id; }
-            set { id = value; }
+            get { return id.ToLower(); }
+            set { id = value.ToLower(); }
         }
 
         public string Name
@@ -27,21 +27,21 @@ namespace StoreServer.Data
         {
             get
             {
-                return new RegionData(id, name);
+                return new RegionData(Id, name);
             }
         }
 
         public Region(RegionData region)
         {
-            this.id = region.Id;
-            this.name = region.Name;
+            this.Id = region.Id;
+            this.name = region.Name.ToLower();
         }
 
         public void Save(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
             command.CommandText = "INSERT INTO led_regions (id, name) VALUES(?, ?)";
-            command.Parameters.AddWithValue("id", this.id);
+            command.Parameters.AddWithValue("id", this.Id);
             command.Parameters.AddWithValue("name", this.name);
             command.ExecuteNonQuery();
         }
@@ -52,7 +52,7 @@ namespace StoreServer.Data
 
             // Verify that this is in db
             command.CommandText = "SELECT id FROM led_regions WHERE id = ?";
-            command.Parameters.AddWithValue("id", this.id);
+            command.Parameters.AddWithValue("id", this.Id);
             OdbcDataReader reader = command.ExecuteReader();
             command.Parameters.Clear();
 
@@ -60,14 +60,14 @@ namespace StoreServer.Data
             if (reader.HasRows)
             {
                 command.CommandText = "UPDATE led_regions SET name = @name WHERE id = @id";
-                command.Parameters.AddWithValue("@id", this.id);
+                command.Parameters.AddWithValue("@id", this.Id);
                 command.Parameters.AddWithValue("@name", data.Name);
                 command.ExecuteNonQuery();
                 this.name = data.Name;
             }
             else
             {
-                throw new Exception("Region id " + this.id + " not in database");
+                throw new Exception("Region id " + this.Id + " not in database");
             }
         }
 
@@ -91,7 +91,7 @@ namespace StoreServer.Data
         public void Delete(OdbcConnection connection)
         {
             // Delete all products in this region
-            List<Product> products = Product.Load(connection, this.id);
+            List<Product> products = Product.Load(connection, this.Id);
             foreach (Product p in products)
             {
                 p.Delete(connection);
@@ -99,7 +99,7 @@ namespace StoreServer.Data
 
             OdbcCommand command = connection.CreateCommand();
             command.CommandText = "DELETE FROM led_regions WHERE id = ?";
-            command.Parameters.AddWithValue("id", this.id);
+            command.Parameters.AddWithValue("id", this.Id);
 
             command.ExecuteNonQuery();
         }

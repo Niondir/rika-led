@@ -30,7 +30,7 @@ namespace StoreClient
             remote = XmlRpcProxyGen.Create<IRemoteFunctions>();
             
             IRemoteFunctions proxy = (IRemoteFunctions)XmlRpcProxyGen.Create(typeof(IRemoteFunctions));
-            //proxy.Url = "Hier die URL";
+            proxy.Url = "http://127.0.0.1:11000/";
         }
 
         static public Connection GetInstance()
