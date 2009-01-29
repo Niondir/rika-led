@@ -20,7 +20,7 @@ namespace Kasse
         {
             if (!reader.IsValidChkSum)
             {
-                Console.WriteLine("Wooops, invaid chk sum: " + reader.PacketString);
+                Console.WriteLine("Wooops, invalid chk sum: " + reader.PacketString);
                 return;
             }
 
