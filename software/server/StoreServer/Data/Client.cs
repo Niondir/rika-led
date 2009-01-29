@@ -114,7 +114,7 @@ namespace StoreServer.Data
 
             if (roleOK)
             {
-                command.CommandText = "INSERT INTO led_users (roles_id, login, password) VALUES(@role, @login, @password)";
+                command.CommandText = "INSERT INTO led_users (roles_name, login, password) VALUES(@role, @login, @password)";
                 command.Parameters.AddWithValue("@login", user.Username);
                 command.Parameters.AddWithValue("@password", user.Password);
                 command.ExecuteNonQuery();
