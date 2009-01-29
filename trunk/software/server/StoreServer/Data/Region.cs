@@ -55,11 +55,12 @@ namespace StoreServer.Data
             command.Parameters.AddWithValue("id", this.Id);
             OdbcDataReader reader = command.ExecuteReader();
             command.Parameters.Clear();
-            reader.Close();
+            
 
             // Got our region id
             if (reader.HasRows)
             {
+                reader.Close();
                 command.CommandText = "UPDATE led_regions SET name = ? WHERE id = ?";
                 command.Parameters.AddWithValue("name", data.Name);
                 command.Parameters.AddWithValue("id", this.Id);
