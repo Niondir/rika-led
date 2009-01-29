@@ -55,6 +55,7 @@ namespace StoreServer.Data
             command.Parameters.AddWithValue("id", this.Id);
             OdbcDataReader reader = command.ExecuteReader();
             command.Parameters.Clear();
+            reader.Close();
 
             // Got our region id
             if (reader.HasRows)
