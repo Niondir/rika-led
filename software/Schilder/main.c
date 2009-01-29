@@ -21,8 +21,7 @@
 sign_t    sign;
 packet_t  packet;
 trace_t   trace;
-uint8_t   csum_debug = 22;
-uint8_t   csum_debug_calc = 22;
+
 
 #define DEBUG_ON
 
@@ -50,7 +49,7 @@ int main(void)
   detectSignMode();    												// Hardware kann von extern als Wagen oder Presischild konfiguriert werden, Preisschiler sogar mit bis zu 7 Adressen
   initTraceCounter(1); 												// TraceTimer konfigurieren und starten
   
-  show_status();       												// Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
+  show_status(1);       												// Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
   _delay_ms(2000);     												// Zeit zum Anzeigen der Informationen
 
   while(1)
@@ -95,7 +94,7 @@ int main(void)
 		} 
   #endif
 	    
-		if(sign.packetsBAD<0xffff)sign.packetsBAD++;
+		if(sign.packetsBAD<0xffff &&packetRecvStatus!=1)sign.packetsBAD++;
 	    else
 	    {
 			   sign.packetsOK=0; sign.packetsBAD=0; //Reset both Counters
@@ -103,7 +102,7 @@ int main(void)
 
 		if(detectSignMode()==1)  // Mode wurde über die externen Jumper verändert
 		{
-		     show_status();                  //Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
+		     show_status(1);                  //Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
 		     _delay_ms(2000);                //Zeit zum Anzeigen der neuen Status Informationen	
 			 sign.displayRefreshFlag = 1;	 //Display Memory neuzeichnen, da durch show_status anderer Inhalt angezeigt wurde 
 		}
@@ -137,35 +136,52 @@ uint8_t detectSignMode(void) //gibt 1 zurück wenn sich der Mode geändert hat
 		sign.signUniqueID=(uint16_t)adr;
     }
 
-	if((signType_yet!=sign.signType) || (adr_yet!=sign.signUniqueID))																	 
+	if((signType_yet!=sign.signType) || (adr_yet!=sign.signUniqueID))
+	{															 
+	
+	
 																	 return 1;
-	else                                                             return 0;
+	}
+	else 
+	return 0;
 }
 
 
-void show_status(void)
+void show_status(uint8_t WriteToDisplayBuffer)
 {
   char tempBuf[DISPLAY_ROWCHARS+1];
 
   clr_Screen();
 
   //Firmware Version
-  sprintf(tempBuf, "FirmwareVersion:%d", FIRMWARE_VERSION);
-  write_Display(tempBuf,1,1);
+  sprintf(tempBuf, "FirmwareVersion:%u", FIRMWARE_VERSION);
+	if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[0], tempBuf); // Zeile 1
+	else                      write_Display(tempBuf,1,1);
 
   //Schild Typ
-  if(sign.signType==SIGN_TYPE_TROLLEY) 
-   write_Display("SignType: Trolley", 1, 2);
-  else 
+  if(sign.signType==SIGN_TYPE_TROLLEY)
+	{
+    
+		if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[1], "SignType: Trolley"); // Zeile 2
+		else                      write_Display("SignType: Trolley", 1, 2);
+	}
+  else
+	{ 
+	 if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[1], "SignType: Price  "); // Zeile 2
    write_Display("SignType: Price  ", 1, 2);
+	}
 
   //Schild ID, über die Preisschilder adressiert werden
-  sprintf(tempBuf, "UniqueSignID: %d",  sign.signUniqueID);
-  write_Display(tempBuf,1,3); 
+  sprintf(tempBuf, "UniqueSignID: %u",  sign.signUniqueID);
+  if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[2], tempBuf);
+	else write_Display(tempBuf,1,3); 
 
   //Pakete OK und Pakete BAD anzeigen
-  sprintf(tempBuf, "PK. OK:%d E:%d",  sign.packetsOK, sign.packetsBAD);
-  write_Display(tempBuf,1,4); 
+  sprintf(tempBuf, "PK. OK:%u E:%u",  sign.packetsOK, sign.packetsBAD);
+	if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[3], tempBuf);
+  else write_Display(tempBuf,1,4); 
+
+	if(WriteToDisplayBuffer)  sign.displayRefreshFlag = 1;
 
 }
 
@@ -184,9 +200,7 @@ int8_t get_packet(void)
   uint8_t csumCompareInt;
   
 
-  //Reset buffers
-  csum_debug_calc = 0;
-  csum_debug = 0;
+
 
   //Auf Start eines Pakets warten
   if (uartSW_getc_nowait()!='<') return 1;                 
@@ -258,8 +272,7 @@ int8_t get_packet(void)
    
  //Checksummen vergleichen
   csumCompareInt    = (uint8_t)atoi(csumCompare);
-  csum_debug_calc = csum;
-  csum_debug = csumCompareInt;
+
 
   if(csumCompareInt==csum)return 0; //Packet korrekt empfangen
   else                    return 9; //Checksummenfehler
@@ -335,7 +348,7 @@ void packet_action(void)
 											break;
 
 	case CMDNR_SHOW_ID:                     //Statusinformationen anzeigen und dannach ein Neuzeichnen des Displays über das Flag veranlassen
-						                    show_status();
+						                    show_status(0);
 											_delay_ms(5000);
 											sign.displayRefreshFlag = 1;
 

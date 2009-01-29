@@ -4,7 +4,7 @@
 #include "display.h"
 
 // Constants
-#define FIRMWARE_VERSION    106
+#define FIRMWARE_VERSION    107
 
 #define SIGN_TYPE_TROLLEY        0
 #define SIGN_TYPE_PRICE          1
@@ -28,7 +28,7 @@
 
 // Prototypes
 uint8_t detectSignMode(void);
-void    show_status(void);
+void show_status(uint8_t WriteToDisplayBuffer);
 int8_t  get_packet(void);
 void    packet_action(void);
 void    initTraceCounter(int8_t run);
