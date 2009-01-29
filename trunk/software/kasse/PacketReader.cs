@@ -79,9 +79,9 @@ namespace Kasse
         public PacketReader(string packet)
         {
             this.packet = packet;
-
-            int startPos = packet.IndexOf(PACKET_START);
-            int endPos = packet.IndexOf(PACKET_END);
+            
+            int startPos = packet.IndexOf(PACKET_START) + 1;
+            int endPos = packet.Length - 1;
             content = packet.Substring(startPos, endPos - startPos);
             Console.WriteLine("Packet content: " + content);
             args = content.Split(new string[] { PACKET_DELIMITER }, StringSplitOptions.None);            

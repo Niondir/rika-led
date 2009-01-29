@@ -8,14 +8,15 @@
 #include <stdio.h>
 #include <string.h>
 #include "Lampe.h"
-
+#include "board.h"
 
 //#define DEBUG
+#define DEBUG_MSG_TARGET_ID ("f")
 
 #define ADBUFFERMAXSLOTS 1
 
 #ifdef DEBUG
-#define PRICETAGBUFFERMAXSLOTS 5
+#define PRICETAGBUFFERMAXSLOTS 4
 #else 
 #define PRICETAGBUFFERMAXSLOTS 7
 #endif
@@ -26,6 +27,7 @@
 #define RCVBUFSIZE 120
 #define TRUE  1
 #define FALSE  0
+
 #define AD_DELAY 100
 #define PRICETAG_DELAY 50
 #define SEND_TRACE_DELAY 200
@@ -85,7 +87,7 @@ ISR(USART_RXC_vect)
 {
 	char tempchar=uart_getc();
 	if(!init_mode){
-		switch (tempchar) {
+		switch (tempchar) { 
 			case '<': 	{
 										if (rcvbuf_receiving){
 											rcvbuf_invalid = TRUE;
@@ -131,7 +133,19 @@ ISR(USART_RXC_vect)
 	}
 }
 
+void insert_default_ad(){
 
+	sprintf(tempstring, "2|");
+	strcat(tempstring, lampid);
+	strcat(tempstring, "|");
+	strcat(tempstring, lampid);
+	strcat(tempstring,"|DEFAULT|NEWAD|FROM LAMP ");
+	strcat(tempstring,lampid);
+	strcat(tempstring,"|");
+	calculate_csum(-1, tempstring);
+	strcat(tempstring, csum);
+	insert_in_ad_buffer(tempstring);
+}
 
 /// ***************************************************
 /// ******            FUNCTIONS                  ******
@@ -156,6 +170,7 @@ void clear_buffers(){
 	nextOverwriteAdBufferPos=0;
 	AdBufferSlotsUsed=0;
 
+	insert_default_ad();
 	#ifdef DEBUG
 	sprintf(tempstring, "BUFFERS CLEARED \r\n");
 	uartSW_puts(tempstring);
@@ -171,17 +186,22 @@ void clear_buffers(){
   *
   */
 void init_lamp(){
-	set_dest( (uint32_t)8, 0);
+	set_dest( DEBUG_MSG_TARGET_ID, "0");
 	_delay_ms(XBEE_GUARDTIME);
-	sprintf(tempstring, "+++");
+	sprintf(tempstring,XBEE_CMD_SEQ);
 	uart_puts(tempstring);
 	_delay_ms(XBEE_GUARDTIME);
-	sprintf(tempstring, "ATMY\r");
+	sprintf(tempstring, "ATMY,CN\r");
 	uart_puts(tempstring);
-	_delay_ms(500);
-	copy_argument(123, lampid);
+	_delay_ms(100);
+	copy_argument(0, lampid);
 	rcvbuf_invalid = TRUE;
+	#ifdef DEBUG
+	sprintf(tempstring, "INIT SUCCEEDED, LAMP %s RUNNING\r\n",lampid);
+	uart_puts(tempstring);
+	#endif
 	init_mode = FALSE;
+	insert_default_ad();
 };
 
  /**
@@ -211,22 +231,29 @@ int get_csum_index(){
   *
   *         This function calculates the checksum by
   *         adding the ascii values of all characters of the
-  *					packet exept '<' '>' and the checksum itself and saves
+  *					packet in the target buffer exept '<' '>' and the checksum itself and saves
   *					result in csum[]
   *
   * \param	csumindex   index of checksum in receivebufferarray
+	* \param 	buffer			buffer containing the packet
   *
   */
-void calculate_csum(int csumindex){
+void calculate_csum(int csumindex, char* buffer){
 	uint8_t tmpcsum=0;
 	int i=0;
-	
-	while(i<csumindex){
-		tmpcsum+=rcvbuf[i];
-		i++;
+	if (csumindex!=-1){
+		while(i<csumindex){
+			tmpcsum+=buffer[i];
+			i++;
+		}
 	}
-	sprintf(tempstring, "%d", tmpcsum);
-	strcpy(csum, tempstring);
+	else{
+		while(buffer[i]!='\0'){
+			tmpcsum+=buffer[i];
+			i++;
+		}
+	}
+	sprintf(csum, "%d", tmpcsum);
 }
 
  /**
@@ -241,7 +268,7 @@ void calculate_csum(int csumindex){
   */
 int checksum_failed(){
 	int csum_index=get_csum_index();
-	calculate_csum(csum_index);
+	calculate_csum(csum_index,rcvbuf);
 
 	#ifdef DEBUG
 	uartSW_puts("\r\n die richtige csum waere: ");
@@ -282,11 +309,12 @@ void copy_argument(int rcvBufPos, char *destArray){
 void change_lampid(){
 	copy_argument(FIRST_ARG_INDEX, lampid);
 	_delay_ms(XBEE_GUARDTIME);
-	uart_puts("+++");
+	uart_puts(XBEE_CMD_SEQ);
 	_delay_ms(XBEE_GUARDTIME);
 	sprintf(tempstring, "ATMY%s,CN\r",lampid);
 	uart_puts(tempstring);
 	_delay_ms(XBEE_GUARDTIME/2);
+	clear_buffers();
 }
 
  /**
@@ -353,8 +381,8 @@ void forward_packet(){
 //************************************
 // 
 //************************************
-void insert_in_ad_buffer(){
-	strcpy(AdBuffer[nextOverwriteAdBufferPos],rcvbuf);
+void insert_in_ad_buffer(char *source){
+	strcpy(AdBuffer[nextOverwriteAdBufferPos],source);
 	nextOverwriteAdBufferPos=(nextOverwriteAdBufferPos+1)%ADBUFFERMAXSLOTS;
 	if((AdBufferSlotsUsed<ADBUFFERMAXSLOTS)&&(nextOverwriteAdBufferPos>=AdBufferSlotsUsed)){
 		AdBufferSlotsUsed++;
@@ -383,6 +411,7 @@ void send_packet(char *packet){
 	uart_putc('<');
 	uart_puts(packet);
 	uart_putc('>');
+	uart_puts("\r\n");
 	#endif
 
 }
@@ -400,7 +429,7 @@ void process_packet(){
 								}
 		// insert ad packet into buffer
 			case '2':	{
-									insert_in_ad_buffer();
+									insert_in_ad_buffer(rcvbuf);
 									break;
 								}
 		// clear lamp buffers
@@ -488,10 +517,12 @@ init_lamp();
 
 		if(!pricetagbuf_empty && !pricetagdelay){
 			send_next_sign();
+			TGL_LED1;
 		}
 
 		if(!adbuf_empty && !addelay){
 			send_next_ad();
+			TGL_LED2;
 		}
 
 		if(rcvbuf_invalid){
@@ -499,10 +530,12 @@ init_lamp();
 			rcvbuf_receiving=FALSE;
 			packet_received=FALSE;
 			rcvbuf_invalid=FALSE;
+
 		}
 		if(send_trace_mode && !sendtracedelay){
 			send_packet(sendtracepacket);
 			sendtracedelay = SEND_TRACE_DELAY;
+			TGL_LED2;
 		}
 	};
 };
