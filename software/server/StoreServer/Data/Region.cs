@@ -60,9 +60,9 @@ namespace StoreServer.Data
             // Got our region id
             if (reader.HasRows)
             {
-                command.CommandText = "UPDATE led_regions SET name = @name WHERE id = @id";
-                command.Parameters.AddWithValue("@id", this.Id);
-                command.Parameters.AddWithValue("@name", data.Name);
+                command.CommandText = "UPDATE led_regions SET name = ? WHERE id = ?";
+                command.Parameters.AddWithValue("name", data.Name);
+                command.Parameters.AddWithValue("id", this.Id);
                 command.ExecuteNonQuery();
                 this.name = data.Name;
             }
