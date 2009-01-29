@@ -4,7 +4,6 @@
 #include <util/delay.h>
 #include <stdlib.h>
 #include "uart.h"
-#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include "Lampe.h"
@@ -37,7 +36,10 @@
 #define UBRR_VAL ((F_CPU+BAUD*8)/(BAUD*16)-1)   // clever runden
 
 
-//global variables
+/// ***************************************************
+/// ******            Global Variables           ******
+/// ***************************************************
+
 char tempstring[120];
 char lampid[5];
 char sendtracepacket[30];
@@ -48,8 +50,8 @@ int  rcvbuf_iterator=0;
 //flags
 int rcvbuf_receiving = FALSE;		// True after "<" received, until ">" received
 int rcvbuf_invalid = FALSE; 		// rcv buffer contains invalid data
-int packet_received = FALSE;		// locks rcvbuf until data handled
-int pricetagbuf_empty = TRUE;
+int packet_received = FALSE;		// while true locks rcvbuf until data handled
+int pricetagbuf_empty = TRUE;		
 int adbuf_empty = TRUE;
 int init_mode = TRUE;
 int send_trace_mode = FALSE;
@@ -160,15 +162,15 @@ void insert_default_ad(){
 void clear_buffers(){
 	//reset pricetag buffer and corresponding variables
 	pricetagbuf_empty = TRUE;
-	nextOverwritePriceTagBufferPos=0;
-	nextOutgoingPriceTag=0;
-	PriceTagBufferSlotsUsed=0;
+	nextOverwritePriceTagBufferPos = 0;
+	nextOutgoingPriceTag = 0;
+	PriceTagBufferSlotsUsed = 0;
 
 	//reset ad buffer and corresponding variables
 	adbuf_empty = TRUE;
-	nextOutgoingAd=0;
-	nextOverwriteAdBufferPos=0;
-	AdBufferSlotsUsed=0;
+	nextOutgoingAd = 0;
+	nextOverwriteAdBufferPos = 0;
+	AdBufferSlotsUsed = 0;
 
 	insert_default_ad();
 	#ifdef DEBUG
@@ -180,16 +182,21 @@ void clear_buffers(){
 
  /**
   * \brief  init lamp
-  *
-  *		This function sends command to xbee module to get
-  *			current my-id and saves it in lampid
+  *		
+  *		This function configures the XBee module to send debug messages
+	*		to the proper target ID. Afer that it gets the personal MY ID from
+	*		the module and saves it in lampid[]. 
   *
   */
 void init_lamp(){
+
+	//set debug msg destination
 	set_dest( DEBUG_MSG_TARGET_ID, "0");
 	_delay_ms(XBEE_GUARDTIME);
 	sprintf(tempstring,XBEE_CMD_SEQ);
 	uart_puts(tempstring);
+
+	//get my id
 	_delay_ms(XBEE_GUARDTIME);
 	sprintf(tempstring, "ATMY,CN\r");
 	uart_puts(tempstring);
@@ -200,6 +207,7 @@ void init_lamp(){
 	sprintf(tempstring, "INIT SUCCEEDED, LAMP %s RUNNING\r\n",lampid);
 	uart_puts(tempstring);
 	#endif
+
 	init_mode = FALSE;
 	insert_default_ad();
 };
