@@ -73,7 +73,7 @@ namespace Kasse
                 {
                     toCheck += args[i] + "|";
                 }
-                Console.WriteLine("Compare Csums: {0} ?= {1} from packet: {2}", GetChecksum(toCheck), ChkSum, toCheck);
+                Console.WriteLine("Compare csums: {0} ?= {1} from packet: {2}", GetChecksum(toCheck), ChkSum, toCheck);
                 return GetChecksum(toCheck) == ChkSum;
             }
         }
@@ -82,7 +82,7 @@ namespace Kasse
         {
             this.packet = packet;
             
-            int startPos = packet.IndexOf(PACKET_START) + 1;
+            int startPos = packet.IndexOf(PACKET_START);
             int endPos = packet.Length - 1;
             content = packet.Substring(startPos, endPos - startPos);
             Console.WriteLine("Packet content: " + content);
