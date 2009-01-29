@@ -310,7 +310,7 @@ void packet_action(void)
 
 
 												XBEE_SEND_STRING("<8|");
-												csum += calc_csum("<8|");
+												csum += calc_csum("8|");
 
 												for(int i=0;i<trace.pos;i++)
 												{											
