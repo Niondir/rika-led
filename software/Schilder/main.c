@@ -49,7 +49,7 @@ int main(void)
   detectSignMode();    												// Hardware kann von extern als Wagen oder Presischild konfiguriert werden, Preisschiler sogar mit bis zu 7 Adressen
   initTraceCounter(1); 												// TraceTimer konfigurieren und starten
   
-  show_status(1);       												// Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
+  show_status(0);       												// Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
   _delay_ms(2000);     												// Zeit zum Anzeigen der Informationen
 
   while(1)
@@ -94,11 +94,15 @@ int main(void)
 		} 
   #endif
 	    
-		if(sign.packetsBAD<0xffff &&packetRecvStatus!=1)sign.packetsBAD++;
-	    else
-	    {
-			   sign.packetsOK=0; sign.packetsBAD=0; //Reset both Counters
-		}  
+
+		if(packetRecvStatus!=1) //"fehler1" ignorieren
+		{
+			if(sign.packetsBAD<0xffff)sign.packetsBAD++;
+		    else
+		    {
+				   sign.packetsOK=0; sign.packetsBAD=0; //Reset both Counters
+			}  
+        }
 
 		if(detectSignMode()==1)  // Mode wurde über die externen Jumper verändert
 		{
@@ -156,32 +160,30 @@ void show_status(uint8_t WriteToDisplayBuffer)
   //Firmware Version
   sprintf(tempBuf, "FirmwareVersion:%u", FIRMWARE_VERSION);
 	if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[0], tempBuf); // Zeile 1
-	else                      write_Display(tempBuf,1,1);
+	                          write_Display(tempBuf,1,1);
 
   //Schild Typ
   if(sign.signType==SIGN_TYPE_TROLLEY)
 	{
     
 		if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[1], "SignType: Trolley"); // Zeile 2
-		else                      write_Display("SignType: Trolley", 1, 2);
+		                          write_Display("SignType: Trolley", 1, 2);
 	}
   else
 	{ 
 	 if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[1], "SignType: Price  "); // Zeile 2
-   write_Display("SignType: Price  ", 1, 2);
+                               write_Display("SignType: Price  ", 1, 2);
 	}
 
   //Schild ID, über die Preisschilder adressiert werden
   sprintf(tempBuf, "UniqueSignID: %u",  sign.signUniqueID);
   if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[2], tempBuf);
-	else write_Display(tempBuf,1,3); 
+	                        write_Display(tempBuf,1,3); 
 
   //Pakete OK und Pakete BAD anzeigen
   sprintf(tempBuf, "PK. OK:%u E:%u",  sign.packetsOK, sign.packetsBAD);
-	if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[3], tempBuf);
-  else write_Display(tempBuf,1,4); 
-
-	if(WriteToDisplayBuffer)  sign.displayRefreshFlag = 1;
+  if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[3], tempBuf);
+     write_Display(tempBuf,1,4); 
 
 }
 
