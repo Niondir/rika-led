@@ -91,10 +91,10 @@ namespace Kasse
 
         private string GetChecksum(string str)
         {
-            int chkSum = 0;
+            byte chkSum = 0;
             foreach (char c in str)
             {
-                chkSum += (int)c;
+                chkSum += (byte)c;
             }
 
             return chkSum.ToString();
