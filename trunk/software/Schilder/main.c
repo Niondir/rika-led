@@ -42,7 +42,9 @@ int main(void)
   sign.packetsOK  = 0;
   sign.packetsBAD = 0;
   
+  initLEDs();
   uartSW_init();       												// software uart
+  init_uart();
   init_Display(4);    												// Display initialisieren
   initPIOs();          												// Mode Jumper Pins konfigurieren
   
@@ -52,57 +54,51 @@ int main(void)
   show_status(0);       												// Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
   _delay_ms(2000);     												// Zeit zum Anzeigen der Informationen
 
+
   while(1)
   {
+
 		if ( (packetRecvStatus = get_packet()) == 0)
 		{ 
 		       packet_action();                  //Das korrekt empfangende Paket verarbeiten
+
 			   if(sign.displayRefreshFlag)       //ggf. das Display komplett neu zeichnen 
-			   {
+	           {
 				   clr_Screen();
 	               write_Display(sign.displayMemory[0],1,1);
 				   write_Display(sign.displayMemory[1],1,2);
 				   write_Display(sign.displayMemory[2],1,3);
 				   write_Display(sign.displayMemory[3],1,4);
 				   sign.displayRefreshFlag = 0;
-			   }
-
+	           }
+			
 			   if(sign.packetsOK<0xffff)sign.packetsOK++;
 			   else
 			   {
 			     sign.packetsOK=0; sign.packetsBAD=0; //Reset both Counters
-			   }             
-       
-  #ifndef DEBUG_ON
-        }
-  #else
-	           toggleFlag=!toggleFlag;
-			   
+			   }  
+			
+	           toggleFlag=!toggleFlag;   
 			   if(toggleFlag) sprintf(debug, "OK"); //Paket korrekt empfangen
 			   else           sprintf(debug, "ok"); //trotzdem kann sich u.U z.B. durch falsche IDs nichts tun!
 			   write_Display(debug,19,4);			//in letzter Zeile ganz Rechts diese 2 Zeichen darstellen
-	
-
 		}
 		else //Paket nicht erfolgreich empfangen
 		{		 
 			if(packetRecvStatus!=1) //Error1 ignorieren (Error1 = Derzeit kein Startzeichen "<" empfangen/verfügbar)
 			{
-				sprintf(debug, "E%d",packetRecvStatus);
+				sprintf(debug, "E%u",packetRecvStatus);
 				write_Display(debug,19,4);
+
+				if(sign.packetsBAD<0xffff)sign.packetsBAD++;
+		        else
+		        {
+				   sign.packetsOK=0; sign.packetsBAD=0; //Reset both Counters
+			    } 
 			}
 		} 
-  #endif
 	    
 
-		if(packetRecvStatus!=1) //"fehler1" ignorieren
-		{
-			if(sign.packetsBAD<0xffff)sign.packetsBAD++;
-		    else
-		    {
-				   sign.packetsOK=0; sign.packetsBAD=0; //Reset both Counters
-			}  
-        }
 
 		if(detectSignMode()==1)  // Mode wurde über die externen Jumper verändert
 		{
@@ -110,6 +106,8 @@ int main(void)
 		     _delay_ms(2000);                //Zeit zum Anzeigen der neuen Status Informationen	
 			 sign.displayRefreshFlag = 1;	 //Display Memory neuzeichnen, da durch show_status anderer Inhalt angezeigt wurde 
 		}
+
+	   
   }
 
   return 0;
@@ -281,30 +279,46 @@ int8_t get_packet(void)
 
 }
 
-
+char t2=0;
+char t3=0;
+char deb[25];
 void packet_action(void)
 {
-
+  
   switch(packet.packetCmdNr)
   { 
     case CMDNR_SEND_TRACE:  
-
+                                          
+                                             
+										   //t3=!t3;
+										   //		if(t3) write_Display("R", 17, 4);
+										   //		else   write_Display("r", 17, 4);
 						  					if(trace.pos != 0) //Min 1 Trace muss vorhanden sein
 											{
 											    
 												char sendPacketBuf[12]; //2*5 Zeichen (16Bit Zahlen als Char) + ',' +'\0'
+                                                
+                                                //t2=!t2;
+												//if(t2) write_Display("T", 18, 4);
+												//else   write_Display("t", 18, 4);
 
-												set_dest( (uint32_t)atoi(packet.args[1]), 0); //Arg1 enthält die FunkZieladresse des Traceempfängers (Kasse), Arg0 ist egal
+											   set_dest2( packet.args[1], "0"); //Arg1 enthält die FunkZieladresse des Traceempfängers (Kasse), Arg0 ist egal
+                                            
+											
+                                               //sprintf(deb, "XAdr:%s", packet.args[1]);
+                                               //write_Display(deb, 1, 4);
+
 
 												XBEE_SEND_STRING("<");
 
 												for(int i=0;i<trace.pos;i++)
 												{											
-                                                    sprintf(sendPacketBuf,"%d,%d", trace.lampIDs[i], trace.times[i] ); //Die Uhr läuft mit (1800/255) Hz
+                                                    sprintf(sendPacketBuf,"%u,%u", trace.lampIDs[i], trace.times[i] ); //Die Uhr läuft mit (1800/255) Hz
                                                     XBEE_SEND_STRING(sendPacketBuf);											  
 												}
 
 												XBEE_SEND_STRING(">");
+											
 												trace.pos = 0;
 											}
 					
@@ -411,7 +425,7 @@ void debug_packet(void)
 {
   char buf[25];
 
-  sprintf(buf,"cmd Nr: %d", packet.packetCmdNr);
+  sprintf(buf,"cmd Nr: %u", packet.packetCmdNr);
 
 	sign.displayRefreshFlag = 1;
 	strcpy(sign.displayMemory[0], buf); //Cmd Nr

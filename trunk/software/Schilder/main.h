@@ -4,7 +4,7 @@
 #include "display.h"
 
 // Constants
-#define FIRMWARE_VERSION    107
+#define FIRMWARE_VERSION    110
 
 #define SIGN_TYPE_TROLLEY        0
 #define SIGN_TYPE_PRICE          1

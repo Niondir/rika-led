@@ -13,3 +13,10 @@ void initPIOs(void)
   DDR_PIO3 &= ~(1<<PIO_3); //input
   PORT_PIO3 |= (1<<PIO_3); //PullUp an
 }
+
+void initLEDs(void)
+{
+  DDRD |= 1<<PD5;
+ // DDRD |= 1<<PD6;
+ // DDRD |= 1<<PD7;
+}
