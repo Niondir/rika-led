@@ -62,7 +62,8 @@ namespace Kasse
 
                     PacketReader reader = new PacketReader(packetStr);
 
-                    if (reader.Command == LampCommand.TracePacket) {
+                    if (reader.Command == LampCommand.TracePacket)
+                    {
                         TracePacket tracePacket = new TracePacket(reader);
                         if (tracePacket.IsValid)
                         {
@@ -74,6 +75,10 @@ namespace Kasse
                         }
                         else
                             Console.WriteLine("Got invalid packet");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Got unhandled packet");
                     }
                 }
                 else

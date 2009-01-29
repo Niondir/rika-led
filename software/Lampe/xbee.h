@@ -1,5 +1,7 @@
 
 #include <inttypes.h>
-#define XBEE_GUARDTIME 20
 
-void set_dest(uint32_t destlow, uint32_t desthigh);
+#define XBEE_GUARDTIME 20
+#define XBEE_CMD_SEQ ("+++")
+
+void set_dest(char* destlow, char* desthigh);
