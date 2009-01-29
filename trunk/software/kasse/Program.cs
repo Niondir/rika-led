@@ -37,6 +37,7 @@ namespace Kasse
                         SerialPacket p = radioReveiver.ReceiveQueue.Dequeue();
                         if (p is TracePacket)
                         {
+                            Console.WriteLine("Sending trace to server");
                             (p as TracePacket).SendToServer();
                         }
                     }

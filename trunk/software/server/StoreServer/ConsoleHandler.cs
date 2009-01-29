@@ -97,6 +97,9 @@ namespace StoreServer
                     case "sendtrace":
                         Program.RadioManager.Send(new SendTracePacket(tokens[1], bool.Parse(tokens[2])));
                         break;
+                    case "csum":
+                        Console.WriteLine(GetChecksum(tokens[1]));
+                        break;
                     case "settext":
                         RegionData region = new RegionData("1", "fooRegion");
                         SignData sign = new SignData(int.Parse(tokens[1]), region);
@@ -139,6 +142,17 @@ namespace StoreServer
                     Console.WriteLine("Unknown Packet");
                     break;
             }
+        }
+
+        private string GetChecksum(string str)
+        {
+            byte chkSum = 0;
+            foreach (char c in str)
+            {
+                chkSum += (byte)c;
+            }
+
+            return chkSum.ToString();
         }
     }
 }
