@@ -82,8 +82,8 @@ namespace Kasse
         {
             this.packet = packet;
             
-            int startPos = packet.IndexOf(PACKET_START);
-            int endPos = packet.Length - 1;
+            int startPos = packet.IndexOf(PACKET_START) + 1;
+            int endPos = packet.Length;
             content = packet.Substring(startPos, endPos - startPos);
             Console.WriteLine("Packet content: " + content);
             args = content.Split(new string[] { PACKET_DELIMITER }, StringSplitOptions.None);            
