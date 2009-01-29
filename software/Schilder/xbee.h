@@ -14,7 +14,7 @@
 #define XBEE_GUARDTIME 20
 #define XBEE_SEND_STRING uart_puts
 
-
-void set_dest(uint32_t destlow, uint32_t desthigh);
+void set_dest2(char* destlow, char* desthigh);
+//void set_dest(uint32_t destlow, uint32_t desthigh);
 
 #endif

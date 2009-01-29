@@ -4,8 +4,8 @@
 #include <stdint.h>
 
 
-#define BAUD 115200UL          // Baudrate
-//#define BAUD 19200UL
+//#define BAUD 115200UL          // Baudrate
+#define BAUD 9600UL
 
 void init_uart(void);
 void uart_puts(char *s);
