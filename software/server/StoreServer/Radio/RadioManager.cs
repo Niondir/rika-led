@@ -15,6 +15,8 @@ namespace StoreServer.Radio
 {
     public class RadioManager
     {
+        private const int SEND_DELAY = 20;
+
         private SerialPort serialPort;
         private Queue<SerialPacket> sendQueue;
         private Thread sendThread;
@@ -112,10 +114,10 @@ namespace StoreServer.Radio
             List<Advertisement> ads = new List<Advertisement>();
             foreach (Advertisement ad in ads_tmp)
             {
-                if (ad.StartTime <= DateTime.Now && ad.StopTime >= DateTime.Now && ad.StartDate <= DateTime.Now && ad.StopDate >= DateTime.Now)
-                {
+                //if (ad.StartTime <= DateTime.Now && ad.StopTime >= DateTime.Now && ad.StartDate <= DateTime.Now && ad.StopDate >= DateTime.Now)
+                //{
                     ads.Add(ad);
-                }
+                //}
             }
 
             // Alle Produkte und Werbungen in packete packen
@@ -209,14 +211,14 @@ namespace StoreServer.Radio
                             }
                             
                             p.Send(serialPort);
-                            Thread.Sleep(200);
+                            Thread.Sleep(SEND_DELAY);
                         }
                         else
                         {
 #if DEBUG
                             SerialPacket p = sendQueue.Dequeue();
                             Debug.WriteLine("RadioManager: <offline> sending: " + p.ToString());
-                            Thread.Sleep(200);
+                            Thread.Sleep(SEND_DELAY);
 #else
                             //try to reconnect
                             Thread.Sleep(1000);

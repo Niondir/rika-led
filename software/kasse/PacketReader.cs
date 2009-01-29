@@ -6,6 +6,7 @@ using CommunicationAPI.Radio;
 
 namespace Kasse
 {
+    // Parse packet: <cmd|{args|}csum>
     public class PacketReader
     {
         public const string PACKET_START = "<";
@@ -72,6 +73,7 @@ namespace Kasse
                 {
                     toCheck += args[i] + "|";
                 }
+                Console.WriteLine("Compare Csums: {0} ?= {1} from packet: {2}", GetChecksum(toCheck), ChkSum, toCheck);
                 return GetChecksum(toCheck) == ChkSum;
             }
         }

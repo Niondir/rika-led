@@ -279,9 +279,8 @@ int8_t get_packet(void)
 
 }
 
-char t2=0;
-char t3=0;
-char deb[25];
+//char t2=0;
+//char t3=0;
 void packet_action(void)
 {
   
@@ -296,8 +295,9 @@ void packet_action(void)
 						  					if(trace.pos != 0) //Min 1 Trace muss vorhanden sein
 											{
 											    
-												char sendPacketBuf[12]; //2*5 Zeichen (16Bit Zahlen als Char) + ',' +'\0'
-                                                
+												char sendPacketBuf[15]; //2*5 Zeichen (16Bit Zahlen als Char) + ',' +'\0'
+                                                uint8_t csum = 0;
+
                                                 //t2=!t2;
 												//if(t2) write_Display("T", 18, 4);
 												//else   write_Display("t", 18, 4);
@@ -309,15 +309,20 @@ void packet_action(void)
                                                //write_Display(deb, 1, 4);
 
 
-												XBEE_SEND_STRING("<");
+												XBEE_SEND_STRING("<8|");
+												csum += calc_csum("<8|");
 
 												for(int i=0;i<trace.pos;i++)
 												{											
-                                                    sprintf(sendPacketBuf,"%u,%u", trace.lampIDs[i], trace.times[i] ); //Die Uhr läuft mit (1800/255) Hz
-                                                    XBEE_SEND_STRING(sendPacketBuf);											  
+                                                    sprintf(sendPacketBuf,"%u|%u|", trace.lampIDs[i], trace.times[i] ); //Die Uhr läuft mit (1800/255) Hz
+                                                    csum += calc_csum(sendPacketBuf);
+													
+													XBEE_SEND_STRING(sendPacketBuf);											  
 												}
+												
+												sprintf(sendPacketBuf,"%d>", csum);
 
-												XBEE_SEND_STRING(">");
+												XBEE_SEND_STRING(sendPacketBuf);
 											
 												trace.pos = 0;
 											}
@@ -396,6 +401,16 @@ void packet_action(void)
 	  }
 }
 
+uint8_t calc_csum(char* data)
+{
+	uint8_t csum=0, i=0;
+
+  	while(data[i]!=0)
+	{
+		csum+=data[i++];
+	}
+	return csum;
+}
 
 void initTraceCounter(int8_t run)
 { 

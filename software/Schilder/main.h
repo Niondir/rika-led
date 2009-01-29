@@ -33,7 +33,7 @@ int8_t  get_packet(void);
 void    packet_action(void);
 void    initTraceCounter(int8_t run);
 void    debug_packet(void);
-
+uint8_t calc_csum(char* data);
 
 // Typedefs
 typedef struct 

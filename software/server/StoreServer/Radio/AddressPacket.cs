@@ -33,7 +33,7 @@ namespace StoreServer.Radio
             port.Write(bytes, 0, sendBytes.Length);
             Thread.Sleep(20);
 
-            Debug.WriteLine(String.Format("Sending: {0} {1}", Decode(swtichModeCmd), Decode(bytes)));
+            Debug.WriteLine(String.Format("Set address to {0}",address));
         }
     }
 }
