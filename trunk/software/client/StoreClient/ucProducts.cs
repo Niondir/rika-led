@@ -48,6 +48,7 @@ namespace StoreClient
             FormAddProduct adder = new FormAddProduct();
             if (adder.ShowDialog(this) == DialogResult.OK)
             {
+                Connection.GetInstance().Add(adder.Value);
                 refreshContent(this, null);
             }
         }
@@ -84,10 +85,9 @@ namespace StoreClient
             GridProducts.Rows.Clear();
             foreach (ProductData i in products)
             {
-                GridProducts.Rows.Add(new string[] { i.Name, i.Sign.Id.ToString(), i.Sign.Region.Name, i.Price.ToString() });
-                GridProducts.Rows[GridProducts.Rows.Count - 1].Cells["ProductID"].ReadOnly = true;
-
-                //DataGridViewCell c = 
+                int aktRow = GridProducts.Rows.Add(new string[] { i.Name, i.Sign.Id.ToString(), i.Sign.Region.Name, i.Price.ToString("0.00") });
+                GridProducts.Rows[aktRow].Cells["ProductID"].ReadOnly = true;
+                GridProducts.Rows[aktRow].Tag = i;
             }
         }
 
@@ -108,17 +108,32 @@ namespace StoreClient
 
         private void toolStripButtonPDelete_Click(object sender, EventArgs e)
         {
+            if (GridProducts.SelectedRows.Count == 1)
+                if (MessageBox.Show("Wollen Sie wirklich das Produkt \"" + ((ProductData)GridProducts.SelectedRows[0].Tag).Name + "\" löschen?", "Frage", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    return;
+            if (GridProducts.SelectedRows.Count > 1)
+                if (MessageBox.Show("Wollen Sie wirklich die " + GridProducts.SelectedRows.Count + " Produkte löschen?", "Frage", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    return;
             foreach (DataGridViewRow i in GridProducts.SelectedRows)
             {
-                Connection.GetInstance().DeleteProduct(Convert.ToInt32(i.Cells["ProductID"].Value));
+                Connection.GetInstance().DeleteProduct(Convert.ToInt32(((ProductData)i.Tag).Sign.Id));
                 GridProducts.Rows.Remove(i);
             }
         }
 
         private void toolStripButtonPEdit_Click(object sender, EventArgs e)
         {
-            if (GridProducts.SelectedRows.Count > 0)
-                GridProducts.BeginEdit(true);
+            foreach (DataGridViewRow i in GridProducts.SelectedRows)
+            {
+                ProductData oldData = (ProductData)i.Tag;
+
+                FormAddProduct editPro = new FormAddProduct(oldData);
+                if (editPro.ShowDialog() == DialogResult.OK)
+                {
+                    Connection.GetInstance().EditProduct(oldData.Sign.Id, editPro.Value);
+                    refreshContent(null, null);
+                }
+            }
         }
 
         private string tmpValueInCell;
@@ -136,7 +151,7 @@ namespace StoreClient
             if (newVal != tmpValueInCell)
             {
                 newData = new ProductData();
-                newData.Name = (string)GridProducts.Rows[e.RowIndex].Cells["ProductName"].Value;
+                newData.Name = (string)GridProducts.Rows[e.RowIndex].Cells["ProdName"].Value;
                 GridProducts.Rows[e.RowIndex].Cells["Price"].Value = ((string)GridProducts.Rows[e.RowIndex].Cells["Price"].Value).Replace('.', ',');
                 try
                 {
@@ -175,6 +190,11 @@ namespace StoreClient
             FormGroupManagement grouper = new FormGroupManagement();
             grouper.groupsChanged += new EventHandler(refreshContent);
             grouper.ShowDialog(this);
+        }
+
+        private void GridProducts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            toolStripButtonPEdit_Click(sender, null);
         }
     }
 }

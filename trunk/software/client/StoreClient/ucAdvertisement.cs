@@ -24,7 +24,7 @@ namespace StoreClient
         private void RefreshData()
         {
             ads = Connection.GetInstance().GetAds();
-
+            gridAds.Rows.Clear();
             foreach (AdvertisementData i in ads)
             {
 
@@ -45,6 +45,7 @@ namespace StoreClient
             if (addAd.ShowDialog() == DialogResult.OK)
             {
                 Connection.GetInstance().Add(addAd.Value);
+                RefreshData();
             }
         }
 
@@ -54,12 +55,18 @@ namespace StoreClient
             if (editAdd.ShowDialog() == DialogResult.OK)
             {
                 Connection.GetInstance().EditAd(((AdvertisementData)gridAds.SelectedRows[0].Tag).Id, editAdd.Value);
+                RefreshData();
             }
         }
 
         private void gridAds_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             toolStripButtonEdit_Click(null, null);
+        }
+
+        private void toolStripButtonRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshData();
         }
     }
 }
