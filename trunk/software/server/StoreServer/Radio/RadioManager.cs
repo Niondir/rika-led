@@ -231,6 +231,7 @@ namespace StoreServer.Radio
                 }
                 else
                 {
+                    // Reduce cpu usages if queue empty
                     Thread.Sleep(50);
                 }
             }

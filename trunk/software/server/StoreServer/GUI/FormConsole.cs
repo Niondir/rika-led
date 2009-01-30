@@ -14,12 +14,35 @@ namespace StoreServer.GUI
         public TextWriter Out { get; set; }
 
         private List<string> history = new List<string>();
-        private int historyPos = 0;
+        private int historyPos = -1;
+
+        private int HistoryPos
+        {
+            get
+            {
+                return historyPos;
+            }
+            set
+            {
+                historyPos = value;
+
+                if (historyPos >= history.Count)
+                {
+                    historyPos = history.Count - 1;
+                }
+
+                if (historyPos < -1)
+                {
+                    historyPos = -1;
+                }
+            }
+        }
 
         public FormConsole()
         {
             InitializeComponent();
             Out = new RichTextBoxTextWriter(rtbConsoleOut);
+            txtConsoleIn.Focus();
         }
 
         private void txtConsoleIn_KeyPress(object sender, KeyPressEventArgs e)
@@ -28,19 +51,34 @@ namespace StoreServer.GUI
             {
                 Console.WriteLine(txtConsoleIn.Text);
                 Program.ConsoleHandler.HandleCommand(txtConsoleIn.Text);
-                history.Add(txtConsoleIn.Text);
+                
+                if (txtConsoleIn.Text != string.Empty)
+                    history.Insert(0, txtConsoleIn.Text);
+                
                 txtConsoleIn.Clear();
                 e.Handled = true;
             }
-            else if (e.KeyChar == (char)Keys.Up)
+            
+        }
+
+        private void txtConsoleIn_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up)
             {
-                if (historyPos >= 0 && historyPos < history.Count)
-                    txtConsoleIn.Text = history[historyPos++];
+                HistoryPos++;
+                if (HistoryPos >= 0)
+                    txtConsoleIn.Text = history[HistoryPos];
+
             }
-            else if (e.KeyChar == (char)Keys.Down)
+            else if (e.KeyCode == Keys.Down)
             {
-                if (historyPos >= 0 && historyPos < history.Count)
-                    txtConsoleIn.Text = history[historyPos--];
+                HistoryPos--;
+                if (HistoryPos >= 0)
+                    txtConsoleIn.Text = history[HistoryPos];
+            }
+            else 
+            {
+                historyPos = -1;
             }
         }
 

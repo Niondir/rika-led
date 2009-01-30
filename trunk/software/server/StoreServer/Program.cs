@@ -16,8 +16,6 @@ using System.Xml;
 using StoreServer.GUI;
 using System.Windows.Forms;
 /* TODO: Program.cs
- * Consolen history
- * auf die neue console hören
  * edit user
  * edit ad
  * */
@@ -179,7 +177,6 @@ namespace StoreServer
                 Console.WriteLine(ex.Message);
                 Console.ReadKey();
             }
-            // TODO: Loop for async actions, linke console input
 
             Console.WriteLine("Server: shuting down...");
             closing = true;
@@ -207,7 +204,7 @@ namespace StoreServer
             {
                 if (!visible)
                     //Hide the window                   
-                    ShowWindow(hWnd, 0); // 0 = SW_HIDE               
+                    ShowWindow(hWnd, 0); // 0 = SW_HIDE        
                 else
                     //Show window again                   
                     ShowWindow(hWnd, 1); //1 = SW_SHOWNORMA          
