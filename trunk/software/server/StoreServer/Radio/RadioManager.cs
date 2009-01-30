@@ -209,7 +209,7 @@ namespace StoreServer.Radio
                                     }
                                 }
                             }
-                            
+
                             p.Send(serialPort);
                             Thread.Sleep(SEND_DELAY);
                         }
@@ -228,6 +228,10 @@ namespace StoreServer.Radio
 #endif
                         }
                     }
+                }
+                else
+                {
+                    Thread.Sleep(50);
                 }
             }
 

@@ -69,6 +69,7 @@ namespace StoreServer.Data
             }
             else
             {
+                reader.Close();
                 throw new Exception("Region id " + this.Id + " not in database");
             }
         }

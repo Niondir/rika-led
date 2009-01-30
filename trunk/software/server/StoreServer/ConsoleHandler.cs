@@ -36,6 +36,12 @@ namespace StoreServer
                         Program.Set();
                     }
                 }
+                else
+                {
+                    // Stop using ~50% cpu ;)
+                    Thread.Sleep(50);
+                }
+                
             }
 
             Debug.WriteLine("Console Listener Thread: Closing");
@@ -50,9 +56,14 @@ namespace StoreServer
                     msg = queue.Dequeue();
                 }
 
-                string[] tokens = msg.ToLower().Split(new char[] {' '});
-                HandleCommand(tokens);
+                HandleCommand(msg);
             }
+        }
+
+        public void HandleCommand(string msg)
+        {
+            string[] tokens = msg.ToLower().Split(new char[] { ' ' });
+            HandleCommand(tokens);
         }
 
         private SessionData session;
