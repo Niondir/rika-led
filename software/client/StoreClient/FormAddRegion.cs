@@ -11,27 +11,36 @@ namespace StoreClient
 {
     public partial class FormAddRegion : Form
     {
-        public RegionData NewRegion { get { return region; } }
-        private RegionData region;
+        public RegionData Value
+        {
+            get { return new RegionData(textBoxID.Text, textBoxName.Text); }
+            set
+            {
+                textBoxName.Text = value.Name;
+                textBoxID.Text = value.Id;
+            }
+        }
+
 
         public FormAddRegion()
         {
             InitializeComponent();
         }
         public FormAddRegion(string name)
+            : this()
         {
-            InitializeComponent();
-            textBox1.Text = name;
+            textBoxName.Text = name;
+        }
+        public FormAddRegion(RegionData editData)
+            :this()
+        {
+            this.Value = editData;
         }
 
         private void buttonAccept_Click(object sender, EventArgs e)
         {
             if (Valid())
             {
-                //int res;
-                //int.TryParse(textBox2.Text, out res);
-                Connection.GetInstance().Add(new RegionData(textBox2.Text, textBox1.Text));
-                region = new RegionData(textBox2.Text, textBox1.Text);
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
@@ -41,15 +50,15 @@ namespace StoreClient
         {
             string errorMsg = string.Empty;
             int i = 1;
-            if (textBox1.Text.Length < 1)
+            if (textBoxName.Text.Length < 1)
             {
-                textBox1.BackColor = Color.OrangeRed;
+                textBoxName.BackColor = Color.OrangeRed;
                 errorMsg += i++.ToString() + ". Bitte geben Sie eine gütige Produktgruppen Nummer ein" + Environment.NewLine;
             }
             int res;
-            if (!int.TryParse(textBox2.Text, out res))
+            if (!int.TryParse(textBoxID.Text, out res))
             {
-                textBox2.BackColor = Color.OrangeRed;
+                textBoxID.BackColor = Color.OrangeRed;
                 errorMsg += i++.ToString() + ". Bitte geben Sie eine gütige Identifikationsnummer ein" + Environment.NewLine;
             }
             if (errorMsg.Length > 0)

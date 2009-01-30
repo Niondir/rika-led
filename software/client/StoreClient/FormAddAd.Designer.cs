@@ -81,22 +81,26 @@
             // 
             // buttonOK
             // 
+            this.buttonOK.Image = global::StoreClient.Properties.Resources.page_save;
             this.buttonOK.Location = new System.Drawing.Point(248, 477);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(124, 23);
+            this.buttonOK.Size = new System.Drawing.Size(124, 26);
             this.buttonOK.TabIndex = 6;
             this.buttonOK.Text = "Speichern";
+            this.buttonOK.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Image = global::StoreClient.Properties.Resources.cancel;
             this.buttonCancel.Location = new System.Drawing.Point(12, 477);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(116, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(116, 26);
             this.buttonCancel.TabIndex = 7;
             this.buttonCancel.Text = "Abbrechen";
+            this.buttonCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 

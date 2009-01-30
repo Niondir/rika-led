@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonAccept = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxID = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -49,15 +49,15 @@
             this.richTextBox1.TabStop = false;
             this.richTextBox1.Text = "";
             // 
-            // textBox1
+            // textBoxName
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.textBox1.Location = new System.Drawing.Point(88, 95);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(183, 20);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.TextChanged += new System.EventHandler(this.ChangeBackToWhiteBackCol);
-            this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
+            this.textBoxName.BackColor = System.Drawing.SystemColors.Window;
+            this.textBoxName.Location = new System.Drawing.Point(88, 95);
+            this.textBoxName.Name = "textBoxName";
+            this.textBoxName.Size = new System.Drawing.Size(183, 20);
+            this.textBoxName.TabIndex = 1;
+            this.textBoxName.TextChanged += new System.EventHandler(this.ChangeBackToWhiteBackCol);
+            this.textBoxName.Enter += new System.EventHandler(this.textBox1_Enter);
             // 
             // label1
             // 
@@ -70,33 +70,37 @@
             // 
             // buttonAccept
             // 
-            this.buttonAccept.Location = new System.Drawing.Point(197, 159);
+            this.buttonAccept.Image = global::StoreClient.Properties.Resources.page_save;
+            this.buttonAccept.Location = new System.Drawing.Point(188, 159);
             this.buttonAccept.Name = "buttonAccept";
-            this.buttonAccept.Size = new System.Drawing.Size(75, 23);
+            this.buttonAccept.Size = new System.Drawing.Size(84, 26);
             this.buttonAccept.TabIndex = 18;
             this.buttonAccept.Text = "Speichern";
+            this.buttonAccept.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonAccept.UseVisualStyleBackColor = true;
             this.buttonAccept.Click += new System.EventHandler(this.buttonAccept_Click);
             // 
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Image = global::StoreClient.Properties.Resources.cancel;
             this.buttonCancel.Location = new System.Drawing.Point(12, 159);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(84, 26);
             this.buttonCancel.TabIndex = 19;
             this.buttonCancel.Text = "Abbrechen";
+            this.buttonCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // textBox2
+            // textBoxID
             // 
-            this.textBox2.Location = new System.Drawing.Point(128, 126);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(143, 20);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.TextChanged += new System.EventHandler(this.ChangeBackToWhiteBackCol);
-            this.textBox2.Enter += new System.EventHandler(this.textBox2_Enter);
+            this.textBoxID.Location = new System.Drawing.Point(128, 126);
+            this.textBoxID.Name = "textBoxID";
+            this.textBoxID.Size = new System.Drawing.Size(143, 20);
+            this.textBoxID.TabIndex = 2;
+            this.textBoxID.TextChanged += new System.EventHandler(this.ChangeBackToWhiteBackCol);
+            this.textBoxID.Enter += new System.EventHandler(this.textBox2_Enter);
             // 
             // label2
             // 
@@ -115,11 +119,11 @@
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(284, 194);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBoxID);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonAccept);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.richTextBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FormAddRegion";
@@ -134,11 +138,11 @@
         #endregion
 
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonAccept;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxID;
         private System.Windows.Forms.Label label2;
     }
 }

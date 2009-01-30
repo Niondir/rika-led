@@ -12,11 +12,32 @@ namespace StoreClient
     public partial class FormAddProduct : Form
     {
         public ProductData Product { get; set; }
+        public ProductData Value
+        {
+            get
+            {
+                SignData thisSign = new SignData(Convert.ToInt32(textBoxNumber.Text), regions[comboBoxGroup.SelectedIndex]);
+                textBoxPrice.Text.Replace(',', '.');
+                return new ProductData(thisSign, textBoxName.Text, Convert.ToDouble(textBoxPrice.Text));
+            }
+            set
+            {
+                textBoxName.Text = value.Name;
+                textBoxNumber.Text = value.Sign.Id.ToString();
+                textBoxPrice.Text = value.Price.ToString("0.00");
+                comboBoxGroup.Text = value.Sign.Region.Name;
+            }
+        }
         private RegionData[] regions;
         public FormAddProduct()
         {
             InitializeComponent();
             SetRegions();
+        }
+        public FormAddProduct(ProductData editData)
+            :this()
+        {
+            Value = editData;
         }
 
         private void SetRegions()
@@ -40,11 +61,11 @@ namespace StoreClient
         {
             if (Valid())
             {
-                SignData thisSign = new SignData(Convert.ToInt32(textBoxNumber.Text), regions[comboBoxGroup.SelectedIndex]);
+                /*SignData thisSign = new SignData(Convert.ToInt32(textBoxNumber.Text), regions[comboBoxGroup.SelectedIndex]);
                 textBoxPrice.Text.Replace(',', '.');
                 ProductData thisProduct = new ProductData(thisSign, textBoxName.Text, Convert.ToDouble(textBoxPrice.Text));
                 Connection.GetInstance().Add(new ProductData(new SignData(Convert.ToInt32(textBoxNumber.Text), regions[comboBoxGroup.SelectedIndex]), textBoxName.Text, Convert.ToDouble(textBoxPrice.Text)));
-                this.DialogResult = DialogResult.OK;
+                */this.DialogResult = DialogResult.OK;
                 this.Close();
             }
         }
@@ -81,7 +102,7 @@ namespace StoreClient
                 {
                     FormAddRegion f = new FormAddRegion(comboBoxGroup.Text);
                     if (f.ShowDialog() == DialogResult.OK)
-                        SetRegions(f.NewRegion);
+                        SetRegions(f.Value);
                     else
                     {
                         comboBoxGroup.BackColor = Color.OrangeRed;
@@ -114,8 +135,22 @@ namespace StoreClient
             if (addReg.ShowDialog() == DialogResult.OK)
             {
                 System.Threading.Thread.Sleep(200);
-                SetRegions(addReg.NewRegion);
+                SetRegions(addReg.Value);
             }
+        }
+
+        private void EnterNewBox(object sender, EventArgs e)
+        {
+            string descString = "";
+            if (sender == textBoxName)
+                descString = "Geben Sie bitte die Produktbezeichnung ein\r\nDiese Bezeichnung erscheint ebenfalls auf dem Preisschild. Daher sind nur maximal 20 Zeichen pro Wort und 3 Worte erlaubt";
+            if (sender == textBoxNumber)
+                descString = "Geben Sie bitte die Nummer des Preisschildes, auf dem das Produkt dargestellt sein soll an";
+            if (sender == textBoxPrice)
+                descString = "Geben Sie bitte den Preis des Produkte in EUR an. Dezimalstellen können durch '.' und ',' getrennt werden";
+            if (sender == comboBoxGroup)
+                descString = "Wählen Sie bitte die Warengruppe, derer das Produkt zugehörig sein soll oder geben Sie eine neue ein";
+            richTextBox1.Text = descString;
         }
     }
 }

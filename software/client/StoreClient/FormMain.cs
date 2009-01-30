@@ -51,8 +51,8 @@ namespace StoreClient
                         panelMain.Controls.Add(new ucLogin());
                         break;
                     case DisplayWindow.Groups:
-                        FormGroupManagement f = new FormGroupManagement();
-                        f.ShowDialog();
+                        this.Text = FormMain.title + " - Produktgruppen";
+                        panelMain.Controls.Add(new ucGroups());
                         break;
                     case DisplayWindow.Products:
                         this.Text = FormMain.title + " - Produkte";

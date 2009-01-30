@@ -152,7 +152,8 @@ namespace StoreClient
 
         internal void EditAd(int p, AdvertisementData advertisementData)
         {
-            return;
+            remote.DeleteAdvertisement(session, new AdvertisementData(p, new RegionData("", ""), "", new string[] { "", "", "", "" }, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now));
+            remote.AddAdvertisement(session, advertisementData);
         }
 
         internal void EditUser(UserData oldUser, UserData newUser)
@@ -164,6 +165,11 @@ namespace StoreClient
         internal void Add(UserData newUser)
         {
             remote.AddUser(session, newUser);
+        }
+
+        internal void EditRegion(RegionData oldData, RegionData newData)
+        {
+            remote.EditRegion(session, oldData, newData);
         }
     }
 }

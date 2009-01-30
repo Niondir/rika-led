@@ -35,12 +35,12 @@
             this.comboBoxGroup = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.buttonAccept = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonNewGroup = new System.Windows.Forms.Button();
             this.textBoxNumber = new System.Windows.Forms.TextBox();
             this.textBoxPrice = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.buttonAccept = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -70,6 +70,7 @@
             this.textBoxName.Size = new System.Drawing.Size(215, 20);
             this.textBoxName.TabIndex = 1;
             this.textBoxName.TextChanged += new System.EventHandler(this.ChangeBackToWhiteBackCol);
+            this.textBoxName.Enter += new System.EventHandler(this.EnterNewBox);
             // 
             // label2
             // 
@@ -90,6 +91,7 @@
             this.comboBoxGroup.Size = new System.Drawing.Size(133, 21);
             this.comboBoxGroup.TabIndex = 3;
             this.comboBoxGroup.SelectedIndexChanged += new System.EventHandler(this.ChangeBackToWhiteBackCol);
+            this.comboBoxGroup.Enter += new System.EventHandler(this.EnterNewBox);
             this.comboBoxGroup.TextChanged += new System.EventHandler(this.ChangeBackToWhiteBackCol);
             // 
             // label3
@@ -110,27 +112,6 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Preis:";
             // 
-            // buttonAccept
-            // 
-            this.buttonAccept.Location = new System.Drawing.Point(196, 229);
-            this.buttonAccept.Name = "buttonAccept";
-            this.buttonAccept.Size = new System.Drawing.Size(75, 23);
-            this.buttonAccept.TabIndex = 9;
-            this.buttonAccept.Text = "Speichern";
-            this.buttonAccept.UseVisualStyleBackColor = true;
-            this.buttonAccept.Click += new System.EventHandler(this.buttonAccept_Click);
-            // 
-            // buttonCancel
-            // 
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(13, 229);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 10;
-            this.buttonCancel.Text = "Abbrechen";
-            this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
-            // 
             // buttonNewGroup
             // 
             this.buttonNewGroup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -149,6 +130,7 @@
             this.textBoxNumber.Size = new System.Drawing.Size(168, 20);
             this.textBoxNumber.TabIndex = 2;
             this.textBoxNumber.TextChanged += new System.EventHandler(this.ChangeBackToWhiteBackCol);
+            this.textBoxNumber.Enter += new System.EventHandler(this.EnterNewBox);
             // 
             // textBoxPrice
             // 
@@ -157,6 +139,7 @@
             this.textBoxPrice.Size = new System.Drawing.Size(192, 20);
             this.textBoxPrice.TabIndex = 4;
             this.textBoxPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBoxPrice.Enter += new System.EventHandler(this.EnterNewBox);
             // 
             // label5
             // 
@@ -167,6 +150,31 @@
             this.label5.Size = new System.Drawing.Size(16, 16);
             this.label5.TabIndex = 15;
             this.label5.Text = "€";
+            // 
+            // buttonAccept
+            // 
+            this.buttonAccept.Image = global::StoreClient.Properties.Resources.page_save;
+            this.buttonAccept.Location = new System.Drawing.Point(179, 229);
+            this.buttonAccept.Name = "buttonAccept";
+            this.buttonAccept.Size = new System.Drawing.Size(92, 26);
+            this.buttonAccept.TabIndex = 9;
+            this.buttonAccept.Text = "Speichern";
+            this.buttonAccept.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonAccept.UseVisualStyleBackColor = true;
+            this.buttonAccept.Click += new System.EventHandler(this.buttonAccept_Click);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Image = global::StoreClient.Properties.Resources.cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(12, 229);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(85, 26);
+            this.buttonCancel.TabIndex = 10;
+            this.buttonCancel.Text = "Abbrechen";
+            this.buttonCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // FormAddProduct
             // 

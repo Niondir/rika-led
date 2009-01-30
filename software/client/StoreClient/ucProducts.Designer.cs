@@ -38,7 +38,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonGroups = new System.Windows.Forms.ToolStripButton();
             this.GridProducts = new System.Windows.Forms.DataGridView();
-            this.ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ProdName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Group = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -145,7 +145,7 @@
             this.GridProducts.AllowUserToOrderColumns = true;
             this.GridProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.GridProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ProductName,
+            this.ProdName,
             this.ProductID,
             this.Group,
             this.Price});
@@ -156,14 +156,15 @@
             this.GridProducts.Size = new System.Drawing.Size(809, 511);
             this.GridProducts.TabIndex = 1;
             this.GridProducts.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.GridProducts_CellBeginEdit);
+            this.GridProducts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridProducts_CellDoubleClick);
             this.GridProducts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridProducts_CellEndEdit);
             this.GridProducts.Paint += new System.Windows.Forms.PaintEventHandler(this.GridProducts_Paint);
             // 
-            // ProductName
+            // ProdName
             // 
-            this.ProductName.FillWeight = 162.4366F;
-            this.ProductName.HeaderText = "Name";
-            this.ProductName.Name = "ProductName";
+            this.ProdName.FillWeight = 162.4366F;
+            this.ProdName.HeaderText = "Name";
+            this.ProdName.Name = "ProdName";
             // 
             // ProductID
             // 
@@ -214,7 +215,7 @@
         private System.Windows.Forms.DataGridView GridProducts;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButtonGroups;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProdName;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductID;
         private System.Windows.Forms.DataGridViewComboBoxColumn Group;
         private System.Windows.Forms.DataGridViewTextBoxColumn Price;
