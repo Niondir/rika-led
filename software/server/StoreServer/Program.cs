@@ -43,6 +43,7 @@ namespace StoreServer
         private static RadioManager radioManager;
         private static MultiTextWriter multiConOut;
         private static FormConsole formConsole;
+        private static ConsoleHandler consoleHandler;
 
         private static bool unix = false;
         public static bool Unix { get { return unix; } }
@@ -61,6 +62,8 @@ namespace StoreServer
         public static ClientHandler ClientHandler { get { return clientHandler; } }
         public static RadioManager RadioManager { get { return radioManager; } }
         public static MultiTextWriter MultiConsoleOut { get { return multiConOut; } }
+        public static ConsoleHandler ConsoleHandler { get { return consoleHandler; } }
+
 
         public static string ExePath
         {
@@ -156,7 +159,7 @@ namespace StoreServer
             radioManager = new RadioManager(config.ComPort, dataManager);
             userManager = new ClientManager();
 
-            ConsoleHandler consoleHandler = new ConsoleHandler();
+            consoleHandler = new ConsoleHandler();
 
             try
             {
@@ -174,6 +177,7 @@ namespace StoreServer
             {
                 ConsoleVisibility(true);
                 Console.WriteLine(ex.Message);
+                Console.ReadKey();
             }
             // TODO: Loop for async actions, linke console input
 
@@ -214,7 +218,7 @@ namespace StoreServer
         {
             while (!closing)
             {
-                //Program.ConsoleVisibility(false);
+                Program.ConsoleVisibility(false);
                 formConsole = new FormConsole();
                 multiConOut.Add(formConsole.Out);
                 Application.Run(formConsole);
