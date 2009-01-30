@@ -35,7 +35,6 @@
             this.groupBoxGroupsRights = new System.Windows.Forms.GroupBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.checkBoxAds = new System.Windows.Forms.CheckBox();
             this.checkBoxProducts = new System.Windows.Forms.CheckBox();
             this.checkBoxUser = new System.Windows.Forms.CheckBox();
@@ -53,14 +52,15 @@
             this.comboBoxGroup = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxOldPW = new System.Windows.Forms.TextBox();
-            this.buttonSaveUser = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.button1 = new System.Windows.Forms.Button();
+            this.buttonSaveUser = new System.Windows.Forms.Button();
+            this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.groupBoxAllUsers.SuspendLayout();
             this.groupBoxGroupsRights.SuspendLayout();
@@ -141,18 +141,6 @@
             this.label7.Size = new System.Drawing.Size(38, 13);
             this.label7.TabIndex = 6;
             this.label7.Text = "Name:";
-            // 
-            // button1
-            // 
-            this.button1.Image = global::StoreClient.Properties.Resources.page_save;
-            this.button1.Location = new System.Drawing.Point(3, 308);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(102, 26);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Speichern";
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // checkBoxAds
             // 
@@ -360,18 +348,6 @@
             this.textBoxOldPW.UseSystemPasswordChar = true;
             this.textBoxOldPW.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxOldPW_KeyPress);
             // 
-            // buttonSaveUser
-            // 
-            this.buttonSaveUser.Image = global::StoreClient.Properties.Resources.page_save;
-            this.buttonSaveUser.Location = new System.Drawing.Point(123, 163);
-            this.buttonSaveUser.Name = "buttonSaveUser";
-            this.buttonSaveUser.Size = new System.Drawing.Size(102, 26);
-            this.buttonSaveUser.TabIndex = 11;
-            this.buttonSaveUser.Text = "Speichern";
-            this.buttonSaveUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.buttonSaveUser.UseVisualStyleBackColor = true;
-            this.buttonSaveUser.Click += new System.EventHandler(this.toolStripButtonSave_Click);
-            // 
             // toolStrip1
             // 
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -390,6 +366,40 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // button1
+            // 
+            this.button1.Image = global::StoreClient.Properties.Resources.page_save;
+            this.button1.Location = new System.Drawing.Point(3, 308);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(102, 26);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Speichern";
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // buttonSaveUser
+            // 
+            this.buttonSaveUser.Image = global::StoreClient.Properties.Resources.page_save;
+            this.buttonSaveUser.Location = new System.Drawing.Point(123, 163);
+            this.buttonSaveUser.Name = "buttonSaveUser";
+            this.buttonSaveUser.Size = new System.Drawing.Size(102, 26);
+            this.buttonSaveUser.TabIndex = 11;
+            this.buttonSaveUser.Text = "Speichern";
+            this.buttonSaveUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonSaveUser.UseVisualStyleBackColor = true;
+            this.buttonSaveUser.Click += new System.EventHandler(this.toolStripButtonSave_Click);
+            // 
             // toolStripButtonRefresh
             // 
             this.toolStripButtonRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -399,11 +409,6 @@
             this.toolStripButtonRefresh.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonRefresh.Text = "toolStripButton1";
             this.toolStripButtonRefresh.Click += new System.EventHandler(this.refreshContent);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonNew
             // 
@@ -435,11 +440,6 @@
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
             this.toolStripButtonDelete.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonDelete.Text = "toolStripButton3";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonSave
             // 
