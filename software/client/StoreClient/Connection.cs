@@ -171,5 +171,20 @@ namespace StoreClient
         {
             remote.EditRegion(session, oldData, newData);
         }
+
+        internal void Add(RoleData role)
+        {
+            remote.AddRole(session, role);
+        }
+
+        internal void DeleteRole(RoleData roleData)
+        {
+            remote.DeleteRole(session, roleData);
+        }
+
+        internal void DeleteUser(UserData userData)
+        {
+            remote.DeleteUser(session, userData);
+        }
     }
 }
