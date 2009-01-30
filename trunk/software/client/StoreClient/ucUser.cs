@@ -16,6 +16,34 @@ namespace StoreClient
         UserData iUser;
         CheckBox[] roleFlags;
 
+        private bool GroupGroupEnabled
+        {
+            get
+            {
+                return checkBoxUser.Enabled;
+            }
+            set
+            {
+                checkBoxAds.Enabled = value;
+                checkBoxProducts.Enabled = value;
+                checkBoxUser.Enabled = value;
+                buttonSaveGroup.Enabled = value;
+                toolStripButtonDeleteGroup.Enabled = value;
+                toolStripButtonSaveGroup.Enabled = value;
+                textBoxGroupName.Enabled = value;
+                label7.Enabled = value;
+                label6.Enabled = value;
+
+                if (!value)
+                {
+                    checkBoxAds.Checked = value;
+                    checkBoxProducts.Checked = value;
+                    checkBoxUser.Checked = value;
+                    textBoxGroupName.Text = "";
+                }
+            }
+        }
+
         public ucUser()
         {
             InitializeComponent();
@@ -28,6 +56,9 @@ namespace StoreClient
         {
             if (listBoxUsers.SelectedIndex >= 0)
             {
+                tableLayoutPanel1.Enabled = false;
+                toolStripButtonSave.Enabled = false;
+
                 textBoxName.Text = users[listBoxUsers.SelectedIndex].Username;
                 comboBoxGroup.Text = users[listBoxUsers.SelectedIndex].Role.Name;
 
@@ -47,7 +78,19 @@ namespace StoreClient
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox2.SelectedIndex < 0)
+            {
+                GroupGroupEnabled = false;
+                toolStripButtonEditGroup.Enabled = false;
+                toolStripButtonDeleteGroup.Enabled = false;
+                checkBoxAds.Checked = false;
+                checkBoxUser.Checked = false;
+                checkBoxProducts.Checked = false;
+                textBoxName.Text = "";
                 return;
+            }
+            listBox2.Tag = roles[listBox2.SelectedIndex];
+            toolStripButtonEditGroup.Enabled = true;
+            toolStripButtonDeleteGroup.Enabled = true;
 
             if ((roles[listBox2.SelectedIndex].Flags & (int)CommunicationAPI.AccessFlags.Ads) != 0)
                 checkBoxAds.Checked = true;
@@ -62,7 +105,7 @@ namespace StoreClient
             else
                 checkBoxUser.Checked = false;
 
-            textBox5.Text = roles[listBox2.SelectedIndex].Name;
+            textBoxGroupName.Text = roles[listBox2.SelectedIndex].Name;
         }
 
         private void toolStripButtonEdit_Click(object sender, EventArgs e)
@@ -75,8 +118,9 @@ namespace StoreClient
 
         private void button1_Click(object sender, EventArgs e)
         {
+            bool newGroup = false;
             if (listBox2.SelectedIndex < 0)
-                return;
+                newGroup = true;
 
             int flags = 0;
             if(checkBoxAds.Checked)
@@ -85,14 +129,27 @@ namespace StoreClient
                 flags |= (int)CommunicationAPI.AccessFlags.Product;
             if(checkBoxUser.Checked)
                 flags |= (int)CommunicationAPI.AccessFlags.User;
+            if (textBoxGroupName.Text.Length == 0)
+            {
+                MessageBox.Show("Bitte geben Sie eine Beizeichnung der Gruppe an", "Gruppenname", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
 
-            Connection.GetInstance().EditRole(roles[listBox2.SelectedIndex], new RoleData(textBox5.Text, flags));
+            RoleData role = new RoleData(textBoxGroupName.Text, flags);
+            if (newGroup)
+                Connection.GetInstance().Add(role);
+            else
+                Connection.GetInstance().EditRole(roles[listBox2.SelectedIndex], role);
 
             refreshContent(null, null);
+
+            GroupGroupEnabled = false;
         }
 
         private void refreshContent(object sender, EventArgs e)
         {
+
+
             listBoxUsers.Items.Clear();
             users = Connection.GetInstance().GetUsers();
             foreach (UserData i in users)
@@ -108,6 +165,9 @@ namespace StoreClient
                 comboBoxGroup.Items.Add(i.Name);
                 listBox2.Items.Add(i.Name);
             }
+
+            listBox1_SelectedIndexChanged(null, null);
+            listBox2_SelectedIndexChanged(null, null);
         }
 
         private void toolStripButtonSave_Click(object sender, EventArgs e)
@@ -160,12 +220,13 @@ namespace StoreClient
         }
         private void toolStripButtonNew_Click(object sender, EventArgs e)
         {
+            listBoxUsers.ClearSelected();
+            
             tableLayoutPanel1.Enabled = true;
             toolStripButtonSave.Enabled = true;
+            toolStripButtonDelete.Enabled = true;
 
             clearAllBoxes();
-
-            listBoxUsers.SelectedIndex = -1;
         }
 
         private void textBoxOldPW_KeyPress(object sender, KeyPressEventArgs e)
@@ -175,6 +236,49 @@ namespace StoreClient
                 toolStripButtonSave_Click(null, null);
                 e.Handled = true;
             }
+        }
+
+        private void toolStripButtonNewGroup_Click(object sender, EventArgs e)
+        {
+            listBox2.ClearSelected();
+            GroupGroupEnabled = false;
+            GroupGroupEnabled = true;
+        }
+
+        private void toolStripButtonDeleteGroup_Click(object sender, EventArgs e)
+        {
+            if (listBox2.SelectedIndex > -1)
+            {
+                if(MessageBox.Show("Soll die Gruppe \""+listBox2.SelectedItem.ToString()+"\" wirklich gelöscht werden?", "Sicherheitsfrage", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) != DialogResult.Yes)
+                    return;
+                Connection.GetInstance().DeleteRole((RoleData)listBox2.Tag);
+                refreshContent(null, null);
+            }
+            
+            GroupGroupEnabled = false;
+        }
+
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        {
+            if (listBoxUsers.SelectedIndex < 0)
+            {
+                tableLayoutPanel1.Enabled = false;
+                toolStripButtonDelete.Enabled = false;
+                toolStripButtonSave.Enabled = false;
+                clearAllBoxes();
+            }
+            else
+            {
+                if(MessageBox.Show("Soll der Benutzer \""+listBoxUsers.SelectedItem.ToString()+"\" wirklich gelöscht werden?", "Sicherheitsfrage", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) != DialogResult.Yes)
+                    return;
+                Connection.GetInstance().DeleteUser((UserData)listBoxUsers.Tag);
+                refreshContent(null, null);
+            }
+        }
+
+        private void toolStripButtonEditGroup_Click(object sender, EventArgs e)
+        {
+            GroupGroupEnabled = !GroupGroupEnabled;
         }
     }
 }
