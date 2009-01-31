@@ -68,5 +68,14 @@ namespace StoreClient
         {
             RefreshData();
         }
+
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow i in gridAds.SelectedRows)
+            {
+                Connection.GetInstance().DeleteAd((AdvertisementData)i.Tag);
+            }
+            RefreshData();
+        }
     }
 }
