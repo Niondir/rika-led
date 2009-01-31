@@ -16,8 +16,7 @@ using System.Xml;
 using StoreServer.GUI;
 using System.Windows.Forms;
 /* TODO: Program.cs
- * edit user
- * edit ad
+ * 
  * */
 
 namespace StoreServer

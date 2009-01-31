@@ -6,8 +6,6 @@ using System.Threading;
 using StoreServer.Data;
 
 /* TODO: RedioManager.cs
- * - Keinen ebeneffekte wenn die Verbindung nicht auf gebaut werden kann. Queue trotzdem pflegen.
- * - Wenn offline, jede Sekunde versuchen die Verbindung wieder auf zu nehmen
  * 
  * */
 
@@ -103,6 +101,12 @@ namespace StoreServer.Radio
                     return;
                 }
                     
+            }
+
+            if (sendQueue.Count > 50)
+            {
+                // Avoid a overloading of the send queue
+                return;
             }
 
             // Alle Produkte raussuchen

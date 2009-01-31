@@ -43,7 +43,6 @@
             this.rtbConsoleOut.Location = new System.Drawing.Point(0, 0);
             this.rtbConsoleOut.Margin = new System.Windows.Forms.Padding(0);
             this.rtbConsoleOut.Name = "rtbConsoleOut";
-            this.rtbConsoleOut.ReadOnly = true;
             this.rtbConsoleOut.Size = new System.Drawing.Size(775, 318);
             this.rtbConsoleOut.TabIndex = 0;
             this.rtbConsoleOut.Text = "";
