@@ -104,7 +104,10 @@ namespace CommunicationAPI.Interface
         SignData[] GetSigns(SessionData session, RegionData region);
 
         [XmlRpcMethod]
-        TraceData[] GetTraces(SessionData session, DateTime from, DateTime to);
+        TraceData[] GetTracesByTimeSpan(SessionData session, DateTime from, DateTime to);
+
+        [XmlRpcMethod]
+        TraceData[] GetTraces(SessionData session);
 
         [XmlRpcMethod]
         AdvertisementData[] GetAdvertisement(SessionData session);
