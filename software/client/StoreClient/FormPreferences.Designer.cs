@@ -48,6 +48,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonSaveAndClose = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -90,6 +91,7 @@
             this.textBoxPassword.Size = new System.Drawing.Size(100, 20);
             this.textBoxPassword.TabIndex = 4;
             this.textBoxPassword.UseSystemPasswordChar = true;
+            this.textBoxPassword.Enter += new System.EventHandler(this.textBoxPassword_Enter);
             // 
             // label2
             // 
@@ -128,6 +130,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.textBoxPort);
             this.tabPage2.Controls.Add(this.checkBoxPort);
             this.tabPage2.Controls.Add(this.textBoxServerAddr);
@@ -246,6 +249,15 @@
             this.buttonSaveAndClose.UseVisualStyleBackColor = true;
             this.buttonSaveAndClose.Click += new System.EventHandler(this.buttonSaveAndClose_Click);
             // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(6, 103);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(396, 80);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Damit die Änderungen wirksam werden, müssen Sie sich zunächst auslogggen. [Datei " +
+                "-> Verbindung trennen]\r\n";
+            // 
             // FormPreferences
             // 
             this.AcceptButton = this.buttonSave;
@@ -290,5 +302,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxPort;
         private System.Windows.Forms.CheckBox checkBoxPort;
+        private System.Windows.Forms.Label label4;
     }
 }
