@@ -82,6 +82,18 @@ namespace StoreServer.GUI
             }
         }
 
+        private void rtbConsoleOut_TextChanged(object sender, EventArgs e)
+        {
+            //if (rtbConsoleOut.Lines.Length > 5)
+            //{
+                // remove first line
+                //string mystring = rtbConsoleOut.Text;
+                //rtbConsoleOut.Text = mystring.Substring(mystring.IndexOf("\n", 0) + 1, mystring.Length - mystring.IndexOf("\n", 0) - 1);
+            //}
+            
+        }
+
+        
 
     }
 }

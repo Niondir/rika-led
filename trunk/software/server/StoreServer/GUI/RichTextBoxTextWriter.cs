@@ -17,6 +17,7 @@ namespace StoreServer.GUI
 
         public override void Write(char value)
         {
+            if (rtb.IsDisposed) return;
             if (rtb.InvokeRequired)
             {
                 rtb.BeginInvoke((MethodInvoker)delegate { Write(value); });
@@ -30,6 +31,7 @@ namespace StoreServer.GUI
 
         public override void WriteLine(string line)
         {
+            if (rtb.IsDisposed) return;
             if (rtb.InvokeRequired)
             {
                 rtb.BeginInvoke((MethodInvoker)delegate { WriteLine(line); });
