@@ -18,7 +18,7 @@ namespace StoreClient
             get
             {
                 Preferences pref = new Preferences();
-                pref.Password = (string)textBoxPassword.Tag;
+                pref.Password = (string)textBoxPassword.Text;
                 pref.ServerAddress = textBoxServerAddr.Text + ":" + textBoxPort.Text;
                 pref.UserName = textBoxUsername.Text;
                 pref.AutoLogin = checkBoxPort.Checked;
@@ -26,8 +26,11 @@ namespace StoreClient
             }
             set
             {
-                textBoxPassword.Text = "Password";
-                textBoxPassword.Tag = value.Password;
+                if (textBoxUsername.Text.Length > 0)
+                {
+                    textBoxPassword.Text = "Password";
+                    textBoxPassword.Tag = value.Password;
+                }
                 textBoxUsername.Text = value.UserName;
                 textBoxServerAddr.Text = value.ServerAddressOnly;
                 textBoxPort.Text = value.ServerPortOnly;
@@ -55,6 +58,11 @@ namespace StoreClient
         private void checkBoxPort_CheckedChanged(object sender, EventArgs e)
         {
             textBoxPort.Enabled = checkBoxPort.Checked;
+        }
+
+        private void textBoxPassword_Enter(object sender, EventArgs e)
+        {
+            textBoxPassword.Text = "";
         }
     }
 
