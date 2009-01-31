@@ -77,10 +77,10 @@ namespace StoreServer.Data
                 throw new Exception("Problem with the text values: " + ex);
             }
             command.Parameters.AddWithValue("name", this.Name);
-            command.Parameters.AddWithValue("startDate", this.StartDate);
-            command.Parameters.AddWithValue("stopDate", this.StopDate);
-            command.Parameters.AddWithValue("startTime", this.StartTime);
-            command.Parameters.AddWithValue("stopTime", this.StopTime);
+            command.Parameters.AddWithValue("startDate", this.StartDate.ToOADate());
+            command.Parameters.AddWithValue("stopDate", this.StopDate.ToOADate());
+            command.Parameters.AddWithValue("startTime", this.StartTime.ToOADate());
+            command.Parameters.AddWithValue("stopTime", this.StopTime.ToOADate());
 
             if (command.ExecuteNonQuery() == 0)
             {
@@ -145,6 +145,23 @@ namespace StoreServer.Data
             command.Parameters.AddWithValue("id", this.id);
 
             command.ExecuteNonQuery();
+        }
+
+        public void Update(OdbcConnection connection, AdvertisementData data)
+        {
+            OdbcCommand command = connection.CreateCommand();
+            command.CommandText = "UPDATE led_advertisements SET regions_id = ?, line1 = ?, line2 = ?, line3 = ?, line4 = ?, name = ?, startDate = ?, stopDate = ?, startTime = ? stopTime = ? WHERE id = ?";
+            command.Parameters.AddWithValue("regions_id", data.Region.Id);
+            command.Parameters.AddWithValue("line1", data.Text[0]);
+            command.Parameters.AddWithValue("line2", data.Text[1]);
+            command.Parameters.AddWithValue("line3", data.Text[2]);
+            command.Parameters.AddWithValue("line4", data.Text[3]);
+            command.Parameters.AddWithValue("name", data.Name);
+            command.Parameters.AddWithValue("startDate", data.StartDate.ToOADate());
+            command.Parameters.AddWithValue("stopDate", data.StopDate.ToOADate());
+            command.Parameters.AddWithValue("startTime", data.StartTime.ToOADate());
+            command.Parameters.AddWithValue("stopTime", data.StopTime.ToOADate());
+            command.Parameters.AddWithValue("where_id", this.id);
         }
     }
 }

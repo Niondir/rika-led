@@ -75,6 +75,9 @@ namespace CommunicationAPI.Interface
         [XmlRpcMethod]
         void EditProduct(SessionData session, ProductData oldValue, ProductData newValue);
 
+        [XmlRpcMethod]
+        void EditAdvertisement(SessionData session, AdvertisementData oldValue, AdvertisementData newValue);
+
         #endregion
 
         #region Get()

@@ -47,6 +47,7 @@
             this.rtbConsoleOut.Size = new System.Drawing.Size(775, 318);
             this.rtbConsoleOut.TabIndex = 0;
             this.rtbConsoleOut.Text = "";
+            this.rtbConsoleOut.TextChanged += new System.EventHandler(this.rtbConsoleOut_TextChanged);
             // 
             // tableLayoutPanel1
             // 
