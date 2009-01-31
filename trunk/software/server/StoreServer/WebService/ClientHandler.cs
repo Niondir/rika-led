@@ -807,7 +807,16 @@ namespace StoreServer.WebService
         #endregion
 
 
-        
+
+        public TraceData[] GetTracesByTimeSpan(SessionData session, DateTime from, DateTime to)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TraceData[] GetTraces(SessionData session)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
