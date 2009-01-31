@@ -68,15 +68,18 @@ namespace StoreClient
 
         private void GridRegions_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            RegionData oldData = (RegionData)GridRegions.SelectedRows[0].Tag;
-
-            FormAddRegion editReg = new FormAddRegion(oldData);
-            if (editReg.ShowDialog() == DialogResult.OK)
+            foreach (DataGridViewRow i in GridRegions.SelectedRows)
             {
-                Connection.GetInstance().EditRegion(oldData, editReg.Value);
-                RefreshContent(null, null);
-                if (groupsChanged != null)
-                    groupsChanged(this, null);
+                RegionData oldData = (RegionData)i.Tag;
+
+                FormAddRegion editReg = new FormAddRegion(oldData);
+                if (editReg.ShowDialog() == DialogResult.OK)
+                {
+                    Connection.GetInstance().EditRegion(oldData, editReg.Value);
+                    RefreshContent(null, null);
+                    if (groupsChanged != null)
+                        groupsChanged(this, null);
+                }
             }
         }
 

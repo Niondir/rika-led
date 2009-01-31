@@ -105,7 +105,10 @@ namespace StoreClient
                 {
                     FormAddRegion f = new FormAddRegion(comboBoxGroup.Text);
                     if (f.ShowDialog() == DialogResult.OK)
+                    {
+                        Connection.GetInstance().Add(f.Value);
                         SetRegions(f.Value);
+                    }
                     else
                     {
                         comboBoxGroup.BackColor = Color.OrangeRed;

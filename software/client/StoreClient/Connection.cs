@@ -195,5 +195,10 @@ namespace StoreClient
         {
             remote.DeleteUser(session, userData);
         }
+
+        internal void DeleteAd(AdvertisementData advertisementData)
+        {
+            remote.DeleteAdvertisement(session, advertisementData);
+        }
     }
 }
