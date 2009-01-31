@@ -113,6 +113,7 @@ namespace StoreClient
             CurrWindow = DisplayWindow.Login;
 
             connection = Connection.GetInstance();
+            connection.ServerURL = Preferences.GetInstance().ServerAddress;
             connection.LoginChanged += new EventHandler<ConnectionChangedEventArgs>(connection_LoginChanged);
         }
 
@@ -168,6 +169,12 @@ namespace StoreClient
         private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void einstellungenToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FormPreferences prefs = new FormPreferences();
+            prefs.ShowDialog();
         }
 
     }
