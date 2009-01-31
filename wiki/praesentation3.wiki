@@ -4,18 +4,18 @@
 FOLIEN  // PRÄSENTATION 3
 
 -themen
-* idee
-* [optional] überblick
-* [optional] unterschiede zum system der anderen gruppe
-* zahlen zum system (wie lange zum hochfahren? korrekt ankommende pakete? maximale entfernung zwischen sender und 	empfänger?)
-* Traces - Prinzip
-* Pakete - analyse nach cmdnummern, checksumme
-* flackern - maximale geschwindigkeit, warum?, ideen zur lösung, 
-* schwierigkeiten?
-* schwächen?
-* solarzelle, wie auslesen? oszilloskop bilder
-* http paket übertragung admin server, wie sieht paket aus
-* werbung - zeitfenster 
+ * idee
+ * [optional] überblick
+ * [optional] unterschiede zum system der anderen gruppe
+ * zahlen zum system (wie lange zum hochfahren? korrekt ankommende pakete? maximale entfernung zwischen sender und 	empfänger?)
+ * Traces - Prinzip
+ * Pakete - analyse nach cmdnummern, checksumme
+ * flackern - maximale geschwindigkeit, warum?, ideen zur lösung, 
+ * schwierigkeiten?
+ * schwächen?
+ * solarzelle, wie auslesen? oszilloskop bilder
+ * http paket übertragung admin server, wie sieht paket aus
+ * werbung - zeitfenster 
 
 Testlauf: 
 schildjumper erkären
