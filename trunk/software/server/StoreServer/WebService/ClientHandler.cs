@@ -308,6 +308,21 @@ namespace StoreServer.WebService
             }
         }
 
+        public void EditAdvertisement(SessionData session, AdvertisementData oldValue, AdvertisementData newValue)
+        {
+            this.ValidateRequest(session, AccessFlags.Authenticated);
+
+            try
+            {
+                Advertisement ad = new Advertisement(oldValue);
+                ad.Update(this.DataManager.Connection, newValue);
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
+            }
+        }
+
         public RoleData[] GetRoles(SessionData session)
         {
             Debug.WriteLine("GetRoles()");
