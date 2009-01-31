@@ -17,20 +17,15 @@ FOLIEN  // PRÄSENTATION 3
  * http paket übertragung admin server, wie sieht paket aus
  * werbung - zeitfenster 
 
-Testlauf: 
-schildjumper erkären
-
-
-
-serverfeatures:
-* automatisches mysql datenbankupdate
-* config datei
-* konsolenoutput in logdatei
-* öffnet webserver für eingehende xml anfragen
-* funkverbindung com port, reconnected
-* beim senden solange unterschiedliche lampem möglich wird das gemacht
-* queue
-* 2 consolen
+-serverfeatures:
+ * automatisches mysql datenbankupdate
+ * config datei
+ * konsolenoutput in logdatei
+ * öffnet webserver für eingehende xml anfragen
+ * funkverbindung com port, reconnected
+ * beim senden solange unterschiedliche lampem möglich wird das gemacht
+ * queue
+ * 2 consolen
 
 management software features:
 - 
