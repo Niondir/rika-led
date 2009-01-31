@@ -2,8 +2,8 @@
 
 
 FOLIEN  // PRÄSENTATION 3
-IStore IServer Ishield I
 
+-themen
 * idee
 * [optional] überblick
 * [optional] unterschiede zum system der anderen gruppe
