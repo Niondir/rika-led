@@ -4,21 +4,18 @@
 FOLIEN  // PRÄSENTATION 3
 IStore IServer Ishield I
 
-1. idee
-2. [optional] überblick
-3. [optional] unterschiede zum system der anderen gruppe
-4. zahlen zum system (wie lange zum hochfahren? korrekt ankommende pakete? maximale entfernung zwischen sender und 	empfänger?)
-5. Traces - Prinzip
-6. Pakete - analyse nach cmdnummern, checksumme
-7. flackern - maximale geschwindigkeit, warum?, ideen zur lösung, 
-8. schwierigkeiten?
-9. schwächen?
-10. solarzelle, wie auslesen? oszilloskop bilder
-11. http paket übertragung admin server, wie sieht paket aus
-12. werbung - zeitfenster
-13. 
-14. 
-15. 
+* idee
+* [optional] überblick
+* [optional] unterschiede zum system der anderen gruppe
+* zahlen zum system (wie lange zum hochfahren? korrekt ankommende pakete? maximale entfernung zwischen sender und 	empfänger?)
+* Traces - Prinzip
+* Pakete - analyse nach cmdnummern, checksumme
+* flackern - maximale geschwindigkeit, warum?, ideen zur lösung, 
+* schwierigkeiten?
+* schwächen?
+* solarzelle, wie auslesen? oszilloskop bilder
+* http paket übertragung admin server, wie sieht paket aus
+* werbung - zeitfenster 
 
 Testlauf: 
 schildjumper erkären
@@ -26,14 +23,14 @@ schildjumper erkären
 
 
 serverfeatures:
-- automatisches mysql datenbankupdate
-- config datei
-- konsolenoutput in logdatei
-- öffnet webserver für eingehende xml anfragen
-- funkverbindung com port, reconnected
-- beim senden solange unterschiedliche lampem möglich wird das gemacht
-- queue
-- 2 consolen
+* automatisches mysql datenbankupdate
+* config datei
+* konsolenoutput in logdatei
+* öffnet webserver für eingehende xml anfragen
+* funkverbindung com port, reconnected
+* beim senden solange unterschiedliche lampem möglich wird das gemacht
+* queue
+* 2 consolen
 
 management software features:
 - 
