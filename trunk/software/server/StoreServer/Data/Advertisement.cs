@@ -119,7 +119,13 @@ namespace StoreServer.Data
 
                 string[] adText = new string[] { reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5) };
                 string name = reader.GetString(6);
-                AdvertisementData aData = new AdvertisementData((int)reader.GetInt64(0), region, name, adText, reader.GetDate(7), reader.GetDate(8), reader.GetDate(9), reader.GetDate(10));
+                
+                DateTime startDate = reader.GetDate(7);
+                DateTime stopDate = reader.GetDate(8);
+                DateTime startTime = reader.GetDate(9);
+                DateTime stopTime = reader.GetDate(10);
+
+                AdvertisementData aData = new AdvertisementData((int)reader.GetInt64(0), region, name, adText, startDate, stopDate, startTime, stopTime);
 
                 
                 Advertisement ad = new Advertisement(aData);
