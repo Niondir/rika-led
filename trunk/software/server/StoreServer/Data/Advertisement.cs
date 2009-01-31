@@ -77,10 +77,10 @@ namespace StoreServer.Data
                 throw new Exception("Problem with the text values: " + ex);
             }
             command.Parameters.AddWithValue("name", this.Name);
-            command.Parameters.AddWithValue("startDate", this.StartDate.ToOADate());
-            command.Parameters.AddWithValue("stopDate", this.StopDate.ToOADate());
-            command.Parameters.AddWithValue("startTime", this.StartTime.ToOADate());
-            command.Parameters.AddWithValue("stopTime", this.StopTime.ToOADate());
+            command.Parameters.AddWithValue("startDate", this.StartDate);
+            command.Parameters.AddWithValue("stopDate", this.StopDate);
+            command.Parameters.AddWithValue("startTime", this.StartTime);
+            command.Parameters.AddWithValue("stopTime", this.StopTime);
 
             if (command.ExecuteNonQuery() == 0)
             {
@@ -163,10 +163,10 @@ namespace StoreServer.Data
             command.Parameters.AddWithValue("line3", data.Text[2]);
             command.Parameters.AddWithValue("line4", data.Text[3]);
             command.Parameters.AddWithValue("name", data.Name);
-            command.Parameters.AddWithValue("startDate", data.StartDate.ToOADate());
-            command.Parameters.AddWithValue("stopDate", data.StopDate.ToOADate());
-            command.Parameters.AddWithValue("startTime", data.StartTime.ToOADate());
-            command.Parameters.AddWithValue("stopTime", data.StopTime.ToOADate());
+            command.Parameters.AddWithValue("startDate", data.StartDate);
+            command.Parameters.AddWithValue("stopDate", data.StopDate);
+            command.Parameters.AddWithValue("startTime", data.StartTime);
+            command.Parameters.AddWithValue("stopTime", data.StopTime);
             command.Parameters.AddWithValue("where_id", this.id);
         }
     }
