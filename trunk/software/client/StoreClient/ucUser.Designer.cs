@@ -50,16 +50,16 @@
             this.comboBoxGroup = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxOldPW = new System.Windows.Forms.TextBox();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonSaveGroup = new System.Windows.Forms.Button();
             this.buttonSaveUser = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonNew = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
+            this.buttonSaveGroup = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBoxNewGroup = new System.Windows.Forms.GroupBox();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
@@ -343,6 +343,18 @@
             this.textBoxOldPW.UseSystemPasswordChar = true;
             this.textBoxOldPW.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxOldPW_KeyPress);
             // 
+            // buttonSaveUser
+            // 
+            this.buttonSaveUser.Image = global::StoreClient.Properties.Resources.page_save;
+            this.buttonSaveUser.Location = new System.Drawing.Point(123, 163);
+            this.buttonSaveUser.Name = "buttonSaveUser";
+            this.buttonSaveUser.Size = new System.Drawing.Size(102, 26);
+            this.buttonSaveUser.TabIndex = 11;
+            this.buttonSaveUser.Text = "Speichern";
+            this.buttonSaveUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonSaveUser.UseVisualStyleBackColor = true;
+            this.buttonSaveUser.Click += new System.EventHandler(this.toolStripButtonSave_Click);
+            // 
             // toolStrip1
             // 
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -361,41 +373,6 @@
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // buttonSaveGroup
-            // 
-            this.buttonSaveGroup.Enabled = false;
-            this.buttonSaveGroup.Image = global::StoreClient.Properties.Resources.page_save;
-            this.buttonSaveGroup.Location = new System.Drawing.Point(112, 175);
-            this.buttonSaveGroup.Name = "buttonSaveGroup";
-            this.buttonSaveGroup.Size = new System.Drawing.Size(102, 26);
-            this.buttonSaveGroup.TabIndex = 5;
-            this.buttonSaveGroup.Text = "Speichern";
-            this.buttonSaveGroup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.buttonSaveGroup.UseVisualStyleBackColor = true;
-            this.buttonSaveGroup.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // buttonSaveUser
-            // 
-            this.buttonSaveUser.Image = global::StoreClient.Properties.Resources.page_save;
-            this.buttonSaveUser.Location = new System.Drawing.Point(123, 163);
-            this.buttonSaveUser.Name = "buttonSaveUser";
-            this.buttonSaveUser.Size = new System.Drawing.Size(102, 26);
-            this.buttonSaveUser.TabIndex = 11;
-            this.buttonSaveUser.Text = "Speichern";
-            this.buttonSaveUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.buttonSaveUser.UseVisualStyleBackColor = true;
-            this.buttonSaveUser.Click += new System.EventHandler(this.toolStripButtonSave_Click);
-            // 
             // toolStripButtonRefresh
             // 
             this.toolStripButtonRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -406,6 +383,11 @@
             this.toolStripButtonRefresh.Text = "toolStripButton1";
             this.toolStripButtonRefresh.ToolTipText = "Aktualisieren";
             this.toolStripButtonRefresh.Click += new System.EventHandler(this.refreshContent);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonNew
             // 
@@ -442,6 +424,11 @@
             this.toolStripButtonDelete.ToolTipText = "Ausgewählten Benutzer löschen";
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripButtonSave
             // 
             this.toolStripButtonSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -453,6 +440,19 @@
             this.toolStripButtonSave.Text = "toolStripButton4";
             this.toolStripButtonSave.ToolTipText = "Benutzerdaten speichern";
             this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
+            // 
+            // buttonSaveGroup
+            // 
+            this.buttonSaveGroup.Enabled = false;
+            this.buttonSaveGroup.Image = global::StoreClient.Properties.Resources.page_save;
+            this.buttonSaveGroup.Location = new System.Drawing.Point(112, 175);
+            this.buttonSaveGroup.Name = "buttonSaveGroup";
+            this.buttonSaveGroup.Size = new System.Drawing.Size(102, 26);
+            this.buttonSaveGroup.TabIndex = 5;
+            this.buttonSaveGroup.Text = "Speichern";
+            this.buttonSaveGroup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonSaveGroup.UseVisualStyleBackColor = true;
+            this.buttonSaveGroup.Click += new System.EventHandler(this.button1_Click);
             // 
             // splitContainer1
             // 

@@ -34,10 +34,15 @@ namespace StoreClient
                 {
                     dateTimePickerStartDate.MinDate = dateTimePickerStartTime.MinDate = value.StartDate;
                 }
-                dateTimePickerStartDate.Value = value.StartDate;
-                dateTimePickerStopDate.Value = value.StopDate;
-                dateTimePickerStartTime.Value = value.StartTime;
-                dateTimePickerStopTime.Value = value.StopTime;
+
+                try
+                {
+                    dateTimePickerStopDate.Value = value.StopDate;
+                    dateTimePickerStartDate.Value = value.StartDate;
+                    dateTimePickerStopTime.Value = value.StopTime;
+                    dateTimePickerStartTime.Value = value.StartTime;
+                }
+                catch { }
 
                 comboBoxGroup.Text = value.Region.Name;
                 comboBoxGroup.Tag = value.Region;
@@ -113,7 +118,6 @@ namespace StoreClient
                     errorMsg += i++.ToString() + ". Bitte wählen Sie eine Produktgruppe." + Environment.NewLine;
                 }
             }
-
             if (errorMsg.Length > 0)
             {
                 MessageBox.Show(errorMsg);
@@ -146,6 +150,11 @@ namespace StoreClient
         private void comboBoxGroup_SelectedIndexChanged(object sender, EventArgs e)
         {
             comboBoxGroup.Tag = (RegionData)regions[comboBoxGroup.SelectedIndex];
+        }
+
+        private void dateTimePickerStartTime_ValueChanged(object sender, EventArgs e)
+        {
+            dateTimePickerStopTime.MinDate = dateTimePickerStartTime.Value + TimeSpan.FromHours(1.0);
         }
     }
 }

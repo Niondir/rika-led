@@ -119,6 +119,7 @@
             // 
             // produkteToolStripMenuItem
             // 
+            this.produkteToolStripMenuItem.Enabled = false;
             this.produkteToolStripMenuItem.Name = "produkteToolStripMenuItem";
             this.produkteToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.produkteToolStripMenuItem.Text = "Produkte";
@@ -126,6 +127,7 @@
             // 
             // produktgruppenToolStripMenuItem
             // 
+            this.produktgruppenToolStripMenuItem.Enabled = false;
             this.produktgruppenToolStripMenuItem.Name = "produktgruppenToolStripMenuItem";
             this.produktgruppenToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.produktgruppenToolStripMenuItem.Text = "Produktgruppen";
@@ -138,6 +140,7 @@
             // 
             // werbungToolStripMenuItem
             // 
+            this.werbungToolStripMenuItem.Enabled = false;
             this.werbungToolStripMenuItem.Name = "werbungToolStripMenuItem";
             this.werbungToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.werbungToolStripMenuItem.Text = "Werbungen";
@@ -145,6 +148,7 @@
             // 
             // kundenanalyseToolStripMenuItem
             // 
+            this.kundenanalyseToolStripMenuItem.Enabled = false;
             this.kundenanalyseToolStripMenuItem.Name = "kundenanalyseToolStripMenuItem";
             this.kundenanalyseToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.kundenanalyseToolStripMenuItem.Text = "Kundenanalyse";
@@ -157,6 +161,7 @@
             // 
             // benutzerToolStripMenuItem
             // 
+            this.benutzerToolStripMenuItem.Enabled = false;
             this.benutzerToolStripMenuItem.Name = "benutzerToolStripMenuItem";
             this.benutzerToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.benutzerToolStripMenuItem.Text = "Benutzer";
