@@ -31,8 +31,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.labelCaption = new System.Windows.Forms.Label();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
-            this.buttonLogin = new System.Windows.Forms.Button();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
+            this.buttonLogin = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,19 +80,6 @@
             this.textBoxUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsername_KeyPress);
             this.textBoxUsername.Enter += new System.EventHandler(this.textBoxUsername_Click);
             // 
-            // buttonLogin
-            // 
-            this.buttonLogin.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonLogin.Image = global::StoreClient.Properties.Resources.connect;
-            this.buttonLogin.Location = new System.Drawing.Point(186, 152);
-            this.buttonLogin.Name = "buttonLogin";
-            this.buttonLogin.Size = new System.Drawing.Size(194, 23);
-            this.buttonLogin.TabIndex = 4;
-            this.buttonLogin.Text = "Einloggen";
-            this.buttonLogin.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.buttonLogin.UseVisualStyleBackColor = true;
-            this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
-            // 
             // textBoxPassword
             // 
             this.textBoxPassword.Dock = System.Windows.Forms.DockStyle.Top;
@@ -105,6 +92,19 @@
             this.textBoxPassword.Leave += new System.EventHandler(this.textBoxPassword_Leave);
             this.textBoxPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsername_KeyPress);
             this.textBoxPassword.Enter += new System.EventHandler(this.textBox1_Click);
+            // 
+            // buttonLogin
+            // 
+            this.buttonLogin.Dock = System.Windows.Forms.DockStyle.Top;
+            this.buttonLogin.Image = global::StoreClient.Properties.Resources.connect;
+            this.buttonLogin.Location = new System.Drawing.Point(186, 152);
+            this.buttonLogin.Name = "buttonLogin";
+            this.buttonLogin.Size = new System.Drawing.Size(194, 26);
+            this.buttonLogin.TabIndex = 4;
+            this.buttonLogin.Text = "Einloggen";
+            this.buttonLogin.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonLogin.UseVisualStyleBackColor = true;
+            this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
             // 
             // ucLogin
             // 

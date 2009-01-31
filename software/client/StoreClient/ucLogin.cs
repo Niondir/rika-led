@@ -58,6 +58,13 @@ namespace StoreClient
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
+
+            if (Preferences.GetInstance().AutoLogin)
+            {
+                textBoxPassword.Text = Preferences.GetInstance().Password;
+                textBoxUsername.Text = Preferences.GetInstance().UserName;
+            }
+            Connection.GetInstance().ServerURL = Preferences.GetInstance().ServerAddress;
         }
 
         private void textBoxUsername_Click(object sender, EventArgs e)
@@ -86,6 +93,7 @@ namespace StoreClient
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
+            Connection.GetInstance().ServerURL = Preferences.GetInstance().ServerAddress;
             if (!this.PasswordEntered || !this.UserEntered)
             {
                 MessageBox.Show("Geben Sie bitte den Benutzernamen und das Passwort ein", "Achtung", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

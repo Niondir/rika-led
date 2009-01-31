@@ -96,13 +96,22 @@ namespace StoreClient
                 comboBoxGroup.BackColor = Color.OrangeRed;
                 errorMsg += i++.ToString() + ". Bitte wählen Sie eine Produktgruppe." + Environment.NewLine;
             }
+            double result;
+            if (!double.TryParse(textBoxPrice.Text, out result))
+            {
+                textBoxPrice.BackColor = Color.OrangeRed;
+                errorMsg += i++.ToString() + ". Geben Sie einen gültigen Preis an." + Environment.NewLine;
+            }
             if (comboBoxGroup.SelectedIndex == -1 && comboBoxGroup.Text.Length > 0)
             {
                 if (MessageBox.Show("Die Warengruppe \"" + comboBoxGroup.Text + "\" existiert nicht, soll sie nun erstellt werden?", "Neue Gruppe erstellen?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     FormAddRegion f = new FormAddRegion(comboBoxGroup.Text);
                     if (f.ShowDialog() == DialogResult.OK)
+                    {
+                        Connection.GetInstance().Add(f.Value);
                         SetRegions(f.Value);
+                    }
                     else
                     {
                         comboBoxGroup.BackColor = Color.OrangeRed;
@@ -115,6 +124,7 @@ namespace StoreClient
                     errorMsg += i++.ToString() + ". Bitte wählen Sie eine Produktgruppe." + Environment.NewLine;
                 }
             }
+
 
             if (errorMsg.Length > 0)
             {
@@ -134,7 +144,7 @@ namespace StoreClient
             FormAddRegion addReg = new FormAddRegion();
             if (addReg.ShowDialog() == DialogResult.OK)
             {
-                System.Threading.Thread.Sleep(200);
+                Connection.GetInstance().Add(addReg.Value);
                 SetRegions(addReg.Value);
             }
         }
