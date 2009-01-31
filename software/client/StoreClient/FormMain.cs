@@ -38,6 +38,7 @@ namespace StoreClient
         internal static string title = "iStore";
         
         private DisplayWindow currWindow = DisplayWindow.Login;
+        private bool showStats;
         public DisplayWindow CurrWindow
         {
             get { return currWindow; }
@@ -49,29 +50,37 @@ namespace StoreClient
                     case DisplayWindow.Login:
                         this.Text = FormMain.title + " - Login";
                         panelMain.Controls.Add(new ucLogin());
+                        showStats = false;
                         break;
                     case DisplayWindow.Groups:
                         this.Text = FormMain.title + " - Produktgruppen";
                         panelMain.Controls.Add(new ucGroups());
+                        showStats = true;
                         break;
                     case DisplayWindow.Products:
                         this.Text = FormMain.title + " - Produkte";
                         panelMain.Controls.Add(new ucProducts(false));
+                        showStats = true;
                         break;
                     case DisplayWindow.User:
                         this.Text = FormMain.title + " - Benutzer";
                         panelMain.Controls.Add(new ucUser());
+                        showStats = true;
                         break;
                     case DisplayWindow.Advertisement:
                         this.Text = FormMain.title + " - Werbungen";
                         panelMain.Controls.Add(new ucAdvertisement());
+                        showStats = true;
                         break;
                     case DisplayWindow.Analysis:
                         this.Text = FormMain.title + " - Analyse";
                         panelMain.Controls.Add(new ucAnalysis());
+                        showStats = true;
                         break;
                 }
                 currWindow = value;
+                if (showStats)
+                    panelMain.Controls.Add(new ucStats());
             }
         }
 
@@ -109,11 +118,10 @@ namespace StoreClient
 
         void connection_LoginChanged(object sender, ConnectionChangedEventArgs e)
         {
-            if (e.Connected)
-                Connected = true;
-            else
-                Connected = false;
+            Connected = e.Connected;
             
+            //enable buttons
+            produkteToolStripMenuItem.Enabled = produktgruppenToolStripMenuItem.Enabled = werbungToolStripMenuItem.Enabled = kundenanalyseToolStripMenuItem.Enabled = benutzerToolStripMenuItem.Enabled = e.Connected;
         }
 
         private void produkteToolStripMenuItem_Click(object sender, EventArgs e)

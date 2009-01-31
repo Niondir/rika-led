@@ -31,8 +31,6 @@
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.dateTimePickerStartDate = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerStopDate = new System.Windows.Forms.DateTimePicker();
-            this.buttonOK = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
             this.labelFrom = new System.Windows.Forms.Label();
             this.labelTo = new System.Windows.Forms.Label();
             this.labelStartDate = new System.Windows.Forms.Label();
@@ -51,6 +49,8 @@
             this.comboBoxGroup = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBoxAppearance.SuspendLayout();
@@ -78,31 +78,6 @@
             this.dateTimePickerStopDate.Name = "dateTimePickerStopDate";
             this.dateTimePickerStopDate.Size = new System.Drawing.Size(305, 20);
             this.dateTimePickerStopDate.TabIndex = 5;
-            // 
-            // buttonOK
-            // 
-            this.buttonOK.Image = global::StoreClient.Properties.Resources.page_save;
-            this.buttonOK.Location = new System.Drawing.Point(248, 477);
-            this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(124, 26);
-            this.buttonOK.TabIndex = 6;
-            this.buttonOK.Text = "Speichern";
-            this.buttonOK.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.buttonOK.UseVisualStyleBackColor = true;
-            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
-            // 
-            // buttonCancel
-            // 
-            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Image = global::StoreClient.Properties.Resources.cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(12, 477);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(116, 26);
-            this.buttonCancel.TabIndex = 7;
-            this.buttonCancel.Text = "Abbrechen";
-            this.buttonCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // labelFrom
             // 
@@ -157,6 +132,7 @@
             this.dateTimePickerStartTime.ShowUpDown = true;
             this.dateTimePickerStartTime.Size = new System.Drawing.Size(95, 20);
             this.dateTimePickerStartTime.TabIndex = 16;
+            this.dateTimePickerStartTime.ValueChanged += new System.EventHandler(this.dateTimePickerStartTime_ValueChanged);
             // 
             // dateTimePickerStopTime
             // 
@@ -313,6 +289,31 @@
             this.label1.Size = new System.Drawing.Size(69, 13);
             this.label1.TabIndex = 18;
             this.label1.Text = "Bezeichnung";
+            // 
+            // buttonOK
+            // 
+            this.buttonOK.Image = global::StoreClient.Properties.Resources.page_save;
+            this.buttonOK.Location = new System.Drawing.Point(248, 477);
+            this.buttonOK.Name = "buttonOK";
+            this.buttonOK.Size = new System.Drawing.Size(124, 26);
+            this.buttonOK.TabIndex = 6;
+            this.buttonOK.Text = "Speichern";
+            this.buttonOK.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Image = global::StoreClient.Properties.Resources.cancel;
+            this.buttonCancel.Location = new System.Drawing.Point(12, 477);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(116, 26);
+            this.buttonCancel.TabIndex = 7;
+            this.buttonCancel.Text = "Abbrechen";
+            this.buttonCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // FormAddAd
             // 
