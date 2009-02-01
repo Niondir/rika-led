@@ -60,7 +60,7 @@ namespace StoreServer.WebService
 
         public void AddRole(SessionData session, RoleData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.User);
 
             Role role = new Role(value);
             try
@@ -75,7 +75,7 @@ namespace StoreServer.WebService
 
         public void AddUser(SessionData session, UserData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.User);
 
             User acc = new User(value);
             try
@@ -90,7 +90,7 @@ namespace StoreServer.WebService
 
         public void AddRegion(SessionData session, RegionData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Regions);
 
             Region region = new Region(value);
 
@@ -106,7 +106,7 @@ namespace StoreServer.WebService
 
         public void AddProduct(SessionData session, ProductData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Product);
 
             Product product = new Product(value);
 
@@ -122,7 +122,7 @@ namespace StoreServer.WebService
 
         public void AddAdvertisement(SessionData session, AdvertisementData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Ads);
 
             Advertisement advertisement = new Advertisement(value);
 
@@ -138,7 +138,7 @@ namespace StoreServer.WebService
 
         public void AddTrace(SessionData session, TraceData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Traces);
 
             Trace trace = new Trace(value);
 
@@ -154,7 +154,7 @@ namespace StoreServer.WebService
 
         public void DeleteRole(SessionData session, RoleData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.User);
 
             Role role = new Role(value);
 
@@ -170,7 +170,7 @@ namespace StoreServer.WebService
 
         public void DeleteUser(SessionData session, UserData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.User);
 
             User user = new User(value);
 
@@ -186,7 +186,7 @@ namespace StoreServer.WebService
 
         public void DeleteRegion(SessionData session, RegionData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Regions);
 
             Region region = new Region(value);
 
@@ -202,7 +202,7 @@ namespace StoreServer.WebService
 
         public void DeleteProduct(SessionData session, ProductData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Product);
 
             Product product = new Product(value);
 
@@ -218,7 +218,7 @@ namespace StoreServer.WebService
 
         public void DeleteAdvertisement(SessionData session, AdvertisementData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Ads);
 
             Advertisement advertisement = new Advertisement(value);
 
@@ -234,7 +234,7 @@ namespace StoreServer.WebService
 
         public void DeleteTrace(SessionData session, TraceData value)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Traces);
 
             Trace trace = new Trace(value);
 
@@ -250,7 +250,7 @@ namespace StoreServer.WebService
 
         public void EditRole(SessionData session, RoleData oldValue, RoleData newValue)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.User);
 
             try
             {
@@ -265,7 +265,7 @@ namespace StoreServer.WebService
 
         public void EditUser(SessionData session, UserData oldValue, UserData newValue)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.User);
 
             try
             {
@@ -280,7 +280,7 @@ namespace StoreServer.WebService
 
         public void EditRegion(SessionData session, RegionData oldValue, RegionData newValue)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.User);
 
             try
             {
@@ -295,7 +295,7 @@ namespace StoreServer.WebService
 
         public void EditProduct(SessionData session, ProductData oldValue, ProductData newValue)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Product);
 
             try
             {
@@ -310,7 +310,7 @@ namespace StoreServer.WebService
 
         public void EditAdvertisement(SessionData session, AdvertisementData oldValue, AdvertisementData newValue)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Ads);
 
             try
             {
@@ -351,7 +351,7 @@ namespace StoreServer.WebService
 
         public UserData GetUser(SessionData session, string loginName)
         {
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.User);
 
             try
             {
@@ -367,7 +367,7 @@ namespace StoreServer.WebService
         public UserData[] GetUsers(SessionData session)
         {
             Debug.WriteLine("GetUsers()");
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.User);
 
             List<UserData> users = new List<UserData>();
             try
@@ -392,7 +392,7 @@ namespace StoreServer.WebService
         public RegionData[] GetRegions(SessionData session)
         {
             Debug.WriteLine("GetRegions()");
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Regions);
             RegionData[] regions;
             try
             {
@@ -414,7 +414,7 @@ namespace StoreServer.WebService
         public ProductData[] GetProducts(SessionData session)
         {
             Debug.WriteLine("GetProducts()");
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Product);
 
             List<ProductData> products = new List<ProductData>();
             try
@@ -439,7 +439,7 @@ namespace StoreServer.WebService
         public ProductData[] GetProductsByRegion(SessionData session, string regionId)
         {
             Debug.WriteLine("GetProductsByRegion()");
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Product);
 
             List<ProductData> products = new List<ProductData>();
             try
@@ -464,7 +464,7 @@ namespace StoreServer.WebService
         public TraceData[] GetTracesByTimeSpan(SessionData session, DateTime from, DateTime to)
         {
             Debug.WriteLine("GetTraces()");
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Traces);
 
             List<TraceData> traces = new List<TraceData>();
             try
@@ -487,7 +487,7 @@ namespace StoreServer.WebService
         public TraceData[] GetTraces(SessionData session)
         {
             Debug.WriteLine("GetTraces()");
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Traces);
 
             List<TraceData> traces = new List<TraceData>();
             try
@@ -510,7 +510,7 @@ namespace StoreServer.WebService
         public AdvertisementData[] GetAdvertisement(SessionData session)
         {
             Debug.WriteLine("GetAdvertisement()");
-            this.ValidateRequest(session, AccessFlags.Authenticated);
+            this.ValidateRequest(session, AccessFlags.Ads);
 
             List<AdvertisementData> ads = new List<AdvertisementData>();
             try
@@ -533,6 +533,8 @@ namespace StoreServer.WebService
 
         public void ShowSignId(RegionData region)
         {
+            this.ValidateRequest(session, AccessFlags.Network);
+
             try
             {
                 Program.RadioManager.Send(new DisplayIdPacket(region.Id));
@@ -545,6 +547,8 @@ namespace StoreServer.WebService
 
         public void SetLampId(string oldId, string newId)
         {
+            this.ValidateRequest(session, AccessFlags.Network);
+
             try
             {
                 Program.RadioManager.Send(new SetLampIdPacket(oldId, newId));

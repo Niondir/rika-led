@@ -84,7 +84,7 @@ namespace StoreServer.Data
             reader.Close();
             
 #if DEBUG
-            Role.SetFlags(AccessFlags.Authenticated);
+            Role.SetFlags(AccessFlags.All);
             return (username == "gast" && password.Check("gast"));
 #else
             return hasAccess;
