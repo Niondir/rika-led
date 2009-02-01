@@ -101,9 +101,6 @@ namespace CommunicationAPI.Interface
         ProductData[] GetProducts(SessionData session);
 
         [XmlRpcMethod]
-        SignData[] GetSigns(SessionData session, RegionData region);
-
-        [XmlRpcMethod]
         TraceData[] GetTracesByTimeSpan(SessionData session, DateTime from, DateTime to);
 
         [XmlRpcMethod]
@@ -116,10 +113,10 @@ namespace CommunicationAPI.Interface
 
 #region Misc
         [XmlRpcMethod]
-        void ShowSignId(RegionData region);
+        void ShowSignId(SessionData session, RegionData region);
 
         [XmlRpcMethod]
-        void SetLampId(string oldId, string newId);
+        void SetLampId(SessionData session, string oldId, string newId);
 
 #endregion
 

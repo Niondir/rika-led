@@ -16,7 +16,7 @@ namespace StoreServer.Data
         {
             get
             {
-                TraceData t = new TraceData(waypoints);
+                TraceData t = new TraceData(waypoints.ToArray());
                 t.Id = id;
                 t.Timestamp = timestamp;
 
@@ -26,7 +26,7 @@ namespace StoreServer.Data
 
         public Trace(TraceData trace)
         {
-            this.waypoints = trace.Locations;
+            this.waypoints.AddRange(trace.Locations);
             this.timestamp = trace.Timestamp;
         }
 
@@ -41,9 +41,14 @@ namespace StoreServer.Data
             }
 
             // Calc dateTimes
-            foreach (LocationData l in waypoints)
+            for (int i = 0; i < waypoints.Count; i++)
             {
-                l.Time = timestamp - (maxTs - l.RelativeTimestamp);
+                LocationData loc = new LocationData();
+                loc.LampId = waypoints[i].LampId;
+                loc.RelativeTimestamp = waypoints[i].RelativeTimestamp;
+                loc.Time = timestamp - new TimeSpan(0, 0, (maxTs - waypoints[i].RelativeTimestamp));
+
+                waypoints[i] = loc;
             }
         }
 
@@ -116,14 +121,11 @@ namespace StoreServer.Data
 
                 // Add the current waypoint 
                 LocationData loc = new LocationData();
-                loc.LampId = (int)reader.GetInt64(1);
+                loc.LampId = reader.GetString(1);
                 loc.RelativeTimestamp = (int)reader.GetInt64(2);
                 loc.Time = t.timestamp - new TimeSpan(0, 0, loc.RelativeTimestamp);
 
                 t.waypoints.Add(loc);
-
-
-                traces.Add(t);
             }
 
             List<Trace> result = new List<Trace>();

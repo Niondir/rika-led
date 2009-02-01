@@ -531,7 +531,7 @@ namespace StoreServer.WebService
             return ads.ToArray();
         }
 
-        public void ShowSignId(RegionData region)
+        public void ShowSignId(SessionData session, RegionData region)
         {
             this.ValidateRequest(session, AccessFlags.Network);
 
@@ -545,7 +545,7 @@ namespace StoreServer.WebService
             }
         }
 
-        public void SetLampId(string oldId, string newId)
+        public void SetLampId(SessionData session, string oldId, string newId)
         {
             this.ValidateRequest(session, AccessFlags.Network);
 
