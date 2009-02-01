@@ -43,7 +43,7 @@ namespace Kasse
                 {
                     try
                     {
-                        loc.Timestamp = int.Parse(reader.Args[i]);
+                        loc.RelativeTimestamp = int.Parse(reader.Args[i]);
                         locations.Add(loc); // struct will be copied
                     }
                     catch
