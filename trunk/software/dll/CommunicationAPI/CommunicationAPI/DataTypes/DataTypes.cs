@@ -244,17 +244,21 @@ namespace CommunicationAPI.DataTypes
 
     public struct LocationData
     {
-        public int Timestamp;
+        public int RelativeTimestamp;
+        public DateTime Time;
         public string LampId;
     }
 
     public struct TraceData
     {
-        public LocationData[] locations;
+        public int Id;
+        public DateTime Timestamp;
+        public LocationData[] Locations;
 
         public TraceData(LocationData[] locations)
         {
-            this.locations = locations;
+            this.Id = -1;
+            this.Locations = locations;
         }
     }
 
