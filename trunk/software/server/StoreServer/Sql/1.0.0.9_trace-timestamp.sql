@@ -1,0 +1,1 @@
+ALTER TABLE `rika`.`led_waypoints` MODIFY COLUMN `time` INTEGER UNSIGNED DEFAULT NULL;

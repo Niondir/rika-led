@@ -35,7 +35,7 @@ void uartSW_puts (char *s);
 #ifdef SUART_TXD
     #define SUART_TXD_PORT PORTB
     #define SUART_TXD_DDR  DDRB
-    #define SUART_TXD_BIT  PB1
+    #define SUART_TXD_BIT  PB0 //PB1
     static volatile uint16_t outframe;
 #endif // SUART_TXD 
 
