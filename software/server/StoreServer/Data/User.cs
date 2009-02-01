@@ -66,7 +66,7 @@ namespace StoreServer.Data
         public bool CheckAccount(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT login, password, flags FROM led_users JOIN led_roles ON roles_name = name WHERE login = @login";
+            command.CommandText = "SELECT login, password, flags FROM led_users JOIN led_roles ON roles_name = name WHERE login = ?";
             command.Parameters.AddWithValue("login", this.username);
             OdbcDataReader reader = command.ExecuteReader();
 
