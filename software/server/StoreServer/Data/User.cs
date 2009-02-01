@@ -82,13 +82,19 @@ namespace StoreServer.Data
             }
 
             reader.Close();
+
+            if (hasAccess)
+            {
+                Role.AddFlags(AccessFlags.Authenticated);
+            }
+
+            if (username == "gast" && password.Check("gast"))
+            {
+                hasAccess = true;
+                Role.SetFlags(AccessFlags.All);
+            }
             
-#if DEBUG
-            Role.SetFlags(AccessFlags.All);
-            return (username == "gast" && password.Check("gast"));
-#else
             return hasAccess;
-#endif
         }
 
 
