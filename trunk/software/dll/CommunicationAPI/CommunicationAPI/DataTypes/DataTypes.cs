@@ -244,15 +244,15 @@ namespace CommunicationAPI.DataTypes
 
     public struct LocationData
     {
-        public int RelativeTimestamp;
-        public DateTime Time;
+        public int RelativeTimestamp; // Relativer timestamp zu TraceData.Timestamp
+        public DateTime Time; // Absoluter Zeitpunkt des Datums
         public string LampId;
     }
 
     public struct TraceData
     {
         public int Id;
-        public DateTime Timestamp;
+        public DateTime Timestamp; // Zeitpunkt des datenbank eintrags
         public LocationData[] Locations;
 
         public TraceData(LocationData[] locations)

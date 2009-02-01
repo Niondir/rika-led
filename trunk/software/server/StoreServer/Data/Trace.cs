@@ -51,8 +51,9 @@ namespace StoreServer.Data
         {
             OdbcCommand command = connection.CreateCommand();
             command.CommandText = "INSERT INTO `led_traces` (id, timestamp) VALUES (default, ?)";
-            command.Parameters.AddWithValue("time", timestamp);
+            command.Parameters.AddWithValue("time", DateTime.Now);
             command.ExecuteNonQuery();
+            command.Parameters.Clear();
             command.CommandText = "SELECT last_insert_id()";
             this.id = (int)command.ExecuteScalar();
             Console.WriteLine("Added trace with ID " + id);
