@@ -219,17 +219,17 @@ namespace StoreServer.Radio
                         }
                         else
                         {
-#if DEBUG
-                            SerialPacket p = sendQueue.Dequeue();
-                            Debug.WriteLine("RadioManager: <offline> sending: " + p.ToString());
-                            Thread.Sleep(SEND_DELAY);
-#else
+//#if DEBUG
+ //                           SerialPacket p = sendQueue.Dequeue();
+ //                           Debug.WriteLine("RadioManager: <offline> sending: " + p.ToString());
+ //                           Thread.Sleep(SEND_DELAY);
+//#else
                             //try to reconnect
                             Thread.Sleep(1000);
                             Console.WriteLine("Serial port is closed, try to reconnect ...");
                             Console.WriteLine(sendQueue.Count + " packets in queue");
                             Connect();
-#endif
+//#endif
                         }
                     }
                 }
