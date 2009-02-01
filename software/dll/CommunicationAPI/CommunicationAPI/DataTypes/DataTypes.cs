@@ -259,9 +259,10 @@ namespace CommunicationAPI.DataTypes
         {
             this.Id = -1;
             this.Locations = locations;
+            this.Timestamp = new DateTime(0);
         }
     }
-
+    
     public struct AdvertisementData
     {
         private int id;

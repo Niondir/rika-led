@@ -1,0 +1,1 @@
+ALTER TABLE `rika`.`led_traces` ADD COLUMN `timestamp` TIMESTAMP NOT NULL AFTER `id`;
