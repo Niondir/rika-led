@@ -81,7 +81,7 @@
             this.ClientSize = new System.Drawing.Size(775, 338);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormConsole";
-            this.Text = "Console";
+            this.Text = "MyStore Server";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
