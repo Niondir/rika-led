@@ -461,18 +461,50 @@ namespace StoreServer.WebService
             return products.ToArray();
         }
 
-        public SignData[] GetSigns(SessionData session, RegionData region)
+        public TraceData[] GetTracesByTimeSpan(SessionData session, DateTime from, DateTime to)
         {
+            Debug.WriteLine("GetTraces()");
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
-            throw new XmlRpcFaultException(1, "Not implemented");
+            List<TraceData> traces = new List<TraceData>();
+            try
+            {
+                int i = 0;
+                foreach (Trace t in Trace.Load(this.DataManager.Connection, from, to))
+                {
+                    i++;
+                    traces.Add(t.Data);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
+            }
+
+            return traces.ToArray();
         }
 
-        public TraceData[] GetTraces(SessionData session, DateTime from, DateTime to)
+        public TraceData[] GetTraces(SessionData session)
         {
+            Debug.WriteLine("GetTraces()");
             this.ValidateRequest(session, AccessFlags.Authenticated);
 
-            throw new XmlRpcFaultException(1, "Not implemented");
+            List<TraceData> traces = new List<TraceData>();
+            try
+            {
+                int i = 0;
+                foreach (Trace t in Trace.Load(this.DataManager.Connection))
+                {
+                    i++;
+                    traces.Add(t.Data);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
+            }
+
+            return traces.ToArray();
         }
 
         public AdvertisementData[] GetAdvertisement(SessionData session)
@@ -806,17 +838,6 @@ namespace StoreServer.WebService
 
         #endregion
 
-
-
-        public TraceData[] GetTracesByTimeSpan(SessionData session, DateTime from, DateTime to)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TraceData[] GetTraces(SessionData session)
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

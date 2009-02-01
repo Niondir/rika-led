@@ -12,6 +12,18 @@ namespace StoreServer.Data
         private DateTime timestamp;
         private List<LocationData> waypoints = new List<LocationData>();
 
+        public TraceData Data
+        {
+            get
+            {
+                TraceData t = new TraceData(waypoints);
+                t.Id = id;
+                t.Timestamp = timestamp;
+
+                return t;
+            }
+        }
+
         public Trace(TraceData trace)
         {
             this.waypoints = trace.Locations;
@@ -54,6 +66,24 @@ namespace StoreServer.Data
                 command.ExecuteNonQuery();
                 command.Parameters.Clear();
             }
+        }
+
+
+        public static List<Trace> Load(OdbcConnection connection, DateTime from, DateTime to)
+        {
+            List<Trace> traces = Trace.Load(connection);
+            List<Trace> result = new List<Trace>();
+
+            // Filter traces
+            foreach (Trace t in traces)
+            {
+                if (t.timestamp > from && t.timestamp < to)
+                {
+                    result.Add(t);
+                }
+            }
+
+            return result;
         }
 
         public static List<Trace> Load(OdbcConnection connection)
