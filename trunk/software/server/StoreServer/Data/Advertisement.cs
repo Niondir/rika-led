@@ -130,15 +130,7 @@ namespace StoreServer.Data
                 
                 Advertisement ad = new Advertisement(aData);
 
-                if (ad.StopDate < DateTime.Now)
-                {
-                    // Delete if invalid, or just don't send back?
-                    ad.Delete(connection);
-                }
-                else
-                {
-                    ads.Add(ad);
-                }
+                ads.Add(ad);
             }
 
             return ads;

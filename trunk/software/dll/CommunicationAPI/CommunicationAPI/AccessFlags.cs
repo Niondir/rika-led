@@ -12,8 +12,9 @@ namespace CommunicationAPI
         User = 1,
         Product = 2,
         Ads = 4,
-        Traces = 5,
-        Authenticated,
+        Traces = 8,
+        Authenticated = 16,
+        Network = 32,
         Regions = AccessFlags.Product | AccessFlags.Ads,
         All = int.MaxValue
     }
