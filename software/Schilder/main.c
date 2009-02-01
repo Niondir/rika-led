@@ -35,7 +35,7 @@ int main(void)
  #endif
 
    
-  _delay_ms(1000);                                                  // startup delay
+  _delay_ms(1500);                                                  // startup delay
   sei();               										    	// global irq an
 
   sign.signType   = SIGN_TYPE_NOT_DETECTED;
@@ -46,6 +46,16 @@ int main(void)
   uartSW_init();       												// software uart
   init_uart();
   init_Display(4);    												// Display initialisieren
+  
+  /*
+  while(0)
+  {
+     clr_Screen();
+     write_Display("123456789ABBabc",1,1);
+
+     _delay_ms(1000);
+  } */
+  
   initPIOs();          												// Mode Jumper Pins konfigurieren
   
   detectSignMode();    												// Hardware kann von extern als Wagen oder Presischild konfiguriert werden, Preisschiler sogar mit bis zu 7 Adressen
@@ -292,7 +302,7 @@ void packet_action(void)
 										   //t3=!t3;
 										   //		if(t3) write_Display("R", 17, 4);
 										   //		else   write_Display("r", 17, 4);
-						  					if(trace.pos != 0) //Min 1 Trace muss vorhanden sein
+						  					if(trace.pos >1) //Min 2 Traces müssen vorhanden sein
 											{
 											    
 												char sendPacketBuf[15]; //2*5 Zeichen (16Bit Zahlen als Char) + ',' +'\0'
@@ -338,12 +348,15 @@ void packet_action(void)
 												{
 								                   uint16_t aktLampID = (uint16_t)atoi(packet.args[0]); //Arg0 = LampenID
 											   
+											   		if (trace.pos == 0) {
+														trace.TimeNow = 0;
+													}
 												   //Nur "Neue" Traces, d.h. LampenID im Paket != LampenID des vorherigen Packets
 												   if(trace.pos==0 || (aktLampID != (trace.lampIDs)[trace.pos])) 
-						              		   	   {
-								                      trace.pos++;
+						              		   	   {								                      
 													  trace.times[trace.pos]   = trace.TimeNow;
 													  trace.lampIDs[trace.pos] = aktLampID;
+													  trace.pos++;
 												    }
 							 							 
 								       			 }
