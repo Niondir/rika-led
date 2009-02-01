@@ -7,6 +7,11 @@ using CommunicationAPI.DataTypes;
 
 namespace Kasse
 {
+    /* TODO:
+     * Invalid argumnt count :(
+     * 
+     * */
+
     public class Program
     {
         private static RadioReceiver radioReveiver;
@@ -19,8 +24,6 @@ namespace Kasse
 
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hallo Welt");
-
             Config config = Config.Load();
 
             // Beim Server anmelden
@@ -31,8 +34,9 @@ namespace Kasse
 
             while (signal.WaitOne())
             {
+                Console.WriteLine("Waiting for next Packet");
                 lock (radioReveiver.ReceiveQueue) {
-                    while (radioReveiver.ReceiveQueue.Count < 0)
+                    while (radioReveiver.ReceiveQueue.Count > 0)
                     {
                         SerialPacket p = radioReveiver.ReceiveQueue.Dequeue();
                         if (p is TracePacket)

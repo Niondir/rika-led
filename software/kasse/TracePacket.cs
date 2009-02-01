@@ -20,11 +20,11 @@ namespace Kasse
         {
             if (!reader.IsValidChkSum)
             {
-                Console.WriteLine("Wooops, invalid chk sum: " + reader.PacketString);
+                Console.WriteLine("Invalid chk sum: " + reader.PacketString);
                 return;
             }
 
-            if (reader.Args.Count % 2 == 0)
+            if (reader.Args.Count % 2 != 0)
             {
                 Console.WriteLine("Invalid argument count: " + reader.PacketString);
                 return;

@@ -70,7 +70,14 @@ namespace Kasse
 
         internal void Add(TraceData traceData)
         {
-            remote.AddTrace(session, traceData);
+            try
+            {
+                remote.AddTrace(session, traceData);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
