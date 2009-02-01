@@ -1,7 +1,5 @@
 ablaufplan
-reihenfolge-inhalt
-
-
+-reihenfolge-inhalt
 * 1. welcome namen etc
 * 2. idee
 * 3. bestandteile des systems / unterschiede zum system der anderen
