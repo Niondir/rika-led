@@ -60,14 +60,17 @@ namespace StoreServer.Data
             command.ExecuteNonQuery();
             command.Parameters.Clear();
             command.CommandText = "SELECT last_insert_id()";
-            this.id = (int)command.ExecuteScalar();
+            Console.WriteLine("convert");
+            OdbcDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+                this.id = reader.GetInt32(0);
             Console.WriteLine("Added trace with ID " + id);
 
-
+            reader.Close();
             foreach (LocationData l in waypoints) {
-                command.CommandText = "INSERT INTO `led_waypoints` (lamps_id, traces_id, time) VALUES (?, ?, ?)";
-                command.Parameters.AddWithValue("lamps_id", id);
-                command.Parameters.AddWithValue("traces_id", l.LampId);
+                command.CommandText = "INSERT INTO `led_waypoints` (regions_id, traces_id, time) VALUES (?, ?, ?)";
+                command.Parameters.AddWithValue("regions_id", l.LampId);
+                command.Parameters.AddWithValue("traces_id", id);
                 command.Parameters.AddWithValue("time", l.RelativeTimestamp);
                 command.ExecuteNonQuery();
                 command.Parameters.Clear();
@@ -95,7 +98,7 @@ namespace StoreServer.Data
         public static List<Trace> Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT traces_id, lamps_id, time, timestamp FROM led_waypoints JOIN led_traces ON led_traces.id = traces_id";
+            command.CommandText = "SELECT traces_id, regions_id, time, timestamp FROM led_waypoints JOIN led_traces ON led_traces.id = traces_id";
             OdbcDataReader reader = command.ExecuteReader();
 
             //List<Trace> traces = new List<Trace>();
