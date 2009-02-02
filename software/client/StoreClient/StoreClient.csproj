@@ -144,6 +144,10 @@
       <DependentUpon>ucAnalysis.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="ucAnalysisCharts.resx">
+      <DependentUpon>ucAnalysisCharts.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="ucGroups.resx">
       <DependentUpon>ucGroups.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -190,6 +194,12 @@
     </Compile>
     <Compile Include="ucAnalysis.Designer.cs">
       <DependentUpon>ucAnalysis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ucAnalysisCharts.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucAnalysisCharts.Designer.cs">
+      <DependentUpon>ucAnalysisCharts.cs</DependentUpon>
     </Compile>
     <Compile Include="ucGroups.cs">
       <SubType>UserControl</SubType>
@@ -271,6 +281,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_right.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

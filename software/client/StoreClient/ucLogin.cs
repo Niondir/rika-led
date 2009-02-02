@@ -61,6 +61,7 @@ namespace StoreClient
 
             if (Preferences.GetInstance().AutoLogin)
             {
+                textBoxPassword.UseSystemPasswordChar = true;
                 textBoxPassword.Text = Preferences.GetInstance().Password;
                 textBoxUsername.Text = Preferences.GetInstance().UserName;
             }
@@ -79,12 +80,6 @@ namespace StoreClient
                 PasswordEntered = true;
         }
 
-        private void textBoxUsername_Leave(object sender, EventArgs e)
-        {
-            if (textBoxUsername.Text.Length == 0)
-                UserEntered = false;
-        }
-
         private void textBoxPassword_Leave(object sender, EventArgs e)
         {
             if (textBoxPassword.Text.Length == 0)
@@ -94,7 +89,7 @@ namespace StoreClient
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             Connection.GetInstance().ServerURL = Preferences.GetInstance().ServerAddress;
-            if (!this.PasswordEntered || !this.UserEntered)
+            if (this.textBoxPassword.Text.Length == 0 && this.textBoxUsername.Text.Length == 0)
             {
                 MessageBox.Show("Geben Sie bitte den Benutzernamen und das Passwort ein", "Achtung", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;

@@ -159,7 +159,7 @@ namespace StoreClient
                     if (newData.Price < 0)
                         throw new FormatException();
                 }
-                catch (FormatException ex)
+                catch (FormatException)
                 {
                     MessageBox.Show("\"" + newVal + "\" ist kein gültiger Wert\r\n", "Falsche Formatierung", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     GridProducts.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = tmpValueInCell;
