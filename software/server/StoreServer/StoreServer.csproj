@@ -142,6 +142,9 @@
     <None Include="Sql\1.0.0.8_trace-ragionid.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Sql\1.0.0.9_trace-timestamp.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.xml">
