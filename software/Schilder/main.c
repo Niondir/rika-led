@@ -289,8 +289,6 @@ int8_t get_packet(void)
 
 }
 
-//char t2=0;
-//char t3=0;
 void packet_action(void)
 {
   
@@ -298,26 +296,15 @@ void packet_action(void)
   { 
     case CMDNR_SEND_TRACE:  
                                           
-                                             
-										   //t3=!t3;
-										   //		if(t3) write_Display("R", 17, 4);
-										   //		else   write_Display("r", 17, 4);
+
 						  					if(trace.pos >1) //Min 2 Traces müssen vorhanden sein
 											{
 											    
-												char sendPacketBuf[15]; //2*5 Zeichen (16Bit Zahlen als Char) + ',' +'\0'
-                                                uint8_t csum = 0;
-
-                                                //t2=!t2;
-												//if(t2) write_Display("T", 18, 4);
-												//else   write_Display("t", 18, 4);
+											  char sendPacketBuf[15]; //2*5 Zeichen (16Bit Zahlen als Char) + ',' +'\0'
+                                              uint8_t csum = 0;
 
 											   set_dest2( packet.args[1], "0"); //Arg1 enthält die FunkZieladresse des Traceempfängers (Kasse), Arg0 ist egal
-                                            
 											
-                                               //sprintf(deb, "XAdr:%s", packet.args[1]);
-                                               //write_Display(deb, 1, 4);
-
 
 												XBEE_SEND_STRING("<8|");
 												csum += calc_csum("8|");
