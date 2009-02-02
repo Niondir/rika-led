@@ -35,7 +35,7 @@ int main(void)
  #endif
 
    
-  _delay_ms(1500);                                                  // startup delay
+                                                   // startup delay
   sei();               										    	// global irq an
 
   sign.signType   = SIGN_TYPE_NOT_DETECTED;
@@ -45,26 +45,38 @@ int main(void)
   initLEDs();
   uartSW_init();       												// software uart
   init_uart();
-  init_Display(4);    												// Display initialisieren
+//  init_Display(4);    												// Display initialisieren
+  _delay_ms(1000);
   
-  /*
-  while(0)
-  {
-     clr_Screen();
-     write_Display("123456789ABBabc",1,1);
 
-     _delay_ms(1000);
-  } */
   
+ // uartSW_puts("\fHallo Kai");
+ // while(1);
+
+
   initPIOs();          												// Mode Jumper Pins konfigurieren
   
   detectSignMode();    												// Hardware kann von extern als Wagen oder Presischild konfiguriert werden, Preisschiler sogar mit bis zu 7 Adressen
   initTraceCounter(1); 												// TraceTimer konfigurieren und starten
   
+  
+  //clr_Screen();
+  
+  //write_Display("Tobi",1,1);
+  /*
+  clr_Screen();
+  write_Display("Tobi",1,1);
+    _delay_ms(2000); 
+  clr_Screen();
+  write_Display("Kai",2,1);
+
+  while(1);
+  */
   show_status(0);       												// Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
+  write_Display("7,45 \x7b fuer TestBaum",1,5);
   _delay_ms(2000);     												// Zeit zum Anzeigen der Informationen
 
-
+  //Main Loop Start
   while(1)
   {
 
@@ -179,7 +191,7 @@ void show_status(uint8_t WriteToDisplayBuffer)
 	}
   else
 	{ 
-	 if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[1], "SignType: Price  "); // Zeile 2
+	 if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[1], "SignType: Price "); // Zeile 2
                                write_Display("SignType: Price  ", 1, 2);
 	}
 
