@@ -23,19 +23,18 @@ packet_t  packet;
 trace_t   trace;
 
 
-#define DEBUG_ON
+#define DEBUG_MODE
 
 int main(void)
 {
   uint8_t packetRecvStatus;
 
- #ifdef DEBUG_ON
-  char    debug[21];
+ #ifdef DEBUG_MODE
+  char  debug[25];
+  char  debug2[25];  
   uint8_t toggleFlag=0;
  #endif
-
-   
-                                                   // startup delay
+                                                                
   sei();               										    	// global irq an
 
   sign.signType   = SIGN_TYPE_NOT_DETECTED;
@@ -45,38 +44,19 @@ int main(void)
   initLEDs();
   uartSW_init();       												// software uart
   init_uart();
-//  init_Display(4);    												// Display initialisieren
-  _delay_ms(1000);
-  
 
-  
- // uartSW_puts("\fHallo Kai");
- // while(1);
-
-
+  _delay_ms(500);                 									// startup delay
+  write_Display4x20Border();                                        // Rand um 4*20 Zeichen malen (virtuelles billig LCD)
+  write_credits();
   initPIOs();          												// Mode Jumper Pins konfigurieren
   
   detectSignMode();    												// Hardware kann von extern als Wagen oder Presischild konfiguriert werden, Preisschiler sogar mit bis zu 7 Adressen
   initTraceCounter(1); 												// TraceTimer konfigurieren und starten
   
+  show_status(0);       											// Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
+  _delay_ms(2000); 												    // Nach Start 2 Sek Systeminfos anzeigen
   
-  //clr_Screen();
-  
-  //write_Display("Tobi",1,1);
-  /*
-  clr_Screen();
-  write_Display("Tobi",1,1);
-    _delay_ms(2000); 
-  clr_Screen();
-  write_Display("Kai",2,1);
-
-  while(1);
-  */
-  show_status(0);       												// Schild Informationen anzeigen, insbesondere SchildID und Typ (AD/Price)
-  write_Display("7,45 \x7b fuer TestBaum",1,5);
-  _delay_ms(2000);     												// Zeit zum Anzeigen der Informationen
-
-  //Main Loop Start
+  //Main Loop
   while(1)
   {
 
@@ -94,30 +74,68 @@ int main(void)
 				   sign.displayRefreshFlag = 0;
 	           }
 			
+			
+			#ifdef DEBUG_MODE
 			   if(sign.packetsOK<0xffff)sign.packetsOK++;
 			   else
 			   {
 			     sign.packetsOK=0; sign.packetsBAD=0; //Reset both Counters
 			   }  
 			
-	           toggleFlag=!toggleFlag;   
-			   if(toggleFlag) sprintf(debug, "OK"); //Paket korrekt empfangen
-			   else           sprintf(debug, "ok"); //trotzdem kann sich u.U z.B. durch falsche IDs nichts tun!
-			   write_Display(debug,19,4);			//in letzter Zeile ganz Rechts diese 2 Zeichen darstellen
+			 
+	           toggleFlag=!toggleFlag; 
+			   switch(packet.packetCmdNr)
+			   {
+			     case CMDNR_SEND_TRACE: sprintf(debug2, "SEND_TRACE"); break;
+				 case CMDNR_SET_AD:     sprintf(debug2, "SET_AD"); break;
+				 case CMDNR_SET_PRICE:  sprintf(debug2, "SET_PRICE"); break;
+				 case CMDNR_SHOW_ID:    sprintf(debug2, "SHOW_ID"); break;
+				 default:               sprintf(debug2, "UNKNOWN"); break;  
+
+			   }
+			   if(toggleFlag) sprintf(debug, "OK: %s", debug2); //Paket korrekt empfangen
+			   else           sprintf(debug, "ok: %s", debug2); //trotzdem kann sich u.U z.B. durch falsche IDs nichts tun!
+			   write_Display(debug,1,8);			//in letzter Zeile ganz Rechts diese 2 Zeichen darstellen
+           
+			   	sprintf(debug, "%u Good  vs. %u Bad",  sign.packetsOK, sign.packetsBAD);
+                write_Display(debug,1,11);
+            #endif
+
 		}
 		else //Paket nicht erfolgreich empfangen
 		{		 
+		   
+		   #ifdef DEBUG_MODE	
 			if(packetRecvStatus!=1) //Error1 ignorieren (Error1 = Derzeit kein Startzeichen "<" empfangen/verfügbar)
 			{
-				sprintf(debug, "E%u",packetRecvStatus);
-				write_Display(debug,19,4);
-
+				
 				if(sign.packetsBAD<0xffff)sign.packetsBAD++;
 		        else
 		        {
 				   sign.packetsOK=0; sign.packetsBAD=0; //Reset both Counters
 			    } 
+			
+	            toggleFlag=!toggleFlag; 
+				if(toggleFlag)
+				{
+					if(packetRecvStatus==9)sprintf(debug, "CHECKSUM WRONG");
+					else sprintf(debug, "PARSE ERROR(%u)",packetRecvStatus);
+				}
+				else
+				{
+					if(packetRecvStatus==9)sprintf(debug, "Checksum Wrong");
+					else sprintf(debug, "Parse Error(%u)",packetRecvStatus);
+				}
+
+				write_Display(debug,1,8);
+             
+				 sprintf(debug, "%u Good  vs. %u Bad",  sign.packetsOK, sign.packetsBAD);
+                 write_Display(debug,1,11); 
+
+			
 			}
+           #endif
+
 		} 
 	    
 
@@ -178,7 +196,7 @@ void show_status(uint8_t WriteToDisplayBuffer)
   clr_Screen();
 
   //Firmware Version
-  sprintf(tempBuf, "FirmwareVersion:%u", FIRMWARE_VERSION);
+  sprintf(tempBuf, "Firm.Version:%u", FIRMWARE_VERSION);
 	if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[0], tempBuf); // Zeile 1
 	                          write_Display(tempBuf,1,1);
 
@@ -186,19 +204,19 @@ void show_status(uint8_t WriteToDisplayBuffer)
   if(sign.signType==SIGN_TYPE_TROLLEY)
 	{
     
-		if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[1], "SignType: Trolley"); // Zeile 2
-		                          write_Display("SignType: Trolley", 1, 2);
+		if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[1], "SignType    :Trolley"); // Zeile 2
+		                          write_Display("SignType    :Trolley", 1, 2);
 	}
   else
 	{ 
-	 if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[1], "SignType: Price "); // Zeile 2
-                               write_Display("SignType: Price  ", 1, 2);
+	 if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[1], "SignType    :Price"); // Zeile 2
+                                  write_Display("SignType    :Price", 1, 2);
 	}
 
   //Schild ID, über die Preisschilder adressiert werden
-  sprintf(tempBuf, "UniqueSignID: %u",  sign.signUniqueID);
+  sprintf(tempBuf, "UniqueSignID:%u",  sign.signUniqueID);
   if(WriteToDisplayBuffer)  strcpy(sign.displayMemory[2], tempBuf);
-	                        write_Display(tempBuf,1,3); 
+  write_Display(tempBuf,1,3); 
 
   //Pakete OK und Pakete BAD anzeigen
   sprintf(tempBuf, "PK. OK:%u E:%u",  sign.packetsOK, sign.packetsBAD);
@@ -402,7 +420,8 @@ void packet_action(void)
 												{
 													sign.displayRefreshFlag = 1;
 													strcpy(sign.displayMemory[0], packet.args[1]); // Name
-													strcpy(sign.displayMemory[1], packet.args[2]); // Preis, todo Eurozeichen definieren und einfügen
+													strcpy(sign.displayMemory[1], packet.args[2]); // Preis, 
+													strcat(sign.displayMemory[1], " EUROZEICHEN");
 													memset(sign.displayMemory[2],' ', 20); sign.displayMemory[2][20]='\0';  // Zeile 3 leer
 													memset(sign.displayMemory[3],' ', 20); sign.displayMemory[3][20]='\0';  // Zeile 4 leer
 												}
