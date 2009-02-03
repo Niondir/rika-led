@@ -25,7 +25,6 @@ namespace StoreServer.Data
             sb.Add("User", cfg.SQLUser);
             sb.Add("Password", cfg.SQLPassword);
             sb.Add("Option", "3");
-            //Debug.WriteLine(sb.ConnectionString);
             connection = new OdbcConnection(sb.ToString());
 
             Console.WriteLine("Connecting to database with {0}:\nServer: {1}\nSchema: {2}\nUser: {3}\nPassword: <hidden>", 
@@ -112,7 +111,7 @@ namespace StoreServer.Data
                 }
                 catch (Exception ex) {
                     transaction.Rollback();
-                    Debug.WriteLine("Created informations table, Error: " + ex.Message);
+                    Console.WriteLine("Created informations table, Error: " + ex.Message);
                 }
             }
 
@@ -156,7 +155,6 @@ namespace StoreServer.Data
                 Version fileversion = new Version(file.Split('_')[0]);
                 if (fileversion > version)
                 {
-                    //Debug.WriteLine("fileversion = " + fileversion.ToString());
                     files.Add(f, fileversion);
                     
                 }
@@ -166,7 +164,7 @@ namespace StoreServer.Data
 
             foreach (string f in files.Keys)
             {
-                Debug.WriteLine("Executing SQL file: " + f);
+                Console.WriteLine("Executing SQL file: " + f);
 
                 FileStream fs = File.Open(f, FileMode.Open);
                 TextReader reader = new StreamReader(fs);
@@ -195,7 +193,7 @@ namespace StoreServer.Data
                     command.Parameters.Add("version", OdbcType.VarChar).Value = version.ToString();
                     command.ExecuteNonQuery();
                     command.Parameters.Clear();
-                    Debug.WriteLine("Database updated to Version: " + version.ToString());
+                    Console.WriteLine("Database updated to Version: " + version.ToString());
 
                     command.Transaction.Commit();
 

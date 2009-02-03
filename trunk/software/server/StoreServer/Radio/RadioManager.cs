@@ -15,22 +15,19 @@ namespace StoreServer.Radio
     {
         private const int SEND_DELAY = 100;
 
+        public string PortName;
+
         private SerialPort serialPort;
         private Queue<SerialPacket> sendQueue;
         private Thread sendThread;
         private Timer sendTimer;
-        public string PortName;
-
-
+        private DataManager dataManager;
+        private string destination = "-1";
 
         public Timer SendTimer
         {
             get { return sendTimer; }
         }
-
-        private DataManager dataManager;
-
-        private string destination = "-1";
 
         public string Destination
         {
@@ -162,8 +159,7 @@ namespace StoreServer.Radio
             }
 
 
-            //Debug.WriteLine("--- Send Loop ---");
-            Debug.WriteLine("Sending: " + ads.Count + " ads & " + products.Count + " products");
+            Console.WriteLine("Sending: " + ads.Count + " ads & " + products.Count + " products");
 
             // Extra liste für die ziel lampen benötigt
             targetList.AddRange(packetList.Keys);
@@ -174,7 +170,6 @@ namespace StoreServer.Radio
                 // Für jede Lampe ein paket
                 foreach (string t in targetList)
                 {
-                    //Debug.WriteLine("Send a packet to Lamp {0}", t);
                     Send(packetList[t].Dequeue());
                 }
 
@@ -183,7 +178,6 @@ namespace StoreServer.Radio
                 {
                     if (packetList[t].Count == 0)
                     {
-                        //Debug.WriteLine("Lamp {0} got all packets", t);
                         targetList.Remove(t);
                     }
                 }
@@ -204,14 +198,12 @@ namespace StoreServer.Radio
                         if (serialPort.IsOpen)
                         {
                             SerialPacket p = sendQueue.Dequeue();
-                            //Debug.WriteLine("RadioManager: <online> sending: " + p.ToString());
 
                             if (p is LampPacket)
                             {
                                 if (((LampPacket)p).TargetId != destination)
                                 {
                                     AddressPacket addressPacket = new AddressPacket(((LampPacket)p).TargetId);
-                                    //Debug.WriteLine("RadioManager: <online> sending: " + addressPacket.ToString());
                                     if (addressPacket.Send(serialPort))
                                     {
                                         destination = addressPacket.Address;

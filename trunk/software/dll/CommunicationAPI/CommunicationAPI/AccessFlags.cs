@@ -15,7 +15,7 @@ namespace CommunicationAPI
         Traces = 8,
         Authenticated = 16,
         Network = 32,
-        Regions = AccessFlags.Product | AccessFlags.Ads,
+        Regions = 64,
         All = int.MaxValue
     }
 }

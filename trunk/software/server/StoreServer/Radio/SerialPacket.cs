@@ -28,7 +28,7 @@ namespace StoreServer.Radio
             string msg = Decode(bytes);
             if (this is LampPacket)
             {
-                Debug.WriteLine("Sending: " + msg + " to " + ((LampPacket)this).TargetId);
+                Console.WriteLine("Sending: " + msg + " to " + ((LampPacket)this).TargetId);
             }
             else Debug.WriteLine("Sending: " + msg);
 
