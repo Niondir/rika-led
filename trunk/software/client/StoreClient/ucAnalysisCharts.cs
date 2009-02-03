@@ -112,7 +112,7 @@ namespace StoreClient
                 mainLines[i] = new PointPairList();
                 for (int j = 0; j < steps; j++)
                 {
-                    TimeSpan ts = GetRestInRegion(lowerBound, upperBound, traces, regions[i]);
+                    TimeSpan ts = GetRestInRegion(traces, regions[i]);
                     mainLines[i].Add((double)j, ts.TotalMinutes);
 
                     lowerBound = upperBound;
@@ -128,7 +128,7 @@ namespace StoreClient
             zedGraphControlMain.AxisChange();
             zedGraphControlMain.Refresh();
         }
-        private TimeSpan GetRestInRegion(DateTime start, DateTime stop, TraceData[] traces, RegionData region)
+        private TimeSpan GetRestInRegion(TraceData[] traces, RegionData region)
         {
             TimeSpan ret = new TimeSpan();
             foreach (TraceData i in traces)
@@ -136,14 +136,14 @@ namespace StoreClient
                 // für alle Regionen bis ausschließlich der letzten, da die mit der abgabe der daten verrechnet werden muss
                 for(int j=0; j<i.Locations.Length - 1; j++)
                 {
-                    if (i.Locations[j].Time < stop && i.Locations[j].Time >= start && i.Locations[j].LampId == region.Id)
+                    if (i.Locations[j].LampId == region.Id)
                     {
                         ret += i.Locations[j + 1].Time - i.Locations[j].Time;
                     }
                 }
                 // letzter abschnitt
                 int last = i.Locations.Length - 1;
-                if (i.Locations[last].Time < stop && i.Locations[last].Time > start && i.Locations[last].LampId == region.Id)
+                if (i.Locations[last].LampId == region.Id)
                     ret += i.Timestamp - i.Locations[last].Time;
             }
             return ret;
