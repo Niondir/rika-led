@@ -13,7 +13,7 @@ namespace StoreServer.Radio
 {
     public class RadioManager
     {
-        private const int SEND_DELAY = 20;
+        private const int SEND_DELAY = 550;
 
         private SerialPort serialPort;
         private Queue<SerialPacket> sendQueue;
