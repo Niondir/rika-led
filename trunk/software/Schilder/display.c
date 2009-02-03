@@ -91,3 +91,9 @@ void clear_row(char row)
   set_CursorPos(1,row);
   LCD_PUTS("                    "); //20 zeichen löschen
 }
+
+void clear_row_long(char row)
+{
+  set_CursorPos(1,row);
+  LCD_PUTS("                     "); //21 zeichen löschen
+}
