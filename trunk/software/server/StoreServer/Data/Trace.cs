@@ -72,10 +72,11 @@ namespace StoreServer.Data
 
             reader.Close();
             foreach (LocationData l in waypoints) {
-                command.CommandText = "INSERT INTO `led_waypoints` (regions_id, traces_id, time) VALUES (?, ?, ?)";
+                command.CommandText = "INSERT INTO `led_waypoints` (regions_id, traces_id, time, regions_name) VALUES (?, ?, ?, ?)";
                 command.Parameters.AddWithValue("regions_id", l.LampId);
                 command.Parameters.AddWithValue("traces_id", id);
                 command.Parameters.AddWithValue("time", (int)(l.RelativeTimestamp * TIME_FACTOR));
+                command.Parameters.AddWithValue("regions_name", l.RegionName);
                 command.ExecuteNonQuery();
                 command.Parameters.Clear();
             }
@@ -102,7 +103,7 @@ namespace StoreServer.Data
         public static List<Trace> Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT traces_id, regions_id, time, timestamp FROM led_waypoints JOIN led_traces ON led_traces.id = traces_id";
+            command.CommandText = "SELECT traces_id, regions_id, time, timestamp, name FROM led_waypoints JOIN led_traces ON led_traces.id = traces_id";
             OdbcDataReader reader = command.ExecuteReader();
 
             //List<Trace> traces = new List<Trace>();
@@ -131,6 +132,7 @@ namespace StoreServer.Data
                 loc.LampId = reader.GetString(1);
                 loc.RelativeTimestamp = (int)reader.GetInt64(2);
                 loc.Time = t.timestamp - new TimeSpan(0, 0, loc.RelativeTimestamp);
+                loc.RegionName = reader.GetString(4);
 
                 t.waypoints.Add(loc);
             }
