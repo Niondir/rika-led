@@ -33,8 +33,8 @@ namespace StoreServer.Data
 
         public Region(RegionData region)
         {
-            this.Id = region.Id;
-            this.name = region.Name.ToLower();
+            this.Id = region.Id.ToLower();
+            this.name = region.Name;
         }
 
         public void Save(OdbcConnection connection)
