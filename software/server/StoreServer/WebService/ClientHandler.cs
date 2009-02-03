@@ -467,19 +467,19 @@ namespace StoreServer.WebService
             this.ValidateRequest(session, AccessFlags.Traces);
 
             List<TraceData> traces = new List<TraceData>();
-            try
-            {
+            //try
+            //{
                 int i = 0;
                 foreach (Trace t in Trace.Load(this.DataManager.Connection, from, to))
                 {
                     i++;
                     traces.Add(t.Data);
                 }
-            }
-            catch (Exception ex)
+            //}
+            /*catch (Exception ex)
             {
                 throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
-            }
+            }*/
 
             return traces.ToArray();
         }

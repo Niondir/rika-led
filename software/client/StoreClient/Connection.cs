@@ -203,6 +203,8 @@ namespace StoreClient
 
         internal TraceData[] GetTraces()
         {
+            return remote.GetTraces(session);
+            
             //TraceData
             TraceData[] dummy = new TraceData[3];
             Random rnd = new Random();
@@ -225,7 +227,7 @@ namespace StoreClient
                 dummy[i].Timestamp = dummy[i].Locations[dummy[i].Locations.Length - 1].Time;
             }
             return dummy;
-            //return remote.GetTraces(session);
+            
         }
     }
 }

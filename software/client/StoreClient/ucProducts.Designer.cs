@@ -103,6 +103,7 @@
             // toolStripButtonPEdit
             // 
             this.toolStripButtonPEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPEdit.Enabled = false;
             this.toolStripButtonPEdit.Image = global::StoreClient.Properties.Resources.page_edit;
             this.toolStripButtonPEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonPEdit.Name = "toolStripButtonPEdit";
@@ -114,6 +115,7 @@
             // toolStripButtonPDelete
             // 
             this.toolStripButtonPDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPDelete.Enabled = false;
             this.toolStripButtonPDelete.Image = global::StoreClient.Properties.Resources.page_delete;
             this.toolStripButtonPDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonPDelete.Name = "toolStripButtonPDelete";
@@ -159,6 +161,7 @@
             this.GridProducts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridProducts_CellDoubleClick);
             this.GridProducts.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridProducts_CellEndEdit);
             this.GridProducts.Paint += new System.Windows.Forms.PaintEventHandler(this.GridProducts_Paint);
+            this.GridProducts.SelectionChanged += new System.EventHandler(this.GridProducts_SelectionChanged);
             // 
             // ProdName
             // 
