@@ -32,13 +32,13 @@ void set_CursorPos(char col, char row)
   LCD_PUTC('O');
   LCD_PUTC(col-1); //Spalte, x
   LCD_PUTC(row-1); //Zeile, y
-  _delay_ms(100);
+ // _delay_ms(100);
 }
 
 void clr_Screen(void)
 {
   LCD_PUTC('\f'); //Formfeed
-  _delay_ms(100);
+  //_delay_ms(100);
 }
 
 
