@@ -99,10 +99,10 @@ namespace StoreServer.Data
         {
             OdbcCommand command = connection.CreateCommand();
 
-            command.CommandText = "SELECT name FROM led_roles WHERE name = @role";
+            command.CommandText = "SELECT name FROM led_roles WHERE name = ?";
             command.Parameters.AddWithValue("role", user.Role.Name);
             OdbcDataReader reader = command.ExecuteReader();
-
+            command.Parameters.Clear();
             bool roleOK = reader.HasRows;
 
             while (reader.Read())
@@ -114,9 +114,10 @@ namespace StoreServer.Data
 
             if (roleOK)
             {
-                command.CommandText = "INSERT INTO led_users (roles_name, login, password) VALUES(@role, @login, @password)";
-                command.Parameters.AddWithValue("@login", user.Username);
-                command.Parameters.AddWithValue("@password", user.Password);
+                command.CommandText = "INSERT INTO led_users (roles_name, login, password) VALUES(?, ?, ?)";
+                command.Parameters.AddWithValue("role", user.Role.Name);
+                command.Parameters.AddWithValue("login", user.Username);
+                command.Parameters.AddWithValue("password", user.Password);
                 command.ExecuteNonQuery();
             }
         }

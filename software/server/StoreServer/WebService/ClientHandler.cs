@@ -41,7 +41,7 @@ namespace StoreServer.WebService
 
             if (client.Authed)
             {
-                Debug.WriteLine("user logged in: " + user.Username);
+                Console.WriteLine("user logged in: " + user.Username);
                 return client.Session.Data;
             }
             else
@@ -280,7 +280,7 @@ namespace StoreServer.WebService
 
         public void EditRegion(SessionData session, RegionData oldValue, RegionData newValue)
         {
-            this.ValidateRequest(session, AccessFlags.User);
+            this.ValidateRequest(session, AccessFlags.Regions);
 
             try
             {
@@ -392,7 +392,9 @@ namespace StoreServer.WebService
         public RegionData[] GetRegions(SessionData session)
         {
             Debug.WriteLine("GetRegions()");
-            this.ValidateRequest(session, AccessFlags.Product | AccessFlags.Regions);
+            this.ValidateRequest(session, AccessFlags.Product);
+            this.ValidateRequest(session, AccessFlags.Ads);
+
             RegionData[] regions;
             try
             {

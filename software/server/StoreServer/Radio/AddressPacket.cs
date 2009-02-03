@@ -20,8 +20,6 @@ namespace StoreServer.Radio
             this.sendBytes = Encode(String.Format("ATDH0,DL{0},CN\r", address));
         }
 
-        
-
         protected override void Write(SerialPort port, Byte[] bytes)
         {
             //guard time, sending +++ to switch to cmd mode
