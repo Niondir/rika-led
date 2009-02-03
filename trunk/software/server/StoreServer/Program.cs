@@ -176,16 +176,21 @@ namespace StoreServer
                 Console.WriteLine(ex.Message);
                 Console.ReadKey();
             }
+            try
+            {
+                Console.WriteLine("Server: shuting down...");
+                closing = true;
+                Thread.Sleep(500);
 
-            Console.WriteLine("Server: shuting down...");
-            closing = true;
-            Thread.Sleep(500);
+                httpService.Abort();
 
-            httpService.Abort();
-
-            Console.WriteLine("Server: Closed");
-            //Console.WriteLine("Server: Pres any key to exit");
-            //Console.ReadKey();
+                Console.WriteLine("Server: Closed");
+                //Console.WriteLine("Server: Pres any key to exit");
+                //Console.ReadKey();
+            }
+            catch(Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public static void Close()
