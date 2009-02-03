@@ -74,6 +74,9 @@ namespace StoreServer
             {
                 switch (command)
                 {
+                    case "port":
+                        Program.RadioManager.PortName = tokens[1];
+                        break;
                     case "sendtimer":
                         Program.RadioManager.SendTimer.Change(int.Parse(tokens[1]), int.Parse(tokens[1]));
                         break;
