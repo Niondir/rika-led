@@ -30,6 +30,7 @@ namespace StoreClient
             : this()
         {
             textBoxName.Text = name;
+            textBoxID.Focus();
         }
         public FormAddRegion(RegionData editData)
             :this()

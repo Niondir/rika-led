@@ -51,6 +51,8 @@ namespace StoreClient
 
         private void toolStripButtonEdit_Click(object sender, EventArgs e)
         {
+            if (gridAds.SelectedRows.Count == 0)
+                return;
             FormAddAd editAdd = new FormAddAd((AdvertisementData)gridAds.SelectedRows[0].Tag);
             if (editAdd.ShowDialog() == DialogResult.OK)
             {
@@ -76,6 +78,14 @@ namespace StoreClient
                 Connection.GetInstance().DeleteAd((AdvertisementData)i.Tag);
             }
             RefreshData();
+        }
+
+        private void gridAds_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridAds.SelectedRows.Count > 0)
+                toolStripButtonDelete.Enabled = toolStripButtonEdit.Enabled = true;
+            else
+                toolStripButtonDelete.Enabled = toolStripButtonEdit.Enabled = false;
         }
     }
 }

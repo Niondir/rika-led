@@ -35,7 +35,7 @@ namespace StoreClient
                 throw exception;
             }
         }
-        internal static string title = "iStore";
+        internal static string title = "MyStore";
         
         private DisplayWindow currWindow = DisplayWindow.Login;
         private bool showStats;

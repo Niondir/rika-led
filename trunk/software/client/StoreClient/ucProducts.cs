@@ -109,10 +109,10 @@ namespace StoreClient
         private void toolStripButtonPDelete_Click(object sender, EventArgs e)
         {
             if (GridProducts.SelectedRows.Count == 1)
-                if (MessageBox.Show("Wollen Sie wirklich das Produkt \"" + ((ProductData)GridProducts.SelectedRows[0].Tag).Name + "\" löschen?", "Frage", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                if (MessageBox.Show("Wollen Sie wirklich das Produkt \"" + ((ProductData)GridProducts.SelectedRows[0].Tag).Name + "\" löschen?", "Frage", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) != DialogResult.Yes)
                     return;
             if (GridProducts.SelectedRows.Count > 1)
-                if (MessageBox.Show("Wollen Sie wirklich die " + GridProducts.SelectedRows.Count + " Produkte löschen?", "Frage", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                if (MessageBox.Show("Wollen Sie wirklich die " + GridProducts.SelectedRows.Count + " Produkte löschen?", "Frage", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) != DialogResult.Yes)
                     return;
             foreach (DataGridViewRow i in GridProducts.SelectedRows)
             {
@@ -195,6 +195,14 @@ namespace StoreClient
         private void GridProducts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             toolStripButtonPEdit_Click(sender, null);
+        }
+
+        private void GridProducts_SelectionChanged(object sender, EventArgs e)
+        {
+            if (GridProducts.SelectedRows.Count > 0)  
+                toolStripButtonPDelete.Enabled = toolStripButtonPEdit.Enabled = true;
+            else
+                toolStripButtonPDelete.Enabled = toolStripButtonPEdit.Enabled = false;
         }
     }
 }

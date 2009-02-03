@@ -256,6 +256,7 @@ namespace CommunicationAPI.DataTypes
         public LocationData[] Locations;
 
         public TraceData(LocationData[] locations)
+            :this()
         {
             this.Id = -1;
             this.Locations = locations;
