@@ -19,6 +19,9 @@ namespace StoreServer.Radio
         private Queue<SerialPacket> sendQueue;
         private Thread sendThread;
         private Timer sendTimer;
+        public string PortName;
+
+
 
         public Timer SendTimer
         {
@@ -44,6 +47,7 @@ namespace StoreServer.Radio
 
         public RadioManager(string portName, DataManager dataManager)
         {
+            this.PortName = portName;
             sendQueue = new Queue<SerialPacket>();
             serialPort = new SerialPort(portName, 9600);
             
@@ -64,6 +68,7 @@ namespace StoreServer.Radio
         {
             try
             {
+                serialPort.PortName = PortName;
                 serialPort.Open();
                 Console.WriteLine("Opened serial port on " + serialPort.PortName);
             }
