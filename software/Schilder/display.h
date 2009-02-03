@@ -18,6 +18,7 @@ void set_CursorForm(char mode);
 void set_DisplayModus(char mode);
 void write_Display(char* data, char col, char row);
 void clear_row(char row);
+void clear_row_long(char row);
 void write_Display4x20Border(void);
 void write_credits(void);
 #endif
