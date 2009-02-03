@@ -22,15 +22,20 @@ namespace Kasse
         private static AutoResetEvent signal = new AutoResetEvent(true);
         public static void Set() { signal.Set(); }
 
+        private static Config config;
+        public static Config Config { get { return config; } }
+
+
+
         public static void Main(string[] args)
         {
-            Config config = Config.Load();
+            config = Config.Load();
 
             // Beim Server anmelden
 
             Connection.GetInstance().Login(config.Username, config.Password);
 
-            radioReveiver = new RadioReceiver(config.ComPort);
+            radioReveiver = new RadioReceiver(Config.ComPort);
 
             while (signal.WaitOne())
             {
