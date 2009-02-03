@@ -97,7 +97,7 @@ void uartSW_putc (const char c)
 {
     do
     {
-        sei(); nop(); nop(); cli(); // yield(); 
+        sei(); nop(); cli(); // yield(); 
     } while (outframe);
 
     // frame = *.P.7.6.5.4.3.2.1.0.S   S=Start(0), P=Stop(1), *=Endemarke(1) 
