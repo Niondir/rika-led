@@ -100,6 +100,7 @@ int main(void)
 				 clear_row(10);  
 			   sprintf(debug, "%u Good  vs. %u Bad",  sign.packetsOK, sign.packetsBAD);
          write_Display(debug,1,11);
+				 clear_row(12);
             #endif
 
 		}
@@ -135,7 +136,7 @@ int main(void)
 				 sprintf(debug, "%u Good  vs. %u Bad",  sign.packetsOK, sign.packetsBAD);
                  write_Display(debug,1,11); 
 
-			
+		  	clear_row(12);
 			}
            #endif
 
