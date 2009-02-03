@@ -247,6 +247,7 @@ namespace CommunicationAPI.DataTypes
         public int RelativeTimestamp; // Relativer timestamp zu TraceData.Timestamp
         public DateTime Time; // Absoluter Zeitpunkt des Datums
         public string LampId;
+        public string RegionName;
     }
 
     public struct TraceData

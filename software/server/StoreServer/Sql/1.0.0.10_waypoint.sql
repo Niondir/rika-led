@@ -1,0 +1,1 @@
+ALTER TABLE `rika`.`led_waypoints` ADD COLUMN `regions_name` VARCHAR(45) NOT NULL AFTER `time`;
