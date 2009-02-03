@@ -96,9 +96,10 @@ int main(void)
 			   if(toggleFlag) sprintf(debug, "OK: %s", debug2); //Paket korrekt empfangen
 			   else           sprintf(debug, "ok: %s", debug2); //trotzdem kann sich u.U z.B. durch falsche IDs nichts tun!
 			   write_Display(debug,1,8);			//in letzter Zeile ganz Rechts diese 2 Zeichen darstellen
-           
-			   	sprintf(debug, "%u Good  vs. %u Bad",  sign.packetsOK, sign.packetsBAD);
-                write_Display(debug,1,11);
+         clear_row(9);
+				 clear_row(10);  
+			   sprintf(debug, "%u Good  vs. %u Bad",  sign.packetsOK, sign.packetsBAD);
+         write_Display(debug,1,11);
             #endif
 
 		}
@@ -128,6 +129,8 @@ int main(void)
 				}
 
 				write_Display(debug,1,8);
+				clear_row(9);
+				clear_row(10);
              
 				 sprintf(debug, "%u Good  vs. %u Bad",  sign.packetsOK, sign.packetsBAD);
                  write_Display(debug,1,11); 
