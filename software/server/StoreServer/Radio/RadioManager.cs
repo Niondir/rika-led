@@ -159,7 +159,7 @@ namespace StoreServer.Radio
             }
 
 
-            Console.WriteLine("Sending: " + ads.Count + " ads & " + products.Count + " products");
+            Console.WriteLine("Created: " + ads.Count + " ads & " + products.Count + " products");
 
             // Extra liste für die ziel lampen benötigt
             targetList.AddRange(packetList.Keys);
