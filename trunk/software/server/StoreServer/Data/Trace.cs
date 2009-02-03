@@ -27,7 +27,10 @@ namespace StoreServer.Data
 
         public Trace(TraceData trace)
         {
-            this.waypoints.AddRange(trace.Locations);
+            if (trace.Locations != null)
+            {
+                this.waypoints.AddRange(trace.Locations);
+            }
             this.timestamp = trace.Timestamp;
         }
 
