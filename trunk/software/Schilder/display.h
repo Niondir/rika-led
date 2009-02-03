@@ -9,6 +9,8 @@
 #define DISPLAY_ROWS        4
 #define DISPLAY_ROWCHARS    20
 
+#define EUROZEICHEN \x7b
+
 void init_Display(int8_t modus);
 void clr_Screen(void);
 void set_CursorPos(char col, char row);
@@ -16,5 +18,6 @@ void set_CursorForm(char mode);
 void set_DisplayModus(char mode);
 void write_Display(char* data, char col, char row);
 void clear_row(char row);
-
+void write_Display4x20Border(void);
+void write_credits(void);
 #endif

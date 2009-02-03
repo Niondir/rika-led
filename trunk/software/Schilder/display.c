@@ -32,13 +32,13 @@ void set_CursorPos(char col, char row)
   LCD_PUTC('O');
   LCD_PUTC(col-1); //Spalte, x
   LCD_PUTC(row-1); //Zeile, y
-  _delay_ms(50);
+  _delay_ms(100);
 }
 
 void clr_Screen(void)
 {
   LCD_PUTC('\f'); //Formfeed
- // _delay_ms(50);
+  _delay_ms(100);
 }
 
 
@@ -59,8 +59,35 @@ void write_Display(char* data, char col, char row)
   LCD_PUTS(data);
 }
 
+void write_Display4x20Border(void)
+{
+  
+  set_CursorPos(21,1);
+  LCD_PUTS("#");    						//Unterstrich unter "reales" Display
+  set_CursorPos(21,2);
+  LCD_PUTS("#"); 
+  set_CursorPos(21,3);
+  LCD_PUTS("#");
+  set_CursorPos(21,4);
+  LCD_PUTS("#");   
+  set_CursorPos(1,5);
+
+  LCD_PUTS("#####################");    						//Unterstrich unter "reales" Display
+ // LCD_PUTS("*********************");   
+}
+
+void write_credits(void)
+{
+  set_CursorPos(1,14);
+  LCD_PUTS("---------------------"); 
+  set_CursorPos(1,15);
+  LCD_PUTS("RIKA Seminar WS 08/09"); 
+  set_CursorPos(1,16);
+  LCD_PUTS("---------------------"); 
+}
+
 void clear_row(char row)
 {
   set_CursorPos(1,row);
-  LCD_PUTS("                    ");
+  LCD_PUTS("                    "); //20 zeichen löschen
 }
