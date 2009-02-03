@@ -13,7 +13,7 @@ namespace StoreServer.Radio
 {
     public class RadioManager
     {
-        private const int SEND_DELAY = 1000;
+        private const int SEND_DELAY = 100;
 
         private SerialPort serialPort;
         private Queue<SerialPacket> sendQueue;
@@ -46,7 +46,7 @@ namespace StoreServer.Radio
         {
             sendQueue = new Queue<SerialPacket>();
             serialPort = new SerialPort(portName, 9600);
-
+            
             this.dataManager = dataManager;
 
             Connect();
@@ -239,7 +239,14 @@ namespace StoreServer.Radio
                     Thread.Sleep(50);
                 }
             }
-
+            try
+            {
+                serialPort.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             Debug.WriteLine("Leaving SerialSend Thread");
         }
     }
