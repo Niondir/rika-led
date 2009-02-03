@@ -52,5 +52,5 @@ void init_AtMega8(){
 	UCSRC=0x86;
 	UCSRB |= (1 << RXCIE);
 	UBRRH=0x00;
-	UBRRL=0x0B; 
+	UBRRL=0x0B;  
 }

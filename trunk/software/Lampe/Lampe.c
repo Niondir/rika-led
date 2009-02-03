@@ -17,7 +17,7 @@
 #ifdef DEBUG
 #define PRICETAGBUFFERMAXSLOTS 4
 #else 
-#define PRICETAGBUFFERMAXSLOTS 7
+#define PRICETAGBUFFERMAXSLOTS 5
 #endif
 
 #define IDMAXLENGTH 4
@@ -89,41 +89,43 @@ ISR(USART_RXC_vect)
 {
 	char tempchar=uart_getc();
 	if(!init_mode){
-		switch (tempchar) { 
-			case '<': 	{
-										if (rcvbuf_receiving){
-											rcvbuf_invalid = TRUE;
-										}
-										else {
-											rcvbuf_receiving = TRUE;
-											rcvbuf_iterator = 0;
-										}
-										break;
-									}
-			case '>': 	{
-										if(rcvbuf_iterator<RCVBUFSIZE){
-											if(rcvbuf_receiving){
-												packet_received = TRUE;
-												rcvbuf_receiving = FALSE;
-												rcvbuf[rcvbuf_iterator]='\0';
-												rcvbuf_iterator=0;
+		if(!packet_received){
+			switch (tempchar) { 
+				case '<': 	{
+											if (rcvbuf_receiving){
+												rcvbuf_invalid = TRUE;
 											}
+											else {
+												rcvbuf_receiving = TRUE;
+												rcvbuf_iterator = 0;
+											}
+											break;
+										}
+				case '>': 	{
+											if(rcvbuf_iterator<RCVBUFSIZE){
+												if(rcvbuf_receiving){
+													packet_received = TRUE;
+													rcvbuf_receiving = FALSE;
+													rcvbuf[rcvbuf_iterator]='\0';
+													rcvbuf_iterator=0;
+												}
+											}
+											else{
+												rcvbuf_invalid = TRUE;
+											}
+											break;
+										}
+
+				default:	{	
+										if(rcvbuf_iterator<RCVBUFSIZE && !packet_received){
+											rcvbuf[rcvbuf_iterator]=tempchar;
+											rcvbuf_iterator++;
 										}
 										else{
-											rcvbuf_invalid = TRUE;
+											//rcvbuf_invalid = TRUE;
 										}
-										break;
 									}
-
-			default:	{	
-									if(rcvbuf_iterator<RCVBUFSIZE && !packet_received){
-										rcvbuf[rcvbuf_iterator]=tempchar;
-										rcvbuf_iterator++;
-									}
-									else{
-										//rcvbuf_invalid = TRUE;
-									}
-								}
+			}
 		}
 	}	
 	else{
@@ -140,10 +142,9 @@ void insert_default_ad(){
 	sprintf(tempstring, "2|");
 	strcat(tempstring, lampid);
 	strcat(tempstring, "|");
-	strcat(tempstring, lampid);
-	strcat(tempstring,"|DEFAULT|NEWAD|FROM LAMP ");
+	strcat(tempstring,"|  Wilkommen im| Mustermarkt|              [");
 	strcat(tempstring,lampid);
-	strcat(tempstring,"|");
+	strcat(tempstring,"]|");
 	calculate_csum(-1, tempstring);
 	strcat(tempstring, csum);
 	insert_in_ad_buffer(tempstring);
@@ -368,10 +369,11 @@ int calculate_overwriteslot(){
 			}
 		}
 	}
-	#ifdef DEBUG
-	sprintf(tempstring, "ueberschrieben wird slot %d", overwrite);
-	uart_puts(tempstring);
-	#endif
+
+	//#ifdef DEBUG
+	//	sprintf(tempstring, "ueberschrieben wird slot %d \r\n", overwrite);
+	//	uart_puts(tempstring);
+	//#endif
 	return(overwrite);
 }
 
@@ -401,15 +403,17 @@ void insert_in_ad_buffer(char *source){
 //************************************
 // 
 //************************************
+
 void insert_in_pricetag_buffer(){
 	int overwriteslot=calculate_overwriteslot();
-	strcpy(PriceTagBuffer[overwriteslot],rcvbuf);
-	nextOverwritePriceTagBufferPos=(overwriteslot+1)%PRICETAGBUFFERMAXSLOTS;
-	if(PriceTagBufferSlotsUsed<PRICETAGBUFFERMAXSLOTS && (overwriteslot>=PriceTagBufferSlotsUsed)){
+	strcpy(PriceTagBuffer[overwriteslot], rcvbuf);
+	nextOverwritePriceTagBufferPos=(nextOverwritePriceTagBufferPos+1) % PRICETAGBUFFERMAXSLOTS;
+	if(overwriteslot==PriceTagBufferSlotsUsed){
 		PriceTagBufferSlotsUsed++;
 	};
 	pricetagbuf_empty = FALSE;
 };
+
 
 void send_packet(char *packet){
 	uartSW_putc('<');
@@ -461,7 +465,7 @@ void process_packet(){
 									break;
 								}
 		// set pricetag packet
-			case '7':			{			
+			case '7':	{			
 									forward_packet();
 									insert_in_pricetag_buffer();
 									break;
@@ -524,11 +528,13 @@ init_lamp();
 		}
 
 		if(!pricetagbuf_empty && !pricetagdelay){
+			TGL_LED1;
 			send_next_sign();
 			TGL_LED1;
 		}
 
 		if(!adbuf_empty && !addelay){
+			TGL_LED2;
 			send_next_ad();
 			TGL_LED2;
 		}
@@ -541,9 +547,10 @@ init_lamp();
 
 		}
 		if(send_trace_mode && !sendtracedelay){
+		  TGL_LED3;
 			send_packet(sendtracepacket);
 			sendtracedelay = SEND_TRACE_DELAY;
-			TGL_LED2;
+			TGL_LED3;
 		}
 	};
 };
