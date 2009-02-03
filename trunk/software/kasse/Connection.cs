@@ -77,6 +77,13 @@ namespace Kasse
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                if (ex.Message.Contains("Login first"))
+                {
+                    Console.WriteLine("Try to reconnect, last message is unhandled");
+                    Connection.GetInstance().Login(Program.Config.Username, Program.Config.Password);
+                }
+
+                
             }
         }
     }
