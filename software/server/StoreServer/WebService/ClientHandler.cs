@@ -392,7 +392,7 @@ namespace StoreServer.WebService
         public RegionData[] GetRegions(SessionData session)
         {
             Debug.WriteLine("GetRegions()");
-            this.ValidateRequest(session, AccessFlags.Regions);
+            this.ValidateRequest(session, AccessFlags.Product | AccessFlags.Regions);
             RegionData[] regions;
             try
             {
