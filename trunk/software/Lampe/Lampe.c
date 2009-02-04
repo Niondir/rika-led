@@ -142,7 +142,7 @@ void insert_default_ad(){
 	sprintf(tempstring, "2|");
 	strcat(tempstring, lampid);
 	strcat(tempstring, "|");
-	strcat(tempstring,"|  Wilkommen im| Mustermarkt|              [");
+	strcat(tempstring,"|  Willkommen im| Mustermarkt|              [");
 	strcat(tempstring,lampid);
 	strcat(tempstring,"]|");
 	calculate_csum(-1, tempstring);

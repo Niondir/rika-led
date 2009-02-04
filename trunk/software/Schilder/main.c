@@ -21,9 +21,10 @@
 sign_t    sign;
 packet_t  packet;
 trace_t   trace;
+char Eurostring[2]="";
 
 
-#define DEBUG_MODE
+//#define DEBUG_MODE
 
 int main(void)
 {
@@ -34,7 +35,10 @@ int main(void)
   char  debug2[25];  
   uint8_t toggleFlag=0;
  #endif
-                                                                
+	
+	Eurostring[0] = EUROZEICHEN;
+	Eurostring[1] = '\0';
+	                                                                
   sei();               										    	// global irq an
 
   sign.signType   = SIGN_TYPE_NOT_DETECTED;
@@ -425,7 +429,8 @@ void packet_action(void)
 													sign.displayRefreshFlag = 1;
 													strcpy(sign.displayMemory[0], packet.args[1]); // Name
 													strcpy(sign.displayMemory[1], packet.args[2]); // Preis, 
-													strcat(sign.displayMemory[1], " EUROZEICHEN");
+													strcat(sign.displayMemory[1], " ");
+													strcat(sign.displayMemory[1], Eurostring);
 													memset(sign.displayMemory[2],' ', 20); sign.displayMemory[2][20]='\0';  // Zeile 3 leer
 													memset(sign.displayMemory[3],' ', 20); sign.displayMemory[3][20]='\0';  // Zeile 4 leer
 												}
