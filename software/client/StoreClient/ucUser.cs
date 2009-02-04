@@ -96,14 +96,31 @@ namespace StoreClient
                 checkBoxAds.Checked = true;
             else
                 checkBoxAds.Checked = false;
+            
             if ((roles[listBox2.SelectedIndex].Flags & (int)CommunicationAPI.AccessFlags.Product) != 0)
                 checkBoxProducts.Checked = true;
             else
                 checkBoxProducts.Checked = false;
+            
             if ((roles[listBox2.SelectedIndex].Flags & (int)CommunicationAPI.AccessFlags.User) != 0)
                 checkBoxUser.Checked = true;
             else
                 checkBoxUser.Checked = false;
+
+            if ((roles[listBox2.SelectedIndex].Flags & (int)CommunicationAPI.AccessFlags.Traces) != 0)
+                checkBoxStats.Checked = true;
+            else
+                checkBoxStats.Checked = false;
+
+            if ((roles[listBox2.SelectedIndex].Flags & (int)CommunicationAPI.AccessFlags.Regions) != 0)
+                checkBoxRegions.Checked = true;
+            else
+                checkBoxRegions.Checked = false;
+
+            if ((roles[listBox2.SelectedIndex].Flags & (int)CommunicationAPI.AccessFlags.Network) != 0)
+                checkBoxNetwork.Checked = true;
+            else
+                checkBoxNetwork.Checked = false;
 
             textBoxGroupName.Text = roles[listBox2.SelectedIndex].Name;
         }
@@ -129,6 +146,14 @@ namespace StoreClient
                 flags |= (int)CommunicationAPI.AccessFlags.Product;
             if(checkBoxUser.Checked)
                 flags |= (int)CommunicationAPI.AccessFlags.User;
+            if (checkBoxNetwork.Checked)
+                flags |= (int)CommunicationAPI.AccessFlags.Network;
+            if (checkBoxRegions.Checked)
+                flags |= (int)CommunicationAPI.AccessFlags.Regions;
+            if (checkBoxStats.Checked)
+                flags |= (int)CommunicationAPI.AccessFlags.Traces;
+
+
             if (textBoxGroupName.Text.Length == 0)
             {
                 MessageBox.Show("Bitte geben Sie eine Beizeichnung der Gruppe an", "Gruppenname", MessageBoxButtons.OK, MessageBoxIcon.Stop);
