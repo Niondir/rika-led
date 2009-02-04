@@ -9,7 +9,7 @@
 #define DISPLAY_ROWS        4
 #define DISPLAY_ROWCHARS    20
 
-#define EUROZEICHEN \x7b
+#define EUROZEICHEN ((char)0x7b)
 
 void init_Display(int8_t modus);
 void clr_Screen(void);
