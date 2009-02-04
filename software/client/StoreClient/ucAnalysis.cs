@@ -22,7 +22,7 @@ namespace StoreClient
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
             panelEmpty.BackColor = SystemColors.Control;
-            TraceData[] traces = Connection.GetInstance().GetTraces();
+            TraceData[] traces = Connection.GetInstance().GetTraces(dateTimePickerStart.Value, dateTimePickerStop.Value);
             panelEmpty.Controls.Clear();
             panelEmpty.Controls.Add(new ucAnalysisCharts(traces, dateTimePickerStart.Value, dateTimePickerStop.Value));
         }
