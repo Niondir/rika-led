@@ -241,6 +241,7 @@ namespace StoreClient
         {
             RegionData region = new RegionData();
             region.Id = "ffff";
+            region.Name = "";
             remote.ShowSignId(session, region);
         }
 
