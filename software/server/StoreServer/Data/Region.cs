@@ -64,9 +64,17 @@ namespace StoreServer.Data
                 command.CommandText = "UPDATE led_regions SET name = ?, id = ? WHERE id = ?";
                 command.Parameters.AddWithValue("name", data.Name);
                 command.Parameters.AddWithValue("new_id", data.Id);
-                command.Parameters.AddWithValue("id", this.Id);
+                command.Parameters.AddWithValue("old_id", this.Id);
                 command.ExecuteNonQuery();
                 this.name = data.Name;
+
+                if (data.Id != this.id)
+                {
+                    command.Parameters.Clear();
+                    command.CommandText = "UPDATE led_products SET regions_id = ? WHERE regions_id = ?";
+                    command.Parameters.AddWithValue("new_id", data.Id.ToLower());
+                    command.Parameters.AddWithValue("old_id", this.id.ToLower());
+                }
             }
             else
             {
