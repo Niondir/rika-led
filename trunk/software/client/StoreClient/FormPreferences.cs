@@ -64,6 +64,46 @@ namespace StoreClient
         {
             textBoxPassword.Text = "";
         }
+
+        private void CheckHex(object sender, KeyPressEventArgs e)
+        {
+            string valid = "0123456789abcdefABCDEF";
+            string lower = "abcdef";
+            if (e.KeyChar == '\r' && textBoxNewID.Text.Length > 0 && textBoxOldID.Text.Length > 0)
+            {
+                e.Handled = true;
+                buttonSendID_Click(sender, null);
+            }
+            if (e.KeyChar == (char)0x08)
+                return;
+            if(!valid.Contains(new string(e.KeyChar,1)))
+                e.Handled = true;
+            if (lower.Contains(new string(e.KeyChar, 1)))
+            {
+                e.KeyChar = new string(e.KeyChar, 1).ToUpper()[0];
+            }
+        }
+
+        private void buttonShowID_Click(object sender, EventArgs e)
+        {
+            Connection.GetInstance().ShowID();
+        }
+
+        private void buttonSendID_Click(object sender, EventArgs e)
+        {
+            buttonSendID.Enabled = false;
+            try
+            {
+                
+                Connection.GetInstance().SetLampId(textBoxOldID.Text, textBoxNewID.Text);
+                textBoxNewID.Text = textBoxOldID.Text = "";
+            }
+            catch(Exception x)
+            {
+                throw x;
+            }
+            buttonSendID.Enabled = true;
+        }
     }
 
     [Serializable]
