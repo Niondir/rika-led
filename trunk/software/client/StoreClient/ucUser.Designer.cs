@@ -61,6 +61,9 @@
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBoxNewGroup = new System.Windows.Forms.GroupBox();
+            this.checkBoxNetwork = new System.Windows.Forms.CheckBox();
+            this.checkBoxStats = new System.Windows.Forms.CheckBox();
+            this.checkBoxRegions = new System.Windows.Forms.CheckBox();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonRefresh2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -70,9 +73,6 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonSaveGroup = new System.Windows.Forms.ToolStripButton();
             this.buttonSaveGroup = new System.Windows.Forms.Button();
-            this.checkBoxRegions = new System.Windows.Forms.CheckBox();
-            this.checkBoxStats = new System.Windows.Forms.CheckBox();
-            this.checkBoxNetwork = new System.Windows.Forms.CheckBox();
             this.groupBoxAllUsers.SuspendLayout();
             this.groupBoxGroupsRights.SuspendLayout();
             this.groupBoxSingleUser.SuspendLayout();
@@ -484,6 +484,39 @@
             this.groupBoxNewGroup.TabStop = false;
             this.groupBoxNewGroup.Text = "Ausgewählte Gruppe";
             // 
+            // checkBoxNetwork
+            // 
+            this.checkBoxNetwork.AutoSize = true;
+            this.checkBoxNetwork.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxNetwork.Location = new System.Drawing.Point(199, 125);
+            this.checkBoxNetwork.Name = "checkBoxNetwork";
+            this.checkBoxNetwork.Size = new System.Drawing.Size(58, 17);
+            this.checkBoxNetwork.TabIndex = 12;
+            this.checkBoxNetwork.Text = "Geräte";
+            this.checkBoxNetwork.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxStats
+            // 
+            this.checkBoxStats.AutoSize = true;
+            this.checkBoxStats.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxStats.Location = new System.Drawing.Point(182, 100);
+            this.checkBoxStats.Name = "checkBoxStats";
+            this.checkBoxStats.Size = new System.Drawing.Size(75, 17);
+            this.checkBoxStats.TabIndex = 11;
+            this.checkBoxStats.Text = "Statistiken";
+            this.checkBoxStats.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxRegions
+            // 
+            this.checkBoxRegions.AutoSize = true;
+            this.checkBoxRegions.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkBoxRegions.Location = new System.Drawing.Point(132, 74);
+            this.checkBoxRegions.Name = "checkBoxRegions";
+            this.checkBoxRegions.Size = new System.Drawing.Size(125, 17);
+            this.checkBoxRegions.TabIndex = 9;
+            this.checkBoxRegions.Text = "Regionen bearbeiten";
+            this.checkBoxRegions.UseVisualStyleBackColor = true;
+            // 
             // toolStrip2
             // 
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -582,39 +615,6 @@
             this.buttonSaveGroup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonSaveGroup.UseVisualStyleBackColor = true;
             this.buttonSaveGroup.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // checkBoxRegions
-            // 
-            this.checkBoxRegions.AutoSize = true;
-            this.checkBoxRegions.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBoxRegions.Location = new System.Drawing.Point(132, 74);
-            this.checkBoxRegions.Name = "checkBoxRegions";
-            this.checkBoxRegions.Size = new System.Drawing.Size(125, 17);
-            this.checkBoxRegions.TabIndex = 9;
-            this.checkBoxRegions.Text = "Regionen bearbeiten";
-            this.checkBoxRegions.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxStats
-            // 
-            this.checkBoxStats.AutoSize = true;
-            this.checkBoxStats.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBoxStats.Location = new System.Drawing.Point(182, 100);
-            this.checkBoxStats.Name = "checkBoxStats";
-            this.checkBoxStats.Size = new System.Drawing.Size(75, 17);
-            this.checkBoxStats.TabIndex = 11;
-            this.checkBoxStats.Text = "Statistiken";
-            this.checkBoxStats.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxNetwork
-            // 
-            this.checkBoxNetwork.AutoSize = true;
-            this.checkBoxNetwork.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBoxNetwork.Location = new System.Drawing.Point(199, 125);
-            this.checkBoxNetwork.Name = "checkBoxNetwork";
-            this.checkBoxNetwork.Size = new System.Drawing.Size(58, 17);
-            this.checkBoxNetwork.TabIndex = 12;
-            this.checkBoxNetwork.Text = "Geräte";
-            this.checkBoxNetwork.UseVisualStyleBackColor = true;
             // 
             // ucUser
             // 

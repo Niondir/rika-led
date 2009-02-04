@@ -27,6 +27,9 @@ namespace StoreClient
                 checkBoxAds.Enabled = value;
                 checkBoxProducts.Enabled = value;
                 checkBoxUser.Enabled = value;
+                checkBoxNetwork.Enabled = value;
+                checkBoxRegions.Enabled = value;
+                checkBoxStats.Enabled = value;
                 buttonSaveGroup.Enabled = value;
                 toolStripButtonDeleteGroup.Enabled = value;
                 toolStripButtonSaveGroup.Enabled = value;
@@ -39,6 +42,9 @@ namespace StoreClient
                     checkBoxAds.Checked = value;
                     checkBoxProducts.Checked = value;
                     checkBoxUser.Checked = value;
+                    checkBoxNetwork.Checked = value;
+                    checkBoxRegions.Checked = value;
+                    checkBoxStats.Checked = value;
                     textBoxGroupName.Text = "";
                 }
             }
