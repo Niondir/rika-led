@@ -19,6 +19,33 @@ namespace StoreServer.WebService
 
         }
 
+
+        /// <summary>
+        /// Boolean check if the user has access
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="accessFlags"></param>
+        /// <returns></returns>
+        private bool HasAccess(SessionData session, AccessFlags accessFlags)
+        {
+            Client client = Program.UserManager.GetClient(session, this.RemoteEndPoint);
+
+            if (client == null)
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Login first");
+            }
+            else if (!client.CheckAccess(session, this.RemoteEndPoint, accessFlags))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Check the accessflag an throw exception if not allowed
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="accessFlags"></param>
         private void ValidateRequest(SessionData session, AccessFlags accessFlags)
         {
             Client client = Program.UserManager.GetClient(session, this.RemoteEndPoint);
@@ -392,8 +419,14 @@ namespace StoreServer.WebService
         public RegionData[] GetRegions(SessionData session)
         {
             Debug.WriteLine("GetRegions()");
-            this.ValidateRequest(session, AccessFlags.Product);
-            this.ValidateRequest(session, AccessFlags.Ads);
+
+
+            if (!(HasAccess(session, AccessFlags.Regions) ||
+            HasAccess(session, AccessFlags.Product) ||
+            HasAccess(session, AccessFlags.Ads)))
+            {
+                throw new XmlRpcFaultException((int)ErrorCodes.AccessDenined, "Keine Berechtigung");
+            }
 
             RegionData[] regions;
             try
