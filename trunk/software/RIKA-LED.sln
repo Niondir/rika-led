@@ -11,22 +11,30 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kasse", "kasse\Kasse.csproj
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_ohne_server|Any CPU = Debug_ohne_server|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48A78EF4-3ADB-45C8-A820-C5DC003ABDFD}.Debug_ohne_server|Any CPU.ActiveCfg = Debug_ohne_server|Any CPU
 		{48A78EF4-3ADB-45C8-A820-C5DC003ABDFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{48A78EF4-3ADB-45C8-A820-C5DC003ABDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48A78EF4-3ADB-45C8-A820-C5DC003ABDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48A78EF4-3ADB-45C8-A820-C5DC003ABDFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A189904E-6B29-44DF-83E9-73C77B0195F7}.Debug_ohne_server|Any CPU.ActiveCfg = Debug_ohne_server|Any CPU
+		{A189904E-6B29-44DF-83E9-73C77B0195F7}.Debug_ohne_server|Any CPU.Build.0 = Debug_ohne_server|Any CPU
 		{A189904E-6B29-44DF-83E9-73C77B0195F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A189904E-6B29-44DF-83E9-73C77B0195F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A189904E-6B29-44DF-83E9-73C77B0195F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A189904E-6B29-44DF-83E9-73C77B0195F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{433D4C5E-44DD-4B00-952E-F0504E6DE751}.Debug_ohne_server|Any CPU.ActiveCfg = Debug_ohne_server|Any CPU
+		{433D4C5E-44DD-4B00-952E-F0504E6DE751}.Debug_ohne_server|Any CPU.Build.0 = Debug_ohne_server|Any CPU
 		{433D4C5E-44DD-4B00-952E-F0504E6DE751}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{433D4C5E-44DD-4B00-952E-F0504E6DE751}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{433D4C5E-44DD-4B00-952E-F0504E6DE751}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{433D4C5E-44DD-4B00-952E-F0504E6DE751}.Release|Any CPU.Build.0 = Release|Any CPU
+		{381AFF0E-6245-4BDB-834C-4B8295CF2B99}.Debug_ohne_server|Any CPU.ActiveCfg = Debug_ohne_server|Any CPU
+		{381AFF0E-6245-4BDB-834C-4B8295CF2B99}.Debug_ohne_server|Any CPU.Build.0 = Debug_ohne_server|Any CPU
 		{381AFF0E-6245-4BDB-834C-4B8295CF2B99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{381AFF0E-6245-4BDB-834C-4B8295CF2B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{381AFF0E-6245-4BDB-834C-4B8295CF2B99}.Release|Any CPU.ActiveCfg = Release|Any CPU

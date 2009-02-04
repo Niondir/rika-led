@@ -227,7 +227,14 @@ namespace StoreClient
                 dummy[i].Timestamp = dummy[i].Locations[dummy[i].Locations.Length - 1].Time;
             }
             return dummy;
-            
+        }
+        internal TraceData[] GetTraces(DateTime start, DateTime stop)
+        {
+            start = start.Date;
+            if (stop != stop.Date)
+                stop = stop.Date + TimeSpan.FromDays(1);
+
+            return remote.GetTracesByTimeSpan(session, start, stop);
         }
     }
 }

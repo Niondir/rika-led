@@ -19,8 +19,6 @@ namespace StoreClient
             InitializeComponent();
             this.Dock = DockStyle.Fill;
 
-            groups = Connection.GetInstance().GetRegions();
-
             refreshContent(null, null);
 
             if (showGroups)
@@ -57,6 +55,7 @@ namespace StoreClient
         {
             groups = Connection.GetInstance().GetRegions(); 
 
+            // filter button fill
             toolStripButtonFilterGroups.DropDownItems.Clear();
             ToolStripMenuItem alleItem = new ToolStripMenuItem("Alle");
             alleItem.Name = "all";
@@ -77,10 +76,12 @@ namespace StoreClient
                 toolStripButtonFilterGroups.DropDownItems.Add(item);
             }
  
+            // group in datagrid
             ((DataGridViewComboBoxColumn)GridProducts.Columns["Group"]).Items.Clear();
             foreach (RegionData i in groups)
                 ((DataGridViewComboBoxColumn)GridProducts.Columns["Group"]).Items.Add(i.Name);
 
+            // products
             products = Connection.GetInstance().GetProducts();            
             GridProducts.Rows.Clear();
             foreach (ProductData i in products)

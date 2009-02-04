@@ -28,7 +28,8 @@ namespace StoreClient
 
             InitializeComponent();
             this.Dock = DockStyle.Fill;
-            SetMainGraph(GraphPrecision.Hours);
+            zedGraphControlMain.GraphPane.XAxis.Type = AxisType.Date;
+            SetMainGraph(GraphPrecision.Seconds, GraphPrecision.Seconds);
             richTextBox1.Text = GetSummary();
             SetRegions();
         }
@@ -69,14 +70,14 @@ namespace StoreClient
 
         }
 
-        public void SetMainGraph(GraphPrecision precision)
+        public void SetMainGraph(GraphPrecision xAxis, GraphPrecision yAxis)
         {
             regions = Connection.GetInstance().GetRegions();
             int steps;
             TimeSpan step = new TimeSpan();
             
             
-            switch (precision)
+            switch (xAxis)
             {
                 case GraphPrecision.MilliSeconds:
                     steps = (int)(stop - start).TotalMilliseconds;
@@ -112,8 +113,13 @@ namespace StoreClient
                 mainLines[i] = new PointPairList();
                 for (int j = 0; j < steps; j++)
                 {
-                    TimeSpan ts = GetRestInRegion(traces, regions[i]);
-                    mainLines[i].Add((double)j, ts.TotalMinutes);
+                    TimeSpan ts = GetRestInRegion(lowerBound, upperBound, traces, regions[i]);
+                    switch(yAxis){
+                        case GraphPrecision.Hours: mainLines[i].Add((double)j, ts.TotalMinutes); break;
+                        case GraphPrecision.Minutes: mainLines[i].Add((double)j, ts.TotalMinutes); break;
+                        case GraphPrecision.Seconds: mainLines[i].Add((double)j, ts.TotalMinutes); break;
+                        default: mainLines[i].Add((double)j, ts.TotalMinutes); break;
+                }
 
                     lowerBound = upperBound;
                     upperBound += step;
@@ -128,7 +134,7 @@ namespace StoreClient
             zedGraphControlMain.AxisChange();
             zedGraphControlMain.Refresh();
         }
-        private TimeSpan GetRestInRegion(TraceData[] traces, RegionData region)
+        private TimeSpan GetRestInRegion(DateTime start, DateTime stop, TraceData[] traces, RegionData region)
         {
             TimeSpan ret = new TimeSpan();
             foreach (TraceData i in traces)
@@ -136,14 +142,14 @@ namespace StoreClient
                 // für alle Regionen bis ausschließlich der letzten, da die mit der abgabe der daten verrechnet werden muss
                 for(int j=0; j<i.Locations.Length - 1; j++)
                 {
-                    if (i.Locations[j].LampId == region.Id)
+                    if (i.Locations[j].Time < stop && i.Locations[j].Time >= start && i.Locations[j].LampId == region.Id)
                     {
                         ret += i.Locations[j + 1].Time - i.Locations[j].Time;
                     }
                 }
                 // letzter abschnitt
                 int last = i.Locations.Length - 1;
-                if (i.Locations[last].LampId == region.Id)
+                if (i.Locations[last].Time < stop && i.Locations[last].Time > start && i.Locations[last].LampId == region.Id)
                     ret += i.Timestamp - i.Locations[last].Time;
             }
             return ret;
@@ -188,6 +194,8 @@ namespace StoreClient
             colors.Add(i, Color.Green);
             colors.Add(i, Color.Pink);
             colors.Add(i, Color.Orange);
+            colors.Add(i, Color.Crimson);
+            colors.Add(i, Color.DarkBlue);
             
             inited = true;
         }

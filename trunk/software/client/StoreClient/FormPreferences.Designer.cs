@@ -38,6 +38,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.checkBoxSaveUser = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
             this.textBoxPort = new System.Windows.Forms.TextBox();
             this.checkBoxPort = new System.Windows.Forms.CheckBox();
             this.textBoxServerAddr = new System.Windows.Forms.TextBox();
@@ -48,7 +49,7 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonSaveAndClose = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -60,6 +61,7 @@
             // 
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Controls.Add(this.tabPage3);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.ImageList = this.imageListTabPages;
             this.tabControl.Location = new System.Drawing.Point(3, 3);
@@ -144,6 +146,15 @@
             this.tabPage2.Text = "Verbindung";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(6, 103);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(396, 80);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Damit die Änderungen wirksam werden, müssen Sie sich zunächst auslogggen. [Datei " +
+                "-> Verbindung trennen]\r\n";
+            // 
             // textBoxPort
             // 
             this.textBoxPort.Enabled = false;
@@ -185,6 +196,7 @@
             this.imageListTabPages.TransparentColor = System.Drawing.Color.Transparent;
             this.imageListTabPages.Images.SetKeyName(0, "user");
             this.imageListTabPages.Images.SetKeyName(1, "connection");
+            this.imageListTabPages.Images.SetKeyName(2, "drive_rename.png");
             // 
             // tableLayoutPanel
             // 
@@ -249,14 +261,15 @@
             this.buttonSaveAndClose.UseVisualStyleBackColor = true;
             this.buttonSaveAndClose.Click += new System.EventHandler(this.buttonSaveAndClose_Click);
             // 
-            // label4
+            // tabPage3
             // 
-            this.label4.Location = new System.Drawing.Point(6, 103);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(396, 80);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Damit die Änderungen wirksam werden, müssen Sie sich zunächst auslogggen. [Datei " +
-                "-> Verbindung trennen]\r\n";
+            this.tabPage3.ImageIndex = 2;
+            this.tabPage3.Location = new System.Drawing.Point(4, 23);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(408, 186);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Geräte";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // FormPreferences
             // 
@@ -303,5 +316,6 @@
         private System.Windows.Forms.TextBox textBoxPort;
         private System.Windows.Forms.CheckBox checkBoxPort;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TabPage tabPage3;
     }
 }

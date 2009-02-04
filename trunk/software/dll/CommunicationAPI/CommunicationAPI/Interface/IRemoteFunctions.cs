@@ -111,14 +111,14 @@ namespace CommunicationAPI.Interface
         
         #endregion
 
-#region Misc
+        #region Misc
         [XmlRpcMethod]
         void ShowSignId(SessionData session, RegionData region);
 
         [XmlRpcMethod]
         void SetLampId(SessionData session, string oldId, string newId);
 
-#endregion
+        #endregion
 
 
     }
