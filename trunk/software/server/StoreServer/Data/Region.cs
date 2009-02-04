@@ -74,6 +74,7 @@ namespace StoreServer.Data
                     command.CommandText = "UPDATE led_products SET regions_id = ? WHERE regions_id = ?";
                     command.Parameters.AddWithValue("new_id", data.Id.ToLower());
                     command.Parameters.AddWithValue("old_id", this.id.ToLower());
+                    command.ExecuteNonQuery();
                 }
             }
             else
