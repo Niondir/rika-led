@@ -43,16 +43,25 @@
             this.checkBoxPort = new System.Windows.Forms.CheckBox();
             this.textBoxServerAddr = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.buttonSendID = new System.Windows.Forms.Button();
+            this.textBoxNewID = new System.Windows.Forms.TextBox();
+            this.textBoxOldID = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.buttonShowID = new System.Windows.Forms.Button();
             this.imageListTabPages = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panelButtons = new System.Windows.Forms.Panel();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonSaveAndClose = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.panelButtons.SuspendLayout();
             this.SuspendLayout();
@@ -190,6 +199,98 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Server Adresse:";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.buttonSendID);
+            this.tabPage3.Controls.Add(this.textBoxNewID);
+            this.tabPage3.Controls.Add(this.textBoxOldID);
+            this.tabPage3.Controls.Add(this.label8);
+            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.label5);
+            this.tabPage3.Controls.Add(this.buttonShowID);
+            this.tabPage3.ImageIndex = 2;
+            this.tabPage3.Location = new System.Drawing.Point(4, 23);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(408, 186);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Geräte";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // buttonSendID
+            // 
+            this.buttonSendID.Location = new System.Drawing.Point(174, 149);
+            this.buttonSendID.Name = "buttonSendID";
+            this.buttonSendID.Size = new System.Drawing.Size(75, 23);
+            this.buttonSendID.TabIndex = 9;
+            this.buttonSendID.Text = "Senden";
+            this.buttonSendID.UseVisualStyleBackColor = true;
+            this.buttonSendID.Click += new System.EventHandler(this.buttonSendID_Click);
+            // 
+            // textBoxNewID
+            // 
+            this.textBoxNewID.Location = new System.Drawing.Point(64, 151);
+            this.textBoxNewID.MaxLength = 4;
+            this.textBoxNewID.Name = "textBoxNewID";
+            this.textBoxNewID.Size = new System.Drawing.Size(100, 20);
+            this.textBoxNewID.TabIndex = 8;
+            this.textBoxNewID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckHex);
+            // 
+            // textBoxOldID
+            // 
+            this.textBoxOldID.Location = new System.Drawing.Point(64, 129);
+            this.textBoxOldID.MaxLength = 4;
+            this.textBoxOldID.Name = "textBoxOldID";
+            this.textBoxOldID.Size = new System.Drawing.Size(100, 20);
+            this.textBoxOldID.TabIndex = 7;
+            this.textBoxOldID.Text = "FFFF";
+            this.textBoxOldID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckHex);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(11, 154);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(47, 13);
+            this.label8.TabIndex = 6;
+            this.label8.Text = "Neue ID";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(19, 132);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(39, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Alte ID";
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(8, 87);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(395, 35);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Sie haben die Möglichkeit, die ID eines Schildes zu ändern. Hierzu benötigen Sie " +
+                "die alte ID und tragen zusätzlich die neue ID ein.";
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(5, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(398, 35);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Sie können alle Schilder veranlassen, ihre ID auf dem Display anzuzeigen.";
+            // 
+            // buttonShowID
+            // 
+            this.buttonShowID.Location = new System.Drawing.Point(8, 47);
+            this.buttonShowID.Name = "buttonShowID";
+            this.buttonShowID.Size = new System.Drawing.Size(241, 23);
+            this.buttonShowID.TabIndex = 0;
+            this.buttonShowID.Text = "Anzeigen der IDs auf dem Display veranlassen";
+            this.buttonShowID.UseVisualStyleBackColor = true;
+            this.buttonShowID.Click += new System.EventHandler(this.buttonShowID_Click);
+            // 
             // imageListTabPages
             // 
             this.imageListTabPages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTabPages.ImageStream")));
@@ -261,16 +362,6 @@
             this.buttonSaveAndClose.UseVisualStyleBackColor = true;
             this.buttonSaveAndClose.Click += new System.EventHandler(this.buttonSaveAndClose_Click);
             // 
-            // tabPage3
-            // 
-            this.tabPage3.ImageIndex = 2;
-            this.tabPage3.Location = new System.Drawing.Point(4, 23);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(408, 186);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Geräte";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
             // FormPreferences
             // 
             this.AcceptButton = this.buttonSave;
@@ -289,6 +380,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.tableLayoutPanel.ResumeLayout(false);
             this.panelButtons.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -317,5 +410,13 @@
         private System.Windows.Forms.CheckBox checkBoxPort;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Button buttonShowID;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox textBoxNewID;
+        private System.Windows.Forms.TextBox textBoxOldID;
+        private System.Windows.Forms.Button buttonSendID;
     }
 }

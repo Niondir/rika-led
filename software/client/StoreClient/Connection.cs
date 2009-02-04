@@ -236,5 +236,17 @@ namespace StoreClient
 
             return remote.GetTracesByTimeSpan(session, start, stop);
         }
+
+        internal void ShowID()
+        {
+            RegionData region = new RegionData();
+            region.Id = "ffff";
+            remote.ShowSignId(session, region);
+        }
+
+        internal void SetLampId(string oldID, string newID)
+        {
+            remote.SetLampId(session, oldID, newID);
+        }
     }
 }
