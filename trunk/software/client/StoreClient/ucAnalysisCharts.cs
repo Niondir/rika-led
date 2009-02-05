@@ -82,7 +82,7 @@ namespace StoreClient
             int a3 = regions.Length;
             ret += String.Format(ucStats.traceStats, a1, a2.ToString(), a3);
             ret += "\r\n\r\n";
-
+            /*
             int traceCount = 0;
             List<string> aktRegions = new List<string>();
             List<string> traceRegions = new List<string>();
@@ -109,7 +109,7 @@ namespace StoreClient
                 //unvisited regions and deleted regions in traces
 
             }
-            
+            */
             return ret;
         }
 
