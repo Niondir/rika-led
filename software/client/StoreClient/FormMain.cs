@@ -10,6 +10,7 @@ using CookComputing.XmlRpc;
 using StoreClient.Remote.Interfaces;
 using CommunicationAPI.Interface;
 using CommunicationAPI.DataTypes;
+using CommunicationAPI;
 
 namespace StoreClient
 {
@@ -79,9 +80,52 @@ namespace StoreClient
                         break;
                 }
                 currWindow = value;
-                if (showStats)
-                    panelMain.Controls.Add(new ucStats());
+                if (showStats && hasRights())
+                    panelMain.Controls.Add(new ucStats((AccessFlags)Connection.user.Role.Flags));
+
+                setPermissions();
             }
+        }
+
+        private void setPermissions()
+        {
+            bool regions = false, products = false, ads = false, traces = false, user = false;
+            if (((AccessFlags)Connection.user.Role.Flags & AccessFlags.Ads) != 0)
+                ads = true;
+            if (((AccessFlags)Connection.user.Role.Flags & AccessFlags.Product) != 0)
+                products = true;
+            if (((AccessFlags)Connection.user.Role.Flags & AccessFlags.Regions) != 0)
+                regions = true;
+            if (((AccessFlags)Connection.user.Role.Flags & AccessFlags.Traces) != 0)
+                traces = true;
+            if (((AccessFlags)Connection.user.Role.Flags & AccessFlags.User) != 0)
+                user = true;
+
+            // benötigt für produkte, regionen, ads und analyse
+            if (regions)
+            {
+                produktgruppenToolStripMenuItem.Enabled = true;
+
+                if (products)
+                    produkteToolStripMenuItem.Enabled = true;
+                if (ads)
+                    werbungToolStripMenuItem.Enabled = true;
+                if (traces)
+                    kundenanalyseToolStripMenuItem.Enabled = true;
+            }
+            if (user)
+                benutzerToolStripMenuItem.Enabled = true;
+        }
+
+        private bool hasRights()
+        {
+            if (((AccessFlags)Connection.user.Role.Flags & AccessFlags.Ads) != 0
+                || ((AccessFlags)Connection.user.Role.Flags & AccessFlags.Product) != 0
+                || ((AccessFlags)Connection.user.Role.Flags & AccessFlags.Regions) != 0
+                || ((AccessFlags)Connection.user.Role.Flags & AccessFlags.Traces) != 0
+                || ((AccessFlags)Connection.user.Role.Flags & AccessFlags.User)  != 0)
+                return true;
+            return false;
         }
 
         private Connection connection;
@@ -123,6 +167,7 @@ namespace StoreClient
             
             //enable buttons
             produkteToolStripMenuItem.Enabled = produktgruppenToolStripMenuItem.Enabled = werbungToolStripMenuItem.Enabled = kundenanalyseToolStripMenuItem.Enabled = benutzerToolStripMenuItem.Enabled = e.Connected;
+            //setPermissions();
         }
 
         private void produkteToolStripMenuItem_Click(object sender, EventArgs e)
