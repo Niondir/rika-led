@@ -237,8 +237,8 @@ namespace StoreClient
             if (stop != stop.Date)
                 stop = stop.Date + TimeSpan.FromDays(1);
 
-            //return remote.GetTracesByTimeSpan(session, start, stop);
-
+            return remote.GetTracesByTimeSpan(session, start, stop);
+            /*
             
             //TraceData
             TraceData[] dummy = new TraceData[3];
@@ -262,6 +262,7 @@ namespace StoreClient
                 dummy[i].Timestamp = dummy[i].Locations[dummy[i].Locations.Length - 1].Time;
             }
             return dummy;
+            */
         }
 
         internal void ShowID()

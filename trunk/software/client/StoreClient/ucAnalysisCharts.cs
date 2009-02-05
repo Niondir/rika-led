@@ -72,7 +72,17 @@ namespace StoreClient
         private string GetSummary()
         {
             string ret = "";
-            
+
+
+            int a1 = traces.Length;
+            TimeSpan a2 = new TimeSpan();
+            foreach (TraceData i in traces)
+                for (int j = 0; j < i.Locations.Length - 1; j++)
+                    a2 += (i.Locations[j + 1].Time - i.Locations[j].Time);
+            int a3 = regions.Length;
+            ret += String.Format(ucStats.traceStats, a1, a2.ToString(), a3);
+            ret += "\r\n\r\n";
+
             int traceCount = 0;
             List<string> aktRegions = new List<string>();
             List<string> traceRegions = new List<string>();
@@ -84,7 +94,7 @@ namespace StoreClient
                         traceRegions.Add(j.RegionName);
 
             if(traceRegions.Count > 0)
-                ret = "Einige Traces durchlaufen Regionen, die nicht mehr aktuell sind:";
+                ret += "Einige Traces durchlaufen Regionen, die nicht mehr aktuell sind:";
             foreach (string i in traceRegions)
             {
                 ret += "\r\n" + i;

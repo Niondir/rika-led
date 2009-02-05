@@ -15,7 +15,7 @@ namespace StoreClient
         static string userStats = "Benutzer: {0}\r\nBenutzergruppen: {1}";
         static string productStats = "Produkte: {0}\r\nProduktgruppen: {1}";
         static string adStats = "Werbeaufträge: {0}\r\nAusstrahlungen/Regionen: {1}/{2}\r\nGesamtausstrahlungsdauer: {3}";
-        static string traceStats = "Kundendaten: {0}\r\nGesamtdauer der Laufwege: {1}\r\nAngelaufene Regionen: {2}";
+        public static string traceStats = "Kundendaten: {0}\r\nGesamtdauer der Laufwege: {1}\r\nAngelaufene Regionen: {2}";
 
         public ucStats(AccessFlags access)
         {
