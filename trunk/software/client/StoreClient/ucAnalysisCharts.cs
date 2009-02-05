@@ -15,6 +15,32 @@ namespace StoreClient
         RegionData[] regions;
         TraceData[] traces;
         DateTime start, stop;
+
+        private GraphPrecision xAxisPrec
+        {
+            set
+            {
+                trackBarXPrecision.Value = (int)value;
+                label1.Text = "Auflösung der Zeitachse\r\n" + value.ToString();
+            }
+            get
+            {
+                return (GraphPrecision)trackBarXPrecision.Value;
+            }
+        }
+        private GraphPrecision yAxisPrec
+        {
+            set
+            {
+                trackBarYPrecision.Value = (int)value;
+                label2.Text = "Auflösung der Zeitachse\r\n" + value.ToString();
+            }
+            get
+            {
+                return (GraphPrecision)trackBarYPrecision.Value;
+            }
+        }
+
         public ucAnalysisCharts(TraceData[] traces, DateTime start, DateTime stop)
         {
             regions = Connection.GetInstance().GetRegions();
@@ -29,7 +55,7 @@ namespace StoreClient
             InitializeComponent();
             this.Dock = DockStyle.Fill;
             zedGraphControlMain.GraphPane.XAxis.Type = AxisType.Date;
-            SetMainGraph(GraphPrecision.Seconds, GraphPrecision.Seconds);
+            SetMainGraph(GraphPrecision.Tage, GraphPrecision.Minuten);
             richTextBox1.Text = GetSummary();
             SetRegions();
         }
@@ -45,15 +71,25 @@ namespace StoreClient
 
         private string GetSummary()
         {
-            /*
+            string ret = "";
+            
             int traceCount = 0;
             List<string> aktRegions = new List<string>();
-            List<String> traceRegions = new List<string>();
+            List<string> traceRegions = new List<string>();
             foreach (RegionData i in regions)
                 aktRegions.Add(i.Name);
             foreach (TraceData i in traces)
                 foreach (LocationData j in i.Locations)
-                    if(traceRegions.Contains(j.
+                    if (!aktRegions.Contains(j.RegionName))
+                        traceRegions.Add(j.RegionName);
+
+            if(traceRegions.Count > 0)
+                ret = "Einige Traces durchlaufen Regionen, die nicht mehr aktuell sind:";
+            foreach (string i in traceRegions)
+            {
+                ret += "\r\n" + i;
+            }
+
             foreach (TraceData i in traces)
             {
                 // Used traces
@@ -63,11 +99,8 @@ namespace StoreClient
                 //unvisited regions and deleted regions in traces
 
             }
-            */
-            return "";
             
-
-
+            return ret;
         }
 
         public void SetMainGraph(GraphPrecision xAxis, GraphPrecision yAxis)
@@ -75,27 +108,29 @@ namespace StoreClient
             regions = Connection.GetInstance().GetRegions();
             int steps;
             TimeSpan step = new TimeSpan();
-            
+
+            this.xAxisPrec = xAxis;
+            this.yAxisPrec = yAxis;
             
             switch (xAxis)
             {
-                case GraphPrecision.MilliSeconds:
+                case GraphPrecision.Millisekunden:
                     steps = (int)(stop - start).TotalMilliseconds;
                     step = TimeSpan.FromMilliseconds(1);
                     break;
-                case GraphPrecision.Seconds:
+                case GraphPrecision.Sekunden:
                     steps = (int)(stop - start).TotalSeconds; 
                     step = TimeSpan.FromSeconds(1);
                     break;
-                case GraphPrecision.Minutes:
+                case GraphPrecision.Minuten:
                     steps = (int)(stop - start).TotalMinutes;
                     step = TimeSpan.FromMinutes(1);
                     break;
-                case GraphPrecision.Hours:
+                case GraphPrecision.Stunden:
                     steps = (int)(stop - start).TotalHours;
                     step = TimeSpan.FromHours(1);
                     break;
-                case GraphPrecision.Days:
+                case GraphPrecision.Tage:
                     steps = (int)(stop - start).TotalDays;
                     step = TimeSpan.FromDays(1);
                     break;
@@ -115,9 +150,9 @@ namespace StoreClient
                 {
                     TimeSpan ts = GetRestInRegion(lowerBound, upperBound, traces, regions[i]);
                     switch(yAxis){
-                        case GraphPrecision.Hours: mainLines[i].Add((double)j, ts.TotalMinutes); break;
-                        case GraphPrecision.Minutes: mainLines[i].Add((double)j, ts.TotalMinutes); break;
-                        case GraphPrecision.Seconds: mainLines[i].Add((double)j, ts.TotalMinutes); break;
+                        case GraphPrecision.Stunden: mainLines[i].Add((double)j, ts.TotalHours); break;
+                        case GraphPrecision.Minuten: mainLines[i].Add((double)j, ts.TotalMinutes); break;
+                        case GraphPrecision.Sekunden: mainLines[i].Add((double)j, ts.TotalSeconds); break;
                         default: mainLines[i].Add((double)j, ts.TotalMinutes); break;
                 }
 
@@ -125,14 +160,44 @@ namespace StoreClient
                     upperBound += step;
                 }
             }
-            Random rnd = new Random();
+
+            zedGraphControlMain.GraphPane.CurveList.Clear();
+            ColorRandomizer.Reset();
             for(int i=0; i<regions.Length; i++)
             {
                 LineItem li = zedGraphControlMain.GraphPane.AddCurve(regions[i].Name, mainLines[i], ColorRandomizer.NextColor(), SymbolType.Circle);
                 li.Line.Width = 3;
             }
+            zedGraphControlMain.GraphPane.Title.Text = "Regionenbesuche nach Zeit";
+            zedGraphControlMain.GraphPane.XAxis.Title.Text = "Zeit ("+this.xAxisPrec.ToString()+")";
+            zedGraphControlMain.GraphPane.YAxis.Title.Text = "Besuchzeit ("+this.yAxisPrec.ToString()+")";
             zedGraphControlMain.AxisChange();
             zedGraphControlMain.Refresh();
+
+            ColorRandomizer.Reset();
+            zedGraphPie.GraphPane.CurveList.Clear();
+            zedGraphPie.GraphPane.YAxis.IsVisible = zedGraphPie.GraphPane.XAxis.IsVisible = false;
+            foreach(RegionData i in regions)
+            {
+                zedGraphPie.GraphPane.AddPieSlice(SumUp(i.Id), ColorRandomizer.NextColor(), Color.White, 45f, 0, i.Name);
+            }
+            zedGraphPie.Refresh();
+        }
+
+        private double SumUp(string p)
+        {
+            double ret = 0;
+            foreach (TraceData i in traces)
+            {
+                for (int j = 0; j < i.Locations.Length-1; j++)
+                {
+                    if (i.Locations[j].LampId == p)
+                        ret += (i.Locations[j].Time - i.Locations[j + 1].Time).TotalMinutes;
+                }
+                if (i.Locations[i.Locations.Length - 1].LampId == p)
+                    ret += (i.Timestamp - i.Locations[i.Locations.Length - 1].Time).TotalMinutes;
+            }
+            return ret;
         }
         private TimeSpan GetRestInRegion(DateTime start, DateTime stop, TraceData[] traces, RegionData region)
         {
@@ -158,15 +223,59 @@ namespace StoreClient
         private void listBoxRegions_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBoxRegions.Tag = regions[listBoxRegions.SelectedIndex];
+
+            UpdateSubGraphs(regions[listBoxRegions.SelectedIndex]);
+        }
+
+        private void UpdateSubGraphs(RegionData region)
+        {
+            double[] destinations = new double[regions.Length];
+            for (int i = 0; i < destinations.Length; i++)
+                destinations[i] = 0.0;
+            foreach (TraceData i in traces)
+            {
+                for (int j = 0; j < i.Locations.Length - 1; j++)
+                {
+                    if (i.Locations[j].LampId == region.Id)
+                        for (int k = 0; k < regions.Length - 1; k++)
+                            if (i.Locations[j+1].LampId == regions[k].Id && i.Locations[j].LampId != i.Locations[j+1].LampId)
+                                destinations[k]++;
+                }
+            }
+            zedGraphControlFlee.GraphPane.Title.Text = "Regionenflucht von " + region.Name;
+            zedGraphControlFlee.GraphPane.XAxis.IsVisible = false;
+            zedGraphControlFlee.GraphPane.YAxis.IsVisible = false;
+            zedGraphControlFlee.GraphPane.CurveList.Clear();
+            ColorRandomizer.Reset();
+            for(int i=0; i<destinations.Length; i++)
+            {
+                zedGraphControlFlee.GraphPane.AddPieSlice(destinations[i], ColorRandomizer.NextColor(), Color.White, 45f, 0, regions[i].Name);
+            }
+            zedGraphControlFlee.Refresh();
+        }
+
+        private void trackBarYPrecision_Scroll(object sender, EventArgs e)
+        {
+            this.yAxisPrec = (GraphPrecision)trackBarYPrecision.Value;
+        }
+
+        private void trackBarXPrecision_Scroll(object sender, EventArgs e)
+        {
+            this.xAxisPrec = (GraphPrecision)trackBarXPrecision.Value;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SetMainGraph((GraphPrecision)trackBarXPrecision.Value, (GraphPrecision)trackBarYPrecision.Value);
         }
     }
     public enum GraphPrecision
     {
-        MilliSeconds,
-        Seconds,
-        Minutes,
-        Hours,
-        Days,
+        Millisekunden,
+        Sekunden,
+        Minuten,
+        Stunden,
+        Tage,
     }
     public class ColorRandomizer
     {
@@ -175,13 +284,16 @@ namespace StoreClient
         static private Random rnd;
         static private int _i = 0;
         static private int i { get { return _i++; } }
+        static private int key = 0;
+        static public void Reset()
+        {
+            key = 0;
+        }
         static public Color NextColor()
         {
             if (!inited)
                 Init();
-            int key = rnd.Next(colors.Count - 1);
-            Color ret = colors[key];
-            colors.Remove(key);
+            Color ret = colors[key++];
             return ret;
         }
 

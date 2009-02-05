@@ -55,6 +55,7 @@ namespace StoreClient
             try
             {
                 session = remote.Login(user);
+                //user = remote.GetUser(session, username);
                 if (LoginChanged != null)
                     LoginChanged(this, new ConnectionChangedEventArgs(true));
             }
@@ -234,7 +235,30 @@ namespace StoreClient
             if (stop != stop.Date)
                 stop = stop.Date + TimeSpan.FromDays(1);
 
-            return remote.GetTracesByTimeSpan(session, start, stop);
+            //return remote.GetTracesByTimeSpan(session, start, stop);
+
+            //TraceData
+            TraceData[] dummy = new TraceData[3];
+            Random rnd = new Random();
+
+            LocationData[] trace = new LocationData[20];
+
+            for (int i = 0; i < dummy.Length; i++)
+            {
+                int h = rnd.Next(1, 2);
+                for (int j = 0; j < trace.Length; j++)
+                {
+                    trace[j] = new LocationData();
+                    trace[j].LampId = rnd.Next(1, 4).ToString();
+                    trace[j].RelativeTimestamp = 0;
+                    if (j > 0)
+                        h += rnd.Next(1, 2);
+                    trace[j].Time = DateTime.Now + TimeSpan.FromHours((double)h);
+                }
+                dummy[i] = new TraceData(trace);
+                dummy[i].Timestamp = dummy[i].Locations[dummy[i].Locations.Length - 1].Time;
+            }
+            return dummy;
         }
 
         internal void ShowID()
