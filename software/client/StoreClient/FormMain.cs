@@ -80,7 +80,7 @@ namespace StoreClient
                         break;
                 }
                 currWindow = value;
-                if (showStats && hasRights())
+                if (showStats && hasRights() && value != DisplayWindow.Analysis)
                     panelMain.Controls.Add(new ucStats((AccessFlags)Connection.user.Role.Flags));
 
                 setPermissions();
