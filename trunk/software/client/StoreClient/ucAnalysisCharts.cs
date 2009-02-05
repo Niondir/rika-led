@@ -149,11 +149,12 @@ namespace StoreClient
                 for (int j = 0; j < steps; j++)
                 {
                     TimeSpan ts = GetRestInRegion(lowerBound, upperBound, traces, regions[i]);
+                    double xVal = (double)(new XDate(lowerBound));
                     switch(yAxis){
-                        case GraphPrecision.Stunden: mainLines[i].Add((double)j, ts.TotalHours); break;
-                        case GraphPrecision.Minuten: mainLines[i].Add((double)j, ts.TotalMinutes); break;
-                        case GraphPrecision.Sekunden: mainLines[i].Add((double)j, ts.TotalSeconds); break;
-                        default: mainLines[i].Add((double)j, ts.TotalMinutes); break;
+                        case GraphPrecision.Stunden: mainLines[i].Add((double)xVal, ts.TotalHours); break;
+                        case GraphPrecision.Minuten: mainLines[i].Add((double)xVal, ts.TotalMinutes); break;
+                        case GraphPrecision.Sekunden: mainLines[i].Add((double)xVal, ts.TotalSeconds); break;
+                        default: mainLines[i].Add((double)xVal, ts.TotalMinutes); break;
                 }
 
                     lowerBound = upperBound;
@@ -174,6 +175,8 @@ namespace StoreClient
             zedGraphControlMain.AxisChange();
             zedGraphControlMain.Refresh();
 
+
+            // Pie
             ColorRandomizer.Reset();
             zedGraphPie.GraphPane.CurveList.Clear();
             zedGraphPie.GraphPane.YAxis.IsVisible = zedGraphPie.GraphPane.XAxis.IsVisible = false;
@@ -229,6 +232,7 @@ namespace StoreClient
 
         private void UpdateSubGraphs(RegionData region)
         {
+            // Fluchtgraph
             double[] destinations = new double[regions.Length];
             for (int i = 0; i < destinations.Length; i++)
                 destinations[i] = 0.0;
@@ -237,7 +241,7 @@ namespace StoreClient
                 for (int j = 0; j < i.Locations.Length - 1; j++)
                 {
                     if (i.Locations[j].LampId == region.Id)
-                        for (int k = 0; k < regions.Length - 1; k++)
+                        for (int k = 0; k < regions.Length; k++)
                             if (i.Locations[j+1].LampId == regions[k].Id && i.Locations[j].LampId != i.Locations[j+1].LampId)
                                 destinations[k]++;
                 }
@@ -252,6 +256,36 @@ namespace StoreClient
                 zedGraphControlFlee.GraphPane.AddPieSlice(destinations[i], ColorRandomizer.NextColor(), Color.White, 45f, 0, regions[i].Name);
             }
             zedGraphControlFlee.Refresh();
+
+
+            //Tageszeitgraph
+            TimeSpan step = TimeSpan.FromMinutes(1.0);
+            int steps = 24 * 60;
+            DateTime lowerBound = start;
+            DateTime upperBound = start + step;
+            PointPairList dayTimeLine = new PointPairList();
+            for (int i = 0; i < steps; i++)
+            {
+                TimeSpan ts = new TimeSpan();
+
+                for (int j = 0; j < (stop - start).TotalDays; j++)
+                {
+                    ts += GetRestInRegion(lowerBound + TimeSpan.FromDays(j), upperBound + TimeSpan.FromDays(j), traces, region);
+                }
+                double xVal = (double)(new XDate(lowerBound));
+                dayTimeLine.Add(xVal, ts.TotalMinutes);
+                lowerBound = upperBound;
+                upperBound += step;
+            }
+            zedGraphControlDayTime.GraphPane.CurveList.Clear();
+            zedGraphControlDayTime.GraphPane.XAxis.Type = AxisType.Date;
+            zedGraphControlDayTime.GraphPane.XAxis.Scale.Min = (double)new XDate(start);
+            zedGraphControlDayTime.GraphPane.XAxis.Scale.Max = (double)new XDate(start + TimeSpan.FromHours(24));
+            LineItem li = zedGraphControlDayTime.GraphPane.AddCurve(region.Name, dayTimeLine, Color.Black, SymbolType.None);
+            li.Line.Width = 3f;
+            zedGraphControlDayTime.GraphPane.Title.Text = "Tageszeitverteilung";
+            zedGraphControlDayTime.AxisChange();
+            zedGraphControlDayTime.Refresh();
         }
 
         private void trackBarYPrecision_Scroll(object sender, EventArgs e)

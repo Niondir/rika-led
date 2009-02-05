@@ -32,11 +32,10 @@
             this.zedGraphControlMain = new ZedGraph.ZedGraphControl();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanelLower = new System.Windows.Forms.TableLayoutPanel();
-            this.zedGraphPieView = new ZedGraph.ZedGraphControl();
+            this.zedGraphControlDayTime = new ZedGraph.ZedGraphControl();
+            this.zedGraphControlFlee = new ZedGraph.ZedGraphControl();
             this.groupBoxRegions = new System.Windows.Forms.GroupBox();
             this.listBoxRegions = new System.Windows.Forms.ListBox();
-            this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
-            this.zedGraphControlFlee = new ZedGraph.ZedGraphControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBoxSummery = new System.Windows.Forms.GroupBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -95,15 +94,13 @@
             // 
             // tableLayoutPanelLower
             // 
-            this.tableLayoutPanelLower.ColumnCount = 4;
-            this.tableLayoutPanelLower.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanelLower.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanelLower.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanelLower.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanelLower.Controls.Add(this.zedGraphPieView, 0, 0);
-            this.tableLayoutPanelLower.Controls.Add(this.groupBoxRegions, 3, 0);
-            this.tableLayoutPanelLower.Controls.Add(this.zedGraphControl1, 1, 0);
-            this.tableLayoutPanelLower.Controls.Add(this.zedGraphControlFlee, 2, 0);
+            this.tableLayoutPanelLower.ColumnCount = 3;
+            this.tableLayoutPanelLower.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.83854F));
+            this.tableLayoutPanelLower.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.17115F));
+            this.tableLayoutPanelLower.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.88267F));
+            this.tableLayoutPanelLower.Controls.Add(this.zedGraphControlDayTime, 0, 0);
+            this.tableLayoutPanelLower.Controls.Add(this.zedGraphControlFlee, 1, 0);
+            this.tableLayoutPanelLower.Controls.Add(this.groupBoxRegions, 2, 0);
             this.tableLayoutPanelLower.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelLower.Location = new System.Drawing.Point(0, 218);
             this.tableLayoutPanelLower.Name = "tableLayoutPanelLower";
@@ -112,28 +109,45 @@
             this.tableLayoutPanelLower.Size = new System.Drawing.Size(929, 180);
             this.tableLayoutPanelLower.TabIndex = 4;
             // 
-            // zedGraphPieView
+            // zedGraphControlDayTime
             // 
-            this.zedGraphPieView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zedGraphPieView.Location = new System.Drawing.Point(3, 3);
-            this.zedGraphPieView.Name = "zedGraphPieView";
-            this.zedGraphPieView.ScrollGrace = 0;
-            this.zedGraphPieView.ScrollMaxX = 0;
-            this.zedGraphPieView.ScrollMaxY = 0;
-            this.zedGraphPieView.ScrollMaxY2 = 0;
-            this.zedGraphPieView.ScrollMinX = 0;
-            this.zedGraphPieView.ScrollMinY = 0;
-            this.zedGraphPieView.ScrollMinY2 = 0;
-            this.zedGraphPieView.Size = new System.Drawing.Size(226, 174);
-            this.zedGraphPieView.TabIndex = 0;
+            this.zedGraphControlDayTime.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zedGraphControlDayTime.IsEnableHPan = false;
+            this.zedGraphControlDayTime.IsEnableHZoom = false;
+            this.zedGraphControlDayTime.Location = new System.Drawing.Point(3, 3);
+            this.zedGraphControlDayTime.Name = "zedGraphControlDayTime";
+            this.zedGraphControlDayTime.ScrollGrace = 0;
+            this.zedGraphControlDayTime.ScrollMaxX = 0;
+            this.zedGraphControlDayTime.ScrollMaxY = 0;
+            this.zedGraphControlDayTime.ScrollMaxY2 = 0;
+            this.zedGraphControlDayTime.ScrollMinX = 0;
+            this.zedGraphControlDayTime.ScrollMinY = 0;
+            this.zedGraphControlDayTime.ScrollMinY2 = 0;
+            this.zedGraphControlDayTime.Size = new System.Drawing.Size(457, 174);
+            this.zedGraphControlDayTime.TabIndex = 1;
+            // 
+            // zedGraphControlFlee
+            // 
+            this.zedGraphControlFlee.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.zedGraphControlFlee.Location = new System.Drawing.Point(466, 3);
+            this.zedGraphControlFlee.Name = "zedGraphControlFlee";
+            this.zedGraphControlFlee.ScrollGrace = 0;
+            this.zedGraphControlFlee.ScrollMaxX = 0;
+            this.zedGraphControlFlee.ScrollMaxY = 0;
+            this.zedGraphControlFlee.ScrollMaxY2 = 0;
+            this.zedGraphControlFlee.ScrollMinX = 0;
+            this.zedGraphControlFlee.ScrollMinY = 0;
+            this.zedGraphControlFlee.ScrollMinY2 = 0;
+            this.zedGraphControlFlee.Size = new System.Drawing.Size(265, 174);
+            this.zedGraphControlFlee.TabIndex = 2;
             // 
             // groupBoxRegions
             // 
             this.groupBoxRegions.Controls.Add(this.listBoxRegions);
             this.groupBoxRegions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxRegions.Location = new System.Drawing.Point(699, 3);
+            this.groupBoxRegions.Location = new System.Drawing.Point(737, 3);
             this.groupBoxRegions.Name = "groupBoxRegions";
-            this.groupBoxRegions.Size = new System.Drawing.Size(227, 174);
+            this.groupBoxRegions.Size = new System.Drawing.Size(189, 174);
             this.groupBoxRegions.TabIndex = 3;
             this.groupBoxRegions.TabStop = false;
             this.groupBoxRegions.Text = "Regionen";
@@ -146,39 +160,9 @@
             this.listBoxRegions.ItemHeight = 16;
             this.listBoxRegions.Location = new System.Drawing.Point(3, 16);
             this.listBoxRegions.Name = "listBoxRegions";
-            this.listBoxRegions.Size = new System.Drawing.Size(221, 148);
+            this.listBoxRegions.Size = new System.Drawing.Size(183, 148);
             this.listBoxRegions.TabIndex = 0;
             this.listBoxRegions.SelectedIndexChanged += new System.EventHandler(this.listBoxRegions_SelectedIndexChanged);
-            // 
-            // zedGraphControl1
-            // 
-            this.zedGraphControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zedGraphControl1.Location = new System.Drawing.Point(235, 3);
-            this.zedGraphControl1.Name = "zedGraphControl1";
-            this.zedGraphControl1.ScrollGrace = 0;
-            this.zedGraphControl1.ScrollMaxX = 0;
-            this.zedGraphControl1.ScrollMaxY = 0;
-            this.zedGraphControl1.ScrollMaxY2 = 0;
-            this.zedGraphControl1.ScrollMinX = 0;
-            this.zedGraphControl1.ScrollMinY = 0;
-            this.zedGraphControl1.ScrollMinY2 = 0;
-            this.zedGraphControl1.Size = new System.Drawing.Size(226, 174);
-            this.zedGraphControl1.TabIndex = 1;
-            // 
-            // zedGraphControlFlee
-            // 
-            this.zedGraphControlFlee.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zedGraphControlFlee.Location = new System.Drawing.Point(467, 3);
-            this.zedGraphControlFlee.Name = "zedGraphControlFlee";
-            this.zedGraphControlFlee.ScrollGrace = 0;
-            this.zedGraphControlFlee.ScrollMaxX = 0;
-            this.zedGraphControlFlee.ScrollMaxY = 0;
-            this.zedGraphControlFlee.ScrollMaxY2 = 0;
-            this.zedGraphControlFlee.ScrollMinX = 0;
-            this.zedGraphControlFlee.ScrollMinY = 0;
-            this.zedGraphControlFlee.ScrollMinY2 = 0;
-            this.zedGraphControlFlee.Size = new System.Drawing.Size(226, 174);
-            this.zedGraphControlFlee.TabIndex = 2;
             // 
             // panel1
             // 
@@ -248,7 +232,7 @@
             // button1
             // 
             this.button1.Image = global::StoreClient.Properties.Resources.arrow_refresh;
-            this.button1.Location = new System.Drawing.Point(157, 108);
+            this.button1.Location = new System.Drawing.Point(159, 98);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(96, 23);
             this.button1.TabIndex = 4;
@@ -317,9 +301,8 @@
 
         private ZedGraph.ZedGraphControl zedGraphControlMain;
         private System.Windows.Forms.SplitContainer splitContainerMain;
-        private ZedGraph.ZedGraphControl zedGraphPieView;
         private ZedGraph.ZedGraphControl zedGraphControlFlee;
-        private ZedGraph.ZedGraphControl zedGraphControl1;
+        private ZedGraph.ZedGraphControl zedGraphControlDayTime;
         private System.Windows.Forms.GroupBox groupBoxRegions;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelLower;
         private System.Windows.Forms.ListBox listBoxRegions;
