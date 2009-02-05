@@ -51,6 +51,8 @@ namespace StoreServer.Data
                 loc.LampId = waypoints[i].LampId;
                 loc.RelativeTimestamp = waypoints[i].RelativeTimestamp;
                 loc.Time = timestamp - new TimeSpan(0, 0, (maxTs - waypoints[i].RelativeTimestamp));
+                loc.RegionName = waypoints[i].RegionName;
+
 
                 waypoints[i] = loc;
             }
@@ -133,6 +135,10 @@ namespace StoreServer.Data
                 loc.RelativeTimestamp = (int)reader.GetInt64(2);
                 loc.Time = t.timestamp - new TimeSpan(0, 0, loc.RelativeTimestamp);
                 loc.RegionName = reader.GetString(4);
+                if (loc.RegionName == null)
+                {
+                    loc.RegionName = "Not Found";
+                }
 
                 t.waypoints.Add(loc);
             }
