@@ -101,6 +101,8 @@ namespace StoreClient
             if (((AccessFlags)Connection.user.Role.Flags & AccessFlags.User) != 0)
                 user = true;
 
+            produktgruppenToolStripMenuItem.Enabled = produkteToolStripMenuItem.Enabled = werbungToolStripMenuItem.Enabled = kundenanalyseToolStripMenuItem.Enabled = benutzerToolStripMenuItem.Enabled = false;
+
             // benötigt für produkte, regionen, ads und analyse
             if (regions)
             {
