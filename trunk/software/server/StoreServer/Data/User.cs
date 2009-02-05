@@ -134,7 +134,7 @@ namespace StoreServer.Data
         {
             OdbcCommand command = connection.CreateCommand();
 
-            command.CommandText = "SELECT led_users.login, led_users.roles_name, led_roles.flags FROM led_users JOIN led_roles ON led_roles.name = led_users.roles_name WHERE led_user.name = ?";
+            command.CommandText = "SELECT led_users.login, led_users.roles_name, led_roles.flags FROM led_users JOIN led_roles ON led_roles.name = led_users.roles_name WHERE led_user.login = ?";
             command.Parameters.AddWithValue("name", loginName);
             OdbcDataReader reader = command.ExecuteReader();
 
