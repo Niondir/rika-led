@@ -35,6 +35,7 @@ namespace Kasse
             LocationData loc = new LocationData();
             for (int i = 0; i < reader.Args.Count; i++)
             {
+                loc.RegionName = "";
                 if (i % 2 == 0)
                 { // grade
                     loc.LampId = reader.Args[i];
