@@ -82,13 +82,13 @@ namespace StoreClient
             if (textBoxName.Text.Length < 1)
             {
                 textBoxName.BackColor = Color.OrangeRed;
-                errorMsg += i++.ToString()+". Bitte geben Sie eine gütige Produktbezeichnung ein." + Environment.NewLine;
+                errorMsg += i++.ToString()+". Bitte geben Sie eine gültige Produktbezeichnung ein." + Environment.NewLine;
             }
             int res;
             if (!int.TryParse(textBoxNumber.Text, out res))
             {
                 textBoxNumber.BackColor = Color.OrangeRed;
-                errorMsg += i++.ToString() + ". Bitte geben Sie eine gütige Produktnummer ein." + Environment.NewLine;
+                errorMsg += i++.ToString() + ". Bitte geben Sie eine gültige Produktnummer ein." + Environment.NewLine;
             }
             if(comboBoxGroup.Text.Length == 0)
             //if (comboBoxGroup.SelectedItem == null)
