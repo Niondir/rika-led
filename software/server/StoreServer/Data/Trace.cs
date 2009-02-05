@@ -103,7 +103,7 @@ namespace StoreServer.Data
         public static List<Trace> Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT traces_id, regions_id, time, timestamp, name FROM led_waypoints JOIN led_traces ON led_traces.id = traces_id";
+            command.CommandText = "SELECT traces_id, regions_id, time, timestamp, name FROM led_waypoints JOIN led_traces ON led_traces.id = traces_id JOIN led_regions ON led_regions.id = regions_id";
             OdbcDataReader reader = command.ExecuteReader();
 
             //List<Trace> traces = new List<Trace>();
