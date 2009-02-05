@@ -113,6 +113,8 @@ namespace StoreServer.Data
 
             command.CommandText = "DELETE FROM led_users WHERE roles_name = ?";
             command.Parameters.AddWithValue("roles_name", this.name);
+            command.ExecuteNonQuery();
+            
         }
     }
 }
