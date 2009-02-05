@@ -400,17 +400,10 @@ namespace StoreServer.WebService
         public UserData GetUser(SessionData session, string loginName)
         {
             Console.WriteLine("GetUser()");
-
-            List<UserData> users = new List<UserData>();
+            UserData user;
             try
             {
-                int i = 0;
-                foreach (User u in User.Load(this.DataManager.Connection, loginName))
-                {
-                    i++;
-                    users.Add(u.Data);
-                    Debug.WriteLine("User name " + i + ": " + u.Username);
-                }
+                user = User.Load(this.DataManager.Connection, loginName).Data;
 
             }
             catch (Exception ex)
@@ -418,7 +411,7 @@ namespace StoreServer.WebService
                 throw new XmlRpcFaultException((int)ErrorCodes.DBReadError, ex.Message);
             }
 
-            return users.ToArray();
+            return user;
         }
 
         public UserData[] GetUsers(SessionData session)
