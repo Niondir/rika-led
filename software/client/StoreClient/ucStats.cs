@@ -68,8 +68,16 @@ namespace StoreClient
                 labelStatsUser.Text = String.Format(userStats, users.Length, roles.Length);
 
             // trace stats
-            if(traces != null)
-                labelStatsTraces.Text = "not yet iimplemented";
+            if (traces != null)
+            {
+                int a1 = traces.Length;
+                TimeSpan a2 = new TimeSpan();
+                foreach (TraceData i in traces)
+                    for (int j = 0; j < i.Locations.Length - 1; j++)
+                        a2 += (i.Locations[j + 1].Time - i.Locations[j].Time);
+                int a3 = regions.Length;
+                labelStatsTraces.Text = String.Format(traceStats, a1, a2.ToString(), a3);
+            }
         }
     }
 }

@@ -206,6 +206,7 @@ namespace StoreClient
         {
             return remote.GetTraces(session);
             
+            /*
             //TraceData
             TraceData[] dummy = new TraceData[3];
             Random rnd = new Random();
@@ -227,16 +228,18 @@ namespace StoreClient
                 dummy[i] = new TraceData(trace);
                 dummy[i].Timestamp = dummy[i].Locations[dummy[i].Locations.Length - 1].Time;
             }
-            return dummy;
+            return dummy;*/
         }
         internal TraceData[] GetTraces(DateTime start, DateTime stop)
         {
+            
             start = start.Date;
             if (stop != stop.Date)
                 stop = stop.Date + TimeSpan.FromDays(1);
 
-            //return remote.GetTracesByTimeSpan(session, start, stop);
+            return remote.GetTracesByTimeSpan(session, start, stop);
 
+            /*
             //TraceData
             TraceData[] dummy = new TraceData[3];
             Random rnd = new Random();
@@ -258,7 +261,7 @@ namespace StoreClient
                 dummy[i] = new TraceData(trace);
                 dummy[i].Timestamp = dummy[i].Locations[dummy[i].Locations.Length - 1].Time;
             }
-            return dummy;
+            return dummy;*/
         }
 
         internal void ShowID()
