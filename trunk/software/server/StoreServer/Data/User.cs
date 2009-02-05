@@ -130,6 +130,32 @@ namespace StoreServer.Data
             return users;
         }
 
+        public static List<User> Load(OdbcConnection connection, string loginName)
+        {
+            OdbcCommand command = connection.CreateCommand();
+
+            command.CommandText = "SELECT led_users.login, led_users.roles_name, led_roles.flags FROM led_users JOIN led_roles ON led_roles.name = led_users.roles_name WHERE led_user.name = ?";
+            command.Parameters.AddWithValue("name", loginName);
+            OdbcDataReader reader = command.ExecuteReader();
+
+            List<User> users = new List<User>();
+
+            try
+            {
+                while (reader.Read())
+                {
+                    UserData uData = new UserData(reader.GetString(0));
+                    uData.Role = new RoleData(reader.GetString(1), reader.GetInt32(2));
+                    users.Add(new User(uData));
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+            reader.Close();
+
+            return users;
+        }
+
         public void Save(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
