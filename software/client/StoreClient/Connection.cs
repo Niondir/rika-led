@@ -55,7 +55,7 @@ namespace StoreClient
             try
             {
                 session = remote.Login(user);
-                //user = remote.GetUser(session, username);
+                user = remote.GetUser(session, username);
                 if (LoginChanged != null)
                     LoginChanged(this, new ConnectionChangedEventArgs(true));
             }

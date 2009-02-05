@@ -166,8 +166,8 @@ namespace StoreClient
             Connected = e.Connected;
             
             //enable buttons
-            produkteToolStripMenuItem.Enabled = produktgruppenToolStripMenuItem.Enabled = werbungToolStripMenuItem.Enabled = kundenanalyseToolStripMenuItem.Enabled = benutzerToolStripMenuItem.Enabled = e.Connected;
-            //setPermissions();
+            //produkteToolStripMenuItem.Enabled = produktgruppenToolStripMenuItem.Enabled = werbungToolStripMenuItem.Enabled = kundenanalyseToolStripMenuItem.Enabled = benutzerToolStripMenuItem.Enabled = e.Connected;
+            setPermissions();
         }
 
         private void produkteToolStripMenuItem_Click(object sender, EventArgs e)
