@@ -62,17 +62,17 @@ void write_Display(char* data, char col, char row)
 void write_Display4x20Border(void)
 {
   
-  set_CursorPos(21,1);
+/*  set_CursorPos(21,1);
   LCD_PUTS("#");    						//Unterstrich unter "reales" Display
   set_CursorPos(21,2);
   LCD_PUTS("#"); 
   set_CursorPos(21,3);
   LCD_PUTS("#");
-  set_CursorPos(21,4);
-  LCD_PUTS("#");   
+  set_CursorPos(21,*/
+
   set_CursorPos(1,5);
 
-  LCD_PUTS("#####################");    						//Unterstrich unter "reales" Display
+  LCD_PUTS("---------------------");    						//Unterstrich unter "reales" Display
  // LCD_PUTS("*********************");   
 }
 

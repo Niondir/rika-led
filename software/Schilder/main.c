@@ -172,6 +172,7 @@ uint8_t detectSignMode(void) //gibt 1 zurück wenn sich der Mode geändert hat
     {
       sign.signType        = SIGN_TYPE_TROLLEY;
 	  sign.signUniqueID = 0; // Dummy, wird bei Wagenschild nicht benötigt
+	  trace.pos =0;          //Trace reseten
     }
     else // Preis-Schild mit 3 Bit Adresse über Jumper einstellbar
     {
@@ -329,7 +330,7 @@ int8_t get_packet(void)
 
 void packet_action(void)
 {
-  
+
   switch(packet.packetCmdNr)
   { 
     case CMDNR_SEND_TRACE:  
@@ -372,17 +373,19 @@ void packet_action(void)
 												if(trace.pos < (TRACE_LAMP_CNT-1)) 
 												{
 								                   uint16_t aktLampID = (uint16_t)atoi(packet.args[0]); //Arg0 = LampenID
-											   
+											        
+
 											   		if (trace.pos == 0) {
 														trace.TimeNow = 0;
 													}
 												   //Nur "Neue" Traces, d.h. LampenID im Paket != LampenID des vorherigen Packets
-												   if(trace.pos==0 || (aktLampID != (trace.lampIDs)[trace.pos])) 
+												   if(trace.pos==0 || (aktLampID != (trace.lampIDs)[trace.pos-1])) 
 						              		   	   {								                      
 													  trace.times[trace.pos]   = trace.TimeNow;
 													  trace.lampIDs[trace.pos] = aktLampID;
 													  trace.pos++;
 												    }
+
 							 							 
 								       			 }
 

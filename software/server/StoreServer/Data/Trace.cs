@@ -8,7 +8,7 @@ namespace StoreServer.Data
 {
     public class Trace
     {
-        private const float TIME_FACTOR = (255 / 1800);
+        private const float TIME_FACTOR = (255.0f / 1800.0f);
         private int id;
         private DateTime timestamp;
         private List<LocationData> waypoints = new List<LocationData>();
@@ -77,6 +77,7 @@ namespace StoreServer.Data
                 command.CommandText = "INSERT INTO `led_waypoints` (regions_id, traces_id, time, regions_name) VALUES (?, ?, ?, ?)";
                 command.Parameters.AddWithValue("regions_id", l.LampId);
                 command.Parameters.AddWithValue("traces_id", id);
+                Debug.WriteLine("Adding timestamp " + l.RelativeTimestamp + " * " + TIME_FACTOR);
                 command.Parameters.AddWithValue("time", (int)(l.RelativeTimestamp * TIME_FACTOR));
                 command.Parameters.AddWithValue("regions_name", l.RegionName);
                 command.ExecuteNonQuery();

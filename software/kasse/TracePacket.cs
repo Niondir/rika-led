@@ -32,9 +32,10 @@ namespace Kasse
 
             List<LocationData> locations = new List<LocationData>();
 
-            LocationData loc = new LocationData();
+            LocationData loc;
             for (int i = 0; i < reader.Args.Count; i++)
             {
+                loc = new LocationData();
                 loc.RegionName = "";
                 if (i % 2 == 0)
                 { // grade
@@ -45,6 +46,7 @@ namespace Kasse
                     try
                     {
                         loc.RelativeTimestamp = int.Parse(reader.Args[i]);
+                        Console.WriteLine("Manage timestamp: " + loc.RelativeTimestamp);
                         locations.Add(loc); // struct will be copied
                     }
                     catch
