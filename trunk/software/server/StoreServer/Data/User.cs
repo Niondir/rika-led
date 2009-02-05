@@ -130,7 +130,7 @@ namespace StoreServer.Data
             return users;
         }
 
-        public static List<User> Load(OdbcConnection connection, string loginName)
+        public static User Load(OdbcConnection connection, string loginName)
         {
             OdbcCommand command = connection.CreateCommand();
 
@@ -153,7 +153,7 @@ namespace StoreServer.Data
 
             reader.Close();
 
-            return users;
+            return users[0];
         }
 
         public void Save(OdbcConnection connection)
