@@ -7,22 +7,45 @@ using CookComputing.XmlRpc;
 
 namespace StoreClient
 {
+    /// <summary>
+    /// EventArgs für die Änderung des Verbindungsstatuses
+    /// Insbesondere kann durch Connected festegestellt werden, wie der aktuelle Verbindungsstatus ist
+    /// </summary>
     public class ConnectionChangedEventArgs : EventArgs
     {
+        /// <summary>
+        /// Zeigt den aktuellen Verbindungsstatus an
+        /// </summary>
         public bool Connected { get; set; }
+
+        /// <summary>
+        /// Erstellt eine ConnectionChangedEventArgs mit aktuellem Verbinsungsstatus
+        /// </summary>
+        /// <param name="connected">aktueller Verbindungsstatus</param>
         public ConnectionChangedEventArgs(bool connected)
         {
             Connected = connected;
         }
 
     }
+
+    /// <summary>
+    /// Abstraktion des Verbinsungsinterface. Ermöglicht die Kommunikation mit dem MyStore Server
+    /// Die Singleton Implementierung ermöglicht die Instanziierung nur durch die statische GetInstance() Methode
+    /// </summary>
     class Connection
     {
+        
+        // Instanz des xml-rpc Interfaces
         private IRemoteFunctions remote;
         private SessionData session;
         static public UserData user;
         static private Connection con;
         
+        /// <summary>
+        /// Wird gefeuert, sobald sich der Status der Verbindung geändert hat.
+        /// Also nach erfolgreichem Aufbau und Abbau der Verbindungen
+        /// </summary>
         public event EventHandler<ConnectionChangedEventArgs> LoginChanged;
 
         private Connection()
@@ -30,6 +53,10 @@ namespace StoreClient
             remote = XmlRpcProxyGen.Create<IRemoteFunctions>();
         }
 
+        /// <summary>
+        /// Einstellungsmöglichkeit der Server Adresse.
+        /// Für eine erfolgreiche Änderung muss der Login neue durchgeführt werden
+        /// </summary>
         public string ServerURL
         {
             set
@@ -42,6 +69,11 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Bietet eine Instanz einer Verbindung zum Server.
+        /// Die Instanzen sind auf eine einzige Verbindung reduziert, da jeweils nur eine Verwaltet werden kann
+        /// </summary>
+        /// <returns>Verbingsinstanz</returns>
         static public Connection GetInstance()
         {
             if (con == null)
@@ -49,6 +81,11 @@ namespace StoreClient
             return con;
         }
 
+        /// <summary>
+        /// Meldet sich als Client mit Benutzernamen und Passwort bei dem Server an.
+        /// </summary>
+        /// <param name="username">Benutzername, der Angemeldet werden soll</param>
+        /// <param name="password">Passwort zu dem Benutzernamen</param>
         internal void Login(string username, string password)
         {
             user = new UserData(username, password);
@@ -65,12 +102,18 @@ namespace StoreClient
             }
         }
 
-
+        /// <summary>
+        /// Meldet den aktuellen Benutzer wieder ab
+        /// </summary>
         internal void Logout()
         {
             remote.Logout(session);
         }
 
+        /// <summary>
+        /// Holt die Liste aller Regionen vom Server und gibt diese zurück
+        /// </summary>
+        /// <returns>Liste aller Regionen auf dem Server</returns>
         internal RegionData[] GetRegions()
         {
             try
@@ -84,7 +127,12 @@ namespace StoreClient
                 return null;
             }
         }
-
+        #region ADD methods
+        /// <summary>
+        /// Veranlasst den Server, eine neue Region anzulegen.
+        /// Wirft xml-rpc Exception
+        /// </summary>
+        /// <param name="regionData">Die zu erstellende Region</param>
         internal void Add(RegionData regionData)
         {
             remote.AddRegion(session, regionData);
@@ -99,6 +147,7 @@ namespace StoreClient
         {
             remote.AddAdvertisement(session, advertisementData);
         }
+        #endregion
 
         internal ProductData[] GetProducts()
         {
@@ -205,31 +254,8 @@ namespace StoreClient
         internal TraceData[] GetTraces()
         {
             return remote.GetTraces(session);
-            
-            /*
-            //TraceData
-            TraceData[] dummy = new TraceData[3];
-            Random rnd = new Random();
-
-            LocationData[] trace = new LocationData[20];
-
-            for(int i=0; i<dummy.Length; i++)
-            {
-                int h = rnd.Next(1, 2);
-                for (int j = 0; j < trace.Length; j++)
-                {
-                    trace[j] = new LocationData();
-                    trace[j].LampId = rnd.Next(1, 3).ToString();
-                    trace[j].RelativeTimestamp = 0;
-                    if (j > 0)
-                        h += rnd.Next(1, 2);
-                    trace[j].Time = DateTime.Now + TimeSpan.FromHours((double)h);
-                }
-                dummy[i] = new TraceData(trace);
-                dummy[i].Timestamp = dummy[i].Locations[dummy[i].Locations.Length - 1].Time;
-            }
-            return dummy;*/
         }
+
         internal TraceData[] GetTraces(DateTime start, DateTime stop)
         {
             
@@ -238,31 +264,6 @@ namespace StoreClient
                 stop = stop.Date + TimeSpan.FromDays(1);
 
             return remote.GetTracesByTimeSpan(session, start, stop);
-            /*
-            
-            //TraceData
-            TraceData[] dummy = new TraceData[3];
-            Random rnd = new Random();
-
-            LocationData[] trace = new LocationData[20];
-
-            for (int i = 0; i < dummy.Length; i++)
-            {
-                int h = rnd.Next(1, 2);
-                for (int j = 0; j < trace.Length; j++)
-                {
-                    trace[j] = new LocationData();
-                    trace[j].LampId = rnd.Next(1, 4).ToString();
-                    trace[j].RelativeTimestamp = 0;
-                    if (j > 0)
-                        h += rnd.Next(1, 2);
-                    trace[j].Time = DateTime.Now + TimeSpan.FromHours((double)h);
-                }
-                dummy[i] = new TraceData(trace);
-                dummy[i].Timestamp = dummy[i].Locations[dummy[i].Locations.Length - 1].Time;
-            }
-            return dummy;
-            */
         }
 
         internal void ShowID()
