@@ -138,32 +138,103 @@ namespace StoreClient
             remote.AddRegion(session, regionData);
         }
 
+        /// <summary>
+        /// Veranlasst den Server ein neues Produkt anzulegen
+        /// </summary>
+        /// <param name="productData">Das zu erstellende Produkt</param>
         internal void Add(ProductData productData)
         {
             remote.AddProduct(session, productData);
         }
 
+        /// <summary>
+        /// Veranlasst den Server eine neue Werbung anzulegen
+        /// </summary>
+        /// <param name="productData">Die zu erstellende Werbung</param>
         internal void Add(AdvertisementData advertisementData)
         {
             remote.AddAdvertisement(session, advertisementData);
         }
         #endregion
 
+        #region GET methods
+        
+        /// <summary>
+        /// Gibt alle im Server befindlichen Produkte zurück
+        /// </summary>
+        /// <returns>Alle Produkte</returns>
         internal ProductData[] GetProducts()
         {
             return remote.GetProducts(session);
         }
 
+        /// <summary>
+        /// Gibt alle Produkte zurück, die einer bestimmten Region angehören
+        /// </summary>
+        /// <param name="regionID">Region, nach der gefiltert werden soll</param>
+        /// <returns>Alle Produkte der Gruppe regionID</returns>
         internal ProductData[] GetProducts(string regionID)
         {
             return remote.GetProductsByRegion(session, regionID);
         }
 
+        /// <summary>
+        /// Gibt alle Benutzer zurück, die auf dem Server registriert sind
+        /// </summary>
+        /// <returns>Liste der Benutzer</returns>
+        internal UserData[] GetUsers()
+        {
+            return remote.GetUsers(session);
+        }
+
+        /// <summary>
+        /// Gibt alle Benutzergruppen zurück, die auf dem Server registriert sind
+        /// </summary>
+        /// <returns>Liste der Benutzergruppen</returns>
+        internal RoleData[] GetRoles()
+        {
+            return remote.GetRoles(session);
+        }
+
+        /// <summary>
+        /// Gibt alle Werbeeinträge zurück, die auf dem Server registriert sind
+        /// </summary>
+        /// <returns>Liste der Werbeeinträge</returns>
+        internal AdvertisementData[] GetAds()
+        {
+            return remote.GetAdvertisement(session);
+        }
+        #endregion
+
+        #region DELETE methods
+        /// <summary>
+        /// Entfernt ein Produkt aus der Datenbank
+        /// </summary>
+        /// <param name="id">Produkt ID des zu löschenden Produkts</param>
         internal void DeleteProduct(int id)
         {
             remote.DeleteProduct(session, new ProductData(new SignData(id, new RegionData("0", "")), "", 0));
         }
 
+        /// <summary>
+        /// Entfernt eine Region aus der Datenbank
+        /// Achtung: Alle beinhaltenden Produkte werden mitgelöscht
+        /// </summary>
+        /// <param name="id">ID der Region</param>
+        internal void DeleteRegion(string id)
+        {
+            remote.DeleteRegion(session, new RegionData(id, ""));
+
+        }
+        #endregion
+        #region EDIT methods
+
+        /// <summary>
+        /// Weist einem Produkt neue Parameter zu.
+        /// Alle alten Parameter werden überschrieben
+        /// </summary>
+        /// <param name="id">Produkt ID des zu ändernden Produkts</param>
+        /// <param name="newValue">neue Attribute</param>
         internal void EditProduct(int id, ProductData newValue)
         {
             remote.EditProduct(session,
@@ -171,81 +242,93 @@ namespace StoreClient
                                 newValue);
         }
 
-        internal void DeleteRegion(string id)
-        {
-            remote.DeleteRegion(session, new RegionData(id, ""));
-            
-        }
-
-        internal UserData[] GetUsers()
-        {
-            return remote.GetUsers(session);
-        }
-
-        internal RoleData[] GetRoles()
-        {
-            return remote.GetRoles(session);
-        }
-
+        /// <summary>
+        /// Weist eine Benutzergruppe neue Attribute zu
+        /// Alle alten Attribute werden überschrieben
+        /// </summary>
+        /// <param name="oldRole">Die zu ändernde Benutzergruppe. Nur der Name muss für eine Bearbeitung übereinstimmtn</param>
+        /// <param name="newRole">Neue Daten, die der Rolle zugewiesen werden</param>
         internal void EditRole(RoleData oldRole, RoleData newRole)
         {
             remote.EditRole(session, oldRole, newRole);
-            
         }
+        #endregion
 
-        internal AdvertisementData[] GetAds()
+
+
+        /// <summary>
+        /// Bearbeitet einen bestehenden Werbeeintrag auf dem Server
+        /// </summary>
+        /// <param name="p">Identifikationsnummer des Werbeeintrags</param>
+        /// <param name="advertisementData">neu Parametriesierte Werbung</param>
+        internal void EditAd(int adID, AdvertisementData advertisementData)
         {
-            AdvertisementData[] ads = new AdvertisementData[4];
-
-            RegionData r = new RegionData("1", "test");
-
-            ads[0] = new AdvertisementData(1, r, "eins", new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1,0,0,0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
-            ads[1] = new AdvertisementData(2, r, "zwei", new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
-            ads[2] = new AdvertisementData(3, r, "drei", new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
-            ads[3] = new AdvertisementData(4, r, "vier", new string[] { "zeile1", "zeile2", "zeile3", "zeile4" }, DateTime.Now, DateTime.Now + new TimeSpan(1, 0, 0, 0), DateTime.Now, DateTime.Now + new TimeSpan(1, 1, 1));
-
-            //return ads;
-            return remote.GetAdvertisement(session);
-        }
-
-
-        internal void EditAd(int p, AdvertisementData advertisementData)
-        {
-            remote.DeleteAdvertisement(session, new AdvertisementData(p, new RegionData("", ""), "", new string[] { "", "", "", "" }, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now));
+            remote.DeleteAdvertisement(session, new AdvertisementData(adID, new RegionData("", ""), "", new string[] { "", "", "", "" }, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now));
             remote.AddAdvertisement(session, advertisementData);
         }
 
+        /// <summary>
+        /// Weist einem vorhandenen Benutzer neue Parameter zu
+        /// </summary>
+        /// <param name="oldUser">Benutzer, der geändert werden soll. Nur der Name ist entscheidend</param>
+        /// <param name="newUser">Neue Parameter des Benutzer</param>
         internal void EditUser(UserData oldUser, UserData newUser)
         {
             remote.DeleteUser(session, oldUser);
             remote.AddUser(session, newUser);
         }
 
+        /// <summary>
+        /// Veranlasst den Server, einen neuen Benutzer in die Datenbank aufzunehmen
+        /// </summary>
+        /// <param name="newUser">Benutzerdaten</param>
         internal void Add(UserData newUser)
         {
             remote.AddUser(session, newUser);
         }
 
+        /// <summary>
+        /// Weist einer bestehenden Region neue Attribute zu
+        /// Die alten Attribute werden alle überschrieben
+        /// </summary>
+        /// <param name="oldData">Die zu ändernde Region. Nur die Identifikationsnummer ist entscheidend</param>
+        /// <param name="newData">Neue Daten zu der Region</param>
         internal void EditRegion(RegionData oldData, RegionData newData)
         {
             remote.EditRegion(session, oldData, newData);
         }
 
+        /// <summary>
+        /// Veranlasst den Server, eine neue Benutzergruppe anzulegen.
+        /// </summary>
+        /// <param name="role">Neue Benutzergruppe</param>
         internal void Add(RoleData role)
         {
             remote.AddRole(session, role);
         }
 
+        /// <summary>
+        /// Entfernt eine Benutzergruppe vom Server
+        /// </summary>
+        /// <param name="roleData">Benutzergruppe, die entfernt werden soll</param>
         internal void DeleteRole(RoleData roleData)
         {
             remote.DeleteRole(session, roleData);
         }
 
+        /// <summary>
+        /// Entfernt einen bestehenden Benutzer vom Server
+        /// </summary>
+        /// <param name="userData">Benutzer, der entfernt werden soll</param>
         internal void DeleteUser(UserData userData)
         {
             remote.DeleteUser(session, userData);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="advertisementData"></param>
         internal void DeleteAd(AdvertisementData advertisementData)
         {
             remote.DeleteAdvertisement(session, advertisementData);
