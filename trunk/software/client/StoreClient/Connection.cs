@@ -327,19 +327,29 @@ namespace StoreClient
         }
 
         /// <summary>
-        /// 
+        /// Entfernt einen Wertbeeintrag vom Server
         /// </summary>
-        /// <param name="advertisementData"></param>
+        /// <param name="advertisementData">Werbeeintrag, dediziert durch die Identifikationsnummer</param>
         internal void DeleteAd(AdvertisementData advertisementData)
         {
             remote.DeleteAdvertisement(session, advertisementData);
         }
 
+        /// <summary>
+        /// Gibt alle Kundenlaufwege zurück, die auf dem Server registriert sind
+        /// </summary>
+        /// <returns>Liste der Laufwege</returns>
         internal TraceData[] GetTraces()
         {
             return remote.GetTraces(session);
         }
 
+        /// <summary>
+        /// Gibt alle Kundenlaufwege zurück, die innerhalb eines Zeitfensters aufgenommen wurden
+        /// </summary>
+        /// <param name="start">Anfangszeit der Aufnahmen</param>
+        /// <param name="stop">Endzeit der Aufnahmen</param>
+        /// <returns>Liste Kundenlaufwege</returns>
         internal TraceData[] GetTraces(DateTime start, DateTime stop)
         {
             
@@ -350,6 +360,9 @@ namespace StoreClient
             return remote.GetTracesByTimeSpan(session, start, stop);
         }
 
+        /// <summary>
+        /// Veranlasst den Server, das Show ID Commando auszusenden. Hierbei zeigen alle erreichbaren Schilder auf dem Display ihre ID an.
+        /// </summary>
         internal void ShowID()
         {
             RegionData region = new RegionData();
@@ -358,6 +371,11 @@ namespace StoreClient
             remote.ShowSignId(session, region);
         }
 
+        /// <summary>
+        /// Weist einem Lampencontroller
+        /// </summary>
+        /// <param name="oldID">aktuelle ID des Lampencontrollers</param>
+        /// <param name="newID">neue ID des Lampencontrollers</param>
         internal void SetLampId(string oldID, string newID)
         {
             remote.SetLampId(session, oldID, newID);
