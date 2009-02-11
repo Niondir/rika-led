@@ -42,7 +42,19 @@ namespace StoreClient
         private SessionData session;
         static public UserData user;
         static private Connection con;
-        
+
+        /// <summary>
+        /// Bietet eine Instanz einer Verbindung zum Server.
+        /// Die Instanzen sind auf eine einzige Verbindung reduziert, da jeweils nur eine Verwaltet werden kann
+        /// </summary>
+        /// <returns>Verbingsinstanz</returns>
+        static public Connection GetInstance()
+        {
+            if (con == null)
+                con = new Connection();
+            return con;
+        }
+
         /// <summary>
         /// Wird gefeuert, sobald sich der Status der Verbindung geändert hat.
         /// Also nach erfolgreichem Aufbau und Abbau der Verbindungen
@@ -69,65 +81,7 @@ namespace StoreClient
                 return remote.Url;
             }
         }
-
-        /// <summary>
-        /// Bietet eine Instanz einer Verbindung zum Server.
-        /// Die Instanzen sind auf eine einzige Verbindung reduziert, da jeweils nur eine Verwaltet werden kann
-        /// </summary>
-        /// <returns>Verbingsinstanz</returns>
-        static public Connection GetInstance()
-        {
-            if (con == null)
-                con = new Connection();
-            return con;
-        }
-
-        /// <summary>
-        /// Meldet sich als Client mit Benutzernamen und Passwort bei dem Server an.
-        /// </summary>
-        /// <param name="username">Benutzername, der Angemeldet werden soll</param>
-        /// <param name="password">Passwort zu dem Benutzernamen</param>
-        internal void Login(string username, string password)
-        {
-            user = new UserData(username, password);
-            try
-            {
-                session = remote.Login(user);
-                user = remote.GetUser(session, username);
-                if (LoginChanged != null)
-                    LoginChanged(this, new ConnectionChangedEventArgs(true));
-            }
-            catch(Exception ex)
-            {
-                FormMain.HandleException(ex);
-            }
-        }
-
-        /// <summary>
-        /// Meldet den aktuellen Benutzer wieder ab
-        /// </summary>
-        internal void Logout()
-        {
-            remote.Logout(session);
-        }
-
-        /// <summary>
-        /// Holt die Liste aller Regionen vom Server und gibt diese zurück
-        /// </summary>
-        /// <returns>Liste aller Regionen auf dem Server</returns>
-        internal RegionData[] GetRegions()
-        {
-            try
-            {
-                RegionData[] regions = remote.GetRegions(session);
-                return regions;
-            }
-            catch (Exception ex)
-            {
-                FormMain.HandleException(ex);
-                return null;
-            }
-        }
+        
         #region ADD methods
         /// <summary>
         /// Veranlasst den Server, eine neue Region anzulegen.
@@ -156,10 +110,46 @@ namespace StoreClient
         {
             remote.AddAdvertisement(session, advertisementData);
         }
+
+        /// <summary>
+        /// Veranlasst den Server, einen neuen Benutzer in die Datenbank aufzunehmen
+        /// </summary>
+        /// <param name="newUser">Benutzerdaten</param>
+        internal void Add(UserData newUser)
+        {
+            remote.AddUser(session, newUser);
+        }
+
+        /// <summary>
+        /// Veranlasst den Server, eine neue Benutzergruppe anzulegen.
+        /// </summary>
+        /// <param name="role">Neue Benutzergruppe</param>
+        internal void Add(RoleData role)
+        {
+            remote.AddRole(session, role);
+        }
         #endregion
 
         #region GET methods
-        
+
+        /// <summary>
+        /// Holt die Liste aller Regionen vom Server und gibt diese zurück
+        /// </summary>
+        /// <returns>Liste aller Regionen auf dem Server</returns>
+        internal RegionData[] GetRegions()
+        {
+            try
+            {
+                RegionData[] regions = remote.GetRegions(session);
+                return regions;
+            }
+            catch (Exception ex)
+            {
+                FormMain.HandleException(ex);
+                return null;
+            }
+        }
+
         /// <summary>
         /// Gibt alle im Server befindlichen Produkte zurück
         /// </summary>
@@ -205,6 +195,31 @@ namespace StoreClient
         {
             return remote.GetAdvertisement(session);
         }
+
+        /// <summary>
+        /// Gibt alle Kundenlaufwege zurück, die innerhalb eines Zeitfensters aufgenommen wurden
+        /// </summary>
+        /// <param name="start">Anfangszeit der Aufnahmen</param>
+        /// <param name="stop">Endzeit der Aufnahmen</param>
+        /// <returns>Liste Kundenlaufwege</returns>
+        internal TraceData[] GetTraces(DateTime start, DateTime stop)
+        {
+
+            start = start.Date;
+            if (stop != stop.Date)
+                stop = stop.Date + TimeSpan.FromDays(1);
+
+            return remote.GetTracesByTimeSpan(session, start, stop);
+        }
+
+        /// <summary>
+        /// Gibt alle Kundenlaufwege zurück, die auf dem Server registriert sind
+        /// </summary>
+        /// <returns>Liste der Laufwege</returns>
+        internal TraceData[] GetTraces()
+        {
+            return remote.GetTraces(session);
+        }
         #endregion
 
         #region DELETE methods
@@ -226,86 +241,6 @@ namespace StoreClient
         {
             remote.DeleteRegion(session, new RegionData(id, ""));
 
-        }
-        #endregion
-        #region EDIT methods
-
-        /// <summary>
-        /// Weist einem Produkt neue Parameter zu.
-        /// Alle alten Parameter werden überschrieben
-        /// </summary>
-        /// <param name="id">Produkt ID des zu ändernden Produkts</param>
-        /// <param name="newValue">neue Attribute</param>
-        internal void EditProduct(int id, ProductData newValue)
-        {
-            remote.EditProduct(session,
-                                new ProductData(new SignData(id, new RegionData("0", "")), "", 0),
-                                newValue);
-        }
-
-        /// <summary>
-        /// Weist eine Benutzergruppe neue Attribute zu
-        /// Alle alten Attribute werden überschrieben
-        /// </summary>
-        /// <param name="oldRole">Die zu ändernde Benutzergruppe. Nur der Name muss für eine Bearbeitung übereinstimmtn</param>
-        /// <param name="newRole">Neue Daten, die der Rolle zugewiesen werden</param>
-        internal void EditRole(RoleData oldRole, RoleData newRole)
-        {
-            remote.EditRole(session, oldRole, newRole);
-        }
-        #endregion
-
-
-
-        /// <summary>
-        /// Bearbeitet einen bestehenden Werbeeintrag auf dem Server
-        /// </summary>
-        /// <param name="p">Identifikationsnummer des Werbeeintrags</param>
-        /// <param name="advertisementData">neu Parametriesierte Werbung</param>
-        internal void EditAd(int adID, AdvertisementData advertisementData)
-        {
-            remote.DeleteAdvertisement(session, new AdvertisementData(adID, new RegionData("", ""), "", new string[] { "", "", "", "" }, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now));
-            remote.AddAdvertisement(session, advertisementData);
-        }
-
-        /// <summary>
-        /// Weist einem vorhandenen Benutzer neue Parameter zu
-        /// </summary>
-        /// <param name="oldUser">Benutzer, der geändert werden soll. Nur der Name ist entscheidend</param>
-        /// <param name="newUser">Neue Parameter des Benutzer</param>
-        internal void EditUser(UserData oldUser, UserData newUser)
-        {
-            remote.DeleteUser(session, oldUser);
-            remote.AddUser(session, newUser);
-        }
-
-        /// <summary>
-        /// Veranlasst den Server, einen neuen Benutzer in die Datenbank aufzunehmen
-        /// </summary>
-        /// <param name="newUser">Benutzerdaten</param>
-        internal void Add(UserData newUser)
-        {
-            remote.AddUser(session, newUser);
-        }
-
-        /// <summary>
-        /// Weist einer bestehenden Region neue Attribute zu
-        /// Die alten Attribute werden alle überschrieben
-        /// </summary>
-        /// <param name="oldData">Die zu ändernde Region. Nur die Identifikationsnummer ist entscheidend</param>
-        /// <param name="newData">Neue Daten zu der Region</param>
-        internal void EditRegion(RegionData oldData, RegionData newData)
-        {
-            remote.EditRegion(session, oldData, newData);
-        }
-
-        /// <summary>
-        /// Veranlasst den Server, eine neue Benutzergruppe anzulegen.
-        /// </summary>
-        /// <param name="role">Neue Benutzergruppe</param>
-        internal void Add(RoleData role)
-        {
-            remote.AddRole(session, role);
         }
 
         /// <summary>
@@ -334,30 +269,96 @@ namespace StoreClient
         {
             remote.DeleteAdvertisement(session, advertisementData);
         }
+        #endregion
+
+        #region EDIT methods
 
         /// <summary>
-        /// Gibt alle Kundenlaufwege zurück, die auf dem Server registriert sind
+        /// Weist einem Produkt neue Parameter zu.
+        /// Alle alten Parameter werden überschrieben
         /// </summary>
-        /// <returns>Liste der Laufwege</returns>
-        internal TraceData[] GetTraces()
+        /// <param name="id">Produkt ID des zu ändernden Produkts</param>
+        /// <param name="newValue">neue Attribute</param>
+        internal void EditProduct(int id, ProductData newValue)
         {
-            return remote.GetTraces(session);
+            remote.EditProduct(session,
+                                new ProductData(new SignData(id, new RegionData("0", "")), "", 0),
+                                newValue);
         }
 
         /// <summary>
-        /// Gibt alle Kundenlaufwege zurück, die innerhalb eines Zeitfensters aufgenommen wurden
+        /// Weist eine Benutzergruppe neue Attribute zu
+        /// Alle alten Attribute werden überschrieben
         /// </summary>
-        /// <param name="start">Anfangszeit der Aufnahmen</param>
-        /// <param name="stop">Endzeit der Aufnahmen</param>
-        /// <returns>Liste Kundenlaufwege</returns>
-        internal TraceData[] GetTraces(DateTime start, DateTime stop)
+        /// <param name="oldRole">Die zu ändernde Benutzergruppe. Nur der Name muss für eine Bearbeitung übereinstimmtn</param>
+        /// <param name="newRole">Neue Daten, die der Rolle zugewiesen werden</param>
+        internal void EditRole(RoleData oldRole, RoleData newRole)
         {
-            
-            start = start.Date;
-            if (stop != stop.Date)
-                stop = stop.Date + TimeSpan.FromDays(1);
+            remote.EditRole(session, oldRole, newRole);
+        }
 
-            return remote.GetTracesByTimeSpan(session, start, stop);
+        /// <summary>
+        /// Bearbeitet einen bestehenden Werbeeintrag auf dem Server
+        /// </summary>
+        /// <param name="p">Identifikationsnummer des Werbeeintrags</param>
+        /// <param name="advertisementData">neu Parametriesierte Werbung</param>
+        internal void EditAd(int adID, AdvertisementData advertisementData)
+        {
+            remote.DeleteAdvertisement(session, new AdvertisementData(adID, new RegionData("", ""), "", new string[] { "", "", "", "" }, DateTime.Now, DateTime.Now, DateTime.Now, DateTime.Now));
+            remote.AddAdvertisement(session, advertisementData);
+        }
+
+        /// <summary>
+        /// Weist einem vorhandenen Benutzer neue Parameter zu
+        /// </summary>
+        /// <param name="oldUser">Benutzer, der geändert werden soll. Nur der Name ist entscheidend</param>
+        /// <param name="newUser">Neue Parameter des Benutzer</param>
+        internal void EditUser(UserData oldUser, UserData newUser)
+        {
+            remote.DeleteUser(session, oldUser);
+            remote.AddUser(session, newUser);
+        }
+
+        /// <summary>
+        /// Weist einer bestehenden Region neue Attribute zu
+        /// Die alten Attribute werden alle überschrieben
+        /// </summary>
+        /// <param name="oldData">Die zu ändernde Region. Nur die Identifikationsnummer ist entscheidend</param>
+        /// <param name="newData">Neue Daten zu der Region</param>
+        internal void EditRegion(RegionData oldData, RegionData newData)
+        {
+            remote.EditRegion(session, oldData, newData);
+        }
+        #endregion
+
+        #region MISC
+        /// <summary>
+        /// Meldet sich als Client mit Benutzernamen und Passwort bei dem Server an.
+        /// </summary>
+        /// <param name="username">Benutzername, der Angemeldet werden soll</param>
+        /// <param name="password">Passwort zu dem Benutzernamen</param>
+        internal void Login(string username, string password)
+        {
+            user = new UserData(username, password);
+            try
+            {
+                session = remote.Login(user);
+                user = remote.GetUser(session, username);
+                if (LoginChanged != null)
+                    LoginChanged(this, new ConnectionChangedEventArgs(true));
+            }
+            catch (Exception ex)
+            {
+                FormMain.HandleException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Meldet den aktuellen Benutzer wieder ab
+        /// </summary>
+        internal void Logout()
+        {
+            remote.Logout(session);
         }
 
         /// <summary>
@@ -380,5 +381,6 @@ namespace StoreClient
         {
             remote.SetLampId(session, oldID, newID);
         }
+        #endregion
     }
 }
