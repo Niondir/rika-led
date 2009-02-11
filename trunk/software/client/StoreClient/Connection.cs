@@ -5,6 +5,7 @@ using CommunicationAPI.Interface;
 using CommunicationAPI.DataTypes;
 using CookComputing.XmlRpc;
 
+
 namespace StoreClient
 {
     /// <summary>
