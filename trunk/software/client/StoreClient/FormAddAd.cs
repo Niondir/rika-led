@@ -12,6 +12,10 @@ namespace StoreClient
     public partial class FormAddAd : Form
     {
         private RegionData[] regions;
+
+        /// <summary>
+        /// Gibt die erstellte Werbung zurück oder legt diese fest
+        /// </summary>
         public AdvertisementData Value {
             get
             {
