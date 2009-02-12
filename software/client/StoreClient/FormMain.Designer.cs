@@ -1,5 +1,9 @@
 ﻿namespace StoreClient
 {
+    /// <summary>
+    /// Hauptfenster der Anwendung. Gekoppelt ans Application Run.
+    /// In diesem Fenster werden die jeweiligen Controls angezeigt.
+    /// </summary>
     partial class FormMain
     {
         /// <summary>

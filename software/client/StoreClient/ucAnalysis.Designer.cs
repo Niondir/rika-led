@@ -1,5 +1,10 @@
 ﻿namespace StoreClient
 {
+    /// <summary>
+    /// Stellt die Laufwege in verschiedenen Graphen dar.
+    /// Das Control beinhaltet zum einen ein ucAnalysisControl, das für die Visualisierung zuständig ist.
+    /// Zum anderen lässt sich damit der Zeitraum der Analyse bestimmen
+    /// </summary>
     partial class ucAnalysis
     {
         /// <summary> 

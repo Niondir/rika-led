@@ -1,5 +1,8 @@
 ﻿namespace StoreClient
 {
+    /// <summary>
+    /// Stellt einen Dialog dar, mit dem sich Werbeeinblendungen im Detail ansehen, verändern oder erstellen lassen.
+    /// </summary>
     partial class FormAddAd
     {
         /// <summary>

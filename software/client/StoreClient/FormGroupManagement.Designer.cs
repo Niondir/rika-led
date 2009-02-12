@@ -1,5 +1,9 @@
 ﻿namespace StoreClient
 {
+    /// <summary>
+    /// Entkoppelte Anzeige der Produktgruppen
+    /// <seealso cref="ucGroups"/>
+    /// </summary>
     partial class FormGroupManagement
     {
         /// <summary>

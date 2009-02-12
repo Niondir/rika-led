@@ -9,9 +9,7 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
-    /// <summary>
-    /// Stellt einen Dialog dar, mit dem sich Produktgruppen im Detail ansehen, bearbeiten und neu erstellen lassen
-    /// </summary>
+
     public partial class FormAddRegion : Form
     {
 
@@ -39,8 +37,8 @@ namespace StoreClient
         /// <summary>
         /// Erstellt ein neues Dialogfenster für Produktgruppen und initialisiert die Komponenten
         /// Zusätzlich wird der übergebene Name als Gruppenname eingetragen und der Focus für schnelle Eingabe auf das ID Textfeld gelegt
+        /// <param name="name">Name der zu erstellenden Produktgruppe</param>
         /// </summary>
-        /// <param name="editData">Name der zu erstellenden Produktgruppe</param>
         public FormAddRegion(string name)
             : this()
         {
@@ -110,6 +108,7 @@ namespace StoreClient
         /// Setzt die Hintergrundfarbe des Controls auf White. Dient dazu, bei Betreten eines zuvor rot gefärbten Controls, auf weiss zurück zu stellen
         /// </summary>
         /// <param name="sender">Control, das weisste Hintergrundfarbe fordert</param>
+        /// <param name="e">unbedeutend</param>
         private void ChangeBackToWhiteBackCol(object sender, EventArgs e)
         {
             ((Control)sender).BackColor = SystemColors.Window;
@@ -120,6 +119,7 @@ namespace StoreClient
         /// Stellt zu jedem Eingabe Control im Dialog die passende Hilfe in die richTextBox
         /// </summary>
         /// <param name="sender">Control, zu dem die Hilfe angezeigt werden soll</param>
+        /// <param name="e">unbedeutend</param>
         private void EnterNewBox(object sender, EventArgs e)
         {
             if(sender == textBoxName)
