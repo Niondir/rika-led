@@ -1,6 +1,3 @@
-
-#include <inttypes.h>
-
 #define XBEE_GUARDTIME 20
 #define XBEE_CMD_SEQ ("+++")
 
