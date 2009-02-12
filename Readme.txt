@@ -23,7 +23,6 @@ Sowie für die Schilder in ./software/Schilder/doc/ und ./software/Schilder/Insta
 
 Benötigte Software
 ==================
-
 AVR Studio ( http://www.atmel.com/dyn/Products/tools_card.asp?tool_id=2725 )
 WinAVR ( http://sourceforge.net/project/showfiles.php?group_id=68108 )
 MySQL (z.b. http://www.apachefriends.org/de/xampp-windows.html )
