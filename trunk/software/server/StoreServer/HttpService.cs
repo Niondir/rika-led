@@ -9,11 +9,22 @@ using StoreServer.Data;
 
 namespace StoreServer
 {
+    /// <summary>
+    /// Handles the HTTP Service where clients can conntect via xml-rpc
+    /// </summary>
     public class HttpService
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private MyXmlRpcListenerService service;
         private HttpServiceThread serviceThread;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url">The url of the server</param>
+        /// <param name="service"></param>
         public HttpService(string url, MyXmlRpcListenerService service)
         {
             this.service = service;
@@ -40,12 +51,18 @@ namespace StoreServer
             }
         }
 
+        /// <summary>
+        /// Stop the service
+        /// </summary>
         public void Abort()
         {
             serviceThread.Abort();
         
         }
 
+        /// <summary>
+        /// The service thread handle all incomming requests
+        /// </summary>
         public class HttpServiceThread
         {
             private HttpListener listener;
@@ -54,7 +71,10 @@ namespace StoreServer
             private Queue<HttpListenerContext> queue;
             private Queue<HttpListenerContext> workingQueue;
 
-            
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="url"></param>
             public HttpServiceThread(string url)
             {
                 queue = new Queue<HttpListenerContext>();
@@ -71,21 +91,26 @@ namespace StoreServer
                 thread.Start();
             }
 
+            /// <summary>
+            /// Stop this thread
+            /// </summary>
             public void Abort()
             {
                 thread.Abort();
                 listener.Abort();
             }
 
+            /// <summary>
+            /// Threadsave method to get the queue, always returns a copy of the queue.
+            /// The old working queue have to be empty before you can receive the current
+            /// </summary>
             public Queue<HttpListenerContext> Queue
             {
                 get
                 {
                     if (workingQueue.Count != 0)
                     {
-                        throw new Exception("HttpService: [ERROR] Hey, someone didn't handled our queue!");
-                        //Console.WriteLine("HttpService: [ERROR] Hey, someone didn't handled our queue!");
-                        //return workingQueue; 
+                        throw new Exception("HttpService: [ERROR] WorkingQueue have to be empty befor requesting the current");
                     }
 
                     lock (queue)
@@ -100,6 +125,9 @@ namespace StoreServer
                 }
             }
 
+            /// <summary>
+            /// The main function of this thread
+            /// </summary>
             public void HttpServiceMain()
             {
 

@@ -5,23 +5,35 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreServer.Data
 {
+    /// <summary>
+    /// One region is one lampcontroller in the supermarket
+    /// </summary>
     public class Region
     {
         private string id;
         private string name;
 
+        /// <summary>
+        /// ID of the region = LampId
+        /// </summary>
         public string Id
         {
             get { return id.ToLower(); }
             set { id = value.ToLower(); }
         }
 
+        /// <summary>
+        /// Name of the Region
+        /// </summary>
         public string Name
         {
             get { return name; }
             set { name = value; }
         }
 
+        /// <summary>
+        /// The daatobject, to receive the CommunicationAPI data type
+        /// </summary>
         public RegionData Data
         {
             get
@@ -30,12 +42,20 @@ namespace StoreServer.Data
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="region"></param>
         public Region(RegionData region)
         {
             this.Id = region.Id.ToLower();
             this.name = region.Name;
         }
 
+        /// <summary>
+        /// Save to database
+        /// </summary>
+        /// <param name="connection"></param>
         public void Save(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -45,6 +65,11 @@ namespace StoreServer.Data
             command.ExecuteNonQuery();
         }
 
+        /// <summary>
+        /// Load from Database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="data"></param>
         public void Update(OdbcConnection connection, RegionData data)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -83,6 +108,11 @@ namespace StoreServer.Data
             }
         }
 
+        /// <summary>
+        /// Load from Database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <returns></returns>
         public static RegionData[] Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -100,6 +130,10 @@ namespace StoreServer.Data
             return regions.ToArray();
         }
 
+        /// <summary>
+        /// Delete in Database
+        /// </summary>
+        /// <param name="connection"></param>
         public void Delete(OdbcConnection connection)
         {
             // Delete all products in this region

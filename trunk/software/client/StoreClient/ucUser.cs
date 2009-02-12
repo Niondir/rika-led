@@ -16,8 +16,6 @@ namespace StoreClient
     {
         UserData[] users;
         RoleData[] roles;
-        UserData iUser;
-        CheckBox[] roleFlags;
 
         /// <summary>
         /// Bewirkt das (De)Aktivieren aller Eingabeelemente, die der Benutzergruppensteuerung angehören

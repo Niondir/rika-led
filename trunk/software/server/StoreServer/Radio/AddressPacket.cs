@@ -6,13 +6,28 @@ using System.Threading;
 
 namespace StoreServer.Radio
 {
+    /// <summary>
+    /// Change the address of the Xbee controller where to send in future.
+    /// Takes 60ms depending on the xbee settings!
+    /// </summary>
     public class AddressPacket : SerialPacket
     {
         private string address;
+
+        /// <summary>
+        /// 
+        /// </summary>
         private Byte[] swtichModeCmd;
 
+        /// <summary>
+        /// The new address
+        /// </summary>
         public string Address { get { return address; } }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="address"></param>
         public AddressPacket(string address)
         {
             this.address = address;
@@ -20,6 +35,11 @@ namespace StoreServer.Radio
             this.sendBytes = Encode(String.Format("ATDH0,DL{0},CN\r", address));
         }
 
+        /// <summary>
+        /// Write the packet to the com port
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="bytes"></param>
         protected override void Write(SerialPort port, Byte[] bytes)
         {
             //guard time, sending +++ to switch to cmd mode

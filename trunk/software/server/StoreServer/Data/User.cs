@@ -16,21 +16,33 @@ namespace StoreServer.Data
         private Password password;
         private Role role;
 
+        /// <summary>
+        /// Login name
+        /// </summary>
         public string Username
         {
             get { return username; }
         }
 
+        /// <summary>
+        /// Login password
+        /// </summary>
         public Password Password
         {
             get { return password; }
         }
 
+        /// <summary>
+        /// User rights
+        /// </summary>
         public Role Role
         {
             get { return role; }
         }
 
+        /// <summary>
+        /// The daatobject, to receive the CommunicationAPI data type
+        /// </summary>
         public UserData Data
         {
             get
@@ -42,6 +54,10 @@ namespace StoreServer.Data
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
         public User(UserData user)
         {
             this.username = user.Username;
@@ -105,6 +121,11 @@ namespace StoreServer.Data
         }
 
 
+        /// <summary>
+        /// Load from database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <returns></returns>
         public static List<User> Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -130,6 +151,12 @@ namespace StoreServer.Data
             return users;
         }
 
+        /// <summary>
+        /// Load  from database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="loginName"></param>
+        /// <returns></returns>
         public static User Load(OdbcConnection connection, string loginName)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -156,6 +183,10 @@ namespace StoreServer.Data
             return users[0];
         }
 
+        /// <summary>
+        /// Save to database
+        /// </summary>
+        /// <param name="connection"></param>
         public void Save(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -188,6 +219,11 @@ namespace StoreServer.Data
 
         }
 
+        /// <summary>
+        /// Update in database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="data"></param>
         public void Update(OdbcConnection connection, UserData data)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -217,6 +253,10 @@ namespace StoreServer.Data
             }
         }
 
+        /// <summary>
+        /// Delete in database
+        /// </summary>
+        /// <param name="connection"></param>
         public void Delete(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();

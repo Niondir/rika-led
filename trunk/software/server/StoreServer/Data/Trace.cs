@@ -6,6 +6,9 @@ using System.Data.Odbc;
 
 namespace StoreServer.Data
 {
+    /// <summary>
+    /// Represent a trace
+    /// </summary>
     public class Trace
     {
         private const float TIME_FACTOR = (255.0f / 1800.0f);
@@ -13,6 +16,9 @@ namespace StoreServer.Data
         private DateTime timestamp;
         private List<LocationData> waypoints = new List<LocationData>();
 
+        /// <summary>
+        /// The daatobject, to receive the CommunicationAPI data type
+        /// </summary>
         public TraceData Data
         {
             get
@@ -25,6 +31,10 @@ namespace StoreServer.Data
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="trace"></param>
         public Trace(TraceData trace)
         {
             if (trace.Locations != null)
@@ -34,6 +44,9 @@ namespace StoreServer.Data
             this.timestamp = trace.Timestamp;
         }
 
+        /// <summary>
+        /// Calculate the aboulute timestamps from the given relative ones
+        /// </summary>
         public void CalcTimestamps()
         {
             int maxTs = 0;
@@ -58,6 +71,10 @@ namespace StoreServer.Data
             }
         }
 
+        /// <summary>
+        /// Save to database
+        /// </summary>
+        /// <param name="connection"></param>
         public void Save(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -85,7 +102,13 @@ namespace StoreServer.Data
             }
         }
 
-
+        /// <summary>
+        /// Load from database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         public static List<Trace> Load(OdbcConnection connection, DateTime from, DateTime to)
         {
             List<Trace> traces = Trace.Load(connection);
@@ -103,6 +126,11 @@ namespace StoreServer.Data
             return result;
         }
 
+        /// <summary>
+        /// Load from database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <returns></returns>
         public static List<Trace> Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -157,10 +185,15 @@ namespace StoreServer.Data
 
         }
 
+        /// <summary>
+        /// Delete from database
+        /// </summary>
+        /// <param name="connection"></param>
         public void Delete(OdbcConnection connection)
         {
-            // TODO: Not implemented: Delete Trace
-            throw new Exception("Not implemented");
+            OdbcCommand command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM `led_traces` WHERE id = " + id;
+            command.ExecuteNonQuery();
         }
     }
 }

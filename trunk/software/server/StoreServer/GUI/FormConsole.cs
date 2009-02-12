@@ -11,6 +11,9 @@ namespace StoreServer.GUI
 {
     public partial class FormConsole : Form
     {
+        /// <summary>
+        /// The output writer for the console form
+        /// </summary>
         public TextWriter Out { get; set; }
 
         private List<string> history = new List<string>();
@@ -38,6 +41,9 @@ namespace StoreServer.GUI
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public FormConsole()
         {
             InitializeComponent();

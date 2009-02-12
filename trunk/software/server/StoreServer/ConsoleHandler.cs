@@ -8,11 +8,20 @@ using StoreServer.Data;
 
 namespace StoreServer
 {
+    /// <summary>
+    /// Handles the console input as commands
+    /// </summary>
     public class ConsoleHandler
     {
+        /// <summary>
+        /// The input queue
+        /// </summary>
         private Queue<string> queue;
         private Thread thread;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ConsoleHandler()
         {
             queue = new Queue<string>();
@@ -22,6 +31,9 @@ namespace StoreServer
             thread.Start();
         }
 
+        /// <summary>
+        /// The main thread
+        /// </summary>
         public void ConsoleListen()
         {
             while (!Program.Closing)
@@ -47,6 +59,9 @@ namespace StoreServer
             Debug.WriteLine("Console Listener Thread: Closing");
         }
 
+        /// <summary>
+        /// Do a slice of work
+        /// </summary>
         public void Slice() {
             if (queue.Count > 0)
             {
@@ -60,6 +75,10 @@ namespace StoreServer
             }
         }
 
+        /// <summary>
+        /// Handle a string as command
+        /// </summary>
+        /// <param name="msg"></param>
         public void HandleCommand(string msg)
         {
             string[] tokens = msg.ToLower().Split(new char[] { ' ' });
