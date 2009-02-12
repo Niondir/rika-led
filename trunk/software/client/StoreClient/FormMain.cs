@@ -14,10 +14,7 @@ using CommunicationAPI;
 
 namespace StoreClient
 {
-    /// <summary>
-    /// Hauptfenster der Anwendung. Gekoppelt ans Application Run.
-    /// In diesem Fenster werden die jeweiligen Controls angezeigt.
-    /// </summary>
+
     public partial class FormMain : Form
     {
         /// <summary>

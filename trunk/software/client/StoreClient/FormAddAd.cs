@@ -9,9 +9,6 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
-    /// <summary>
-    /// Stellt einen Dialog dar, mit dem sich Werbeeinblendungen im Detail ansehen, verändern oder erstellen lassen.
-    /// </summary>
     public partial class FormAddAd : Form
     {
         private RegionData[] regions;
@@ -190,6 +187,7 @@ namespace StoreClient
         /// Setzt die Hintergrundfarbe des Controls auf White. Dient dazu, bei Betreten eines zuvor rot gefärbten Controls, auf weiss zurück zu stellen
         /// </summary>
         /// <param name="sender">Control, das weisste Hintergrundfarbe fordert</param>
+        /// <param name="e">unbedeutend</param>
         private void SetWhiteAgain(object sender, EventArgs e)
         {
             ((Control)sender).BackColor = SystemColors.Window;

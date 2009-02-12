@@ -1,5 +1,8 @@
 ﻿namespace StoreClient
 {
+    /// <summary>
+    /// Stellt einen Dialog dar, mit dem sich Produktgruppen im Detail ansehen, bearbeiten und neu erstellen lassen
+    /// </summary>
     partial class FormAddRegion
     {
         /// <summary>

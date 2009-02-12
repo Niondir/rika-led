@@ -15,8 +15,14 @@ namespace StoreClient
     /// </summary>
     public partial class FormGroupManagement : Form
     {
+        /// <summary>
+        /// Wird ausgelöst, sobald eine neue Region erstellt oder eine bestehende bearbeitet oder gelöscht wurde
+        /// </summary>
         public event EventHandler groupsChanged;
 
+        /// <summary>
+        /// Erstellt ein neues Fenster und initialisiert die komponenten
+        /// </summary>
         public FormGroupManagement()
         {
             InitializeComponent();

@@ -93,6 +93,7 @@ namespace StoreClient
         /// <summary>
         /// Überprüft bei Eingabe in die Textbox, ob die Eingabe gültig ist, also einer HEX Zahl entspricht
         /// <param name="e">Beinhaltet Informationen über die gedrückte Taste</param>
+        /// <param name="sender">unbedeutend</param>
         /// </summary>
         private void CheckHex(object sender, KeyPressEventArgs e)
         {
