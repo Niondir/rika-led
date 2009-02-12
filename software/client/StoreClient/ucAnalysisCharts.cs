@@ -350,11 +350,26 @@ namespace StoreClient
     /// </summary>
     public enum GraphPrecision
     {
+        /// <summary>
+        /// 
+        /// </summary>
         Millisekunden,
+        /// <summary>
+        /// 
+        /// </summary>
         Sekunden,
+        /// <summary>
+        /// 
+        /// </summary>
         Minuten,
+        /// <summary>
+        /// 
+        /// </summary>
         Stunden,
-        Tage,
+        /// <summary>
+        /// 
+        /// </summary>
+        Tage
     }
 
     /// <summary>
@@ -368,10 +383,19 @@ namespace StoreClient
         static private int _i = 0;
         static private int i { get { return _i++; } }
         static private int key = 0;
+        
+        /// <summary>
+        /// 
+        /// </summary>
         static public void Reset()
         {
             key = 0;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         static public Color NextColor()
         {
             if (!inited)

@@ -105,7 +105,7 @@ namespace StoreClient
         /// <summary>
         /// Veranlasst den Server eine neue Werbung anzulegen
         /// </summary>
-        /// <param name="productData">Die zu erstellende Werbung</param>
+        /// <param name="advertisementData">Die zu erstellende Werbung</param>
         internal void Add(AdvertisementData advertisementData)
         {
             remote.AddAdvertisement(session, advertisementData);
@@ -300,7 +300,7 @@ namespace StoreClient
         /// <summary>
         /// Bearbeitet einen bestehenden Werbeeintrag auf dem Server
         /// </summary>
-        /// <param name="p">Identifikationsnummer des Werbeeintrags</param>
+        /// <param name="adID">Identifikationsnummer des Werbeeintrags</param>
         /// <param name="advertisementData">neu Parametriesierte Werbung</param>
         internal void EditAd(int adID, AdvertisementData advertisementData)
         {
