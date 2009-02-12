@@ -1,3 +1,10 @@
+/*! \file uart.c
+    \brief hard and software uart
+    
+    Contains UART related code.
+*/
+
+
 #include "uart.h"
 #include <avr/io.h>
 #include <avr/interrupt.h> 
