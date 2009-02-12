@@ -15,7 +15,6 @@ namespace StoreClient
     public partial class ucLogin : UserControl
     {
         private bool userEntered = false;
-        private bool passwordEntered = false;
 
         private bool UserEntered
         {

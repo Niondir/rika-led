@@ -6,30 +6,45 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreServer.Data
 {
+    /// <summary>
+    /// One product in the supermarket
+    /// </summary>
     public class Product
     {
         private Sign sign;
         private string name;
         private double price;
 
+        /// <summary>
+        /// The sign object where the price is displayed
+        /// </summary>
         public Sign Sign
         {
             get { return sign; }
             set { sign = value; }
         }
 
+        /// <summary>
+        /// The name of the product
+        /// </summary>
         public string Name
         {
             get { return name; }
             set { name = value; }
         }
 
+        /// <summary>
+        /// The price of the product
+        /// </summary>
         public double Price
         {
             get { return price; }
             set { price = value; }
         }
 
+        /// <summary>
+        /// The daatobject, to receive the CommunicationAPI data type
+        /// </summary>
         public ProductData Data
         {
             get
@@ -38,6 +53,10 @@ namespace StoreServer.Data
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="product"></param>
         public Product(ProductData product)
         {
             this.sign = new Sign(product.Sign);
@@ -45,6 +64,10 @@ namespace StoreServer.Data
             this.price = product.Price;
         }
 
+        /// <summary>
+        /// Save to database
+        /// </summary>
+        /// <param name="connection"></param>
         public void Save(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -57,6 +80,11 @@ namespace StoreServer.Data
             command.ExecuteNonQuery();
         }
 
+        /// <summary>
+        /// Update in Database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="data"></param>
         public void Update(OdbcConnection connection, ProductData data)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -89,6 +117,12 @@ namespace StoreServer.Data
             }
         }
 
+        /// <summary>
+        /// Load from Database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="regionId"></param>
+        /// <returns></returns>
         public static List<Product> Load(OdbcConnection connection, string regionId)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -110,6 +144,11 @@ namespace StoreServer.Data
             return products;
         }
 
+        /// <summary>
+        /// Load from Database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <returns></returns>
         public static List<Product> Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -144,6 +183,10 @@ namespace StoreServer.Data
             return products;
         }
 
+        /// <summary>
+        /// Delete in Database
+        /// </summary>
+        /// <param name="connection"></param>
         public void Delete(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();

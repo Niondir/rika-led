@@ -15,17 +15,27 @@ namespace StoreServer.Data
     {
         private Dictionary<int, Client> clients;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ClientManager()
         {
             clients = new Dictionary<int, Client>();
         }
 
-
+        /// <summary>
+        /// Add a client to the directory of known clients
+        /// </summary>
+        /// <param name="client"></param>
         public void AddClient(Client client)
         {
             clients[client.Session.Id] = client;
         }
 
+        /// <summary>
+        /// Remove client from the known client directory
+        /// </summary>
+        /// <param name="client"></param>
         public void RemoveClient(Client client)
         {
             if (clients.ContainsKey(client.Session.Id)) {
@@ -34,7 +44,12 @@ namespace StoreServer.Data
         }
         
         
-
+        /// <summary>
+        /// Get a client by session and ip
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="remoteEndPoint"></param>
+        /// <returns></returns>
         public Client GetClient(SessionData session, IPEndPoint remoteEndPoint)
         {
             Client client;

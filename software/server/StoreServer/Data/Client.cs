@@ -19,36 +19,56 @@ namespace StoreServer.Data
 
         private bool authed = false;
 
+        /// <summary>
+        /// The session of the client
+        /// </summary>
         public Session Session
         {
             get { return session; }
         }
 
+        /// <summary>
+        /// Ip the client is connected from
+        /// </summary>
         public IPAddress IP
         {
             get { return ipEndPoint.Address; }
         }
 
+        /// <summary>
+        /// Is the client authenticated?
+        /// </summary>
         public bool Authed
         {
             get { return authed; }
             set { authed = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ipEndPoint"></param>
+        /// <param name="user"></param>
+        /// <param name="connection"></param>
         public Client(IPEndPoint ipEndPoint, UserData user, OdbcConnection connection)
         {
             this.user = new User(user);
             this.ipEndPoint = ipEndPoint;
             this.session = Session.NewSession();
 
-            /// Valid logindata?
+            // Valid logindata?
             this.authed = this.user.CheckAccount(connection);
-            
-            //UpdateAccessFlags();
-            
+           
             Program.UserManager.AddClient(this);
         }
 
+        /// <summary>
+        /// Check if this request has access
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="remoteEndPoint"></param>
+        /// <param name="flags"></param>
+        /// <returns></returns>
         public bool CheckAccess(SessionData session, IPEndPoint remoteEndPoint, AccessFlags flags)
         {
             if (!this.Authed)
@@ -62,11 +82,18 @@ namespace StoreServer.Data
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Logout()
         {
             this.authed = false;
         }
 
+        /// <summary>
+        /// Session still alive?
+        /// </summary>
+        /// <returns></returns>
         public bool CheckSession()
         {
             if (!session.Alive)

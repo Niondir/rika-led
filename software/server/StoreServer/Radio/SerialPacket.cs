@@ -5,10 +5,21 @@ using System.IO.Ports;
 
 namespace StoreServer.Radio
 {
+    /// <summary>
+    /// Any packet for the serial connection have to be of this type
+    /// </summary>
     public abstract class SerialPacket
     {
+        /// <summary>
+        /// the bytes we send to the com port. Use Encode(string) to greate the byte array
+        /// </summary>
         protected Byte[] sendBytes;
 
+        /// <summary>
+        /// Write this packet to the serial port
+        /// </summary>
+        /// <param name="port">SerialPort to use</param>
+        /// <returns></returns>
         public bool Send(SerialPort port)
         {
             try
@@ -23,6 +34,11 @@ namespace StoreServer.Radio
             }
         }
 
+        /// <summary>
+        /// Write this packet to the serial port
+        /// </summary>
+        /// <param name="port">SerialPort to use</param>
+        /// <param name="bytes">given byte array to send</param>
         protected virtual void Write(SerialPort port, Byte[] bytes)
         {
             string msg = Decode(bytes);
@@ -55,6 +71,10 @@ namespace StoreServer.Radio
             return Encoding.ASCII.GetString(bytes, 0, bytes.Length);
         }
 
+        /// <summary>
+        /// Packet to string, for debug outputs
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return base.ToString() + "\n" + Decode(sendBytes) + "\n";

@@ -6,35 +6,64 @@ using System.Data.Odbc;
 
 namespace StoreServer.Data
 {
+    /// <summary>
+    /// One advertisement
+    /// </summary>
     public class Advertisement
     {
         private int id;
         private Region region;
         private string[] text;
 
+        /// <summary>
+        /// Name of the ad
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime StartDate { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public DateTime StopDate { get; set; }
+        /// <summary>
+        /// Daily start time
+        /// </summary>
         public DateTime StartTime { get; set; }
+        /// <summary>
+        /// Dayli stop time
+        /// </summary>
         public DateTime StopTime { get; set; }
        
-
+        /// <summary>
+        /// Database id of the ad, for internal use only
+        /// </summary>
         public int Id
         {
             get { return id; }
         }
 
+        /// <summary>
+        /// Region of the ad
+        /// </summary>
         public Region Region
         {
             get { return region; }
         }
 
-
+        /// <summary>
+        /// Advertisement text in 4 rows
+        /// </summary>
         public string[] Text
         {
             get { return text; }
         }
 
+        /// <summary>
+        /// The daatobject, to receive the CommunicationAPI data type
+        /// </summary>
         public AdvertisementData Data
         {
             get
@@ -43,6 +72,10 @@ namespace StoreServer.Data
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="advertisement"></param>
         public Advertisement(AdvertisementData advertisement) {
             this.id = advertisement.Id;
             this.region = new Region(advertisement.Region);
@@ -54,6 +87,10 @@ namespace StoreServer.Data
             this.StopTime = advertisement.StopTime;
         }
 
+        /// <summary>
+        /// Save to database
+        /// </summary>
+        /// <param name="connection"></param>
         public void Save(OdbcConnection connection)
         {
             if (text.Length != 4)
@@ -88,6 +125,11 @@ namespace StoreServer.Data
             }
         }
 
+        /// <summary>
+        /// Load from Database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <returns></returns>
         public static List<Advertisement> Load(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -136,6 +178,10 @@ namespace StoreServer.Data
             return ads;
         }
 
+        /// <summary>
+        /// Deletei n database
+        /// </summary>
+        /// <param name="connection"></param>
         public void Delete(OdbcConnection connection)
         {
             OdbcCommand command = connection.CreateCommand();
@@ -145,6 +191,11 @@ namespace StoreServer.Data
             command.ExecuteNonQuery();
         }
 
+        /// <summary>
+        /// Update in database
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="data"></param>
         public void Update(OdbcConnection connection, AdvertisementData data)
         {
             OdbcCommand command = connection.CreateCommand();

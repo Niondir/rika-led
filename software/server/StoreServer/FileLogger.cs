@@ -5,19 +5,38 @@ using System.IO;
 
 namespace StoreServer
 {
+    /// <summary>
+    /// A TextWriter to write a logfile
+    /// </summary>
     public class FileLogger : TextWriter, IDisposable
     {
         private string m_FileName;
         private bool m_NewLine;
+
+        /// <summary>
+        /// Format of the date string
+        /// </summary>
         public const string DateFormat = "[MMMM dd hh:mm:ss.f tt]: ";
 
+        /// <summary>
+        /// Filename of the Logfile
+        /// </summary>
         public string FileName { get { return m_FileName; } }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
         public FileLogger(string file)
             : this(file, false)
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="append"></param>
         public FileLogger(string file, bool append)
         {
             file = Path.Combine(Program.BaseDirectory, file);
@@ -40,6 +59,10 @@ namespace StoreServer
             m_NewLine = true;
         }
 
+        /// <summary>
+        /// Write a char
+        /// </summary>
+        /// <param name="ch"></param>
         public override void Write(char ch)
         {
             using (StreamWriter writer = new StreamWriter(new FileStream(m_FileName, FileMode.Append, FileAccess.Write, FileShare.Read)))
@@ -53,6 +76,10 @@ namespace StoreServer
             }
         }
 
+        /// <summary>
+        /// Write a string
+        /// </summary>
+        /// <param name="str"></param>
         public override void Write(string str)
         {
             using (StreamWriter writer = new StreamWriter(new FileStream(m_FileName, FileMode.Append, FileAccess.Write, FileShare.Read)))
@@ -66,6 +93,10 @@ namespace StoreServer
             }
         }
 
+        /// <summary>
+        /// Write a line
+        /// </summary>
+        /// <param name="line"></param>
         public override void WriteLine(string line)
         {
             using (StreamWriter writer = new StreamWriter(new FileStream(m_FileName, FileMode.Append, FileAccess.Write, FileShare.Read)))
@@ -77,6 +108,9 @@ namespace StoreServer
             }
         }
 
+        /// <summary>
+        /// Enconding of the logfile, readonly
+        /// </summary>
         public override System.Text.Encoding Encoding
         {
             get { return System.Text.Encoding.Default; }

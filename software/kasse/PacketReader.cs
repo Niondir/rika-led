@@ -16,7 +16,6 @@ namespace Kasse
         private string packet;
         private string content;
         private string[] args;
-        private int id;
 
         public string PacketString
         {

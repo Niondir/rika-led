@@ -11,8 +11,15 @@ using StoreServer.Radio;
 
 namespace StoreServer.WebService
 {
+    /// <summary>
+    /// Handle all clients connected to the server
+    /// </summary>
     public class ClientHandler : MyXmlRpcListenerService, IRemoteFunctions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataManager"></param>
         public ClientHandler(DataManager dataManager)
             : base(dataManager)
         {
@@ -62,6 +69,11 @@ namespace StoreServer.WebService
 
         #region IRemoteFunctions Member
 
+        /// <summary>
+        /// Login to the server
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public SessionData Login(UserData user)
         {
             Console.WriteLine("Login()");
@@ -79,6 +91,10 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Logout from the server
+        /// </summary>
+        /// <param name="session"></param>
         public void Logout(SessionData session)
         {
             Console.WriteLine("Logout()");
@@ -89,6 +105,11 @@ namespace StoreServer.WebService
                 client.Logout();
         }
 
+        /// <summary>
+        /// Add a new role
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void AddRole(SessionData session, RoleData value)
         {
             Console.WriteLine("AddRole()");
@@ -105,6 +126,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Add a new user
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void AddUser(SessionData session, UserData value)
         {
             Console.WriteLine("AddUser()");
@@ -121,6 +147,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Add a new region
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void AddRegion(SessionData session, RegionData value)
         {
             Console.WriteLine("AddRegion()");
@@ -138,6 +169,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Add a new product
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void AddProduct(SessionData session, ProductData value)
         {
             Console.WriteLine("AddProduct()");
@@ -155,6 +191,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Add a new advertisement
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void AddAdvertisement(SessionData session, AdvertisementData value)
         {
             Console.WriteLine("AddAdvertisement()");
@@ -172,6 +213,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Add a new trace
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void AddTrace(SessionData session, TraceData value)
         {
             Console.WriteLine("AddTrace()");
@@ -189,6 +235,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Delete a role
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void DeleteRole(SessionData session, RoleData value)
         {
             Console.WriteLine("DeleteRole()");
@@ -206,6 +257,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Delete a user
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void DeleteUser(SessionData session, UserData value)
         {
             Console.WriteLine("DeleteUser()");
@@ -223,6 +279,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Delete a region
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void DeleteRegion(SessionData session, RegionData value)
         {
             Console.WriteLine("DeleteRegion()");
@@ -240,6 +301,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Delete a product
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void DeleteProduct(SessionData session, ProductData value)
         {
             Console.WriteLine("DeleteProduct()");
@@ -257,6 +323,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Delete an advertisement
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void DeleteAdvertisement(SessionData session, AdvertisementData value)
         {
             Console.WriteLine("DeleteAdvertisement()");
@@ -274,6 +345,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Delete a trace
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="value"></param>
         public void DeleteTrace(SessionData session, TraceData value)
         {
             Console.WriteLine("DeleteTrace()");
@@ -291,6 +367,12 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Edit a role
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
         public void EditRole(SessionData session, RoleData oldValue, RoleData newValue)
         {
             Console.WriteLine("EditRole()");
@@ -307,6 +389,12 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Edit an user
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
         public void EditUser(SessionData session, UserData oldValue, UserData newValue)
         {
             Console.WriteLine("EditUser()");
@@ -323,6 +411,12 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Edit a region
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
         public void EditRegion(SessionData session, RegionData oldValue, RegionData newValue)
         {
             Console.WriteLine("EditRegion()");
@@ -339,6 +433,12 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Edit a product
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
         public void EditProduct(SessionData session, ProductData oldValue, ProductData newValue)
         {
             Console.WriteLine("EditProduct()");
@@ -355,6 +455,12 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Edit an advertisement
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
         public void EditAdvertisement(SessionData session, AdvertisementData oldValue, AdvertisementData newValue)
         {
             Console.WriteLine("EditAdvertisement()");
@@ -371,6 +477,11 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Get all roles
+        /// </summary>
+        /// <param name="session"></param>
+        /// <returns></returns>
         public RoleData[] GetRoles(SessionData session)
         {
             Console.WriteLine("GetRoles()");
@@ -397,6 +508,12 @@ namespace StoreServer.WebService
             return roles.ToArray();
         }
 
+        /// <summary>
+        /// Get details from a user
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="loginName"></param>
+        /// <returns></returns>
         public UserData GetUser(SessionData session, string loginName)
         {
             Console.WriteLine("GetUser()");
@@ -414,6 +531,11 @@ namespace StoreServer.WebService
             return user;
         }
 
+        /// <summary>
+        /// Get all Users
+        /// </summary>
+        /// <param name="session"></param>
+        /// <returns></returns>
         public UserData[] GetUsers(SessionData session)
         {
             Console.WriteLine("GetUsers()");
@@ -439,6 +561,11 @@ namespace StoreServer.WebService
             return users.ToArray();
         }
 
+        /// <summary>
+        /// Get all regions
+        /// </summary>
+        /// <param name="session"></param>
+        /// <returns></returns>
         public RegionData[] GetRegions(SessionData session)
         {
             Console.WriteLine("GetRegions()");
@@ -469,6 +596,11 @@ namespace StoreServer.WebService
             return regions;
         }
 
+        /// <summary>
+        /// Gt all products
+        /// </summary>
+        /// <param name="session"></param>
+        /// <returns></returns>
         public ProductData[] GetProducts(SessionData session)
         {
             Console.WriteLine("GetProducts()");
@@ -494,6 +626,12 @@ namespace StoreServer.WebService
             return products.ToArray();
         }
 
+        /// <summary>
+        /// Get all products in a region
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="regionId"></param>
+        /// <returns></returns>
         public ProductData[] GetProductsByRegion(SessionData session, string regionId)
         {
             Console.WriteLine("GetProductsByRegion()");
@@ -519,6 +657,13 @@ namespace StoreServer.WebService
             return products.ToArray();
         }
 
+        /// <summary>
+        /// Get all traces betewwn from an to
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         public TraceData[] GetTracesByTimeSpan(SessionData session, DateTime from, DateTime to)
         {
             Console.WriteLine("GetTraces()");
@@ -542,6 +687,11 @@ namespace StoreServer.WebService
             return traces.ToArray();
         }
 
+        /// <summary>
+        /// Get all traces
+        /// </summary>
+        /// <param name="session"></param>
+        /// <returns></returns>
         public TraceData[] GetTraces(SessionData session)
         {
             Console.WriteLine("GetTraces()");
@@ -565,6 +715,11 @@ namespace StoreServer.WebService
             return traces.ToArray();
         }
 
+        /// <summary>
+        /// Get all ads
+        /// </summary>
+        /// <param name="session"></param>
+        /// <returns></returns>
         public AdvertisementData[] GetAdvertisement(SessionData session)
         {
             Console.WriteLine("GetAdvertisement()");
@@ -589,6 +744,11 @@ namespace StoreServer.WebService
             return ads.ToArray();
         }
 
+        /// <summary>
+        /// Send a show sign id packet
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="region"></param>
         public void ShowSignId(SessionData session, RegionData region)
         {
             Console.WriteLine("ShowSignId()");
@@ -604,6 +764,12 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Change the lamp id
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="oldId"></param>
+        /// <param name="newId"></param>
         public void SetLampId(SessionData session, string oldId, string newId)
         {
             Console.WriteLine("SetLampId()");
@@ -623,11 +789,17 @@ namespace StoreServer.WebService
 
         #region IXmlRpcProxy Member
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public System.Security.Cryptography.X509Certificates.X509CertificateCollection ClientCertificates
         {
             get { throw new NotImplementedException(); }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public string ConnectionGroupName
         {
             get
@@ -640,11 +812,17 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public CookieContainer CookieContainer
         {
             get { throw new NotImplementedException(); }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public ICredentials Credentials
         {
             get
@@ -657,6 +835,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public bool EnableCompression
         {
             get
@@ -669,6 +850,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public bool Expect100Continue
         {
             get
@@ -681,16 +865,25 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public WebHeaderCollection Headers
         {
             get { throw new NotImplementedException(); }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public Guid Id
         {
             get { throw new NotImplementedException(); }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public int Indentation
         {
             get
@@ -703,6 +896,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public bool KeepAlive
         {
             get
@@ -715,6 +911,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public XmlRpcNonStandard NonStandard
         {
             get
@@ -727,6 +926,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public bool PreAuthenticate
         {
             get
@@ -739,6 +941,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public Version ProtocolVersion
         {
             get
@@ -751,6 +956,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public IWebProxy Proxy
         {
             get
@@ -763,35 +971,59 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Must be implemeted from MyXmlRpcListenerService
+        /// </summary>
         public event XmlRpcRequestEventHandler RequestEvent;
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public CookieCollection ResponseCookies
         {
             get { throw new NotImplementedException(); }
         }
 
+        /// <summary>
+        /// Must be implemeted from MyXmlRpcListenerService
+        /// </summary>
         public event XmlRpcResponseEventHandler ResponseEvent;
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public WebHeaderCollection ResponseHeaders
         {
             get { throw new NotImplementedException(); }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public string[] SystemListMethods()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public string SystemMethodHelp(string MethodName)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public object[] SystemMethodSignature(string MethodName)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public int Timeout
         {
             get
@@ -804,6 +1036,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public string Url
         {
             get
@@ -816,6 +1051,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public bool UseEmptyParamsTag
         {
             get
@@ -828,6 +1066,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public bool UseIndentation
         {
             get
@@ -840,6 +1081,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public bool UseIntTag
         {
             get
@@ -852,6 +1096,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public bool UseStringTag
         {
             get
@@ -864,6 +1111,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public string UserAgent
         {
             get
@@ -876,6 +1126,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public Encoding XmlEncoding
         {
             get
@@ -888,6 +1141,9 @@ namespace StoreServer.WebService
             }
         }
 
+        /// <summary>
+        /// Have to be implemented, but not used
+        /// </summary>
         public string XmlRpcMethod
         {
             get

@@ -7,15 +7,25 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreServer.Data
 {
+    /// <summary>
+    /// The DataManager handels the Database communication and manage the sql update files
+    /// </summary>
     public class DataManager
     {
         private OdbcConnection connection;
 
+        /// <summary>
+        /// The current Connection to the SQL server
+        /// </summary>
         public OdbcConnection Connection
         {
             get { return connection; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cfg"></param>
         public DataManager(Config cfg)
         {
             OdbcConnectionStringBuilder sb = new OdbcConnectionStringBuilder();
@@ -41,22 +51,6 @@ namespace StoreServer.Data
             }
 
             VeryfyDatabase();
-
-            /* Workflow:
-             * Es kommen Events für Datenbank anfragen an. Diese müssen behandelt werden.
-             * Behandlung eines Events kann dazu führen, dass dem FunkManager aufträge gegeben werden.
-             * 
-             * */
-
-            /* TODO: Interface für die Datenbankzugriffe definieren
-             * 
-             * */
-
-        }
-
-        public void Slice()
-        {
-            // Gibt es Aufgaben die regelmäßig getan werden müssen?
         }
 
         private void VeryfyDatabase()

@@ -1,5 +1,8 @@
 ﻿namespace StoreServer.GUI
 {
+    /// <summary>
+    /// The console form
+    /// </summary>
     partial class FormConsole
     {
         /// <summary>

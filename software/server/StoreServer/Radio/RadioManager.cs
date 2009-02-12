@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading;
 using StoreServer.Data;
 
-/* TODO: RedioManager.cs
- * 
- * */
 
 namespace StoreServer.Radio
 {
+    /// <summary>
+    /// Handles the serial port communication.
+    /// </summary>
     public class RadioManager
     {
         private const int SEND_DELAY = 100;
 
+        /// <summary>
+        /// Port name e.g. "COM3"
+        /// </summary>
         public string PortName;
 
         private SerialPort serialPort;
@@ -24,11 +27,17 @@ namespace StoreServer.Radio
         private DataManager dataManager;
         private string destination = "-1";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Timer SendTimer
         {
             get { return sendTimer; }
         }
 
+        /// <summary>
+        /// The destination lamp id
+        /// </summary>
         public string Destination
         {
             get { return destination; }
@@ -42,6 +51,11 @@ namespace StoreServer.Radio
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="portName">The com port</param>
+        /// <param name="dataManager"></param>
         public RadioManager(string portName, DataManager dataManager)
         {
             this.PortName = portName;
