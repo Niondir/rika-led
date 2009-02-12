@@ -9,6 +9,9 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class FormAddAd : Form
     {
         private RegionData[] regions;

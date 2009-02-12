@@ -14,7 +14,9 @@ using CommunicationAPI;
 
 namespace StoreClient
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class FormMain : Form
     {
         /// <summary>
@@ -281,11 +283,29 @@ namespace StoreClient
     /// </summary>
     public enum DisplayWindow
     {
+        /// <summary>
+        /// 
+        /// </summary>
         Login,
+        /// <summary>
+        /// 
+        /// </summary>
         Products,
+        /// <summary>
+        /// 
+        /// </summary>
         Groups,
+        /// <summary>
+        /// 
+        /// </summary>
         User,
+        /// <summary>
+        /// 
+        /// </summary>
         Advertisement,
+        /// <summary>
+        /// 
+        /// </summary>
         Analysis
     }
 }

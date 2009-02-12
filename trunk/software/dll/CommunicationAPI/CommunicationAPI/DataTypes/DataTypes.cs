@@ -7,7 +7,9 @@ using CommunicationAPI;
 
 namespace CommunicationAPI.DataTypes
 {
- 
+ /// <summary>
+ /// Daten für eine Session
+ /// </summary>
     public struct SessionData
     {
         private int id;

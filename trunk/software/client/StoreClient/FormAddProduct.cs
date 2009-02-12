@@ -9,7 +9,9 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class FormAddProduct : Form
     {
 

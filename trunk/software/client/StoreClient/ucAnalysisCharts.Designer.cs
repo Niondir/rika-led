@@ -1,5 +1,8 @@
 ﻿namespace StoreClient
 {
+    /// <summary>
+    /// 
+    /// </summary>
     partial class ucAnalysisCharts
     {
         /// <summary> 
