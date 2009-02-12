@@ -10,7 +10,7 @@ Software komponenten:
 =========================
 Beinhaltet die 3 Windowsanwendungen. Diese können mit Visual Studio 2008 kompiliert werden.
 
-Ein API Dokumentation ist in Form von XML Kommentaren im Quellcode sowie als HTML Dokumentation in ./Doku/
+Ein API Dokumentation ist in Form von XML Kommentaren im Quellcode sowie als HTML Dokumentation in ./Doku/Index.html
 
 
 Schild und Lampe
