@@ -14,8 +14,16 @@ using CommunicationAPI;
 
 namespace StoreClient
 {
+    /// <summary>
+    /// Hauptfenster der Anwendung. Gekoppelt ans Application Run.
+    /// In diesem Fenster werden die jeweiligen Controls angezeigt.
+    /// </summary>
     public partial class FormMain : Form
     {
+        /// <summary>
+        /// Behandelt die übergebenen Exceptions und wirft am Ende die Exception wieder zurück, wenn keine passende Behandlung gefunden wurde
+        /// </summary>
+        /// <param name="exception">Exception die behandelt werden soll</param>
         internal static void HandleException(Exception exception)
         {
             try
@@ -36,10 +44,15 @@ namespace StoreClient
                 throw exception;
             }
         }
+        
         internal static string title = "MyStore Manager";
         
         private DisplayWindow currWindow = DisplayWindow.Login;
         private bool showStats;
+        /// <summary>
+        /// Steuert die Anzeige der Controls im Hauptpanel. Die Unterscheidung wird im DisplayWindow getroffen
+        /// <seealso cref="DisplayWindow"/>
+        /// </summary>
         public DisplayWindow CurrWindow
         {
             get { return currWindow; }
@@ -87,6 +100,9 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Stellt die Benutzeroberfläche auf die Benutzerrechte ein, die der aktuell angemeldete Benutzer hat
+        /// </summary>
         private void setPermissions()
         {
             bool regions = false, products = false, ads = false, traces = false, user = false;
@@ -119,6 +135,10 @@ namespace StoreClient
                 benutzerToolStripMenuItem.Enabled = true;
         }
 
+        /// <summary>
+        /// Prüft, ob überhaupt Rechte für den aktuell angemeldeten Benutzer vergeben sind
+        /// </summary>
+        /// <returns></returns>
         private bool hasRights()
         {
             if (((AccessFlags)Connection.user.Role.Flags & AccessFlags.Ads) != 0
@@ -132,6 +152,9 @@ namespace StoreClient
 
         private Connection connection;
         private bool connected = false;
+        /// <summary>
+        /// Gibt den aktuellen Verbindungsstatus an oder legt diesen fest
+        /// </summary>
         private bool Connected
         {
             get { return connected; }
@@ -151,6 +174,11 @@ namespace StoreClient
                 }
             }
         }
+
+        /// <summary>
+        /// Erstellt eine Instanz des Hauptfensters und initialisiert die Komponenten.
+        /// Zusätzlich wird die Verbindung zum Server konfiguriert.
+        /// </summary>
         public FormMain()
         {
             InitializeComponent();
@@ -163,25 +191,20 @@ namespace StoreClient
             connection.LoginChanged += new EventHandler<ConnectionChangedEventArgs>(connection_LoginChanged);
         }
 
+        /// <summary>
+        /// Wird ausgeführt, wenn die Verbindungsinstanz eine Änderung der Verbindung feststellt
+        /// </summary>
         void connection_LoginChanged(object sender, ConnectionChangedEventArgs e)
         {
             Connected = e.Connected;
             
-            //enable buttons
-            //produkteToolStripMenuItem.Enabled = produktgruppenToolStripMenuItem.Enabled = werbungToolStripMenuItem.Enabled = kundenanalyseToolStripMenuItem.Enabled = benutzerToolStripMenuItem.Enabled = e.Connected;
             setPermissions();
         }
 
-        private void produkteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CurrWindow = DisplayWindow.Products;
-        }
-
-        private void werbungToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CurrWindow = DisplayWindow.Advertisement;
-        }
-
+        /// <summary>
+        /// Ruft das Login Control in den Fordergrund, oder versucht einen Login anhand der Daten, die bereits eingetragen sind
+        /// Wenn die Verbindung bereits aufgebaut ist, wird diese abgebaut
+        /// </summary>
         private void verbindungHerstellenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!connected)
@@ -198,33 +221,67 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Läd das Control in das haupt Panel, das für die Produkte zuständig ist
+        /// </summary>
+        private void produkteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CurrWindow = DisplayWindow.Products;
+        }
+
+        /// <summary>
+        /// Läd das Control in das haupt Panel, das für die Werbung zuständig ist
+        /// </summary>
+        private void werbungToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CurrWindow = DisplayWindow.Advertisement;
+        }
+
+        /// <summary>
+        /// Läd das Control in das haupt Panel, das für die Produktgruppen zuständig ist
+        /// </summary>
         private void produktgruppenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CurrWindow = DisplayWindow.Groups;
         }
 
+        /// <summary>
+        /// Läd das Control in das haupt Panel, das für die Benutzersteuerung zuständig ist
+        /// </summary>
         private void benutzerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CurrWindow = DisplayWindow.User;
         }
 
+        /// <summary>
+        /// Läd das Control in das haupt Panel, das für die Kundenanalyse zuständig ist
+        /// </summary>
         private void kundenanalyseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CurrWindow = DisplayWindow.Analysis;
         }
 
-        private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
+        /// <summary>
+        /// Öffnet den Einstellungs Dialog
+        /// </summary>
         private void einstellungenToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             FormPreferences prefs = new FormPreferences();
             prefs.ShowDialog();
         }
 
+        /// <summary>
+        /// Schließt das Programm
+        /// </summary>
+        private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
+
+    /// <summary>
+    /// Aufzählung, aller unterstützten Darstellungsmodi. Werden verwendet, um im Hauptfenster die Anzeige zu bestimmen
+    /// </summary>
     public enum DisplayWindow
     {
         Login,

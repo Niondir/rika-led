@@ -9,10 +9,22 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
+    /// <summary>
+    /// Stellt die Informationen über bestehende Regionen tabellarisch dar
+    /// </summary>
     public partial class ucGroups : UserControl
     {
+        /// <summary>
+        /// wird ausgelöst, sobald eine neue Gruppe hinzugefügt, verändert oder gelöscht wurde.
+        /// Wichtig für die entkoppelte darstellung
+        /// </summary>
+        /// <seealso cref="FormAddRegion"/>
         public event EventHandler groupsChanged;
         RegionData[] groups;
+
+        /// <summary>
+        /// Initialisiert das Control und füllt es mit aktuellen Daten
+        /// </summary>
         public ucGroups()
         {
             InitializeComponent();
@@ -20,6 +32,10 @@ namespace StoreClient
             this.Dock = DockStyle.Fill;
             RefreshContent(null, null);
         }
+
+        /// <summary>
+        /// Aktualisiert die Daten, indem der Server abgefragt wird und stellt sie dar
+        /// </summary>
         private void RefreshContent(object sender, EventArgs e)
         {
             GridRegions.Rows.Clear();
@@ -32,6 +48,9 @@ namespace StoreClient
             GridRegions.Sort(GridRegions.Columns["name"], ListSortDirection.Ascending);
         }
 
+        /// <summary>
+        /// Öffnet ein Dialogfenser, in dem eine neue Region erstellt werden kann
+        /// </summary>
         private void toolStripButtonNew_Click(object sender, EventArgs e)
         {
             FormAddRegion addReg = new FormAddRegion();
@@ -42,6 +61,10 @@ namespace StoreClient
                 groupsChanged(this, null);
         }
 
+        /// <summary>
+        /// Entfernt die aktuell ausgewählte Region lokal und vom Server
+        /// Hierbei werden auch alle der Gruppe zugehörigen Produkte gelöscht. Eine Abfrage schützt eine ungewollte Löschung
+        /// </summary>
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             int regCount = 0;
@@ -61,11 +84,17 @@ namespace StoreClient
                 groupsChanged(this, null);
         }
 
+        /// <summary>
+        /// Öffnet ein Dialogfenster, in dem die aktuell ausgewählte Region bearbeitet und abgespeichert werden kann
+        /// </summary>
         private void toolStripButtonEdit_Click(object sender, EventArgs e)
         {
             GridRegions_CellDoubleClick(null, null);
         }
 
+        /// <summary>
+        /// Öffnet ein Dialogfenster, in dem die aktuell ausgewählte Region bearbeitet und abgespeichert werden kann
+        /// </summary>
         private void GridRegions_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             foreach (DataGridViewRow i in GridRegions.SelectedRows)
@@ -83,6 +112,9 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Verwaltet die Verfügbarkeit der Buttons zum Löschen und Bearbeiten je nach Auswahl der Daten
+        /// </summary>
         private void GridRegions_SelectionChanged(object sender, EventArgs e)
         {
             if (GridRegions.SelectedRows.Count > 0)

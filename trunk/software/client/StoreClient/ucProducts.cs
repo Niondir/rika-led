@@ -10,10 +10,17 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
+    /// <summary>
+    /// Stellt die Informationen über bestehende Produkte tabellarisch dar
+    /// </summary>
     public partial class ucProducts : UserControl
     {
         private ProductData[] products;
         private RegionData[] groups;
+
+        /// <summary>
+        /// Initialisiert das Control und öffnet gegebenfalls zusätzlich das Regionen Fenster
+        /// </summary>
         public ucProducts(bool showGroups)
         {
             InitializeComponent();
@@ -25,6 +32,9 @@ namespace StoreClient
                 toolStripButtonGroups_Click(null, null);
         }
 
+        /// <summary>
+        /// Filtert alle Produkte einer Region je nach abgewählten Knoten aus der Tabelle
+        /// </summary>
         void item_Click(object sender, EventArgs e)
         {
             if (((ToolStripMenuItem)sender).Name == "all")
@@ -41,6 +51,9 @@ namespace StoreClient
             GridProducts.Refresh();
         }
 
+        /// <summary>
+        /// Öffnet ein Dialogfenser, in dem ein neues Produkt erstellt werden kann
+        /// </summary>
         private void toolStripButtonPNew_Click(object sender, EventArgs e)
         {
             FormAddProduct adder = new FormAddProduct();
@@ -51,6 +64,9 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Aktualisiert die Daten, indem der Server abgefragt wird und stellt sie dar
+        /// </summary>
         private void refreshContent(object sender, EventArgs e)
         {
             groups = Connection.GetInstance().GetRegions(); 
@@ -92,6 +108,10 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// übt den tatsächlichen Filter nach Regionen aus
+        /// Herausgefilterte Produkte werden nicht aus der Tabelle gelöscht, sondern ausgeblendet
+        /// </summary>
         private void GridProducts_Paint(object sender, PaintEventArgs e)
         {
             foreach (DataGridViewRow i in GridProducts.Rows)
@@ -107,6 +127,9 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Entfernt das aktuell ausgewählte Produkt lokal und vom Server
+        /// </summary>
         private void toolStripButtonPDelete_Click(object sender, EventArgs e)
         {
             if (GridProducts.SelectedRows.Count == 1)
@@ -122,6 +145,9 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Öffnet ein Dialogfenster, in dem das aktuell ausgewählte Produkt bearbeitet und abgespeichert werden kann
+        /// </summary>
         private void toolStripButtonPEdit_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow i in GridProducts.SelectedRows)
@@ -139,11 +165,18 @@ namespace StoreClient
 
         private string tmpValueInCell;
         ProductData newData;
+
+        /// <summary>
+        /// Ermöglicht dem Benutzer eine in-Cell-Bearbeitung. Um nicht in dem Dialogfenster arbeiten zu müssen, kann hier auch direkt in der Tabelle manipuliert werden
+        /// </summary>
         private void GridProducts_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             tmpValueInCell = (string)GridProducts.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
         }
 
+        /// <summary>
+        /// Führt die in-Cell-Bearbeitung durch, wenn nötig
+        /// </summary>
         private void GridProducts_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             string newVal = (string)GridProducts.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
@@ -186,6 +219,9 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Öffnet ein Dialogfenster, in dem die aktuell eingetragen Regionen sichtbar und manipulierbar sind
+        /// </summary>
         private void toolStripButtonGroups_Click(object sender, EventArgs e)
         {
             FormGroupManagement grouper = new FormGroupManagement();
@@ -193,11 +229,17 @@ namespace StoreClient
             grouper.ShowDialog(this);
         }
 
+        /// <summary>
+        /// Öffnet ein Dialogfenster, in dem das aktuell ausgewählte Produkt bearbeitet und abgespeichert werden kann
+        /// </summary>
         private void GridProducts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             toolStripButtonPEdit_Click(sender, null);
         }
 
+        /// <summary>
+        /// Verwaltet die Verfügbarkeit der Buttons zum Löschen und Bearbeiten je nach Auswahl der Daten
+        /// </summary>
         private void GridProducts_SelectionChanged(object sender, EventArgs e)
         {
             if (GridProducts.SelectedRows.Count > 0)  

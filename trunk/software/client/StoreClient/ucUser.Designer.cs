@@ -104,7 +104,7 @@
             this.listBoxUsers.Name = "listBoxUsers";
             this.listBoxUsers.Size = new System.Drawing.Size(460, 199);
             this.listBoxUsers.TabIndex = 0;
-            this.listBoxUsers.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.listBoxUsers.SelectedIndexChanged += new System.EventHandler(this.listBoxUsers_SelectedIndexChanged);
             // 
             // listBox2
             // 
@@ -114,7 +114,7 @@
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(288, 199);
             this.listBox2.TabIndex = 0;
-            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
+            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBoxGroup_SelectedIndexChanged);
             // 
             // groupBoxGroupsRights
             // 
@@ -601,7 +601,7 @@
             this.toolStripButtonSaveGroup.Size = new System.Drawing.Size(23, 22);
             this.toolStripButtonSaveGroup.Text = "toolStripButton4";
             this.toolStripButtonSaveGroup.ToolTipText = "Gruppendaten speichern";
-            this.toolStripButtonSaveGroup.Click += new System.EventHandler(this.button1_Click);
+            this.toolStripButtonSaveGroup.Click += new System.EventHandler(this.buttonSaveGroup_Click);
             // 
             // buttonSaveGroup
             // 
@@ -614,7 +614,7 @@
             this.buttonSaveGroup.Text = "Speichern";
             this.buttonSaveGroup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.buttonSaveGroup.UseVisualStyleBackColor = true;
-            this.buttonSaveGroup.Click += new System.EventHandler(this.button1_Click);
+            this.buttonSaveGroup.Click += new System.EventHandler(this.buttonSaveGroup_Click);
             // 
             // ucUser
             // 

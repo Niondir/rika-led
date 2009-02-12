@@ -16,6 +16,9 @@ namespace StoreClient
         TraceData[] traces;
         DateTime start, stop;
 
+        /// <summary>
+        /// Gibt die aktuelle Auflösung der graphen auf der X Achse an oder legt sie fest
+        /// </summary>
         private GraphPrecision xAxisPrec
         {
             set
@@ -28,6 +31,10 @@ namespace StoreClient
                 return (GraphPrecision)trackBarXPrecision.Value;
             }
         }
+
+        /// <summary>
+        /// Gibt die aktuelle Auflösung der graphen auf der Y Achse an oder legt sie fest
+        /// </summary>
         private GraphPrecision yAxisPrec
         {
             set
@@ -41,6 +48,12 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Erstellt die visuelle Darstellung in einem Control abhängig von den Übergabeparametern
+        /// </summary>
+        /// <param name="traces">Liste der Kunden Laufwege, die analysiert werden sollen</param>
+        /// <param name="start">Startzeit der Analyse</param>
+        /// <param name="stop">Stopzeit der Analyse</param>
         public ucAnalysisCharts(TraceData[] traces, DateTime start, DateTime stop)
         {
             regions = Connection.GetInstance().GetRegions();
@@ -60,6 +73,9 @@ namespace StoreClient
             SetRegions();
         }
 
+        /// <summary>
+        /// Aktualisiert die Regionen und schreibt sie als Elemente in die List Box
+        /// </summary>
         private void SetRegions()
         {
             listBoxRegions.Items.Clear();
@@ -69,6 +85,10 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Gibt eine kurze Zusammenfassung der Analysierten Daten zurück
+        /// </summary>
+        /// <returns>Zusammenfassung der Daten in einem String</returns>
         private string GetSummary()
         {
             string ret = "";
@@ -82,37 +102,15 @@ namespace StoreClient
             int a3 = regions.Length;
             ret += String.Format(ucStats.traceStats, a1, a2.ToString(), a3);
             ret += "\r\n\r\n";
-            /*
-            int traceCount = 0;
-            List<string> aktRegions = new List<string>();
-            List<string> traceRegions = new List<string>();
-            foreach (RegionData i in regions)
-                aktRegions.Add(i.Name);
-            foreach (TraceData i in traces)
-                foreach (LocationData j in i.Locations)
-                    if (!aktRegions.Contains(j.RegionName))
-                        traceRegions.Add(j.RegionName);
-
-            if(traceRegions.Count > 0)
-                ret += "Einige Traces durchlaufen Regionen, die nicht mehr aktuell sind:";
-            foreach (string i in traceRegions)
-            {
-                ret += "\r\n" + i;
-            }
-
-            foreach (TraceData i in traces)
-            {
-                // Used traces
-                if (i.Timestamp > start && i.Timestamp < stop)
-                    traceCount++;
-
-                //unvisited regions and deleted regions in traces
-
-            }
-            */
+            
             return ret;
         }
 
+        /// <summary>
+        /// Zeigt die Daten, abhängig von der Genauigkeit im Hauptgraphen und im Tortendiagramm an.
+        /// </summary>
+        /// <param name="xAxis">Auflösung der x Achse</param>
+        /// <param name="yAxis">Auflösung der y Achse</param>
         public void SetMainGraph(GraphPrecision xAxis, GraphPrecision yAxis)
         {
             regions = Connection.GetInstance().GetRegions();
@@ -148,7 +146,7 @@ namespace StoreClient
             }
 
 
-
+            // Zeichnen
             PointPairList[] mainLines = new PointPairList[regions.Length];
 
             for(int i = 0; i<mainLines.Length; i++)
@@ -197,21 +195,36 @@ namespace StoreClient
             zedGraphPie.Refresh();
         }
 
-        private double SumUp(string p)
+        /// <summary>
+        /// Summiert alle Zeitspannen auf, die innerhalb des untersuchten Intervalls bei der übergebenen Produktregion angelaufen wurden
+        /// </summary>
+        /// <param name="regionName">Name der Region</param>
+        /// <returns></returns>
+        private double SumUp(string regionName)
         {
             double ret = 0;
             foreach (TraceData i in traces)
             {
                 for (int j = 0; j < i.Locations.Length-1; j++)
                 {
-                    if (i.Locations[j].LampId == p)
+                    if (i.Locations[j].LampId == regionName)
                         ret += (i.Locations[j].Time - i.Locations[j + 1].Time).TotalMinutes;
                 }
-                if (i.Locations[i.Locations.Length - 1].LampId == p)
+                // letzter wird mit dem Abgabe Datetime verglichen
+                if (i.Locations[i.Locations.Length - 1].LampId == regionName)
                     ret += (i.Timestamp - i.Locations[i.Locations.Length - 1].Time).TotalMinutes;
             }
             return ret;
         }
+
+        /// <summary>
+        /// Berechnet die Zeit, die in einem bestimmten Zeitintervall von allen übergebenen Laufwegen in der bestimmten Region verbracht wurde
+        /// </summary>
+        /// <param name="start">Startpunkt des Zeitrahmens</param>
+        /// <param name="stop">Endpunkt des Zeitrahmens</param>
+        /// <param name="traces">Laufwege, die untersucht werden sollen</param>
+        /// <param name="region">Region, die untersucht werden soll</param>
+        /// <returns>Verweildauer in dergion [region]</returns>
         private TimeSpan GetRestInRegion(DateTime start, DateTime stop, TraceData[] traces, RegionData region)
         {
             TimeSpan ret = new TimeSpan();
@@ -233,6 +246,10 @@ namespace StoreClient
             return ret;
         }
 
+        /// <summary>
+        /// Zeigt in den unteren Graphen, die Daten der neu ausgewählten Region an
+        /// </summary>
+        /// <seealso cref="UpdateSubGraphs"/>
         private void listBoxRegions_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBoxRegions.Tag = regions[listBoxRegions.SelectedIndex];
@@ -240,6 +257,10 @@ namespace StoreClient
             UpdateSubGraphs(regions[listBoxRegions.SelectedIndex]);
         }
 
+        /// <summary>
+        /// Berechnet die Daten abhängig von dem Übergabeparameter für die unteren Graphen und stellt sie dar
+        /// </summary>
+        /// <param name="region">Region, die dargestellt werden soll</param>
         private void UpdateSubGraphs(RegionData region)
         {
             // Fluchtgraph
@@ -298,21 +319,35 @@ namespace StoreClient
             zedGraphControlDayTime.Refresh();
         }
 
+        /// <summary>
+        /// Passt die Auflösung der y Achse an
+        /// </summary>
         private void trackBarYPrecision_Scroll(object sender, EventArgs e)
         {
             this.yAxisPrec = (GraphPrecision)trackBarYPrecision.Value;
         }
 
+        /// <summary>
+        /// Passt die Auflösung der x Achse an
+        /// </summary>
         private void trackBarXPrecision_Scroll(object sender, EventArgs e)
         {
             this.xAxisPrec = (GraphPrecision)trackBarXPrecision.Value;
         }
 
+        /// <summary>
+        /// Aktualisiert die Anzeige
+        /// </summary>
+        /// <seealso cref="SetMainGraph"/>
         private void button1_Click(object sender, EventArgs e)
         {
             SetMainGraph((GraphPrecision)trackBarXPrecision.Value, (GraphPrecision)trackBarYPrecision.Value);
         }
     }
+
+    /// <summary>
+    /// Auflistung der möglichen Auflösungen
+    /// </summary>
     public enum GraphPrecision
     {
         Millisekunden,
@@ -321,6 +356,10 @@ namespace StoreClient
         Stunden,
         Tage,
     }
+
+    /// <summary>
+    /// Vereinfachter Zugriff auf Farben
+    /// </summary>
     public class ColorRandomizer
     {
         static private Dictionary<int, Color> colors = new Dictionary<int, Color>();

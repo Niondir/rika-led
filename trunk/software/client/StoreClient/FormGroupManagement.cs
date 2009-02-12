@@ -9,6 +9,10 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
+    /// <summary>
+    /// Entkoppelte Anzeige der Produktgruppen
+    /// <seealso cref="ucGroups"/>
+    /// </summary>
     public partial class FormGroupManagement : Form
     {
         public event EventHandler groupsChanged;

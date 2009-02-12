@@ -9,6 +9,9 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
+    /// <summary>
+    /// Stellt die Informationen über bestehende Benutzer und Benutzergruppen dar und bietet die Möglichkeit sie zu manipulieren
+    /// </summary>
     public partial class ucUser : UserControl
     {
         UserData[] users;
@@ -16,6 +19,9 @@ namespace StoreClient
         UserData iUser;
         CheckBox[] roleFlags;
 
+        /// <summary>
+        /// Bewirkt das (De)Aktivieren aller Eingabeelemente, die der Benutzergruppensteuerung angehören
+        /// </summary>
         private bool GroupGroupEnabled
         {
             get
@@ -50,6 +56,9 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Initialisiert das Control und füllt es mit aktuellen Daten
+        /// </summary>
         public ucUser()
         {
             InitializeComponent();
@@ -58,7 +67,11 @@ namespace StoreClient
             refreshContent(null, null);
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Behandelt die Auswahl eines anderen Benutzer in der Liste.
+        /// Die Benutzerdaten werden geladen und angezeigt und die Erreichbarkeit von Delete und Edit Buttons
+        /// </summary>
+        private void listBoxUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBoxUsers.SelectedIndex >= 0)
             {
@@ -81,7 +94,11 @@ namespace StoreClient
             }
         }
 
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Behandelt die Auswahl einer anderen Benutzergruppe in der Liste.
+        /// Die Benutzergruppen Daten werden geladen und angezeigt und die Erreichbarkeit von Delete und Edit Buttons
+        /// </summary>
+        private void listBoxGroup_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox2.SelectedIndex < 0)
             {
@@ -131,6 +148,9 @@ namespace StoreClient
             textBoxGroupName.Text = roles[listBox2.SelectedIndex].Name;
         }
 
+        /// <summary>
+        /// Die Eingabeelemente werden für den Benutzer freigegeben, so dass er diesen Verändern kann
+        /// </summary>
         private void toolStripButtonEdit_Click(object sender, EventArgs e)
         {
             bool setVal = !tableLayoutPanel1.Enabled;
@@ -139,7 +159,10 @@ namespace StoreClient
             toolStripButtonSave.Enabled = setVal;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Speichert die Eingaben der Benutzergruppe
+        /// </summary>
+        private void buttonSaveGroup_Click(object sender, EventArgs e)
         {
             bool newGroup = false;
             if (listBox2.SelectedIndex < 0)
@@ -177,10 +200,11 @@ namespace StoreClient
             GroupGroupEnabled = false;
         }
 
+        /// <summary>
+        /// Aktualisiert die Daten, indem der Server abgefragt wird und stellt sie dar
+        /// </summary>
         private void refreshContent(object sender, EventArgs e)
         {
-
-
             listBoxUsers.Items.Clear();
             users = Connection.GetInstance().GetUsers();
             foreach (UserData i in users)
@@ -197,10 +221,14 @@ namespace StoreClient
                 listBox2.Items.Add(i.Name);
             }
 
-            listBox1_SelectedIndexChanged(null, null);
-            listBox2_SelectedIndexChanged(null, null);
+            listBoxUsers_SelectedIndexChanged(null, null);
+            listBoxGroup_SelectedIndexChanged(null, null);
         }
 
+        /// <summary>
+        /// Speichert die angegebenen Daten des Benutzers.
+        /// Die Angaben werden überprüft und der Benutzer wird gegebenenfalls darauf hingewiesen, seine Angaben zu ergänzen
+        /// </summary>
         private void toolStripButtonSave_Click(object sender, EventArgs e)
         {
             if (textBoxName.Text.Length == 0)
@@ -239,16 +267,28 @@ namespace StoreClient
 
             clearAllBoxes();
         }
+
+        /// <summary>
+        /// Löscht die Eingabefelder der Passwörter
+        /// </summary>
         private void clearPWBoxes()
         {
             textBoxNewPW.Text = textBoxNewPWagain.Text = textBoxOldPW.Text = "";
         }
+
+        /// <summary>
+        /// Löscht alle Eingabefelder, die für die Benutzersteuerund zuständig sind
+        /// </summary>
         private void clearAllBoxes()
         {
             textBoxName.Text = "";
             comboBoxGroup.Text = "";
             clearPWBoxes();
         }
+
+        /// <summary>
+        /// Gibt die Eingabeelemente frei für die Eingabe eines neuen Benutzers
+        /// </summary>
         private void toolStripButtonNew_Click(object sender, EventArgs e)
         {
             listBoxUsers.ClearSelected();
@@ -260,6 +300,9 @@ namespace StoreClient
             clearAllBoxes();
         }
 
+        /// <summary>
+        /// Eingabeerleichterung. Durch die Enter Taste wird das Speichern des Benutzers ausgelöst
+        /// </summary>
         private void textBoxOldPW_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == '\r')
@@ -269,6 +312,9 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Gibt die Eingabeelemente frei für die Eingabe einer neuen Benutzergruppe
+        /// </summary>
         private void toolStripButtonNewGroup_Click(object sender, EventArgs e)
         {
             listBox2.ClearSelected();
@@ -276,6 +322,12 @@ namespace StoreClient
             GroupGroupEnabled = true;
         }
 
+        /// <summary>
+        /// Löscht die ausgewählte Benutzergruppe lokal udn vom Server.
+        /// Achtung, die zugehörigen Benutzer werden nicht gelöscht und behalten alle ihre Rechte.
+        /// Sie sollten also einer neuen/anderen Gruppe zugeordnet werden
+        /// Die Löschung wird durch eine Abfrage von unabsichtlichen Löschungen geschützt
+        /// </summary>
         private void toolStripButtonDeleteGroup_Click(object sender, EventArgs e)
         {
             if (listBox2.SelectedIndex > -1)
@@ -289,6 +341,10 @@ namespace StoreClient
             GroupGroupEnabled = false;
         }
 
+        /// <summary>
+        /// Löscht den ausgewählten Benutzer lokal udn vom Server.
+        /// Die Löschung wird durch eine Abfrage von unabsichtlichen Löschungen geschützt
+        /// </summary>
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             if (listBoxUsers.SelectedIndex < 0)
@@ -307,6 +363,9 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Die Eingabeelemente werden für die Benutzergruppe freigegeben, so dass er diese Verändern kann
+        /// </summary>
         private void toolStripButtonEditGroup_Click(object sender, EventArgs e)
         {
             GroupGroupEnabled = !GroupGroupEnabled;
