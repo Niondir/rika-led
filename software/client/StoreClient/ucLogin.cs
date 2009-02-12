@@ -9,6 +9,9 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
+    /// <summary>
+    /// Enthält Eingabefälder für den Login
+    /// </summary>
     public partial class ucLogin : UserControl
     {
         private bool userEntered = false;
@@ -33,27 +36,9 @@ namespace StoreClient
             }
         }
 
-        private bool PasswordEntered
-        {
-            get { return passwordEntered; }
-            set
-            {
-                passwordEntered = value;
-                textBoxPassword.UseSystemPasswordChar = value;
-                if (value == false)
-                {
-                    textBoxPassword.ForeColor = Color.Silver;
-                    textBoxPassword.PasswordChar = new char();
-                    textBoxPassword.Text = "Passwort";
-                }
-                else
-                {
-                    textBoxPassword.ForeColor = SystemColors.ControlText;
-                    textBoxPassword.Text = string.Empty;
-                }
-            }
-        }
-
+        /// <summary>
+        /// Initialisiert das Control und füllt es gegebenenfalls mit Benutzerdaten, sofern die Einstellungen es verlangen
+        /// </summary>
         public ucLogin()
         {
             InitializeComponent();
@@ -68,24 +53,9 @@ namespace StoreClient
             Connection.GetInstance().ServerURL = Preferences.GetInstance().ServerAddress;
         }
 
-        private void textBoxUsername_Click(object sender, EventArgs e)
-        {
-            if (UserEntered == false)
-                UserEntered = true;
-        }
-
-        private void textBox1_Click(object sender, EventArgs e)
-        {
-            if (PasswordEntered == false)
-                PasswordEntered = true;
-        }
-
-        private void textBoxPassword_Leave(object sender, EventArgs e)
-        {
-            if (textBoxPassword.Text.Length == 0)
-                PasswordEntered = false;
-        }
-
+        /// <summary>
+        /// Überprüft die Angaben und führt bei erfolgreicher Überprüfung einen Login durch. Andernfalls wird der Benutzer auf die fehlenden Angaben hingewiesen
+        /// </summary>
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             Connection.GetInstance().ServerURL = Preferences.GetInstance().ServerAddress;
@@ -97,6 +67,10 @@ namespace StoreClient
             Connection.GetInstance().Login(textBoxUsername.Text, textBoxPassword.Text);
         }
 
+        /// <summary>
+        /// Erhöht die Benutzerfreundlichkeit durch Login, sobald die Enter Taste gedrückt wird
+        /// </summary>
+        /// <seealso cref="buttonLogin_Click"/>
         private void textBoxUsername_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == '\r')
@@ -106,6 +80,10 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Forciert einen Login
+        /// </summary>
+        /// <seealso cref="buttonLogin_Click"/>
         internal void PerformLogin()
         {
             buttonLogin_Click(this, null);

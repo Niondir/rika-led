@@ -57,7 +57,7 @@
             this.textBoxName.Size = new System.Drawing.Size(183, 20);
             this.textBoxName.TabIndex = 1;
             this.textBoxName.TextChanged += new System.EventHandler(this.ChangeBackToWhiteBackCol);
-            this.textBoxName.Enter += new System.EventHandler(this.textBox1_Enter);
+            this.textBoxName.Enter += new System.EventHandler(this.EnterNewBox);
             // 
             // label1
             // 
@@ -100,7 +100,7 @@
             this.textBoxID.Size = new System.Drawing.Size(143, 20);
             this.textBoxID.TabIndex = 2;
             this.textBoxID.TextChanged += new System.EventHandler(this.ChangeBackToWhiteBackCol);
-            this.textBoxID.Enter += new System.EventHandler(this.textBox2_Enter);
+            this.textBoxID.Enter += new System.EventHandler(this.EnterNewBox);
             // 
             // label2
             // 

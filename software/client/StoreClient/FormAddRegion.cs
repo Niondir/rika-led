@@ -9,8 +9,15 @@ using CommunicationAPI.DataTypes;
 
 namespace StoreClient
 {
+    /// <summary>
+    /// Stellt einen Dialog dar, mit dem sich Produktgruppen im Detail ansehen, bearbeiten und neu erstellen lassen
+    /// </summary>
     public partial class FormAddRegion : Form
     {
+
+        /// <summary>
+        /// Gibt die dem Dialog entsprechende Produktgruppe zurück oder legt diese fest
+        /// </summary>
         public RegionData Value
         {
             get { return new RegionData(textBoxID.Text, textBoxName.Text); }
@@ -21,23 +28,40 @@ namespace StoreClient
             }
         }
 
-
+        /// <summary>
+        /// Erstellt ein neues Dialogfenster für Produktgruppen und initialisiert die Komponenten
+        /// </summary>
         public FormAddRegion()
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Erstellt ein neues Dialogfenster für Produktgruppen und initialisiert die Komponenten
+        /// Zusätzlich wird der übergebene Name als Gruppenname eingetragen und der Focus für schnelle Eingabe auf das ID Textfeld gelegt
+        /// </summary>
+        /// <param name="editData">Name der zu erstellenden Produktgruppe</param>
         public FormAddRegion(string name)
             : this()
         {
             textBoxName.Text = name;
             textBoxID.Focus();
         }
+
+        /// <summary>
+        /// Erstellt ein neues Dialogfenster für Produktgruppen und initialisiert die Komponenten
+        /// Zusätzlich werden die Anzeigefelder mit den übergebenen Eigenschaften gefüllt
+        /// </summary>
+        /// <param name="editData">Die Produktgruppe, die angezeigt werden soll</param>
         public FormAddRegion(RegionData editData)
             :this()
         {
             this.Value = editData;
         }
 
+        /// <summary>
+        /// Übernimmt den aktuellen Status und schließt den Dialog wenn alle Eingaben korreckt sind mit dem DialogResult: OK
+        /// </summary>
         private void buttonAccept_Click(object sender, EventArgs e)
         {
             if (Valid())
@@ -47,6 +71,10 @@ namespace StoreClient
             }
         }
 
+        /// <summary>
+        /// Überprüft, ob die Angaben im Dialog eine gülte Produktgruppe ergeben und weist gegebenenfalls darauf hin, Einträge zu korrigieren.
+        /// </summary>
+        /// <returns>Gibt das Ergebnis der Validierung zurück</returns>
         private bool Valid()
         {
             string errorMsg = string.Empty;
@@ -70,23 +98,34 @@ namespace StoreClient
             return true;
         }
 
+        /// <summary>
+        /// Schließt den Dialog ohne die Änderungen zu übernehmen. DialogResult: CANCEL
+        /// </summary>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
+        /// <summary>
+        /// Setzt die Hintergrundfarbe des Controls auf White. Dient dazu, bei Betreten eines zuvor rot gefärbten Controls, auf weiss zurück zu stellen
+        /// </summary>
+        /// <param name="sender">Control, das weisste Hintergrundfarbe fordert</param>
         private void ChangeBackToWhiteBackCol(object sender, EventArgs e)
         {
             ((Control)sender).BackColor = SystemColors.Window;
         }
 
-        private void textBox1_Enter(object sender, EventArgs e)
-        {
-            richTextBox1.Text = "Bitte geben Sie eine für die neue Produktgruppe einen Namen ein";
-        }
 
-        private void textBox2_Enter(object sender, EventArgs e)
+        /// <summary>
+        /// Stellt zu jedem Eingabe Control im Dialog die passende Hilfe in die richTextBox
+        /// </summary>
+        /// <param name="sender">Control, zu dem die Hilfe angezeigt werden soll</param>
+        private void EnterNewBox(object sender, EventArgs e)
         {
-            richTextBox1.Text = "Bitte geben Sie die Identifikationsnummer der zugehörigen Lampe ein. Diese finden Sie auf der Rückseite der Steuerschaltung";
+            if(sender == textBoxName)
+                richTextBox1.Text = "Bitte geben Sie eine für die neue Produktgruppe einen Namen ein";
+            if(sender == textBoxID)
+                richTextBox1.Text = "Bitte geben Sie die Identifikationsnummer der zugehörigen Lampe ein. Diese finden Sie auf der Rückseite der Steuerschaltung";
         }
     }
 }

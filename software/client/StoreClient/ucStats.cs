@@ -10,6 +10,9 @@ using CommunicationAPI;
 
 namespace StoreClient
 {
+    /// <summary>
+    /// Stellt eine Statusanzeige aller vorhandenen Daten in kürze dar
+    /// </summary>
     public partial class ucStats : UserControl
     {
         static string userStats = "Benutzer: {0}\r\nBenutzergruppen: {1}";
@@ -17,6 +20,10 @@ namespace StoreClient
         static string adStats = "Werbeaufträge: {0}\r\nAusstrahlungen/Regionen: {1}/{2}\r\nGesamtausstrahlungsdauer: {3}";
         public static string traceStats = "Kundendaten: {0}\r\nGesamtdauer der Laufwege: {1}\r\nAngelaufene Regionen: {2}";
 
+        /// <summary>
+        /// Initialisiert das Control
+        /// </summary>
+        /// <param name="access">die Rechte, die dem aktuell eingeloggten Benutzer zustehen</param>
         public ucStats(AccessFlags access)
         {
             InitializeComponent();
@@ -24,6 +31,10 @@ namespace StoreClient
             SetStats(access);
         }
 
+        /// <summary>
+        /// Stellt die Informationen graphisch dar
+        /// </summary>
+        /// <param name="access">die Rechte, die dem aktuell eingeloggten Benutzer zustehen</param>
         private void SetStats(AccessFlags access)
         {
             Connection connect = Connection.GetInstance();
@@ -35,6 +46,7 @@ namespace StoreClient
             RoleData[] roles = null;
             TraceData[] traces = null;
 
+            // check access flags and get possible data
             if ((access & AccessFlags.Ads) != 0)
                 ads = connect.GetAds();
             if((access & AccessFlags.Regions) != 0)
