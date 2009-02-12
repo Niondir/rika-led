@@ -25,6 +25,7 @@
 #define TRACE_LAMP_CNT      25  //benötiger Platz ist TRACE_LAMP_CNT*2*2, da zu jeder 16Bit LampenId auch ein 16Bit Zeitstempel gehört
 
 
+#define PACKET_OK           0
 
 // Prototypes
 uint8_t detectSignMode(void);

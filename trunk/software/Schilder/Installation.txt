@@ -1,0 +1,6 @@
+Installation bzw. Kompilierung der Schild Firmware
+***************************************************
+
+- Es wird eine AVRStudio Installation benötigt (Version >= 4.15) (http://www.atmel.com)
+- Zusätzlich muss auf dem Rechner noch "WinAVR", die GCC AVR Toolchain installiert werden (http://winavr.sourceforge.net)
+- Durch einen Doppelklick auf die Datei 
